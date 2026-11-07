@@ -1,0 +1,11 @@
+# The version of Book 1 (the site-building book) this book's test sites are
+# built from. tools/setup.sh reads Book 1's exported sites (its sites/ folder,
+# made by its tools/export-sites.sh) at this commit.
+#
+# To build on a newer Book 1: put the new commit here, delete the test sites
+# (ddev delete -O lens-and-trail-theme, and remove the folder; the same for
+# lens-and-trail-cms-theme), run tools/setup.sh, put the theme back with
+# tools/use-step.sh, and check that every chapter's pages still look right.
+
+repository: ../developing-open-sourced-web-software-with-drupal
+ref: '80915dc'  # Book 1, chore/export-site-recipe: "Export the test sites for Theming Drupal" (2026-11-07)

@@ -72,12 +72,14 @@ python3 tools/build.py
 
 ### The test sites
 
-The themes are tested on two DDEV sites, copies of Book 1's final sites, so the two books never break each other's screenshots:
+The themes are tested on two DDEV sites, rebuilt from Book 1's finished sites. Book 1 exports them into its `sites/` folder (its `tools/export-sites.sh`: Composer files, configuration, and content as a recipe), and this book pins the Book 1 commit it builds on in `data/book1.yml`. Separate sites mean the two books never break each other's screenshots.
 
 ```bash
-tools/setup.sh                 # make lens-and-trail-theme and lens-and-trail-cms-theme
+tools/setup.sh                 # build lens-and-trail-theme and lens-and-trail-cms-theme from Book 1
 tools/use-step.sh 04 01        # put Chapter 4's first step on the sites, as the default theme
 ```
+
+When Book 1 changes a site: re-export it there and commit, put the new commit in `data/book1.yml`, delete the two sites (`ddev delete -O <name>` and the folder), run `tools/setup.sh`, put the theme back with `tools/use-step.sh`, and check the chapters' pages. Log in with `admin` / `12345`.
 
 `PROJECT-LOG.md` ("Where we are") has their URLs and state.
 
@@ -123,3 +125,4 @@ Facts about releases and products that change quickly. Re-check each before a re
 
 - Mercury 1.0.5 requires Drupal ^11.3 (2026-11-07): the Mercury track runs on the Drupal CMS site (Drupal 11.4) until Mercury has a Drupal 12 release.
 - Core's `starterkit_theme` in Drupal 12.0.0-beta2 has no `components/` folder (2026-11-07).
+- The test sites' rebuild (`tools/setup.sh`) installs Book 1's configuration with the Minimal profile, because Drupal can't install Standard from configuration (it has a `hook_install()`): the Status report says "Minimal". Check whether core still refuses.
