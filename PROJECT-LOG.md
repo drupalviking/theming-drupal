@@ -9,7 +9,7 @@ Last updated: 2026-11-07.
 Read this first when picking the work up in a new session.
 
 - **2026-11-07: the book was started.** Scaffold, research, the test sites (built from Book 1's export) and `OUTLINE.md` (reviewed and accepted by the author) are on `chore/scaffold`; the remote is `github.com/drupalviking/theming-drupal`, and the author pushes. Nothing is drafted.
-- **Chapter 3 in progress** on `feature/chapter-03-design` (2026-11-07): grilling done (see Decisions: Chapter 3's scope, Spice, Dark mode, Fonts); next, the author picks from the palette and type options (published as a private artifact, https://claude.ai/artifact/PNXN3sTZMCA7yvh3sXqo74), then Claude drafts. Originally: **Chapter 3, *Designing Lens & Trail*** (the author, 2026-11-07). Start with the `write-chapter` skill's grilling, then Claude drafts the design brief, palette options (from `#1f6f5c`, contrast-checked in light and dark mode) and type options for the author to choose from; Penpot comes after the choices (the author has no account yet; the chapter shows creating one). The pilot chapter (Chapter 11, the Hike card) still decides the multi-track format and Storybook.
+- **Chapter 3 drafted** on `feature/chapter-03-design` (2026-11-07), waiting for the author's review: `manuscript/03-designing-lens-and-trail.md`, 14 figures. The author picked palette **B, Old Town sandstone** and font pair **3, Bricolage Grotesque + Atkinson Hyperlegible Next** (options page: https://claude.ai/artifact/PNXN3sTZMCA7yvh3sXqo74). Next, after the review: Chapter 4, *The Design in Penpot*.
 - **The folder** is still `themeing-drupal`. It will be renamed to `theming-drupal` (the author, 2026-11-07); do it outside a Claude session that has it as its working directory.
 - **The test sites** (DDEV, outside this repository), built by `tools/setup.sh` from Book 1's export at the commit in `data/book1.yml` (2026-11-07: `223b3ca`, on Book 1's `chore/export-site-recipe`, not merged yet):
   - `~/websites/open-university/lens-and-trail-theme`: Book 1's core site (Drupal 12.0.0-beta2, Olivero). `https://lens-and-trail-theme.ddev.site:8443`, `admin` / `12345`.
@@ -65,10 +65,14 @@ Made on 2026-11-07, at the start.
 | Dark mode (2026-11-07) | **A toggle** (light, dark, follow the system), not only the system setting: a teachable moment (the author). The club green `#1f6f5c` is 6.0:1 on white but 3.1:1 on `#121212`, so dark mode needs its own green. |
 | Fonts (2026-11-07) | **A pair** (headings and body), variable, openly licensed, self-hosted: a teachable moment (the author). Subsetting waits for the performance chapter. |
 | Layout reference (2026-11-07) | **utumallt.is** (made by the author's company; the author holds the design rights): its layout and how each route is shown, not its look. A card: photo, title, length, difficulty in words, a short teaser, the area. A route page: photo, title, description, a key-facts block (duration, distance, difficulty, ascent, surface, hazards), "Open map" with the start point, a GPX file. |
+| Palette and fonts (2026-11-07) | The author: **B, Old Town sandstone** (green-700 `#1f6f5c` for links and buttons, sandstone for markers and badges, warm neutrals) and **Bricolage Grotesque + Atkinson Hyperlegible Next** (OFL, variable, in `design/fonts/` with their licenses). Scales 50 to 950 made in OKLCH; the roles and their contrast in Chapter 3's table (every text pair passes AA in both modes). |
+| Logo (2026-11-07) | **Book 1's mark kept**, redrawn on a cream disc of its own (`design/logo.svg`): Book 1's white logo vanishes in forced colors (found on the core site, Figure 3.6). |
+| The hike page's button (2026-11-07) | **Directions** (to the meeting place), not "Join the hike": Book 1's club takes no bookings (its How to join says "no need to book"; signing up is in Book 1's Chapter 22 as a next step). |
 | WordPress boxes (2026-11-07) | **Only the bare necessities** (the author): "If you come from WordPress, you need to adapt here." Not a comparison of everything. |
 
 ## History
 
+- **2026-11-07**, night: **Chapter 3 drafted**, *Designing Lens & Trail*, after the grilling (Claude's recommendations, plus the author's spice, toggle, font pair, and the bare-necessities WordPress box) and the author's picks. Found on the way: Book 1's logo disappears in forced colors; Olivero has no reduced-motion rules; Colorbox and PhotoSwipe have no Drupal 12 release; the Turnhouse hike has no hike leader on the test site (Book 1's rebuild gave Jordi only the hikes admin led); DTCG 2025.10 writes colors as objects, and Penpot has light/dark themes (for Chapter 4). Figures: 12 from `design/chapter03/figures.html` with `tools/design_figures.py 03` (Book 1's `.venv`), and two of Olivero on the core site with and without forced colors (Playwright's `forced_colors`, a throwaway script; add to `tools/screenshots.py` when it exists).
 - **2026-11-07**, late: the author's review of `OUTLINE.md`: accepted as it is, with two additions: the design files are in the repository for readers (the Penpot file, the tokens, the wireframes), and "override as little as possible" as a running thread, made very clear in Chapter 8.
 - **2026-11-07**, late: `tools/setup.sh` made ready for readers (the author: the build script is for everybody): clones Book 1 if needed, sites next to this folder instead of `~/websites/open-university`, portable `sed`, checks for DDEV and Git, a clear message when the pinned commit is missing. The core site rebuilt with it and compared again. Appendix C confirmed; Chapter 3 starts with creating a Penpot account.
 - **2026-11-07**, evening: the outline, with the author: `OUTLINE.md` (23 chapters in three parts). Penpot for the design, Claude drafts and the author decides; dark mode, print, reduced motion and forced colors, variable fonts; Twig in two chapters; header and footer together; views apart from forms; every menu variant built for a real reason.
@@ -79,7 +83,11 @@ Made on 2026-11-07, at the start.
 
 ## The club's sites
 
-What each chapter adds to the two themes, so later chapters and exercises don't contradict it. Empty until the first chapter is written.
+What each chapter adds to the two themes, so later chapters and exercises don't contradict it.
+
+| Chapter | Adds |
+|---|---|
+| 3 | Nothing on the sites. The design: `design/logo.svg`, `design/fonts/`, the decisions in the chapter's tables (roles, type scale steps `--step--1` to `--step-5`, spacing `3xs` to `3xl`, breakpoints 40 and 64 rem, container switch 30 rem, content 80 rem, text `65ch`, radiuses 4/8/round, focus 3 px outline in *action*, motion 150/250 ms, slider at least 7 s a slide). Promised to later chapters: the dark mode toggle (JavaScript chapter), forced colors CSS and `forced-colors` (CSS architecture), the lightbox module or `<dialog>` (images), print stylesheet (templates for content), favicon and the logo as decoration next to the site name (header), form field borders darker than card borders (forms), the map (backlog), font subsetting (performance). |
 
 ## Backlog
 
@@ -95,4 +103,5 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 - **Screenshots**: `tools/screenshots.py`, in the style of Book 1's (Playwright, 1280 pixels wide), once there's something to take.
 - **A map on the hike page** (the author, 2026-11-07): at least the starting point, at best the track. A quick how-to in this book (OpenStreetMap; check Geofield and Leaflet for Drupal 12, or a static map image with a link). If Book 1 needs a field for it, that's an appendix or an expert exercise there (the module chapter, perhaps).
 - **The galleries' lightbox**: Colorbox and PhotoSwipe have no Drupal 12 release (2026-11-07). Re-check in the images chapter; the fallback is a `<dialog>` lightbox in the theme.
+- **Turnhouse hike without a leader**: on the rebuilt core site, *Turnhouse Hill and Carnethy Hill* has no Hike leader (Book 1 gave it admin; the rebuild moved admin's hikes to Jordi, but not this one?). Check Book 1's export; Chapter 3's figures don't name a leader.
 - **Book 1's Chapter 16**: update its `%%` note on the companion book's title and link when this book has a home.
