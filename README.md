@@ -77,6 +77,8 @@ python3 tools/build.py
 The themes are tested on two DDEV sites, rebuilt from Book 1's finished sites. **Readers can do the same, without having worked through Book 1**: `tools/setup.sh` needs only DDEV and Git, clones Book 1 next to this folder if it isn't there, and makes the two sites next to this folder too. Book 1 exports them into its `sites/` folder (its `tools/export-sites.sh`: Composer files, configuration, and content as a recipe), and this book pins the Book 1 commit it builds on in `data/book1.yml`. Separate sites mean the two books never break each other's screenshots.
 
 ```bash
+git clone https://github.com/drupalviking/theming-drupal.git
+cd theming-drupal
 tools/setup.sh                 # build lens-and-trail-theme and lens-and-trail-cms-theme from Book 1
 tools/use-step.sh 04 01        # put Chapter 4's first step on the sites, as the default theme
 ```
