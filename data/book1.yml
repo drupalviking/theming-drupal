@@ -8,4 +8,4 @@
 # tools/use-step.sh, and check that every chapter's pages still look right.
 
 repository: ../developing-open-sourced-web-software-with-drupal
-ref: '80915dc'  # Book 1, chore/export-site-recipe: "Export the test sites for Theming Drupal" (2026-11-07)
+ref: '223b3ca'  # Book 1, chore/export-site-recipe: "Chapter 15: hikes led by admin get Jordi" (2026-11-07)

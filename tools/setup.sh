@@ -106,12 +106,6 @@ SETTINGS
   # Standard's hook_install() gives user 1 the administrator role; Minimal's
   # doesn't, so do it here.
   ddev drush user:role:add administrator admin
-  # On Book 1's site three hikes have admin as their hike leader, from before
-  # Chapter 15 filtered that field by the Hike leader role. Drupal doesn't check
-  # old references, but the content import does, so admin needs the role.
-  if ddev drush role:list --format=list 2>/dev/null | grep -qx hike_leader; then
-    ddev drush user:role:add hike_leader admin
-  fi
   ddev drush recipe ../book1-export/content
   # What the import can't bring (Focal Point's crops), from Book 1's export.
   if [[ -f book1-export/after-import.php ]]; then

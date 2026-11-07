@@ -10,11 +10,11 @@ Read this first when picking the work up in a new session.
 
 - **2026-11-07: the book was started.** Scaffold, research and a proposed outline are on `chore/scaffold`. Nothing is drafted. Next: the author reviews the outline (README, "Contents and status") and `research/choosing-an-approach.md`, then a **pilot chapter** (the Hike card as a component, on both sites) decides the multi-track format.
 - **The folder** is still `themeing-drupal`. It will be renamed to `theming-drupal` (the author, 2026-11-07); do it outside a Claude session that has it as its working directory.
-- **The test sites** (DDEV, outside this repository), built by `tools/setup.sh` from Book 1's export at the commit in `data/book1.yml` (2026-11-07: `80915dc`, on Book 1's `chore/export-site-recipe`, not merged yet):
+- **The test sites** (DDEV, outside this repository), built by `tools/setup.sh` from Book 1's export at the commit in `data/book1.yml` (2026-11-07: `223b3ca`, on Book 1's `chore/export-site-recipe`, not merged yet):
   - `~/websites/open-university/lens-and-trail-theme`: Book 1's core site (Drupal 12.0.0-beta2, Olivero). `https://lens-and-trail-theme.ddev.site:8443`, `admin` / `12345`.
   - `~/websites/open-university/lens-and-trail-cms-theme`: Book 1's Drupal CMS site (Drupal CMS 2.2.8 on Drupal 11.4.11, Mercury). `https://lens-and-trail-cms-theme.ddev.site:8443`, `admin` / `12345`.
   - Each has a DDEV snapshot `start` (Book 1's final state). On the author's machine DDEV's router uses port 8443.
-  - Checked against Book 1's sites (2026-11-07): the same entity counts and IDs, the same path aliases, the same pages (status, title, images). Known differences: the profile is Minimal, not Standard (see the README's "Check before publication"); admin also has the Hike leader role (three of Book 1's hikes have admin as leader; Book 1's backlog); on the CMS site, Book 1's broken Devel Generate media and terms stay behind, Focal Point makes a default crop for one image that had none, and Drupal's newer Spanish translations add a few labels to two configuration items (`config:status` shows `dashboard.dashboard.ai_dashboard` and `views.view.canvas_pages`).
+  - Checked against Book 1's sites (2026-11-07): the same entity counts and IDs, the same path aliases, the same pages (status, title, images). Known differences: the profile is Minimal, not Standard (see the README's "Check before publication"); on the CMS site, Book 1's broken Devel Generate media and terms stay behind, Focal Point makes a default crop for one image that had none, and Drupal's newer Spanish translations add a few labels to two configuration items (`config:status` shows `dashboard.dashboard.ai_dashboard` and `views.view.canvas_pages`).
 
 ## How we work
 
@@ -53,6 +53,7 @@ Made on 2026-11-07, at the start.
 
 ## History
 
+- **2026-11-07**, evening: Book 1's three hikes with admin as leader now have Jordi (a Try it in Book 1's Chapter 15, the author's choice), so the rebuild no longer gives admin the Hike leader role. Pinned to `223b3ca`.
 - **2026-11-07**, evening: the test sites are rebuilt from Book 1's export, not copied. Book 1 got `tools/export-sites.sh` (on its `chore/export-site-recipe`; see Book 1's PROJECT-LOG for what core's exporter needed); here, `tools/setup.sh` installs Book 1's configuration (`site:install --existing-config`, with Minimal), applies the content recipe and Book 1's `after-import.php`, and fills in Pathauto's Spanish aliases. `data/book1.yml` pins the Book 1 commit. Both sites built and compared with Book 1's.
 - **2026-11-07**, later: the author's review of the outline. New chapters for the header, menus (deep dive), heroes, the footer, and error and maintenance pages; JavaScript and Images moved before them; the outline grouped in three parts. Book 2 in the series. Theme names `lens_trail` and `lens_trail_cms`. Storybook decided after the pilot. Usage numbers for Emulsify, Radix, UI Suite, Mercury and the Storybook module in the research.
 - **2026-11-07**: Started the book. Researched the approaches (Starterkit, subthemes, Mercury, contrib base themes, native CSS); the author chose Starterkit + plain CSS for the core site and Mercury for the Drupal CMS site, with the multi-track format to be decided after a pilot chapter. Scaffold made from Book 1 (`tools/build.py`, `update_numbers.py`, the `write-chapter` skill, the Obsidian settings) and the module book (`code/` steps, `include`/`diff` directives, `use-step.sh`). Proposed outline in the README.
@@ -63,7 +64,7 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 
 ## Backlog
 
-- **Pin Book 1 after its merge**: `data/book1.yml` points at `80915dc` on Book 1's `chore/export-site-recipe`. When the author merges it, the commit stays valid; if it's rebased or squashed, put the new commit there.
+- **Pin Book 1 after its merge**: `data/book1.yml` points at `223b3ca` on Book 1's `chore/export-site-recipe`. When the author merges it, the commit stays valid; if it's rebased or squashed, put the new commit there.
 - **Pilot chapter**: the Hike card as an SDC on both sites (plain CSS on core, Tailwind on Drupal CMS); then decide the multi-track format.
 - **Mercury on the CMS site**: copy with the same machine name (`CUSTOMIZING.md`'s route, safe with Drupal CMS's Starter templates) or `generate-theme --starterkit=mercury` with a new name (needs the Starter's templates fixed; mercury work item 3570020). Decide in the pilot.
 - **Mercury on Drupal 12**: when Mercury has a Drupal 12 release, check whether the CMS track moves too.
