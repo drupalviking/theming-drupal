@@ -37,17 +37,23 @@ From `research/choosing-an-approach.md`.
 
 ### 3. Designing Lens & Trail
 
-- Claude drafts a brief and options; the author picks.
-- The brief: who visits the club's site, what they need first (the next hike, how to join, photos), the feeling (outdoors, photography, Edinburgh).
-- **Penpot**: creating a free account step by step (the author doesn't have one either: the book shows it from the start), a project, pages for the wireframes. Self-hosting mentioned.
-- Color: the club's green `#1f6f5c` from Book 1, a palette around it, contrast checked for light and **dark mode**; **forced colors** in mind.
-- Type: a self-hosted **variable font** (openly licensed), a type scale, line length.
-- Spacing, radius, shadows, breakpoints vs container sizes.
-- **Design tokens** in Penpot, exported as W3C DTCG JSON into `design/tokens.json`.
-- Wireframes: front page, a hike page, an album, the hikes list, the header and menu at three widths, the 404 page. Exported as SVG/PNG into `design/`.
+Split in two after the grilling (the author, 2026-11-07): this chapter makes the decisions, the next one puts them in Penpot. Claude drafts the options; the author (the club's committee, in the story) picks, and the book shows the options turned down and why.
+
+- The brief: who visits the club's site (newcomers deciding to join, members on a phone at the trailhead, Spanish speakers), what they need first (the next hike, how to join, photos), the feeling (the photos lead, the interface stays quiet; outdoors and Edinburgh in the colors and type). Phones first.
+- Color: the club's green `#1f6f5c` from Book 1 (6.0:1 on white, 3.1:1 on near-black: dark mode needs its own green), an accent, warm neutrals. Two tiers of tokens: values, then roles (`color-action`, `color-surface`), and only the roles change in dark mode. WCAG 2.2 AA; APCA in one sentence. **Dark mode with a toggle** (light, dark, system). **Forced colors**: what must survive.
+- Type: **a pair** of self-hosted, openly licensed **variable fonts** (headings and body) with Spanish characters; a fluid type scale with `clamp()`; line length.
+- Spacing, radius, shadows; two page breakpoints and container sizes for components.
+- A simple SVG logo (needed when the themes are generated); a few icons (Lucide or Tabler); photo aspect ratios (3:2 cards, 16:9 heroes, 1:1 galleries).
+- Motion, with some spice (the author): **sliders for heroes**, **a lightbox for the galleries**, **a little parallax on the front page**. No slider moves by itself without a pause button (WCAG 2.2.2); with **reduced motion** nothing moves.
+- **Print**: the hike page as a handout (the date, the meeting place, distance and difficulty, the map link printed in full, no menu).
+- Coming from WordPress? Only the bare necessities: `theme.json` holds WordPress's tokens; here they live in `tokens.json` and the theme's CSS.
+
+### 4. The Design in Penpot
+
+- **Penpot**: creating a free account step by step (the author doesn't have one either: the book shows it from the start), a project, pages for the wireframes. Self-hosting in one paragraph.
+- **Design tokens** in Penpot, exported into `design/tokens.json` (check whether Penpot writes strict W3C DTCG or the Tokens Studio format; `tools/tokens.py` reads what it really writes).
+- Wireframes, grey, at three widths: front page, a hike page, an album, the hikes list, the header and menu, the mega menu panel, the 404 page; and one style tile (colors, type, buttons, a hike card, focus states). One made by hand in the chapter, the rest imported. Exported as SVG/PNG into `design/`.
 - Getting the design: importing `design/lens-and-trail.penpot` into your own Penpot account, or using the SVG/PNG and `tokens.json` without Penpot.
-- Motion: what moves and what doesn't (**reduced motion**).
-- **Print**: what a printed hike page needs (the meeting place, the date, a map link, no menu).
 - Box: **Using Figma?** The same with Figma Variables and a plugin, and what that costs.
 
 ### 4. Generating the Themes

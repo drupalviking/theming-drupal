@@ -96,8 +96,9 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | **Part 1: Foundations** |  |
 | 1. What a Theme Is, and What We'll Build | Proposed. |
 | 2. Choosing an Approach | Proposed. From `research/choosing-an-approach.md`. |
-| 3. Designing Lens & Trail | Proposed. Penpot, design tokens (W3C format), dark mode, print, reduced motion, variable fonts. Claude drafts, the author decides. |
-| 4. Generating the Themes | Proposed. `lens_trail` (Starterkit) and `lens_trail_cms` (Mercury); `tools/tokens.py`. |
+| 3. Designing Lens & Trail | In progress. The brief and the decisions: color (dark mode with a toggle), a pair of variable fonts, spacing, motion (sliders, a lightbox, a little parallax), print. Claude drafts, the author decides. |
+| 4. The Design in Penpot | Proposed. Split from Chapter 3: a Penpot account, design tokens (W3C format), wireframes, export, Using Figma?. |
+| 5. Generating the Themes | Proposed. `lens_trail` (Starterkit) and `lens_trail_cms` (Mercury); `tools/tokens.py`. |
 | 5. Regions and the Page Template | Proposed. |
 | 6. Libraries and a CSS Architecture | Proposed. |
 | 7. Twig Basics | Proposed. |
