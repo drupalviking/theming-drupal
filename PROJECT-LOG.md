@@ -8,7 +8,8 @@ Last updated: 2026-11-07.
 
 Read this first when picking the work up in a new session.
 
-- **2026-11-07: the book was started.** Scaffold, research and a proposed outline are on `chore/scaffold`. Nothing is drafted. Next: the author reviews the outline (README, "Contents and status") and `research/choosing-an-approach.md`, then a **pilot chapter** (the Hike card as a component, on both sites) decides the multi-track format.
+- **2026-11-07: the book was started.** Scaffold, research, the test sites (built from Book 1's export) and `OUTLINE.md` (reviewed and accepted by the author) are on `chore/scaffold`; the remote is `github.com/drupalviking/theming-drupal`, and the author pushes. Nothing is drafted.
+- **Next: Chapter 3, *Designing Lens & Trail*** (the author, 2026-11-07). Start with the `write-chapter` skill's grilling, then Claude drafts the design brief, palette options (from `#1f6f5c`, contrast-checked in light and dark mode) and type options for the author to choose from; Penpot comes after the choices (the author has no account yet; the chapter shows creating one). The pilot chapter (Chapter 11, the Hike card) still decides the multi-track format and Storybook.
 - **The folder** is still `themeing-drupal`. It will be renamed to `theming-drupal` (the author, 2026-11-07); do it outside a Claude session that has it as its working directory.
 - **The test sites** (DDEV, outside this repository), built by `tools/setup.sh` from Book 1's export at the commit in `data/book1.yml` (2026-11-07: `223b3ca`, on Book 1's `chore/export-site-recipe`, not merged yet):
   - `~/websites/open-university/lens-and-trail-theme`: Book 1's core site (Drupal 12.0.0-beta2, Olivero). `https://lens-and-trail-theme.ddev.site:8443`, `admin` / `12345`.
