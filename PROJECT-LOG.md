@@ -44,7 +44,7 @@ Made on 2026-11-07, at the start.
 | Parts of a page | **Chapters of their own for the header, menus (a deep dive: simple, dropdown, mega menu, hamburger/off-canvas), hero sections and the footer**, and one for **error and maintenance pages** (401, 403, 404, 500, maintenance mode) (the author, 2026-11-07). |
 | Storybook | **Decided after the pilot**, with more data (the author, 2026-11-07: many people use it, and it can be added to a Starterkit theme). Data so far in `research/choosing-an-approach.md`. |
 | Code | **The module book's way**: complete theme copies per section in `code/chapterNN/steps/NN-name/{core,cms}/<theme>/`, `<!-- include -->` and `<!-- diff -->`, `tools/use-step.sh`. No code typed into the manuscript. |
-| Test sites | **New DDEV copies of Book 1's final sites**, so the books don't break each other's screenshots. |
+| Test sites | **Built from a recipe that Book 1 exports** (the author, 2026-11-07): Book 1 gets a script that writes its final site as a recipe (configuration, content with core's `content:export`, files) into Book 1's repo; this book's `tools/setup.sh` makes a fresh Drupal install and applies it, then the theme steps go on top. So a change in Book 1 can be rebuilt into this book. Separate DDEV sites (`lens-and-trail-theme`, `lens-and-trail-cms-theme`), so the books don't break each other's screenshots. The work in Book 1 goes on a branch in Book 1's repo (approved, e.g. `chore/export-site-recipe`). Until it exists, `tools/setup.sh` copies Book 1's DDEV sites. |
 | License | Text and images CC BY-SA 4.0, as Book 1. The themes' code GPL-2.0-or-later, as Drupal requires. |
 | Teachers' kit | Yes, later: Marp decks in `slides/`, as the module book. |
 | Spelling | US. |
@@ -62,6 +62,7 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 
 ## Backlog
 
+- **Book 1's site as a recipe** (decided 2026-11-07): an export script in Book 1's repo (config + `content:export` + files, for the core site and the Drupal CMS site; check Canvas pages, users and the media files), then rewrite this book's `tools/setup.sh` to install Drupal and apply it.
 - **Pilot chapter**: the Hike card as an SDC on both sites (plain CSS on core, Tailwind on Drupal CMS); then decide the multi-track format.
 - **Mercury on the CMS site**: copy with the same machine name (`CUSTOMIZING.md`'s route, safe with Drupal CMS's Starter templates) or `generate-theme --starterkit=mercury` with a new name (needs the Starter's templates fixed; mercury work item 3570020). Decide in the pilot.
 - **Mercury on Drupal 12**: when Mercury has a Drupal 12 release, check whether the CMS track moves too.
