@@ -1,0 +1,13 @@
+# The version of Book 1 (the site-building book) this book's test sites are
+# built from. tools/setup.sh reads Book 1's exported sites (its sites/ folder,
+# made by its tools/export-sites.sh) at this commit.
+#
+# To build on a newer Book 1: put the new commit here, delete the test sites
+# (ddev delete -O lens-and-trail-theme, and remove the folder; the same for
+# lens-and-trail-cms-theme), run tools/setup.sh, put the theme back with
+# tools/use-step.sh, and check that every chapter's pages still look right.
+
+# Book 1's public repository. tools/setup.sh clones it next to this book's
+# folder if there's no copy there yet.
+url: https://github.com/drupalviking/developing-open-sourced-web-software-with-drupal.git
+ref: '223b3ca'  # Book 1, chore/export-site-recipe: "Chapter 15: hikes led by admin get Jordi" (2026-11-07)
