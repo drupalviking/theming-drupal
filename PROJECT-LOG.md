@@ -23,7 +23,7 @@ Same as Book 1 and the module book.
 - **The author** (Hilmar Kári Hallbjörnsson) decides what goes in, reviews every chapter, and pushes and merges. Claude drafts, builds, tests, and commits.
 - **One chapter at a time.** Before drafting a chapter, Claude asks the author questions about what to include and leave out ("grilling"); the author asked for many questions where they're vague. The author reviews the draft before the next chapter starts.
 - **Branches**: one branch per unit of work, created only after the author says yes in the conversation. Claude never commits to `main`, pushes, opens pull requests, or merges.
-- **Commit messages**: whether Book 1's "no Claude attribution" rule applies here is to be confirmed by the author.
+- **No Claude attribution** in commit messages (no `Co-Authored-By` or "Generated with" lines), as in Book 1 (the author, 2026-11-07).
 - **Chapter numbers and cross-references** are checked once, at the end.
 
 ## Decisions
@@ -33,12 +33,16 @@ Made on 2026-11-07, at the start.
 | Question | Decision |
 |---|---|
 | Title | **Theming Drupal**, the spelling Book 1 and drupal.org use (not "Themeing"). The folder gets renamed. |
+| Place in the series | **Book 2**: after the site-building book (Book 1), before the module book (Book 3, `~/websites/ru/book-rewrite`), though it's the third to be written. |
 | Relation to Book 1 | A companion: the reader continues on Book 1's Lens & Trail sites, from the state Book 1's last chapter leaves them in. Book 1's Chapter 16 already points here. |
 | Reader | Book 1 graduates and front-end developers: knows site building, basic HTML and CSS. Twig, render arrays, libraries, preprocess and components are new and explained. |
 | Approach | Core site: **Starterkit + plain modern CSS + SDC + Twig, no Node toolchain.** The author wanted the simplest approach first, and as few third-party build tools as possible. Research in `research/choosing-an-approach.md`. |
 | Sites | **Both equally.** Core site: the Starterkit theme. Drupal CMS site: a theme made from **Mercury** (Tailwind, npm), which is also the book's second approach. |
 | Multi-track format | **Decided after a pilot chapter.** The author would like to teach both (or all) approaches. Options: (a) one book, the core/plain-CSS path first and the other toolchains in a later part; (b) two editions from shared sources, with `<!-- track: -->` markers in `tools/build.py`; (c) both in every chapter, in boxes. Claude's advice: don't mix npm/Tailwind into the plain-CSS theme itself; the two put the styling in different places (CSS files vs Twig classes), so a reader would see two versions of every template. |
-| Design | **Designed in the book**: an early chapter with the brand (Book 1's color `#1f6f5c`), type, spacing and wireframes, as design tokens. |
+| Design | **Designed in the book**: an early chapter (Chapter 3) with the brand (Book 1's color `#1f6f5c`), type, spacing and wireframes, as design tokens. Where a later chapter finds a design decision was a mistake, it changes it in the open, in a "Revisiting the design" box, showing how a real project changes course (the author, 2026-11-07). |
+| Theme names | **`lens_trail`** (core site) and **`lens_trail_cms`** (Drupal CMS site), unless the pilot keeps Mercury's own machine name `mercury` for the CMS site. |
+| Parts of a page | **Chapters of their own for the header, menus (a deep dive: simple, dropdown, mega menu, hamburger/off-canvas), hero sections and the footer**, and one for **error and maintenance pages** (401, 403, 404, 500, maintenance mode) (the author, 2026-11-07). |
+| Storybook | **Decided after the pilot**, with more data (the author, 2026-11-07: many people use it, and it can be added to a Starterkit theme). Data so far in `research/choosing-an-approach.md`. |
 | Code | **The module book's way**: complete theme copies per section in `code/chapterNN/steps/NN-name/{core,cms}/<theme>/`, `<!-- include -->` and `<!-- diff -->`, `tools/use-step.sh`. No code typed into the manuscript. |
 | Test sites | **New DDEV copies of Book 1's final sites**, so the books don't break each other's screenshots. |
 | License | Text and images CC BY-SA 4.0, as Book 1. The themes' code GPL-2.0-or-later, as Drupal requires. |
@@ -49,6 +53,7 @@ Made on 2026-11-07, at the start.
 
 ## History
 
+- **2026-11-07**, later: the author's review of the outline. New chapters for the header, menus (deep dive), heroes, the footer, and error and maintenance pages; JavaScript and Images moved before them; the outline grouped in three parts. Book 2 in the series. Theme names `lens_trail` and `lens_trail_cms`. Storybook decided after the pilot. Usage numbers for Emulsify, Radix, UI Suite, Mercury and the Storybook module in the research.
 - **2026-11-07**: Started the book. Researched the approaches (Starterkit, subthemes, Mercury, contrib base themes, native CSS); the author chose Starterkit + plain CSS for the core site and Mercury for the Drupal CMS site, with the multi-track format to be decided after a pilot chapter. Scaffold made from Book 1 (`tools/build.py`, `update_numbers.py`, the `write-chapter` skill, the Obsidian settings) and the module book (`code/` steps, `include`/`diff` directives, `use-step.sh`). Proposed outline in the README.
 
 ## The club's sites
@@ -59,11 +64,10 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 
 - **Pilot chapter**: the Hike card as an SDC on both sites (plain CSS on core, Tailwind on Drupal CMS); then decide the multi-track format.
 - **Mercury on the CMS site**: copy with the same machine name (`CUSTOMIZING.md`'s route, safe with Drupal CMS's Starter templates) or `generate-theme --starterkit=mercury` with a new name (needs the Starter's templates fixed; mercury work item 3570020). Decide in the pilot.
-- **Theme names**: the machine and human names of the two themes (`lens_trail`?).
 - **Mercury on Drupal 12**: when Mercury has a Drupal 12 release, check whether the CMS track moves too.
-- **Storybook**: leave out, or show on the Mercury track only? Also check for a component preview in Drupal itself.
+- **Storybook**: decide after the pilot. Try the Storybook module (drupal/storybook) on the core theme in the pilot, and see what it costs: Node, its Drupal 12 support (1.0.4 supports ^9 || ^10 || ^11, 2026-11-07), and what a reader must upgrade later. Compare with SDC Styleguide (no Node).
 - **Radix and UI Suite**: check Drupal 12 status and toolchains for Chapter 2.
 - **Olivero as a base theme**: a short demonstration in Chapter 2 of why not (what breaks on an Olivero update).
-- **Build your own Canvas component**: from Book 1's backlog ("advanced; partly theming"): Chapter 11.
+- **Build your own Canvas component**: from Book 1's backlog ("advanced; partly theming"): Chapter 18.
 - **Screenshots**: `tools/screenshots.py`, in the style of Book 1's (Playwright, 1280 pixels wide), once there's something to take.
 - **Book 1's Chapter 16**: update its `%%` note on the companion book's title and link when this book has a home.

@@ -1,6 +1,6 @@
 # Theming Drupal
 
-An open book about building Drupal themes, and the companion to *Developing Open Sourced Web Software with Drupal* (the site-building book, "Book 1"). It is written for the Drupal Open University Initiative, and for anyone to use, share, and improve.
+An open book about building Drupal themes: **Book 2** in the series, after *Developing Open Sourced Web Software with Drupal* (the site-building book, "Book 1"), and before *Drupal Module Development for Drupal 11 and 12* (Book 3, written first, in `~/websites/ru/book-rewrite`). It is written for the Drupal Open University Initiative, and for anyone to use, share, and improve.
 
 Book 1 built **Lens & Trail**, the website of a small photography and hiking club in Edinburgh, in English and Spanish, on Drupal core and on Drupal CMS. It ended with the club's site on someone else's theme (Olivero on core, Mercury on Drupal CMS) and a promise: *Theming Drupal* is where you make your own. In this book the reader gives both sites a theme of their own:
 
@@ -83,27 +83,35 @@ tools/use-step.sh 04 01        # put Chapter 4's first step on the sites, as the
 
 ## Contents and status
 
-A first proposal (2026-11-07), for the author to grill. Nothing is drafted yet.
+A proposal (2026-11-07, revised the same day with the author's sections on headers, footers, heroes, menus and error pages), for the author to grill. Nothing is drafted yet. The design is made early (Chapter 3); where later chapters find it was wrong, they change it in the open, in "Revisiting the design" boxes, as a real project would.
 
 | Chapter | Status |
 |---|---|
+| **Part 1: Foundations** | |
 | 1. What a Theme Is, and What We'll Build | Proposed. Picks up from Book 1's Chapter 16: what a theme does and doesn't do, the two sites, a tour of the finished themes. |
-| 2. Choosing an Approach | Proposed. Starterkit, subthemes, Mercury, contrib base themes, from scratch; native CSS vs build tools; dependencies and what breaks in three years. From `research/choosing-an-approach.md`. |
+| 2. Choosing an Approach | Proposed. Starterkit, subthemes, Mercury, contrib base themes (Radix, UI Suite, Emulsify), from scratch; native CSS vs build tools; Storybook; dependencies and what breaks in three years. From `research/choosing-an-approach.md`. |
 | 3. Designing Lens & Trail | Proposed. The brand (Book 1's `#1f6f5c`), type scale, spacing, wireframes for the front page, a hike and an album; design tokens as CSS custom properties (and as Tailwind's `@theme` on the CMS site). |
-| 4. Generating the Themes | Proposed. `generate-theme` on core; Mercury on Drupal CMS; the `.info.yml` file, the screenshot and the logo; switching the sites over. |
-| 5. Regions and the Page Template | Proposed. `page.html.twig`, regions, moving Book 1's blocks over. |
-| 6. Libraries: CSS and JavaScript | Proposed. `*.libraries.yml`, attaching libraries, `libraries-extend`/`-override`, a cascade-layer architecture, aggregation. |
+| 4. Generating the Themes | Proposed. `generate-theme` on core (`lens_trail`); Mercury on Drupal CMS (`lens_trail_cms`, or `mercury` if the pilot keeps the name); the `.info.yml` file, the screenshot and the logo; switching the sites over. |
+| 5. Regions and the Page Template | Proposed. `page.html.twig`, `html.html.twig`, regions, moving Book 1's blocks over. |
+| 6. Libraries and a CSS Architecture | Proposed. `*.libraries.yml`, attaching libraries, `libraries-extend`/`-override`, cascade layers, aggregation. |
 | 7. Twig in Depth | Proposed. Twig debugging, file name suggestions, variables, filters, `attributes`, `|t`, render arrays as seen from Twig. |
-| 8. Templates for Content | Proposed. Nodes, fields and view modes: Hike, News and Album; the Card view mode from Book 1. |
-| 9. Preprocess Functions and Theme Settings | Proposed. The `.theme` file, OO hooks in themes, theme settings, suggestions of your own. |
-| 10. Single Directory Components | Proposed. Props, slots, schema; the Hike card as a component (the pilot chapter). |
-| 11. Components in Canvas and Layout Builder | Proposed. Components as Canvas building blocks on the CMS site; the same component in Layout Builder on core. |
-| 12. Views, Menus, Forms and User Pages | Proposed. Views templates, the main menu (with the dropdown), forms, the login and user pages. |
-| 13. Images | Proposed. Responsive images, AVIF/WebP, art direction, the gallery. |
-| 14. JavaScript the Drupal Way | Proposed. Behaviors, `once()`, `drupalSettings`, no framework; Mercury's component JS. |
-| 15. Accessibility and Performance | Proposed. WCAG 2.2 AA, focus, motion, color contrast; Core Web Vitals, fonts, caching and render cache metadata in templates. |
-| 16. Multilingual Theming | Proposed. English and Spanish, longer strings, `lang`, right-to-left readiness. |
-| 17. Keeping a Theme Up to Date | Proposed. Core changes, comparing your theme with a fresh Starterkit, upgrading Tailwind and npm packages years later. |
+| 8. Preprocess Functions and Theme Settings | Proposed. The `.theme` file, OO hooks in themes, theme settings, suggestions of your own. |
+| 9. JavaScript the Drupal Way | Proposed. Behaviors, `once()`, `drupalSettings`, no framework; Mercury's component JS. Before the menus, which need it. |
+| 10. Single Directory Components | Proposed. Props, slots, schema; the Hike card as a component (the **pilot chapter**). |
+| 11. Images | Proposed. Responsive images, AVIF/WebP, art direction, the gallery; needed by the hero. |
+| **Part 2: The parts of a page** | |
+| 12. The Header | Proposed. Branding (logo, site name, slogan), search, the language switcher, the user menu; sticky or not; the header as a component and as a region. |
+| 13. Menus, in Depth | Proposed. The author's deep dive: how a menu reaches the page (menu blocks, levels, `menu.html.twig` and its suggestions, active trail); a simple menu; dropdowns; a **mega menu** (approaches: nested levels, blocks or fields on menu links, contrib); the **hamburger** and off-canvas menu on small screens; keyboard and screen-reader patterns (disclosure, not ARIA `menu`); the footer menu; breadcrumbs. |
+| 14. Hero Sections | Proposed. The front page hero, a hike's hero image, a hero component with variants; text over images and contrast; Canvas's hero components on Drupal CMS. |
+| 15. The Footer | Proposed. Footer regions, the footer menu, the Club info block from Book 1, social links, the license line. |
+| 16. Templates for Content | Proposed. Nodes, fields and view modes: Hike, News and Album; the Card view mode from Book 1. |
+| 17. Views, Forms and User Pages | Proposed. Views templates and the Hikes list, the exposed filter, forms and form elements, the login and user pages. |
+| 18. Components in Canvas and Layout Builder | Proposed. Components as Canvas building blocks on the CMS site; the same component in Layout Builder on core. Book 1's backlog item "build your own Canvas component". |
+| 19. Error and Maintenance Pages | Proposed. 403 and 404 (Basic site settings vs. templates such as `page--system--404.html.twig`), 401 (core's default HTML 401 page), 500 (core's plain "unexpected error" page, which no theme reaches, and web server error pages), maintenance mode and the database-offline page (`maintenance-page.html.twig`, `$settings['maintenance_theme']`). |
+| **Part 3: Finishing** | |
+| 20. Accessibility and Performance | Proposed. An audit of the finished themes (accessibility is checked in every chapter; this is the final pass): WCAG 2.2 AA, Core Web Vitals, fonts, caching and render cache metadata in templates. |
+| 21. Multilingual Theming | Proposed. English and Spanish, longer strings, `lang`, right-to-left readiness. |
+| 22. Keeping a Theme Up to Date | Proposed. Core changes, comparing your theme with a freshly generated Starterkit, upgrading Tailwind and npm packages years later, rebuilding when Book 1 changes. |
 | Appendix A. Twig Reference | Proposed. |
 | Appendix B. Answers to the Advanced Exercises | Proposed. |
 

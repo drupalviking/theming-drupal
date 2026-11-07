@@ -55,7 +55,29 @@ There are several ways to start a Drupal theme: a subtheme of an existing theme,
 ## 5. Contrib base themes
 
 - **Emulsify**: the 7.x line supports `^11.3 || ^12`, with Emulsify Core 4 and a **Vite** frontend workflow; upgrading from 6.x means moving from Webpack to Vite ([Emulsify on drupal.org](https://www.drupal.org/project/emulsify), [emulsify-drupal on GitHub](https://github.com/emulsify-ds/emulsify-drupal), to check). A real example of the toolchain churn the author wants to avoid.
-- **Radix** (Bootstrap) and **UI Suite** (Bootstrap, DSFR, Material…): not researched yet. Check their Drupal 12 status and build tools before Chapter 2 mentions them.
+- **Radix** (Bootstrap) and **UI Suite** (Bootstrap, DSFR, Material…): Drupal 12 support checked (below); their build tools are still to check before Chapter 2 mentions them.
+
+### How many sites use them (2026-11-07)
+
+From drupal.org's project usage (the weekly count of sites reporting through the Update Status module, summed over all release lines; read from `https://www.drupal.org/api-d7/node.json?field_project_machine_name=<name>`). Sites that turn Update Status off aren't counted, so these are lower bounds and only good for comparing projects with each other. Drupal 12 support is from each project's newest stable release on packages.drupal.org.
+
+| Project | Sites | Newest stable | Drupal core |
+|---|---:|---|---|
+| Bootstrap5 (theme) | about 26,700 (19,077 on 4.0.x) | | |
+| UI Icons | about 14,200 | | |
+| Radix | about 12,200 (5,330 on 6.0.x) | 6.0.9 | ^10.3 \|\| ^11 \|\| ^12 |
+| UI Patterns (SDC in Drupal's UI) | about 9,200 (3,102 on 2.0.x) | 2.0.23 | ^10.6 \|\| ^11.3 \|\| ^12 |
+| Storybook (module) | about 7,950 | 1.0.4 | ^9 \|\| ^10 \|\| ^11 (**no Drupal 12**) |
+| Mercury | about 4,650 | 1.0.5 | ^11.3 (**no Drupal 12**) |
+| SDC Devel | about 2,300 | 1.0.3 | up to ^12 |
+| Emulsify | **about 840** (394 on the 7.x lines) | 7.3.1 | ^11.3 \|\| ^12 |
+| UI Suite Bootstrap | about 615 | 5.2.3 | ^11.3 \|\| ^12 |
+| SDC Styleguide | about 225 | 1.3.3 | >=10.3 |
+| Olivero (contrib, Drupal 12) | about 150 | | |
+
+**Emulsify (the author's question: how big is it since Drupal CMS?)**: small. About 840 sites, against about 12,200 for Radix, 26,700 for Bootstrap5 and 4,650 for Mercury, which only exists since Drupal CMS 2. Emulsify's usage history (to see a trend since Drupal CMS 1.0 in January 2025) is on drupal.org's usage page, which shows automated clients a login or CAPTCHA, so the trend is **to check by hand**: `https://www.drupal.org/project/usage/emulsify`. Either way, it isn't big enough to build the book on. Worth a paragraph in Chapter 2 as an example of a design-system toolchain (Storybook, Vite) and of toolchain churn (Webpack → Vite in 7.x).
+
+**Storybook**: the Storybook module (Lullabot, by Mateu Aguiló Bosch) adds `{% stories %}` and `{% story %}` Twig tags, so stories are written in Twig next to the component, and Storybook renders them through Drupal. About 7,950 sites is a lot more than Emulsify, which agrees with the author's sense that many people use Storybook. But it needs Storybook itself (Node, npm) running next to Drupal, and its newest release doesn't support Drupal 12 yet. SDC Styleguide shows components without Node, but few sites use it. **To try in the pilot** on the core theme, then decide (PROJECT-LOG, Decisions).
 
 ## 6. Native CSS instead of a preprocessor
 
@@ -91,10 +113,20 @@ How the book would make "come back in three years" work, when it does use npm:
 - An upgrade routine: `npm outdated`, read the changelogs for majors (Tailwind 3 → 4 changed configuration from `tailwind.config.js` to CSS `@theme`, to check), upgrade one tool at a time, rebuild, compare screenshots.
 - Record versions in `data/numbers.yml` so the book flags when they move.
 
+## 9. Error and maintenance pages (for Chapter 19)
+
+Read from Drupal 12.0.0-beta2's code on the core test site (2026-11-07), still to try on the site:
+
+- **403 and 404**: `CustomPageExceptionHtmlSubscriber` serves the pages set in Basic site settings (`system.site:page.403`, `page.404`); without them, `DefaultExceptionHtmlSubscriber` renders core's own page through the theme. The theme can target them with a page template suggestion (`page--system--404.html.twig`, to check with Twig debugging).
+- **401**: `DefaultExceptionHtmlSubscriber::on401()` exists, but for an HTML page an anonymous visitor without access usually gets a 403, not a 401; a 401 comes from HTTP authentication (basic_auth). To check what the reader can actually trigger.
+- **500**: `FinalExceptionSubscriber` writes "The website encountered an unexpected error. Try again later." without the theme; `includes/errors.inc` has the same text. So the theme can't style a real 500. What a site can do instead: a static error page from the web server (nginx/Apache `ErrorDocument`, and DDEV's), and the maintenance theme where Drupal uses it.
+- **Maintenance mode and the database-offline page**: `maintenance-page.html.twig` (core's Starterkit has one, in `templates/layout/`), and `$settings['maintenance_theme']` in `settings.php` to choose the theme that renders it (`drupal_maintenance_theme()` in `includes/bootstrap.inc`).
+- Fast 404 (`$config['system.performance']['fast_404']` in `settings.php`): a plain HTML 404 for missing files, which no theme reaches either.
+
 ## Open questions
 
 - [ ] The CMS site: same-name copy of Mercury, or `generate-theme --starterkit=mercury` with a new name? (Pilot chapter.)
-- [ ] The themes' machine names (`lens_trail`? `lens_and_trail`?) and human names.
-- [ ] Storybook: leave out, or show for the Mercury track only? Drupal has no built-in component preview; check the status of SDC-related preview modules (to check).
-- [ ] Radix and UI Suite: Drupal 12 status and toolchains.
+- [ ] Storybook: decide after the pilot (the author). Try the Storybook module on the core theme; compare SDC Styleguide.
+- [ ] Emulsify's usage trend since Drupal CMS (January 2025): check drupal.org's usage page by hand.
+- [ ] Radix and UI Suite: toolchains (Drupal 12 status is in the table).
 - [ ] When Mercury gets a Drupal 12 release, can the Mercury track move to Drupal 12?
