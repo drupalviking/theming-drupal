@@ -1,0 +1,15 @@
+.DS_Store
+PDF Exports
+
+# Obsidian: which notes are open, per person. Changes every time the vault is opened.
+.obsidian/workspace.json
+
+# Python venv for tools/ (Playwright, PyYAML)
+.venv/
+
+# The Mercury track's npm packages. package-lock.json is committed; the
+# packages are not (npm ci brings them back).
+node_modules/
+
+# Built slide decks (tools/slides.py, to come).
+slides/build/
