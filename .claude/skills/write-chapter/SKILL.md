@@ -56,6 +56,7 @@ Book 1's voice:
   PROJECT-LOG's Decisions. Until then, ask.
 - Teach the Drupal-specific part once (it's the same on both sites: info files, regions, libraries, Twig,
   preprocess, components, Canvas), and show only the styling where the two differ.
+- The design is the readers' too: any change to the design updates `design/lens-and-trail.penpot`, `design/tokens.json` and the SVG/PNG exports together.
 - Accessibility is part of every chapter, not a chapter at the end: WCAG 2.2 AA, keyboard and focus, contrast,
   reduced motion, real HTML elements. Check each component with the keyboard and a contrast checker.
 
@@ -72,6 +73,7 @@ Book 1's voice:
 - Test every step on its site: `tools/use-step.sh NN SS`, then look at the pages (curl, or the browser), check
   `ddev drush watchdog:show`, and turn on Twig development mode to check the suggestions the text names.
 - No placeholder names (`foo`, `my_theme`): name everything after the club's things (hike, album, card).
+- **Override as little as possible** (the author's rule). Before adding a template, a theme hook override or a preprocess function, try in this order: site building (view modes, display settings, block settings), CSS on the markup Drupal already gives, `attributes` and classes, one template for the most specific suggestion (`node--hike--card.html.twig`, never a blanket `node.html.twig` copy), a component called from that template, and only then preprocess or a hook override. Say in the text why the cheaper options weren't enough. Never mass-override templates or theme hooks: a hundred overrides is a fork of Drupal, not a theme.
 - `core_version_requirement`: `^11.3 || ^12` unless a chapter needs something newer (then say so).
 
 ## 6. Structure of a chapter

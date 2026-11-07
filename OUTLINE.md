@@ -7,7 +7,9 @@ The chapter-by-chapter plan for *Theming Drupal*, for the author to grill. Propo
 **In every chapter**: the opening says what state the two sites start in; every step is done on the core site (`lens_trail`, plain CSS) and on the Drupal CMS site (`lens_trail_cms`, Tailwind), in the format the pilot chapter decides; accessibility is checked as we go (keyboard, focus, contrast, reduced motion); a summary, exercises, and "Want to know more?".
 
 **Running threads**:
+- **Override as little as possible** (the author, 2026-11-07). Every template, theme hook or preprocess function a theme overrides is a copy the theme now owns: core and contrib fix bugs and accessibility problems in their version, and the theme's copy doesn't get the fixes. A theme with a hundred overrides is a fork of half of Drupal. The order to try things in: site building first (view modes, display settings, formatters, block settings: Book 1), then CSS on the markup Drupal already gives, then `attributes` and classes, then *one* template for a specific suggestion (`node--hike--card`, not `node`), then a component called from that template, and only then preprocess. Every chapter that adds an override says why the cheaper options weren't enough; Chapter 8 makes the case in full; Chapter 23 shows the cost at upgrade time.
 - **Design tokens.** One token file from Penpot (`design/tokens.json`, W3C DTCG format) is the source of every color, size and font. `tools/tokens.py` (Python, no npm) turns it into CSS custom properties for `lens_trail` and Tailwind's `@theme` for `lens_trail_cms`.
+- **The design is the readers' too** (the author, 2026-11-07). Everything from Chapter 3 is in the repository, under the book's CC BY-SA license: the Penpot file itself (`design/lens-and-trail.penpot`, Penpot's export format, to import into the reader's own free account), the tokens (`design/tokens.json`), and the wireframes as SVG and PNG, for readers who don't use Penpot at all. Every later change to the design ("Revisiting the design") updates all three.
 - **"Revisiting the design" boxes.** When a later chapter finds that a design decision from Chapter 3 doesn't work (a color that fails contrast in dark mode, a font size too small in Spanish), it changes the design in the open: Penpot, then tokens, then rebuild. That's how a real project changes course.
 - **Dark mode, reduced motion, forced colors, print, self-hosted variable fonts**: designed in Chapter 3, built in Chapter 6, and checked again in each chapter that adds something visual.
 
@@ -43,6 +45,7 @@ From `research/choosing-an-approach.md`.
 - Spacing, radius, shadows, breakpoints vs container sizes.
 - **Design tokens** in Penpot, exported as W3C DTCG JSON into `design/tokens.json`.
 - Wireframes: front page, a hike page, an album, the hikes list, the header and menu at three widths, the 404 page. Exported as SVG/PNG into `design/`.
+- Getting the design: importing `design/lens-and-trail.penpot` into your own Penpot account, or using the SVG/PNG and `tokens.json` without Penpot.
 - Motion: what moves and what doesn't (**reduced motion**).
 - **Print**: what a printed hike page needs (the meeting place, the date, a map link, no menu).
 - Box: **Using Figma?** The same with Figma Variables and a plugin, and what that costs.
@@ -88,6 +91,9 @@ From `research/choosing-an-approach.md`.
 - Preprocess: adding variables (a hike's "days until"), suggestions of your own (`hook_theme_suggestions_HOOK_alter()`).
 - Theme settings: a form in `theme-settings.php`, config schema, the dark mode default and the hero toggle as examples.
 - When to use preprocess and when Twig is enough.
+- **How much to override** (the author: be very clear about this). A theme that overrides a hundred theme hooks and templates is the wrong way to write a theme, however well each override works on its own. Why: every override is a copy that misses core's and contrib's fixes (security, accessibility, new features); upgrades turn into diffing a hundred files; contrib modules' markup stops matching their CSS and JS; other developers can't tell which markup is Drupal's and which is the theme's. A real-world story of a site moved to components with over a hundred overrides, and what it should have looked like (anonymized, unless the author wants to name it).
+- The checklist before overriding anything: can site building do it (Book 1)? Can CSS do it on the existing markup? Can `attributes` or a class do it? Is there a specific suggestion, so the override touches one case, not all? Can a component be called from one template instead of overriding many? Only then: preprocess, or a theme hook override.
+- Counting and auditing overrides: Twig debug's suggestions, listing a theme's templates and hooks, and comparing with Starterkit (an exercise on the club's theme).
 
 ### 9. Twig in Depth
 
@@ -211,6 +217,7 @@ The final pass over both finished themes (accessibility has been checked in ever
 ### 23. Keeping a Theme Up to Date
 
 - Core changes that reach themes (template changes, deprecations, Twig versions); reading change records.
+- What our overrides cost at upgrade time: going through every template and hook the theme overrides, and why the club's theme has few (Chapter 8).
 - Comparing our theme with a freshly generated Starterkit.
 - The CMS site: upgrading Tailwind, esbuild and the other npm packages years later, one at a time; Node versions in DDEV; what changed in Mercury.
 - Rebuilding when Book 1 changes (`data/book1.yml`).
