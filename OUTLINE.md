@@ -18,7 +18,7 @@ The chapter-by-chapter plan for *Theming Drupal*, for the author to grill. Propo
 ### 1. What a Theme Is, and What We'll Build
 
 - Picks up from Book 1's Chapter 16: what a theme does (markup, styles, scripts, templates) and what it doesn't (content, structure, functionality).
-- The two sites from Book 1, and how this book's test sites are rebuilt from them (`tools/setup.sh`, in plain words; the details in an appendix or the README).
+- The two sites from Book 1. **Starting here without Book 1?** `tools/setup.sh` fetches Book 1 and builds both sites as Book 1 leaves them (the author, 2026-11-07: the build script is for everybody); the details in Appendix C.
 - A tour of the finished themes on both sites: header, menus, hero, hike page, gallery, 404, dark mode, print.
 - What the reader needs: Book 1's knowledge, basic HTML and CSS, a code editor, DDEV. No Node on the core site.
 - Coming from WordPress? Classic themes, block themes and `theme.json`, and what's similar.
@@ -37,7 +37,7 @@ From `research/choosing-an-approach.md`.
 
 - Claude drafts a brief and options; the author picks.
 - The brief: who visits the club's site, what they need first (the next hike, how to join, photos), the feeling (outdoors, photography, Edinburgh).
-- **Penpot**: an account (or self-hosted), a project, pages for the wireframes.
+- **Penpot**: creating a free account step by step (the author doesn't have one either: the book shows it from the start), a project, pages for the wireframes. Self-hosting mentioned.
 - Color: the club's green `#1f6f5c` from Book 1, a palette around it, contrast checked for light and **dark mode**; **forced colors** in mind.
 - Type: a self-hosted **variable font** (openly licensed), a type scale, line length.
 - Spacing, radius, shadows, breakpoints vs container sizes.
@@ -220,4 +220,4 @@ The final pass over both finished themes (accessibility has been checked in ever
 
 - **A. Twig reference**: the syntax, Drupal's filters and functions, and the variables of the templates the book touches.
 - **B. Answers to the advanced exercises.**
-- **C. How the test sites are built** (maybe): Book 1's export and this book's `tools/setup.sh`, for readers and teachers who want their own copy.
+- **C. Building the Sites Without Book 1**: for readers who start with this book, and for teachers. What `tools/setup.sh` needs (DDEV, Git), what it does (Book 1's export, `site:install --existing-config`, the content recipe), how long it takes, and what to do when it fails.

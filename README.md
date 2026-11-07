@@ -74,7 +74,7 @@ python3 tools/build.py
 
 ### The test sites
 
-The themes are tested on two DDEV sites, rebuilt from Book 1's finished sites. Book 1 exports them into its `sites/` folder (its `tools/export-sites.sh`: Composer files, configuration, and content as a recipe), and this book pins the Book 1 commit it builds on in `data/book1.yml`. Separate sites mean the two books never break each other's screenshots.
+The themes are tested on two DDEV sites, rebuilt from Book 1's finished sites. **Readers can do the same, without having worked through Book 1**: `tools/setup.sh` needs only DDEV and Git, clones Book 1 next to this folder if it isn't there, and makes the two sites next to this folder too. Book 1 exports them into its `sites/` folder (its `tools/export-sites.sh`: Composer files, configuration, and content as a recipe), and this book pins the Book 1 commit it builds on in `data/book1.yml`. Separate sites mean the two books never break each other's screenshots.
 
 ```bash
 tools/setup.sh                 # build lens-and-trail-theme and lens-and-trail-cms-theme from Book 1
@@ -119,7 +119,7 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | 23. Keeping a Theme Up to Date | Proposed. |
 | Appendix A. Twig Reference | Proposed. |
 | Appendix B. Answers to the Advanced Exercises | Proposed. |
-| Appendix C. How the Test Sites Are Built | Maybe. |
+| Appendix C. Building the Sites Without Book 1 | Proposed. For readers who start here, and for teachers. |
 
 Chapter numbers will be checked once, at the end, together with every cross-reference.
 

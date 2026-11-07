@@ -21,8 +21,10 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 REPO=$(pwd)
 
-CORE_DIR=${CORE_DIR:-$HOME/websites/open-university/lens-and-trail-theme}
-CMS_DIR=${CMS_DIR:-$HOME/websites/open-university/lens-and-trail-cms-theme}
+# The sites tools/setup.sh makes, next to this book's folder.
+BASE=${BASE:-$(dirname "$REPO")}
+CORE_DIR=${CORE_DIR:-$BASE/lens-and-trail-theme}
+CMS_DIR=${CMS_DIR:-$BASE/lens-and-trail-cms-theme}
 
 if [[ $# -lt 2 ]]; then
   echo "Usage: tools/use-step.sh <chapter> <step> [--no-default]" >&2

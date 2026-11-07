@@ -3,10 +3,17 @@
 #
 # Usage: tools/setup.sh [core|cms]     (both when no argument)
 #
-#   Book 1's sites/core/  ->  ~/websites/open-university/lens-and-trail-theme
-#   Book 1's sites/cms/   ->  ~/websites/open-university/lens-and-trail-cms-theme
+# You don't need to have worked through Book 1: this script fetches it.
+# The sites are made next to this book's folder:
 #
-# Book 1 (../developing-open-sourced-web-software-with-drupal) exports its
+#   Book 1's sites/core/  ->  ../lens-and-trail-theme      (Drupal core)
+#   Book 1's sites/cms/   ->  ../lens-and-trail-cms-theme  (Drupal CMS)
+#
+# What you need: DDEV (with Docker or another container runtime it supports),
+# Git, and an internet connection. Building both sites takes a while: Composer
+# downloads Drupal and the modules twice.
+#
+# Book 1 (Developing Open Sourced Web Software with Drupal) exports its
 # finished sites with its tools/export-sites.sh: the codebase (Composer files
 # and patches), the configuration, and the content as a recipe. This script
 # rebuilds a site from that export:
@@ -21,8 +28,15 @@
 # Which version of Book 1: data/book1.yml pins a commit of Book 1's repository,
 # so a change in Book 1 never changes this book's sites by surprise. To move to
 # a newer Book 1, change the commit there, delete the sites and run this again.
-# BOOK1_REF=WORKTREE uses Book 1's working copy instead (for testing an export
-# before it's committed).
+#
+# Where Book 1 comes from: a copy of Book 1's repository next to this book's
+# folder (../developing-open-sourced-web-software-with-drupal) if there is one;
+# otherwise it's cloned from data/book1.yml's url: into that place.
+#
+# For the authors:
+#   BOOK1_REF=WORKTREE  use Book 1's working copy, not the pinned commit
+#                       (to test an export before it's committed)
+#   BASE=/some/folder   make the sites somewhere else
 #
 # An existing site is left alone: delete it first to rebuild it
 # (ddev delete -O <name>, then remove the folder). Log in with admin / 12345.
@@ -30,12 +44,42 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 REPO=$(pwd)
-BASE=${BASE:-$HOME/websites/open-university}
+BASE=${BASE:-$(dirname "$REPO")}
 BOOK1=${BOOK1:-$BASE/developing-open-sourced-web-software-with-drupal}
-if [[ -z "${BOOK1_REF:-}" ]]; then
-  # The value of "ref:", without quotes or a trailing comment.
-  BOOK1_REF=$(sed -n 's/^ref: *//p' data/book1.yml | sed 's/ *#.*//' | tr -d "'\"")
+
+# A value from data/book1.yml, without quotes or a trailing comment.
+book1_setting() {
+  sed -n "s/^$1: *//p" data/book1.yml | sed 's/ *#.*//' | tr -d "'\""
+}
+BOOK1_REF=${BOOK1_REF:-$(book1_setting ref)}
+
+for tool in ddev git; do
+  if ! command -v "$tool" >/dev/null; then
+    echo "This script needs $tool. See Book 1's Chapter 4, or https://ddev.com." >&2
+    exit 1
+  fi
+done
+
+# Book 1's repository: use a copy that's there, or clone it. A copy that
+# doesn't have the pinned commit yet is fetched.
+if [[ ! -d "$BOOK1/.git" ]]; then
+  echo "== Cloning Book 1 into $BOOK1"
+  git clone "$(book1_setting url)" "$BOOK1"
 fi
+if [[ "$BOOK1_REF" != WORKTREE ]] && ! git -C "$BOOK1" cat-file -e "$BOOK1_REF^{commit}" 2>/dev/null; then
+  git -C "$BOOK1" fetch --all --quiet
+  if ! git -C "$BOOK1" cat-file -e "$BOOK1_REF^{commit}" 2>/dev/null; then
+    echo "Book 1's repository ($BOOK1) has no commit $BOOK1_REF, the one data/book1.yml asks for." >&2
+    echo "If you're an author: has it been pushed? Otherwise, please report it." >&2
+    exit 1
+  fi
+fi
+
+# sed -i works differently on macOS and Linux; this works on both.
+replace_in() {
+  local file=$1 expression=$2
+  sed "$expression" "$file" > "$file.tmp" && mv "$file.tmp" "$file"
+}
 
 build_site() {
   local name=$1 project=$2
@@ -78,7 +122,7 @@ build_site() {
 
   cd "$dir"
   # Book 1's DDEV settings (PHP version, database...), under this project's name.
-  sed -i '' "s/^name: .*/name: $project/" .ddev/config.yaml
+  replace_in .ddev/config.yaml "s/^name: .*/name: $project/"
   ddev start
   ddev composer install --no-interaction
 
@@ -99,7 +143,7 @@ SETTINGS
   # so the rebuild installs it with Minimal, which has none. The only visible
   # difference: the Status report says "Minimal" as the install profile.
   if grep -q "^profile: standard" config/sync/core.extension.yml; then
-    sed -i '' 's/^profile: standard$/profile: minimal/; s/^  standard: 1000$/  minimal: 1000/' config/sync/core.extension.yml
+    replace_in config/sync/core.extension.yml 's/^profile: standard$/profile: minimal/; s/^  standard: 1000$/  minimal: 1000/'
   fi
   ddev drush site:install --existing-config -y \
     --account-name=admin --account-pass=12345
@@ -120,7 +164,7 @@ SETTINGS
   ddev drush cache:rebuild
   ddev snapshot --name=start
   cd "$REPO"
-  echo "Ready: https://$project.ddev.site (admin / 12345; DDEV snapshot 'start' is Book 1's final state)"
+  echo "Ready: $(ddev describe "$project" -j | sed -n 's/.*"primary_url": *"\([^"]*\)".*/\1/p' | head -1) (admin / 12345; DDEV snapshot 'start' is Book 1's final state)"
 }
 
 case "${1:-both}" in

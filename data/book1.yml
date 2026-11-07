@@ -7,5 +7,7 @@
 # lens-and-trail-cms-theme), run tools/setup.sh, put the theme back with
 # tools/use-step.sh, and check that every chapter's pages still look right.
 
-repository: ../developing-open-sourced-web-software-with-drupal
+# Book 1's public repository. tools/setup.sh clones it next to this book's
+# folder if there's no copy there yet.
+url: https://github.com/drupalviking/developing-open-sourced-web-software-with-drupal.git
 ref: '223b3ca'  # Book 1, chore/export-site-recipe: "Chapter 15: hikes led by admin get Jordi" (2026-11-07)
