@@ -26,7 +26,7 @@ Same as Book 1 and the module book.
 - **The author** (Hilmar Kári Hallbjörnsson) decides what goes in, reviews every chapter, and pushes and merges. Claude drafts, builds, tests, and commits.
 - **One chapter at a time.** Before drafting a chapter, Claude asks the author questions about what to include and leave out ("grilling"); the author asked for many questions where they're vague. The author reviews the draft before the next chapter starts.
 - **Branches**: one branch per unit of work, created only after the author says yes in the conversation. Claude never commits to `main`, pushes, opens pull requests, or merges.
-- **No Claude attribution** in commit messages (no `Co-Authored-By` or "Generated with" lines), as in Book 1 (the author, 2026-11-07).
+- **Claude may be attributed** in commit messages with a `Co-Authored-By` line (the author, 2026-11-08; first decided against, as in Book 1, on 2026-11-07).
 - **Chapter numbers and cross-references** are checked once, at the end.
 
 ## Decisions
