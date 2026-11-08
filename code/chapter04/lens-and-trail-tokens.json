@@ -32,7 +32,8 @@
         },
         "700": {
           "$value": "#1f6f5c",
-          "$type": "color"
+          "$type": "color",
+          "$description": "The club's green, from Book 1"
         },
         "800": {
           "$value": "#184d40",
@@ -344,7 +345,8 @@
       },
       "action": {
         "$value": "{color.green.700}",
-        "$type": "color"
+        "$type": "color",
+        "$description": "Links, buttons, focus rings"
       },
       "on-action": {
         "$value": "{color.neutral.0}",
@@ -392,7 +394,8 @@
       },
       "action": {
         "$value": "{color.green.400}",
-        "$type": "color"
+        "$type": "color",
+        "$description": "Links, buttons, focus rings"
       },
       "on-action": {
         "$value": "{color.neutral.950}",
