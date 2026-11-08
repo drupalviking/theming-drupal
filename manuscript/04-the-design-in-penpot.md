@@ -6,7 +6,7 @@ This chapter puts the design into **Penpot**, a free and open source design tool
 
 You don't need to have used a design tool before. We hadn't used Penpot either when we started this chapter, and we'll go slowly, one click at a time. Nothing in this chapter changes the two sites: they still run Olivero and Mercury, as Book 1 left them. The next chapter generates the themes, and the tokens from this chapter are where their colors and sizes come from.
 
-%% Author: written as we go (2026-11-08). Done so far: the file, the tokens and the fonts. Still to come: the hike card component, the hike page on a phone, the other wireframes, exporting, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
+%% Author: written as we go (2026-11-08). Done so far: the file, the tokens, the fonts and the hike card. Still to come: the hike page on a phone, the other wireframes, exporting, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
 
 ## Penpot
 
@@ -156,4 +156,122 @@ We did try uploading our own copies first, because the themes will use those fil
 ![Penpot's Fonts page after choosing BricolageGrotesque[opsz,wdth,wght].ttf: one font added, shown as Regular, with an empty space where the family name should be, and Upload and Dismiss buttons](images/04-font-upload-variable.png)
 *Figure 4.13: Penpot reads a variable font as one style without a name. We clicked Dismiss all, and uploaded nothing.*
 
-%% Author: next sections (to come): the hike card component, the hike page on a phone, the other wireframes, exporting `design/tokens.json` and the Penpot file. %%
+## The hike card
+
+Now the tokens get used. The first thing we draw is the **hike card** from Chapter 3: the photo, the date, the title, the badges, a teaser and the area. It's the club's most used piece (the front page, the hikes list, the sidebar and the archive all show hikes as cards), so it becomes a **component**: a piece drawn once and reused everywhere, where a change to the original changes every copy. That's the same idea as the Drupal components we'll build later in the book, and the card in Penpot is their blueprint.
+
+### A page for components
+
+A Penpot file can have several **pages**, like a sketchbook. The club's file will have one for components and one for each group of wireframes.
+
+1. In the left panel, click **Layers**. At the top is the list of **Pages**, with one page, named after the file.
+2. Double-click the page's name, type `Components` and press **Enter**.
+
+### A board with a layout
+
+Everything on a Penpot page sits on a **board**: a frame with a size, like an artboard in other tools. A board can arrange what's inside it with a **layout**, and a **flex layout** is the same idea as CSS flexbox: the things inside it go in a row or a column, with a gap between them, and the board can grow to fit them. Drawing with flex layouts is a little slower than placing things by hand, but it's how the card will behave in the browser, so what you see in Penpot is close to what you'll get.
+
+1. In the toolbar at the top of the canvas, click the **Board** tool (the square with corner marks), or press **B**.
+2. Drag a board on the canvas. Then, in the **Design** panel on the right, set **W** to `328` and **H** to `450`. 328 pixels is a 360-pixel phone minus the page's side margins (`space.s`, 16 pixels on each side). The height doesn't matter, because the card will soon fit its content.
+3. In the **Layers** list, double-click the board's name, and name it `Hike card`.
+4. In the **Design** panel, click **+** next to **Layout**, and choose **Flex layout**. Then click the downward arrow in the layout's direction buttons, so the things inside go in a **column**.
+
+### The photo
+
+The card's photo is Book 1's photo of the hike: Turnhouse Hill across Glencorse Reservoir, by dave souza, under CC BY-SA 4.0. It's in Book 1's repository as `examples/photos/turnhouse-hill-glencorse.jpg`.
+
+1. With the card selected, click the **Image** tool in the toolbar (or press **Shift+K**), and choose the photo. Penpot puts it inside the card, at its full size, which is much too big.
+2. In the **Design** panel, click the lock next to **W** and **H**, so the two can change separately. Then set **W** to `328` and **H** to `219`: the club's 3:2 shape (Chapter 3). Penpot crops the photo to fill the shape rather than squashing it.
+3. Name the layer `Photo`.
+
+![The Hike card board in Penpot with the photo of Glencorse Reservoir at the top, 328 by 219 pixels, and an empty white area below; the Layers list shows Hike card with Photo inside it](images/04-card-photo.png)
+*Figure 4.14: The photo, cropped to 3:2.*
+
+### The text, and its spacing
+
+Below the photo, the card's text needs some space around it and between its lines. That's a second board inside the card, with a layout of its own.
+
+1. Choose the **Board** tool again, and drag a board inside the card, below the photo. Penpot puts it in the card's layout, after the photo. Name it `Body`.
+2. Give it a **Flex layout** too, in a **column**.
+3. Under **Flex element** in the **Design** panel, set its width to **Fill** (the arrows pointing outwards), so it's always as wide as the card, and its height to **Fit content**.
+
+Now the spacing, from the tokens. In the club's design, the inside of a card has `space.s` (16 pixels) around it and `space.2xs` (8 pixels) between its parts.
+
+1. With `Body` selected, open the **Tokens** tab and click the `values` set, to see its tokens.
+2. Under **Spacing**, **right-click** `s`. Penpot shows everything a spacing token can be used for: gaps, paddings and margins.
+3. Under **Paddings**, choose **All**.
+4. Right-click `2xs`, and choose **Row Gap**.
+
+![The menu for the space.s token: Column Gap and Row Gap, Paddings (All, Horizontal, Vertical, Padding top, right, bottom and left), Margins (the same), and Edit token, Duplicate token, Copy token path and Delete token](images/04-token-padding-menu.png)
+*Figure 4.15: Right-click a token to choose what it's used for.*
+
+In the **Design** panel, the padding and the gap now show their values in a little outlined box: that's Penpot's sign that the value comes from a token. Hover over a token in the Tokens tab, and Penpot shows its name, its value, and its resolved value.
+
+![The Tokens tab with the s token highlighted, and a tooltip over 2xs: Name space.2xs, Original value 8, Resolved value 8; on the right, the Body board's paddings are 16 in outlined boxes](images/04-token-padding-applied.png)
+*Figure 4.16: The paddings come from `space.s`. A value from a token is outlined.*
+
+Now the first piece of text, the date:
+
+1. Choose the **Text** tool (**T**), and drag a text box inside `Body`. Wait for the blinking cursor before you type.
+2. Type `Sat 21 November · 9:30`, then press **Escape**. Name the layer `Date`.
+3. With the text selected, apply its tokens by **clicking** them (a click uses a token for the most likely property, and for a font token on a text, that's the font):
+   - in the `values` set: `font.family.body` and `font.weight.bold`;
+   - in the `light` set: right-click `color.muted` and choose **Fill** (a text's color is its fill);
+   - in the `phone` set: `font.size.step--1`.
+
+> **Watch the number keys.** With something selected on the canvas, Penpot reads the number keys as a shortcut for opacity: **2** makes it 20% opaque, **5** 50%, **0** 100%. If you start typing a date before the text box is ready, the board you're in may turn pale. It happened to us. If something looks faded, look at the **%** next to **Normal** at the top of the **Design** panel.
+
+The other texts are made the same way, each with a font, a size, a weight and a color from the tokens:
+
+| Layer | Text | Font | Size | Weight | Color |
+|---|---|---|---|---|---|
+| `Date` | Sat 21 November · 9:30 | `font.family.body` | `step--1` | `bold` | `color.muted` |
+| `Title` | Turnhouse Hill and Carnethy Hill | `font.family.heading` | `step-2` | `semibold` | `color.text` |
+| `Teaser` | Two summits of the Pentlands from Flotterstone car park. | `font.family.body` | `step--1` | `regular` | `color.muted` |
+| `Area` | Turnhouse Hill | `font.family.body` | `step--1` | `bold` | `color.muted` |
+
+Set each text's width to **Fill** under **Flex element**, so long titles wrap inside the card instead of running out of it.
+
+The two **badges** (difficulty and distance) are small boards of their own: a text in a board with a flex layout, a `color.tint` fill, `color.on-tint` text, a `radius.round` corner, `space.xs` padding at the sides and `space.3xs` at the top and bottom. Both go in a board called `Badges`, a row with a `space.2xs` gap, between the title and the teaser. To put a text in a board of its own, select it, right-click, and choose **Selection to board**.
+
+Last, the card itself: a `color.surface` fill, a `border.thin` stroke in `color.border` (right-click the color token and choose **Stroke**), a `radius.medium` corner, **Clip content** on, so the photo's corners are rounded too, and its height set to **Fit content**, so it's always as tall as what's in it.
+
+%% Author: the steps up to the date were done by hand in Penpot, as written. The rest of the card (title, badges, teaser, area, and the card's own fill, stroke, corner and clipping) was built through Penpot's MCP server with the same properties and tokens; walk them by hand once more before the chapter is final, to check the clicks. The difficulty icon is "▲▲" in text for now; the Lucide icon comes with the icons. Chapter 3 says a photo's credit is shown even on a card, but its card figure has none: where does the credit go on the card (over the photo's corner, or in small type under it)? %%
+
+![The finished hike card in Penpot with the Hike card board selected: the photo, the date, the title in Bricolage Grotesque, the Moderate and 11.5 km badges, the teaser and the area. The Layers list shows Photo and Body, with Date, Title, Badges, Teaser and Area inside Body; the Design panel shows the fill color.surface as a token](images/04-card-tokens.png)
+*Figure 4.17: The hike card. Every color, size and space in it is a token.*
+
+### A component, and a variant
+
+1. Select the `Hike card` board in the **Layers** list.
+2. Press **Ctrl+K** (**Cmd+K** on a Mac).
+
+The board's icon in the Layers list changes to a diamond, and the **Design** panel gets a **Component** section that says *Main*: this is the **main component**, the original. Copies of it, which Penpot calls **instances**, follow every change you make here. You'll find the component in the **Assets** tab, ready to drag onto the wireframes.
+
+![The Hike card as a component: a diamond icon next to its name in the Layers list, and a Component section in the Design panel, marked Main, with the name Hike card](images/04-card-component.png)
+*Figure 4.18: The card is now a component.*
+
+Chapter 3 gave the card two layouts: the photo on top in a narrow space, and the photo beside the text when the card's container is at least 30 rem (480 pixels) wide. In Penpot, two versions of a component are **variants**.
+
+1. In the **Component** section, click the menu (**⋮**) next to the component's name, and choose **Create variant**.
+
+![The component menu open: Show in assets panel, Create annotation and Create variant](images/04-component-menu.png)
+*Figure 4.19: Creating a variant.*
+
+Penpot puts the card and a copy of it in a new board with a purple outline, the **variant group**, and gives the copy a property: *Property 1*, with the value *Value 2*.
+
+![The variant group: two identical hike cards side by side in a board with a purple outline, a plus button on its right edge, and in the Design panel, Component Variant, Property 1 and Value 2](images/04-card-variant.png)
+*Figure 4.20: Two variants, not different yet.*
+
+2. Rename the property to `Layout`, and give the two variants the values `Photo on top` and `Photo beside`.
+3. Make the second one different: select it, set its layout's direction to a **row**, its width to `600`, and its photo to `240` by `160` (3:2 again).
+
+![The two variants of the hike card: on the left, the photo on top of the text; on the right, a wider card with the photo on the left and the date, title, badges, teaser and area beside it](images/04-hike-card-variants.png)
+*Figure 4.21: The hike card's two variants, Photo on top and Photo beside.*
+
+> **Try it:** Choose **Dark** in the Themes menu, and look at the card. Nothing in it was drawn twice: every color is a role, and the roles point at the dark values now.
+
+![The same two variants in dark mode: a dark brown card, light text, the title in near-white, and the badges dark sandstone with light text](images/04-hike-card-dark.png)
+*Figure 4.22: The same card with the Dark theme. That's what the two tiers of tokens are for.*
+
+%% Author: next sections (to come): the hike page on a phone, the other wireframes, exporting `design/tokens.json` and the Penpot file. %%
