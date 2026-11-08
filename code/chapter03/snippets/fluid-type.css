@@ -1,14 +1,14 @@
 /*
  * The club's type scale: each step grows smoothly from its size at 360px
  * wide (body text 17px, ratio 1.2) to its size at 1280px (18px, ratio 1.25).
- * In Chapter 5, tools/tokens.py writes these lines from design/tokens.json.
+ * In Chapter 5, scripts/tokens.py writes these lines from design/tokens.json.
  */
 :root {
-  --step--1: clamp(0.885rem, 0.880rem + 0.025vw, 0.900rem);
-  --step-0: clamp(1.063rem, 1.038rem + 0.109vw, 1.125rem);
-  --step-1: clamp(1.275rem, 1.224rem + 0.228vw, 1.406rem);
-  --step-2: clamp(1.530rem, 1.441rem + 0.396vw, 1.758rem);
-  --step-3: clamp(1.836rem, 1.695rem + 0.628vw, 2.197rem);
-  --step-4: clamp(2.203rem, 1.991rem + 0.945vw, 2.747rem);
-  --step-5: clamp(2.644rem, 2.335rem + 1.373vw, 3.433rem);
+  --font-size-step--1: clamp(0.886rem, 0.880rem + 0.025vw, 0.900rem);
+  --font-size-step-0: clamp(1.062rem, 1.038rem + 0.109vw, 1.125rem);
+  --font-size-step-1: clamp(1.275rem, 1.224rem + 0.228vw, 1.406rem);
+  --font-size-step-2: clamp(1.530rem, 1.441rem + 0.396vw, 1.758rem);
+  --font-size-step-3: clamp(1.836rem, 1.695rem + 0.628vw, 2.197rem);
+  --font-size-step-4: clamp(2.203rem, 1.990rem + 0.946vw, 2.747rem);
+  --font-size-step-5: clamp(2.644rem, 2.335rem + 1.373vw, 3.433rem);
 }

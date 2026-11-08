@@ -88,3 +88,18 @@ numbers:
     value: '26'
     label: Node.js, newest LTS line (LTS since 2026-10-28, supported to 2029-04-30, per endoflife.date); what the Mercury track pins in DDEV's nodejs_version
     source: https://endoflife.date/nodejs
+
+  light_dark_newly:
+    value: 'May 2024'
+    label: CSS light-dark(), Baseline newly available (2024-05-13, web-features baseline_low_date; Chrome 123, Firefox 120, Safari 17.5)
+    source: https://developer.mozilla.org/en-US/docs/Web/CSS/color_value/light-dark
+
+  light_dark_widely:
+    value: 'November 2026'
+    label: CSS light-dark(), Baseline widely available (30 months after newly available, 2026-11-13; web-features had no baseline_high_date yet on 2026-11-08)
+    source: https://webstatus.dev/features/light-dark
+
+  drupal_12_version:
+    value: '12.0.0-beta2'
+    label: Drupal 12, the version the core test site runs (not stable yet)
+    source: https://www.drupal.org/project/drupal/releases

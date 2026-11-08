@@ -69,6 +69,7 @@ LANGUAGES = {
     ".twig": "twig",
     ".sh": "bash",
     ".php": "php",
+    ".py": "python",
     ".theme": "php",
     ".module": "php",
     ".css": "css",
@@ -104,13 +105,16 @@ def display_path(path: Path) -> str:
 
     code/chapterNN/steps/NN-name/<site>/<theme>/... loses everything up to
     the theme; <site> is core or cms. code/chapterNN/snippets/... loses
-    code/chapterNN/snippets/.
+    code/chapterNN/snippets/. code/chapterNN/scripts/... becomes scripts/...,
+    the folder in the reader's own project.
     """
     parts = path.relative_to(ROOT).parts
     if len(parts) > 5 and parts[0] == "code" and parts[2] == "steps" and parts[4] in ("core", "cms"):
         return "/".join(parts[5:])
     if len(parts) > 3 and parts[0] == "code" and parts[2] == "snippets":
         return "/".join(parts[3:])
+    if len(parts) > 3 and parts[0] == "code" and parts[2] == "scripts":
+        return "/".join(parts[2:])
     return "/".join(parts)
 
 
@@ -140,7 +144,30 @@ def extract_yaml_key(lines: list[str], key: str, path: Path) -> list[str]:
     raise BuildError(f"No top-level key {key} in {path.name}")
 
 
+def extract_python_function(lines: list[str], name: str, path: Path) -> list[str]:
+    signature = re.compile(rf"^(\s*)def\s+{re.escape(name)}\s*\(")
+    for index, line in enumerate(lines):
+        match = signature.match(line)
+        if not match:
+            continue
+        indent = len(match.group(1))
+        start = index
+        while start > 0 and lines[start - 1].strip().startswith("@"):
+            start -= 1
+        end = index + 1
+        while end < len(lines) and (
+            not lines[end].strip() or len(lines[end]) - len(lines[end].lstrip()) > indent
+        ):
+            end += 1
+        while lines[end - 1].strip() == "":
+            end -= 1
+        return dedent(lines[start:end])
+    raise BuildError(f"No function {name}() in {path.name}")
+
+
 def extract_function(lines: list[str], name: str, path: Path) -> list[str]:
+    if path.suffix == ".py":
+        return extract_python_function(lines, name, path)
     signature = re.compile(rf"^(\s*)(?:(?:public|protected|private|static|final|abstract)\s+)*function\s+{re.escape(name)}\s*\(")
     for index, line in enumerate(lines):
         match = signature.match(line)
