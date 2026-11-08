@@ -54,6 +54,17 @@ SHOTS = {
         ("dark", "06-front-after-dark", "cms", "/", 1280, 1000, False),
         ("dark", "06-join-after-dark", "cms", "/join", 1280, 1000, False),
     ],
+    "07": [
+        ("before", "07-hike-before", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 1000, False),
+        ("before", "07-front-before", "core", "/", 1280, 1000, False),
+        ("regions", "07-block-layout", "core", "/admin/structure/block", 1280, 1500, True),
+        ("demonstrate", "07-demonstrate-regions", "core", "/admin/structure/block/demo/lens_trail", 1280, 1000, True),
+        ("after", "07-hike-after", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 1000, False),
+        ("after", "07-front-after", "core", "/", 1280, 1000, False),
+        ("after", "07-join-after", "core", "/join", 1280, 900, False),
+        ("after", "07-hike-after-phone", "core", "/hikes/glencorse-reservoir-winter-loop", 360, 740, False),
+        ("hero", "07-front-hero", "core", "/", 1280, 700, False),
+    ],
 }
 
 

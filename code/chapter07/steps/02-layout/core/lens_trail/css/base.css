@@ -1,0 +1,46 @@
+/*
+ * The club's first rules: the page's colors, fonts and sizes, from the
+ * design tokens in tokens.css. The CSS architecture comes in a later chapter.
+ */
+
+/* Light or dark, as the visitor's system is set: light-dark() follows this. */
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-step-0);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-family-heading);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--font-size-step-5);
+}
+
+h2 {
+  font-size: var(--font-size-step-3);
+}
+
+h3 {
+  font-size: var(--font-size-step-2);
+}
+
+a {
+  color: var(--color-action);
+}
+
+/* A photo is never wider than the space it's in. */
+img {
+  max-width: 100%;
+  height: auto;
+}
