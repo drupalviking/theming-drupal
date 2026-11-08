@@ -402,8 +402,10 @@ Two more components came out of them, on the `Components` page: the **Header** a
 
 The hikes list at 800 pixels is there for one reason: the cards. At 800 pixels the list still has one card in a row (three in a row only come at 64 rem, 1024 pixels), and each card's container is 768 pixels wide, more than the 30 rem (480 pixels) from Chapter 3, so the card uses its **Photo beside** variant. That's a container query, decided in the design: the card asks how much room it has, not how wide the window is.
 
-![The hikes list at 800 pixels: Upcoming hikes, a Difficulty filter with an Apply button, and four hike cards in one column, each with its photo on the left and its text on the right](images/04-hikes-list-800.png)
+![The hikes list at 800 pixels: Upcoming hikes, a Difficulty filter with an Apply button, and four hike cards in one column, each with its photo on the left and its text on the right; North Berwick Law and the harbour has the default photo, the club's logo on light sandstone](images/04-hikes-list-800.png)
 *Figure 4.29: At 800 pixels, one column of cards, with their photos beside the text.*
+
+One of the club's hikes, *North Berwick Law and the harbour*, has no photo in Book 1. A card with a hole in it looks broken, so the design has a **default photo** for it: the club's logo in `color.on-tint` on `color.tint`, with no credit, because there's nobody to credit. It's a component on the `Components` page, `Default photo`, and it's in the book's repository as `design/default-photo.svg`, an image the site can show when a hike has none. In Penpot, a copy of the hike card can't take a new layer inside it, so the North Berwick cards show the default photo as the image of their `Photo` layer, the way the site would show an image file.
 
 The Spanish hike page is a copy of the English one with Book 1's Spanish texts in it, and it found the first thing the design has to make room for: Drupal's Spanish date (*sábado, 21 de noviembre de 2026, a las 09:30*, Book 1's format) takes two lines on a phone where the English one takes one, and *Estacionamiento de Flotterstone* wraps in its box. Both still fit, which is the point of checking.
 
@@ -419,13 +421,13 @@ A **style tile** is one board with the design's parts side by side, without a pa
 
 There's one style tile, not two. Tokens follow the theme that's active for the whole file, so the dark style tile is the same board, exported with **Dark** chosen in the Themes menu.
 
-![The style tile in light mode: the logo and Lens & Trail, eleven color swatches from background to on-tint, the type samples Photos and hikes around Edinburgh and ¿Quién se apunta a la excursión?, body text, a credit and a link, a Join the club button, a Menu button, four badges, a focused button with its outline, a hike card with the photo beside, and the spacing scale as bars](images/04-style-tile-light.png)
+![The style tile in light mode: the logo and Lens & Trail, eleven color swatches from background to on-tint, the type samples Photos and hikes around Edinburgh and ¿Quién se apunta a la excursión?, body text, a credit and a link, a Join the club button, a Menu button, four badges, a focused button with its outline 2 pixels away from it, a hike card with the photo beside, and the spacing scale as bars](images/04-style-tile-light.png)
 *Figure 4.32: The style tile, Light.*
 
 ![The same style tile in dark mode: near-black background, light text, a light green button with dark text, dark sandstone badges, and the card on a dark raised surface](images/04-style-tile-dark.png)
 *Figure 4.33: The same board, Dark.*
 
-%% Author: the other wireframes, the Header and Footer components and the style tile were built through Penpot's MCP server (2026-11-08), with the same tokens and components, and exported as PNG at 1x into `design/wireframes/` (19 files, 11 MB). Choices to check: the content on them (teasers of the other hikes, the footer's "Meet us" heading, the 404's wording "You're a little off the trail", the dark mode toggle as Light · Dark · Auto in the menu and a round button with a placeholder circle in the wide header, the language switcher as "English · Español"); North Berwick has no photo in Book 1, so its card shows a grey box; the focus outline on the style tile has no 2-pixel gap (`size.focus-offset`) yet. %%
+%% Author: the other wireframes, the Header and Footer components and the style tile were built through Penpot's MCP server (2026-11-08), with the same tokens and components, and exported as PNG at 1x into `design/wireframes/` (19 files, 11 MB). Choices to check: the content on them (teasers of the other hikes, the footer's "Meet us" heading, the 404's wording "You're a little off the trail", the dark mode toggle as Light · Dark · Auto in the menu and a round button with a placeholder circle in the wide header, the language switcher as "English · Español"); North Berwick's cards show the default photo (the author, 2026-11-08: a hike without a photo gets a default, which is Book 1's to set up on the site); the focus outline on the style tile is a frame with `size.focus-offset` as its padding and the 3-pixel outline as its stroke, as CSS's `outline-offset` would draw it, with a 6-pixel radius (no token: 4 plus the 2-pixel gap). %%
 
 ## Taking the design out of Penpot
 
@@ -508,6 +510,7 @@ You don't need Penpot for the rest of the book. If you'd rather not make an acco
 | `design/wireframes/` | Every page as a PNG at 1x, and the style tile in light and dark | You, while building the themes: open the page you're working on next to the browser |
 | `design/lens-and-trail.penpot` | The whole Penpot file | Anyone who wants to change the design in Penpot |
 | `design/logo.svg`, `design/fonts/` | The logo and the fonts, from Chapter 3 | The themes |
+| `design/default-photo.svg` | The photo for a hike that has none | The sites, as their default photo |
 
 `tokens.json` is a text file, and it reads well without a tool: open it in your editor, and you can look up any value by its name. The wireframes are plain images. Neither needs anything installed.
 
@@ -531,7 +534,7 @@ You can now:
 
 1. Draw the hike page at 1280 pixels yourself. Duplicate the `Hike page, phone` board, choose **Wide** in the Themes menu, make the board 1280 pixels wide, and swap the header for an instance of `Header / Wide`. What has to change besides the width? Compare your page with `design/wireframes/hike-page-wide.png`.
 2. Change `radius.medium` in the `values` set from 8 to 12, and watch the card and the button. Export the tokens over `design/tokens.json` and run `git diff design/tokens.json`: how many lines changed? Then set it back to 8.
-3. North Berwick has no photo in Book 1, so its card shows a grey box. Design a card for a hike without a photo: add a second property to the hike card, `Photo`, with the values `Yes` and `No`. What should the card show where the photo was, or should the text move up? *(challenge)*
+3. Choose **Dark** in the Themes menu and compare the North Berwick cards with the `Default photo` component on the `Components` page. The component turns dark, because its fill and its logo are tokens; the photo on the cards stays light sandstone, because it's an image. Which one behaves like the site will, with `design/default-photo.svg`? Suggest two ways a theme could give the default photo a dark version. *(challenge)*
 4. Choose **Dark** and **Wide** in the Themes menu and look at every page on the Wireframes page. Find one thing that doesn't change between the modes, and say whether it should.
 5. Draw the **News** card you sketched in Chapter 3's exercises as a component, with tokens only: no colors or sizes typed in. Then switch to **Dark**: anything that stays light was typed in, not taken from a token. *(challenge)*
 
