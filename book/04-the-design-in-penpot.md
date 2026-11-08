@@ -18,7 +18,7 @@ Penpot is a design and prototyping tool, in the same family as Figma and Sketch:
 
 ### An account and a file
 
-1. Go to **design.penpot.app** and create a free account, with your email address or with a GitHub, GitLab or Google account.
+1. Go to **design.penpot.app** and create a free account. Penpot asks for your name, an email address and a password, or lets you sign up with an account you already have elsewhere, such as GitHub or Google. It sends you an email to confirm the address; click the link in it, and you're in. Sign-up pages change more often than anything else in a tool, so we don't show this one: if it looks different when you get there, the questions will be the same.
 2. After signing up, you land on the **dashboard**: your projects and files. In the sidebar on the left, click **Drafts**. Drafts is a place for files that don't belong to a project yet, which is what the club's design is for now.
 3. At the top right, click **+ New file**. Penpot makes a file and opens it.
 4. At the top of the left panel, you'll see the file's name, something like *New File 1*. Double-click it, type `Lens & Trail`, and press **Enter**.
@@ -224,4 +224,9 @@ The **Themes** menu says *2 active themes*. Open it, and you'll see why: one the
 
 ## The club's fonts in Penpot
 
-The club's two fonts are already in Penpot: it offers the whole Google Fonts collection, and both Bricolage Grotesque and Atkinson Hyperlegible Next are in it, under the same open license as our own copies. The `font.family.heading` and `font.family.body` tokens name them, and Penpot finds them by those names.
+The club's two fonts are already in Penpot. It offers the whole Google Fonts collection, and Bricolage Grotesque and Atkinson Hyperlegible Next are both in it, under the same open license as the copies in the book's `design/fonts/` folder. The `font.family.heading` and `font.family.body` tokens name them, and Penpot finds them by those names, so there's nothing to install.
+
+We did try uploading our own copies first, because the themes will use those files and it would be nice if the design used the very same ones. Penpot has a page for that (on the dashboard, **Fonts** under **Sources**), and it takes TTF files like ours. But our fonts are **variable** fonts, all their weights in one file (Chapter 3), and Penpot read each file as a single style, *Regular*, without even a family name. So in Penpot, the club uses Penpot's copies, in seven weights from 200 to 800; Atkinson Hyperlegible Next has italics, too. What Penpot's copy of Bricolage Grotesque doesn't have is the width and optical size axes. The design doesn't need them: the browser uses them in the themes, where our own files are.
+
+![Penpot's Fonts page after choosing BricolageGrotesque[opsz,wdth,wght].ttf: one font added, shown as Regular, with an empty space where the family name should be, and Upload and Dismiss buttons](images/04-font-upload-variable.png)
+*Figure 4.13: Penpot reads a variable font as one style without a name. We clicked Dismiss all, and uploaded nothing.*

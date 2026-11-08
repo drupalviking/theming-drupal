@@ -6,7 +6,7 @@ This chapter puts the design into **Penpot**, a free and open source design tool
 
 You don't need to have used a design tool before. We hadn't used Penpot either when we started this chapter, and we'll go slowly, one click at a time. Nothing in this chapter changes the two sites: they still run Olivero and Mercury, as Book 1 left them. The next chapter generates the themes, and the tokens from this chapter are where their colors and sizes come from.
 
-%% Author: written as we go (2026-11-08). Done so far: the file and the tokens. Still to come, after the Penpot work: fonts (see the note there), the hike card component, the hike page on a phone, the other wireframes, exporting, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
+%% Author: written as we go (2026-11-08). Done so far: the file, the tokens and the fonts. Still to come: the hike card component, the hike page on a phone, the other wireframes, exporting, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
 
 ## Penpot
 
@@ -20,9 +20,7 @@ Penpot is a design and prototyping tool, in the same family as Figma and Sketch:
 
 ### An account and a file
 
-%% Author: the sign-up screenshots need an account that doesn't exist yet. Claude can take them with a fresh address when you have one for it (or we describe sign-up in words only, since it changes often). %%
-
-1. Go to **design.penpot.app** and create a free account, with your email address or with a GitHub, GitLab or Google account.
+1. Go to **design.penpot.app** and create a free account. Penpot asks for your name, an email address and a password, or lets you sign up with an account you already have elsewhere, such as GitHub or Google. It sends you an email to confirm the address; click the link in it, and you're in. Sign-up pages change more often than anything else in a tool, so we don't show this one: if it looks different when you get there, the questions will be the same.
 2. After signing up, you land on the **dashboard**: your projects and files. In the sidebar on the left, click **Drafts**. Drafts is a place for files that don't belong to a project yet, which is what the club's design is for now.
 3. At the top right, click **+ New file**. Penpot makes a file and opens it.
 4. At the top of the left panel, you'll see the file's name, something like *New File 1*. Double-click it, type `Lens & Trail`, and press **Enter**.
@@ -151,8 +149,11 @@ The **Themes** menu says *2 active themes*. Open it, and you'll see why: one the
 
 ## The club's fonts in Penpot
 
-%% Author: decide before this section is final. Tested 2026-11-08: Penpot's Fonts page (dashboard, Sources > Fonts) takes TTF, OTF and WOFF, but our variable files come in as one "Regular" style with an empty family name; three files at once became one entry with all three file names. So Penpot (2.18) doesn't read variable fonts on upload. Nothing was uploaded. Penpot already has both fonts from Google Fonts, same OFL fonts, same names: Bricolage Grotesque in 7 weights (200 to 800, no width or optical size axis), Atkinson Hyperlegible Next in 7 weights plus italics. Claude's recommendation: use Penpot's copies in the design (the tokens already name them), keep our own files in `design/fonts/` for the themes, and say so here in a short paragraph, with the upload as a "what we tried" note. Two figures from the test can show it. %%
+The club's two fonts are already in Penpot. It offers the whole Google Fonts collection, and Bricolage Grotesque and Atkinson Hyperlegible Next are both in it, under the same open license as the copies in the book's `design/fonts/` folder. The `font.family.heading` and `font.family.body` tokens name them, and Penpot finds them by those names, so there's nothing to install.
 
-The club's two fonts are already in Penpot: it offers the whole Google Fonts collection, and both Bricolage Grotesque and Atkinson Hyperlegible Next are in it, under the same open license as our own copies. The `font.family.heading` and `font.family.body` tokens name them, and Penpot finds them by those names.
+We did try uploading our own copies first, because the themes will use those files and it would be nice if the design used the very same ones. Penpot has a page for that (on the dashboard, **Fonts** under **Sources**), and it takes TTF files like ours. But our fonts are **variable** fonts, all their weights in one file (Chapter 3), and Penpot read each file as a single style, *Regular*, without even a family name. So in Penpot, the club uses Penpot's copies, in seven weights from 200 to 800; Atkinson Hyperlegible Next has italics, too. What Penpot's copy of Bricolage Grotesque doesn't have is the width and optical size axes. The design doesn't need them: the browser uses them in the themes, where our own files are.
+
+![Penpot's Fonts page after choosing BricolageGrotesque[opsz,wdth,wght].ttf: one font added, shown as Regular, with an empty space where the family name should be, and Upload and Dismiss buttons](images/04-font-upload-variable.png)
+*Figure 4.13: Penpot reads a variable font as one style without a name. We clicked Dismiss all, and uploaded nothing.*
 
 %% Author: next sections (to come): the hike card component, the hike page on a phone, the other wireframes, exporting `design/tokens.json` and the Penpot file. %%
