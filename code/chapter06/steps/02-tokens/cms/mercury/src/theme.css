@@ -1,0 +1,72 @@
+/**
+ * @file theme.css
+ * Mercury's shadcn/ui-style variables, set from the club's design tokens.
+ *
+ * Mercury's components use these names (bg-primary, text-muted-foreground...).
+ * This file says which of the club's roles each name means. The roles are in
+ * tokens.css, written by scripts/tokens.py; only the mapping is written by hand.
+ */
+
+:root {
+  /* Follow the visitor's system setting: light-dark() in the tokens obeys this. */
+  color-scheme: light dark;
+
+  --background: var(--color-club-background);
+  --foreground: var(--color-club-text);
+  --card: var(--color-club-surface);
+  --card-foreground: var(--color-club-text);
+  --primary: var(--color-club-action);
+  --primary-foreground: var(--color-club-on-action);
+  --secondary: var(--color-club-tint);
+  --secondary-foreground: var(--color-club-on-tint);
+  --muted: var(--color-club-tint);
+  --muted-foreground: var(--color-club-muted);
+  --accent: var(--color-club-tint);
+  --accent-foreground: var(--color-club-on-tint);
+  --destructive: oklch(0.6368 0.2078 25.3313);
+  --destructive-foreground: oklch(1 0 0);
+  --border: var(--color-club-border);
+  --input: var(--color-club-border);
+  --ring: var(--color-club-action); /* The focus ring on buttons and badges. */
+  --font-sans: "Outfit", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: "Fira Mono", "Menlo", "Consolas", "Liberation Mono", monospace;
+  --font-body: "Inter", Arial, Helvetica, sans-serif;
+  --radius: var(--radius-medium);
+  --shadow-x: 0;
+  --shadow-y: 1px;
+  --shadow-blur: 3px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.1;
+  --shadow-color: oklch(0 0 0);
+  --shadow-2xs: 0 1px 3px 1px hsl(0 0% 0% / 0.05);
+  --shadow-xs: 0 1px 3px 1px hsl(0 0% 0% / 0.05), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+  --shadow-sm: 0 1px 3px 1px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+  --shadow: 0 1px 3px 1px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+  --shadow-md: 0 1px 3px 1px hsl(0 0% 0% / 0.1), 0 4px 6px -2px hsl(0 0% 0% / 0.1);
+  --shadow-lg: 0 1px 3px 1px hsl(0 0% 0% / 0.1), 0 8px 10px -2px hsl(0 0% 0% / 0.1);
+  --shadow-xl: 0 1px 3px 1px hsl(0 0% 0% / 0.1), 0 12px 14px -3px hsl(0 0% 0% / 0.1);
+  --shadow-2xl: 0 1px 3px 1px hsl(0 0% 0% / 0.1), 0 16px 18px -3px hsl(0 0% 0% / 0.1);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+
+  /* Set navbar height for hero billboard overlay */
+  --navbar-height: calc(var(--spacing) * 15);
+
+  @media (min-width: 768px) {
+    --navbar-height: calc(var(--spacing) * 18);
+  }
+}
+
+/* Mercury's Dark color scheme setting forces dark mode for everyone. */
+.dark {
+  color-scheme: dark;
+}
+
+/* Mercury's buttons show focus with a ring at half opacity, too faint on the
+   club's cream background (2.1:1, and WCAG asks for 3:1). This file isn't in a
+   cascade layer, so this rule wins over Tailwind's outline-none. */
+:focus-visible {
+  outline: var(--border-focus) solid var(--foreground);
+  outline-offset: var(--size-focus-offset);
+}
