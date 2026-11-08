@@ -6,7 +6,7 @@ This chapter puts the design into **Penpot**, a free and open source design tool
 
 You don't need to have used a design tool before. We hadn't used Penpot either when we started this chapter, and we'll go slowly, one click at a time. Nothing in this chapter changes the two sites: they still run Olivero and Mercury, as Book 1 left them. The next chapter generates the themes, and the tokens from this chapter are where their colors and sizes come from.
 
-%% Author: written as we go (2026-11-08). All sections drafted (2026-11-08); waiting for the author's review. %%
+%% Author: written as we go (2026-11-08). All sections drafted (2026-11-08); reviewed by the author (2026-11-08). Still open: walking the MCP-built steps by hand (the author, or someone, later). %%
 
 ## Penpot
 
