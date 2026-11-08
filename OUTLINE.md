@@ -4,14 +4,14 @@ The chapter-by-chapter plan for *Theming Drupal*, for the author to grill. Propo
 
 **How chapters are cut** (the author, 2026-11-07): as much material as the topic needs, with Book 1's level of detail (every step shown, many screenshots). Similar topics are merged into one chapter; big topics are split where needed. The number of chapters doesn't matter.
 
-**In every chapter**: the opening says what state the two sites start in; every step is done on the core site (`lens_trail`, plain CSS) and on the Drupal CMS site (`lens_trail_cms`, Tailwind), in the format the pilot chapter decides; accessibility is checked as we go (keyboard, focus, contrast, reduced motion); a summary, exercises, and "Want to know more?".
+**In every chapter**: the opening says what state the two sites start in; every step is done on the core site (`lens_trail`, plain CSS) and on the Drupal CMS site (`mercury`, Tailwind), in the format the pilot chapter decides; accessibility is checked as we go (keyboard, focus, contrast, reduced motion); a summary, exercises, and "Want to know more?".
 
 **Running threads**:
-- **Override as little as possible** (the author, 2026-11-07). Every template, theme hook or preprocess function a theme overrides is a copy the theme now owns: core and contrib fix bugs and accessibility problems in their version, and the theme's copy doesn't get the fixes. A theme with a hundred overrides is a fork of half of Drupal. The order to try things in: site building first (view modes, display settings, formatters, block settings: Book 1), then CSS on the markup Drupal already gives, then `attributes` and classes, then *one* template for a specific suggestion (`node--hike--card`, not `node`), then a component called from that template, and only then preprocess. Every chapter that adds an override says why the cheaper options weren't enough; Chapter 8 makes the case in full; Chapter 23 shows the cost at upgrade time.
-- **Design tokens.** One token file from Penpot (`design/tokens.json`, W3C DTCG format) is the source of every color, size and font. `tools/tokens.py` (Python, no npm) turns it into CSS custom properties for `lens_trail` and Tailwind's `@theme` for `lens_trail_cms`.
+- **Override as little as possible** (the author, 2026-11-07). Every template, theme hook or preprocess function a theme overrides is a copy the theme now owns: core and contrib fix bugs and accessibility problems in their version, and the theme's copy doesn't get the fixes. A theme with a hundred overrides is a fork of half of Drupal. The order to try things in: site building first (view modes, display settings, formatters, block settings: Book 1), then CSS on the markup Drupal already gives, then `attributes` and classes, then *one* template for a specific suggestion (`node--hike--card`, not `node`), then a component called from that template, and only then preprocess. Every chapter that adds an override says why the cheaper options weren't enough; Chapter 10 makes the case in full; Chapter 25 shows the cost at upgrade time.
+- **Design tokens.** One token file from Penpot (`design/tokens.json`, W3C DTCG format) is the source of every color, size and font. `tokens.py` (Python, no npm; in the project's `scripts/`) turns it into CSS custom properties for `lens_trail` and Tailwind's `@theme` for `mercury`.
 - **The design is the readers' too** (the author, 2026-11-07). Everything from Chapter 3 is in the repository, under the book's CC BY-SA license: the Penpot file itself (`design/lens-and-trail.penpot`, Penpot's export format, to import into the reader's own free account), the tokens (`design/tokens.json`), and the wireframes as SVG and PNG, for readers who don't use Penpot at all. Every later change to the design ("Revisiting the design") updates all three.
 - **"Revisiting the design" boxes.** When a later chapter finds that a design decision from Chapter 3 doesn't work (a color that fails contrast in dark mode, a font size too small in Spanish), it changes the design in the open: Penpot, then tokens, then rebuild. That's how a real project changes course.
-- **Dark mode, reduced motion, forced colors, print, self-hosted variable fonts**: designed in Chapter 3, built in Chapter 6, and checked again in each chapter that adds something visual.
+- **Dark mode, reduced motion, forced colors, print, self-hosted variable fonts**: designed in Chapter 3, built in Chapter 8, and checked again in each chapter that adds something visual.
 
 ---
 
@@ -56,15 +56,26 @@ Split in two after the grilling (the author, 2026-11-07): this chapter makes the
 - Getting the design: importing `design/lens-and-trail.penpot` into your own Penpot account, or using the SVG/PNG and `tokens.json` without Penpot.
 - Box: **Using Figma?** The same with Figma Variables and a plugin, and what that costs.
 
-### 4. Generating the Themes
+### 5. Generating the Core Site's Theme
 
-- Core site: `php core/scripts/drupal generate-theme lens_trail`, every file it made and why, the `.info.yml` file, the logo and the screenshot; switching the site over from Olivero.
-- CMS site: `lens_trail_cms` from Mercury (copy with the same name or `generate-theme --starterkit=mercury`: decided in the pilot); `npm ci` with Node pinned in DDEV; switching over.
-- `tools/tokens.py`: from `design/tokens.json` to `css/tokens.css` and Tailwind's `@theme`. Run it, read what it made.
-- Blocks after switching themes (Book 1's Chapter 16: per-theme placements).
-- Version control for a theme: what to commit (on the CMS site, built files too).
+Split from "Generating the Themes" (the author, 2026-11-08): this chapter is the core site, the next one the Drupal CMS site.
 
-### 5. Regions and the Page Template
+- `vendor/bin/dr generate-theme lens_trail` (`core/scripts/drupal` is deprecated since 11.4), every file it made and why, the `.info.yml` file, the libraries, the hooks class; switching the site over from Olivero.
+- **The clean slate** (the author): the site with the bare Starterkit theme, before any of the club's CSS.
+- Blocks after switching themes (Book 1's Chapter 16: per-theme placements, the first region for the rest).
+- The logo and the screenshot.
+- **Fewer templates** (the author chose option b): remove the 21 templates that are the same as core's; the other 55 go with Starterkit's CSS in the libraries chapter.
+- `tokens.py` (Python, standard library only, in the project's `scripts/`): from `design/tokens.json` to `css/tokens.css`, values in rem, roles with `light-dark()`, the type scale with `clamp()`. A first `base.css`; dark mode from the tokens alone.
+- Version control for a theme: what to commit, generated files too.
+
+### 6. Generating the Drupal CMS Site's Theme
+
+- Mercury copied into `themes/custom` with **the same machine name**, `mercury` (Mercury's own `CUSTOMIZING.md` route; `composer remove drupal/mercury`): the site's Canvas pages use Mercury's components by name (`sdc.mercury.*`), so a new name would break them. A box: the light route, `theme.css` and `fonts.css` in the web root.
+- Node pinned in DDEV (`nodejs_version`), `ddev npm ci`, `npm run build`; `build/` committed, `node_modules/` ignored.
+- `tokens.py` learns a second output: Tailwind's `@theme` with the club's role names, and Mercury's shadcn variables (`--primary`, `--background`…) set from them, so Mercury's components and new classes both follow the club's design.
+- Switching over, the blocks, Mercury before and after.
+
+### 7. Regions and the Page Template
 
 - `html.html.twig` and `page.html.twig`: what each one owns.
 - Regions in the `.info.yml` file from the wireframes; hidden regions; what happens to blocks in a region you remove.
@@ -72,18 +83,18 @@ Split in two after the grilling (the author, 2026-11-07): this chapter makes the
 - A first look at Twig debugging (Book 1's Chapter 16 showed it; here we use it).
 - Layout with CSS Grid for the page: content, sidebar, full-width regions.
 
-### 6. Libraries and a CSS Architecture
+### 8. Libraries and a CSS Architecture
 
 - `*.libraries.yml`: global libraries, attaching per template, dependencies, `libraries-extend` and `libraries-override` (trimming core's and Starterkit's CSS).
 - A cascade-layer plan (`@layer reset, tokens, base, layout, components, utilities`), and why layers matter with Drupal's and contrib CSS (Mercury's unlayered base CSS as the real-world example).
-- The tokens in use: custom properties, `color-mix()`, `light-dark()` and **dark mode** (system preference, and a toggle with theme settings later in Chapter 8).
+- The tokens in use: custom properties, `color-mix()`, `light-dark()` and **dark mode** (system preference, and a toggle with theme settings later in Chapter 10).
 - Self-hosted **variable fonts** with `@font-face` and `font-display`.
 - **Reduced motion** and **forced colors** in the base layer.
-- CSS nesting, container queries, `:has()`, logical properties (ready for right-to-left in Chapter 22). Baseline dates in `data/numbers.yml`.
+- CSS nesting, container queries, `:has()`, logical properties (ready for right-to-left in Chapter 24). Baseline dates in `data/numbers.yml`.
 - Aggregation: what Drupal does with your files in production (Performance settings).
 - CMS site: Tailwind's layers and `@theme`, `npm run build`, what the built file contains.
 
-### 7. Twig Basics
+### 9. Twig Basics
 
 - Syntax: output, tags, comments; variables in a template and where they come from.
 - Filters and functions Drupal adds (`|t`, `|without`, `|clean_class`, `link()`, `file_url()`…).
@@ -91,7 +102,7 @@ Split in two after the grilling (the author, 2026-11-07): this chapter makes the
 - `attributes`, `title_attributes`, `content_attributes`: adding classes without losing Drupal's.
 - `{{ content }}` and printing parts of it (`content.field_date`) without breaking caching.
 
-### 8. Preprocess Functions and Theme Settings
+### 10. Preprocess Functions and Theme Settings
 
 - The `.theme` file; hooks in themes in Drupal 12 (procedural, and what OO hooks mean for themes; check what Drupal 12 supports).
 - Preprocess: adding variables (a hike's "days until"), suggestions of your own (`hook_theme_suggestions_HOOK_alter()`).
@@ -101,31 +112,31 @@ Split in two after the grilling (the author, 2026-11-07): this chapter makes the
 - The checklist before overriding anything: can site building do it (Book 1)? Can CSS do it on the existing markup? Can `attributes` or a class do it? Is there a specific suggestion, so the override touches one case, not all? Can a component be called from one template instead of overriding many? Only then: preprocess, or a theme hook override.
 - Counting and auditing overrides: Twig debug's suggestions, listing a theme's templates and hooks, and comparing with Starterkit (an exercise on the club's theme).
 
-### 9. Twig in Depth
+### 11. Twig in Depth
 
 - Render arrays as seen from Twig: what's in `content`, `#cache`, why printing a field's value directly loses cache tags.
 - `{% extends %}`, `{% embed %}`, `{% include %}`, macros.
-- Translation in templates (`{% trans %}`, `|t`, placeholders) — foundation for Chapter 22.
+- Translation in templates (`{% trans %}`, `|t`, placeholders) — foundation for Chapter 24.
 - Twig's sandbox and what Drupal doesn't allow, and why (security).
 - Debugging: `dump()`, Devel's `kint`/`dpm` alternatives, the Twig debug comments.
 
-### 10. JavaScript the Drupal Way
+### 12. JavaScript the Drupal Way
 
 - Drupal behaviors, `once()`, `context`, `drupalSettings`; attaching JS through libraries.
 - ES modules in libraries (check Drupal 12's support), no framework, no bundler on the core site.
-- Progressive enhancement: everything works without JS first (the menu in Chapter 14 depends on this).
+- Progressive enhancement: everything works without JS first (the menu in Chapter 16 depends on this).
 - CMS site: Mercury's `lib/component.js` and esbuild.
 
-### 11. Single Directory Components (the pilot chapter)
+### 13. Single Directory Components (the pilot chapter)
 
 - What a component is; `*.component.yml` (props and slots as JSON Schema), the Twig file, CSS and JS that attach themselves.
 - The **Hike card**: built as a component, used from a node template (the Card view mode from Book 1).
 - Props vs slots; variants; `include` vs `embed`.
 - Component CSS in layers; container queries for a card that fits any column.
-- CMS site: the same card with Tailwind; how it shows up in Canvas (detailed in Chapter 19).
+- CMS site: the same card with Tailwind; how it shows up in Canvas (detailed in Chapter 21).
 - Storybook on this card (the pilot decides whether it stays).
 
-### 12. Images
+### 14. Images
 
 - Responsive images in Drupal: image styles (Book 1's Chapter 9), responsive image styles, breakpoints in the `.breakpoints.yml` file.
 - AVIF/WebP, `sizes`, lazy loading, `fetchpriority` for the hero image.
@@ -135,13 +146,13 @@ Split in two after the grilling (the author, 2026-11-07): this chapter makes the
 
 ## Part 2: The parts of a page
 
-### 13. The Header and the Footer
+### 15. The Header and the Footer
 
 - **Header**: branding (logo, site name, slogan) and the site branding block's template; search (core Search or a link); the language switcher (English/Spanish); the user menu (log in, my account); sticky or not, and its cost on small screens; the header as a component and as a region.
 - **Footer**: footer regions, the footer menu (Book 1's Chapter 14), the Club info block (a content block with fields: its own template), social links, the license line (CC BY-SA for photos).
 - Skip link and landmarks (`<header>`, `<nav>`, `<footer>`).
 
-### 14. Menus, in Depth
+### 16. Menus, in Depth
 
 The author's deep dive; every variant built for a real reason on the club's site.
 
@@ -149,19 +160,19 @@ The author's deep dive; every variant built for a real reason on the club's site
 - **Simple menu**: a list, styled; the current page marked (`aria-current`).
 - **Dropdown**: Hikes > Hike archive (Book 1's nesting); the disclosure pattern (a button that opens a list), not ARIA `menu`; keyboard and screen readers; hover vs click.
 - **Mega menu**: the Hikes panel with the areas (taxonomy), the next hikes (a view block) and a photo. The approaches: deeper menu levels, blocks inside the menu template, fields on menu links (contrib; check Drupal 12 support), and which we build.
-- **Hamburger and off-canvas** on small screens: `<button>`, `aria-expanded`, focus trapping in a dialog, `<dialog>` vs a hidden panel, closing with Escape; works without JS (Chapter 10's progressive enhancement).
+- **Hamburger and off-canvas** on small screens: `<button>`, `aria-expanded`, focus trapping in a dialog, `<dialog>` vs a hidden panel, closing with Escape; works without JS (Chapter 12's progressive enhancement).
 - Breadcrumbs (Book 1's path-based breadcrumbs), styled.
 - CMS site: Mercury's navbar component, changed.
 
-### 15. Hero Sections
+### 17. Hero Sections
 
 - The front page hero: a photo, a heading, a call to action (Join the club, Next hike).
-- A hike's hero image (the Photo field), art direction from Chapter 12, text over images and contrast (gradients, `text-shadow` isn't enough).
+- A hike's hero image (the Photo field), art direction from Chapter 14, text over images and contrast (gradients, `text-shadow` isn't enough).
 - A hero component with variants (image, image + text, color only), props and slots.
 - Performance: the hero image as the Largest Contentful Paint.
 - CMS site: Mercury's hero components (billboard, side-by-side) and our own in Canvas.
 
-### 16. Templates for Content
+### 18. Templates for Content
 
 - Nodes: `node--hike.html.twig`, `node--hike--teaser.html.twig`, `node--hike--card.html.twig`; News and Album.
 - Fields: `field.html.twig` and its suggestions; labels (inline, hidden); multi-value fields; the date with a `<time>` element.
@@ -170,7 +181,7 @@ The author's deep dive; every variant built for a real reason on the club's site
 - **Print stylesheet** for hike pages (a handout).
 - Microdata or JSON-LD? (Book 1's Chapter 17 used Schema.org Metatag on the CMS site; what the theme adds.)
 
-### 17. Views
+### 19. Views
 
 - Views' templates: `views-view.html.twig`, `views-view-unformatted`, grid, table, list; suggestions per view and display.
 - The Hikes list and the archive, the Newest photos grid, the albums.
@@ -178,7 +189,7 @@ The author's deep dive; every variant built for a real reason on the club's site
 - Pagers, "more" links, empty text.
 - Rendering rows with view modes and components vs Views fields.
 
-### 18. Forms and User Pages
+### 20. Forms and User Pages
 
 - How Drupal forms render: form elements, `form-element.html.twig`, `input`, descriptions and errors, required markers.
 - Styling the forms the club uses: contact, comment, search, the exposed filter, login and registration (Book 1's CAPTCHA).
@@ -186,14 +197,14 @@ The author's deep dive; every variant built for a real reason on the club's site
 - The user page (Jordi's profile from Book 1's Chapter 15) and the login page.
 - Status messages (`status-messages.html.twig`).
 
-### 19. Components in Canvas and Layout Builder
+### 21. Components in Canvas and Layout Builder
 
 - CMS site: our SDC components as Canvas building blocks; props that make sense to editors; schema requirements; the Hike card and the hero in Canvas.
 - Core site: the same components in Layout Builder (block plugins, or the hero through a content block).
 - Book 1's backlog item: "Build your own Canvas component".
 - What editors can break, and how the schema stops them.
 
-### 20. Error and Maintenance Pages
+### 22. Error and Maintenance Pages
 
 From `research/choosing-an-approach.md`, section 9; to try on the sites.
 
@@ -206,24 +217,24 @@ From `research/choosing-an-approach.md`, section 9; to try on the sites.
 
 ## Part 3: Finishing
 
-### 21. Accessibility and Performance
+### 23. Accessibility and Performance
 
 The final pass over both finished themes (accessibility has been checked in every chapter).
 
 - An accessibility audit: WCAG 2.2 AA, axe or the browser's tools, a screen reader walk-through, keyboard only, zoom to 400%, forced colors, reduced motion.
-- Performance: Core Web Vitals, fonts, images, CSS and JS size, aggregation, the render cache and cache metadata in templates (from Chapter 9), BigPipe.
+- Performance: Core Web Vitals, fonts, images, CSS and JS size, aggregation, the render cache and cache metadata in templates (from Chapter 11), BigPipe.
 - Fixing what we find, with "Revisiting the design" where needed.
 
-### 22. Multilingual Theming
+### 24. Multilingual Theming
 
-- English and Spanish (Book 1's Chapter 18): longer strings, the language switcher (Chapter 13), `lang` and `dir` attributes, translated strings in Twig and JS (`Drupal.t()`).
-- Right-to-left readiness with logical properties (Chapter 6), tested with a right-to-left language turned on for a moment.
+- English and Spanish (Book 1's Chapter 18): longer strings, the language switcher (Chapter 15), `lang` and `dir` attributes, translated strings in Twig and JS (`Drupal.t()`).
+- Right-to-left readiness with logical properties (Chapter 8), tested with a right-to-left language turned on for a moment.
 - Fonts that cover the languages.
 
-### 23. Keeping a Theme Up to Date
+### 25. Keeping a Theme Up to Date
 
 - Core changes that reach themes (template changes, deprecations, Twig versions); reading change records.
-- What our overrides cost at upgrade time: going through every template and hook the theme overrides, and why the club's theme has few (Chapter 8).
+- What our overrides cost at upgrade time: going through every template and hook the theme overrides, and why the club's theme has few (Chapter 10).
 - Comparing our theme with a freshly generated Starterkit.
 - The CMS site: upgrading Tailwind, esbuild and the other npm packages years later, one at a time; Node versions in DDEV; what changed in Mercury.
 - Rebuilding when Book 1 changes (`data/book1.yml`).

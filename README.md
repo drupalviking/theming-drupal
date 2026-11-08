@@ -25,12 +25,13 @@ The text and images are licensed under the [Creative Commons Attribution-ShareAl
 | `code/chapterNN/steps/NN-name/core/<theme>/` | A complete, working copy of the core site's theme after a section of the chapter. |
 | `code/chapterNN/steps/NN-name/cms/<theme>/` | The same for the Drupal CMS site's theme. |
 | `code/chapterNN/snippets/` | Code that is shown but not installed: the "old way", and alternatives. |
+| `code/chapterNN/scripts/` | Tools that live in the reader's own project, next to `web/` (not in a theme): `tokens.py`, from Chapter 5. |
 | `OUTLINE.md` | What goes in each chapter. |
 | `design/` | The design: `logo.svg`, the fonts with their licenses (`fonts/`), each chapter's figure sources (`chapterNN/figures.html`); from Chapter 4: the Penpot file (`lens-and-trail.penpot`), the wireframes as PNG (`wireframes/`), and `tokens.json`, the design tokens every theme's colors and sizes come from, exported from Penpot. |
 | `research/` | Background research behind the book's decisions (not part of the book). |
 | `slides/` | The teachers' kit (to come): a Marp deck and teaching notes per chapter. |
 | `data/numbers.yml` | Versions and dates that go out of date, filled into the manuscript by the build. |
-| `tools/` | `build.py`, `update_numbers.py`, `setup.sh` (makes the test sites), `use-step.sh` (puts a theme step on the test sites), `design_figures.py` (screenshots a chapter's design figures; needs Python Playwright). |
+| `tools/` | `build.py`, `update_numbers.py`, `setup.sh` (makes the test sites), `use-step.sh` (puts a theme step on the test sites), `design_figures.py` (screenshots a chapter's design figures), `screenshots.py` (screenshots the test sites' pages for a chapter, by tag, before and after a step); both need Python Playwright. |
 | `PROJECT-LOG.md` | Decisions, history, the test sites, open items, and the backlog. |
 
 ## Writing
@@ -98,28 +99,29 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | 2. Choosing an Approach | Proposed. From `research/choosing-an-approach.md`. |
 | 3. Designing Lens & Trail | **Drafted** (2026-11-07), for the author's review. The brief (with utumallt.is as the layout reference), the colors (green, Old Town sandstone, warm neutrals; values and roles; dark mode with a toggle; forced colors), Bricolage Grotesque + Atkinson Hyperlegible Next (variable, self-hosted), a fluid type scale, space and layout, the hike card and page, photos, icons, Book 1's logo redrawn, motion (slider, lightbox, parallax, reduced motion), print. 16 figures: 12 from `design/chapter03/figures.html` (`tools/design_figures.py 03`), 2 from the core site, 2 of utumallt.is. |
 | 4. The Design in Penpot | **Reviewed** (2026-11-08) on `feature/chapter-04-penpot`; the MCP-built steps are still to be walked by hand. The design is in `design/`: `tokens.json`, `lens-and-trail.penpot` and `wireframes/`. |
-| 5. Generating the Themes | Proposed. `lens_trail` (Starterkit) and `lens_trail_cms` (Mercury); `tools/tokens.py`. |
-| 5. Regions and the Page Template | Proposed. |
-| 6. Libraries and a CSS Architecture | Proposed. |
-| 7. Twig Basics | Proposed. |
-| 8. Preprocess Functions and Theme Settings | Proposed. |
-| 9. Twig in Depth | Proposed. |
-| 10. JavaScript the Drupal Way | Proposed. |
-| 11. Single Directory Components | Proposed. **The pilot chapter** (the Hike card). |
-| 12. Images | Proposed. |
+| 5. Generating the Core Site's Theme | **Drafted** (2026-11-08) on `feature/chapter-05-themes`, for the author's review. `lens_trail` from Starterkit (`vendor/bin/dr generate-theme`), the bare theme as a clean slate, the blocks moved, the club's logo and screenshot, 21 templates removed (the same as core's), `scripts/tokens.py` (`code/chapter05/scripts/`) writing `css/tokens.css`, a first `base.css`, dark mode from the tokens. Four steps, tested on the core site. 10 screenshots (`tools/screenshots.py 05`). |
+| 6. Generating the Drupal CMS Site's Theme | Proposed. Mercury copied as `mercury` (same machine name: the Canvas pages use its components); Node pinned in DDEV; `tokens.py` writes Tailwind's `@theme`. |
+| 7. Regions and the Page Template | Proposed. |
+| 8. Libraries and a CSS Architecture | Proposed. |
+| 9. Twig Basics | Proposed. |
+| 10. Preprocess Functions and Theme Settings | Proposed. |
+| 11. Twig in Depth | Proposed. |
+| 12. JavaScript the Drupal Way | Proposed. |
+| 13. Single Directory Components | Proposed. **The pilot chapter** (the Hike card). |
+| 14. Images | Proposed. |
 | **Part 2: The parts of a page** |  |
-| 13. The Header and the Footer | Proposed. |
-| 14. Menus, in Depth | Proposed. Simple, dropdown, mega menu (the Hikes panel) and hamburger, all built on the club's site. |
-| 15. Hero Sections | Proposed. |
-| 16. Templates for Content | Proposed. Includes the print stylesheet. |
-| 17. Views | Proposed. |
-| 18. Forms and User Pages | Proposed. |
-| 19. Components in Canvas and Layout Builder | Proposed. |
-| 20. Error and Maintenance Pages | Proposed. 401, 403, 404, 500, maintenance mode. |
+| 15. The Header and the Footer | Proposed. |
+| 16. Menus, in Depth | Proposed. Simple, dropdown, mega menu (the Hikes panel) and hamburger, all built on the club's site. |
+| 17. Hero Sections | Proposed. |
+| 18. Templates for Content | Proposed. Includes the print stylesheet. |
+| 19. Views | Proposed. |
+| 20. Forms and User Pages | Proposed. |
+| 21. Components in Canvas and Layout Builder | Proposed. |
+| 22. Error and Maintenance Pages | Proposed. 401, 403, 404, 500, maintenance mode. |
 | **Part 3: Finishing** |  |
-| 21. Accessibility and Performance | Proposed. |
-| 22. Multilingual Theming | Proposed. |
-| 23. Keeping a Theme Up to Date | Proposed. |
+| 23. Accessibility and Performance | Proposed. |
+| 24. Multilingual Theming | Proposed. |
+| 25. Keeping a Theme Up to Date | Proposed. |
 | Appendix A. Twig Reference | Proposed. |
 | Appendix B. Answers to the Advanced Exercises | Proposed. |
 | Appendix C. Building the Sites Without Book 1 | Proposed. For readers who start here, and for teachers. |
@@ -138,3 +140,4 @@ Facts about releases and products that change quickly. Re-check each before a re
 - Core's `starterkit_theme` in Drupal 12.0.0-beta2 has no `components/` folder (2026-11-07).
 - Penpot's token import format (Chapter 4's `code/chapter04/lens-and-trail-tokens.json`), read from Penpot's source on `main` (2026-11-08, `common/src/app/common/types/tokens_lib.cljc` and `token.cljc`): sets as top-level keys, `$themes` (each with `name`, `group`, `description` and `selectedTokenSets`), `$metadata` (`tokenSetOrder`, `activeThemes`, `activeSets`); `$type` names `color`, `spacing`, `borderRadius`, `borderWidth`, `fontFamilies`, `fontWeights`, `fontSizes`, `sizing`, `dimension`, `number`, `shadow`. Import replaces all of a file's tokens (Penpot's help). Font sizes in px only for now; rem is promised. Imported into design.penpot.app on 2026-11-08 without errors; the import dialog says it "will override all your current tokens, sets and themes". Exported again on 2026-11-08 (**Tokens → Tools → Export**, Single file) as `design/tokens.json`: the same 101 tokens and descriptions, but font families come out as lists (`["Bricolage Grotesque"]`), the themes lose their descriptions and gain `id` and `isSource`, and the key order changes. The `.penpot` file's manifest says `penpot/2.19.0-RC6` (design.penpot.app on 2026-11-08), not 2.18.6: check the version before publication. Figma's variables (Chapter 4's Using Figma? box), from help.figma.com on 2026-11-08: import of W3C-format JSON (2025.10) and export of modes as JSON, listed for Professional, Education, Organization, Government and Enterprise plans; one mode per imported file; font family a single name; Starter's mode count not stated. Check again before publication.
 - The test sites' rebuild (`tools/setup.sh`) installs Book 1's configuration with the Minimal profile, because Drupal can't install Standard from configuration (it has a `hook_install()`): the Status report says "Minimal". Check whether core still refuses.
+- Chapter 5 (2026-11-08, Drupal 12.0.0-beta2): `vendor/bin/dr generate-theme` (the `dr` tool is new in 11.4 and marked experimental; `core/scripts/drupal` deprecated in 11.4, removed in 13); what Starterkit generates (142 files, 81 templates, 31 CSS files, `src/Hook/LensTrailHooks.php` with a stray `@file` docblock, the *Classy* screenshot, `core_version_requirement: ^12`, no `regions`); 21 of its templates the same as core's; the `.theme` file deprecated in 11.5; the admin theme is *Default Admin*; blocks from missing regions go to the first region. Re-run the comparison (`code/chapter05/steps/03-fewer-templates`) on the release Drupal 12.
