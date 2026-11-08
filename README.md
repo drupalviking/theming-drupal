@@ -13,7 +13,7 @@ The reader is someone who finished Book 1, or a front-end developer new to Drupa
 
 ## License
 
-The text and images are licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license](LICENSE) (CC BY-SA 4.0). The themes' code under `code/` is licensed under the GNU General Public License, version 2 or later (GPL-2.0-or-later), like Drupal itself, because a Drupal theme is a derivative of Drupal.
+The text and images are licensed under the [Creative Commons Attribution-ShareAlike 4.0 International license](LICENSE) (CC BY-SA 4.0). The themes' code under `code/` is licensed under the GNU General Public License, version 2 or later (GPL-2.0-or-later), like Drupal itself, because a Drupal theme is a derivative of Drupal. The fonts under `design/fonts/` are not ours: they keep their own license, the SIL Open Font License 1.1, in the `OFL.txt` next to each font.
 
 ## Layout
 
@@ -26,11 +26,11 @@ The text and images are licensed under the [Creative Commons Attribution-ShareAl
 | `code/chapterNN/steps/NN-name/cms/<theme>/` | The same for the Drupal CMS site's theme. |
 | `code/chapterNN/snippets/` | Code that is shown but not installed: the "old way", and alternatives. |
 | `OUTLINE.md` | What goes in each chapter. |
-| `design/` | The design (to come): Penpot exports of the wireframes, and `tokens.json`, the design tokens every theme's colors and sizes come from. |
+| `design/` | The design: `logo.svg`, the fonts with their licenses (`fonts/`), each chapter's figure sources (`chapterNN/figures.html`); to come in Chapter 4: the Penpot file, the wireframes, and `tokens.json`, the design tokens every theme's colors and sizes come from. |
 | `research/` | Background research behind the book's decisions (not part of the book). |
 | `slides/` | The teachers' kit (to come): a Marp deck and teaching notes per chapter. |
 | `data/numbers.yml` | Versions and dates that go out of date, filled into the manuscript by the build. |
-| `tools/` | `build.py`, `update_numbers.py`, `setup.sh` (makes the test sites), `use-step.sh` (puts a theme step on the test sites). |
+| `tools/` | `build.py`, `update_numbers.py`, `setup.sh` (makes the test sites), `use-step.sh` (puts a theme step on the test sites), `design_figures.py` (screenshots a chapter's design figures; needs Python Playwright). |
 | `PROJECT-LOG.md` | Decisions, history, the test sites, open items, and the backlog. |
 
 ## Writing
@@ -89,15 +89,16 @@ When Book 1 changes a site: re-export it there and commit, put the new commit in
 
 ## Contents and status
 
-The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the author the same day). Nothing is drafted yet. Chapters are cut by material, not by number: similar topics merged, big ones split (the author, 2026-11-07).
+The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the author the same day). Chapter 3 is drafted. Chapters are cut by material, not by number: similar topics merged, big ones split (the author, 2026-11-07).
 
 | Chapter | Status |
 |---|---|
 | **Part 1: Foundations** |  |
 | 1. What a Theme Is, and What We'll Build | Proposed. |
 | 2. Choosing an Approach | Proposed. From `research/choosing-an-approach.md`. |
-| 3. Designing Lens & Trail | Proposed. Penpot, design tokens (W3C format), dark mode, print, reduced motion, variable fonts. Claude drafts, the author decides. |
-| 4. Generating the Themes | Proposed. `lens_trail` (Starterkit) and `lens_trail_cms` (Mercury); `tools/tokens.py`. |
+| 3. Designing Lens & Trail | **Drafted** (2026-11-07), for the author's review. The brief (with utumallt.is as the layout reference), the colors (green, Old Town sandstone, warm neutrals; values and roles; dark mode with a toggle; forced colors), Bricolage Grotesque + Atkinson Hyperlegible Next (variable, self-hosted), a fluid type scale, space and layout, the hike card and page, photos, icons, Book 1's logo redrawn, motion (slider, lightbox, parallax, reduced motion), print. 16 figures: 12 from `design/chapter03/figures.html` (`tools/design_figures.py 03`), 2 from the core site, 2 of utumallt.is. |
+| 4. The Design in Penpot | Proposed. Split from Chapter 3: a Penpot account, design tokens (W3C format), wireframes, export, Using Figma?. |
+| 5. Generating the Themes | Proposed. `lens_trail` (Starterkit) and `lens_trail_cms` (Mercury); `tools/tokens.py`. |
 | 5. Regions and the Page Template | Proposed. |
 | 6. Libraries and a CSS Architecture | Proposed. |
 | 7. Twig Basics | Proposed. |
@@ -129,6 +130,11 @@ Chapter numbers will be checked once, at the end, together with every cross-refe
 
 Facts about releases and products that change quickly. Re-check each before a release.
 
+- Baseline dates in Chapter 3 (checked 2026-11-07 in the web-features data): `light-dark()` newly available 2024-05-13, widely available on 2026-11-13; scroll-driven animations newly available 2026-10-27; `text-wrap: balance` newly available 2024-05-13; OKLCH widely available 2025-11-09; container queries 2025-08-14; `forced-colors` 2025-03-12.
+- Colorbox has no Drupal 12 release (2.2.1, `^10.2 || ^11`, maintenance fixes only, 2026-11-07); nor has PhotoSwipe (5.0.13, `^10.3 || ^11`). Chapter 3 says so.
+- Olivero (contrib on Drupal 12) has no `prefers-reduced-motion` rule in its CSS, and `forced-colors` rules in several files (2026-11-07): Chapter 3's Try it relies on it.
+- Chrome's developer tools: **More tools** > **Rendering** > **Emulate CSS media feature forced-colors** / **prefers-reduced-motion** (Chapter 3's Try its).
 - Mercury 1.0.5 requires Drupal ^11.3 (2026-11-07): the Mercury track runs on the Drupal CMS site (Drupal 11.4) until Mercury has a Drupal 12 release.
 - Core's `starterkit_theme` in Drupal 12.0.0-beta2 has no `components/` folder (2026-11-07).
+- Penpot's token import format (Chapter 4's `code/chapter04/lens-and-trail-tokens.json`), read from Penpot's source on `main` (2026-11-08, `common/src/app/common/types/tokens_lib.cljc` and `token.cljc`): sets as top-level keys, `$themes` (each with `name`, `group`, `description` and `selectedTokenSets`), `$metadata` (`tokenSetOrder`, `activeThemes`, `activeSets`); `$type` names `color`, `spacing`, `borderRadius`, `borderWidth`, `fontFamilies`, `fontWeights`, `fontSizes`, `sizing`, `dimension`, `number`, `shadow`. Import replaces all of a file's tokens (Penpot's help). Font sizes in px only for now; rem is promised. Imported into design.penpot.app on 2026-11-08 without errors; the import dialog says it "will override all your current tokens, sets and themes".
 - The test sites' rebuild (`tools/setup.sh`) installs Book 1's configuration with the Minimal profile, because Drupal can't install Standard from configuration (it has a `hook_install()`): the Status report says "Minimal". Check whether core still refuses.

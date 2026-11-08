@@ -1,0 +1,544 @@
+{
+  "values": {
+    "color": {
+      "green": {
+        "50": {
+          "$value": "#e4fbf3",
+          "$type": "color"
+        },
+        "100": {
+          "$value": "#d3efe6",
+          "$type": "color"
+        },
+        "200": {
+          "$value": "#baddd2",
+          "$type": "color"
+        },
+        "300": {
+          "$value": "#9ac6b8",
+          "$type": "color"
+        },
+        "400": {
+          "$value": "#75ab9b",
+          "$type": "color"
+        },
+        "500": {
+          "$value": "#4c8f7c",
+          "$type": "color"
+        },
+        "600": {
+          "$value": "#2f7865",
+          "$type": "color"
+        },
+        "700": {
+          "$value": "#1f6f5c",
+          "$type": "color",
+          "$description": "The club's green, from Book 1"
+        },
+        "800": {
+          "$value": "#184d40",
+          "$type": "color"
+        },
+        "900": {
+          "$value": "#0c362c",
+          "$type": "color"
+        },
+        "950": {
+          "$value": "#032019",
+          "$type": "color"
+        }
+      },
+      "sand": {
+        "50": {
+          "$value": "#fff3e8",
+          "$type": "color"
+        },
+        "100": {
+          "$value": "#ffe2c8",
+          "$type": "color"
+        },
+        "200": {
+          "$value": "#f0cdac",
+          "$type": "color"
+        },
+        "300": {
+          "$value": "#dcb189",
+          "$type": "color"
+        },
+        "400": {
+          "$value": "#c69360",
+          "$type": "color"
+        },
+        "500": {
+          "$value": "#ad712f",
+          "$type": "color"
+        },
+        "600": {
+          "$value": "#955907",
+          "$type": "color"
+        },
+        "700": {
+          "$value": "#895103",
+          "$type": "color"
+        },
+        "800": {
+          "$value": "#603703",
+          "$type": "color"
+        },
+        "900": {
+          "$value": "#442602",
+          "$type": "color"
+        },
+        "950": {
+          "$value": "#2a1500",
+          "$type": "color"
+        }
+      },
+      "neutral": {
+        "0": {
+          "$value": "#ffffff",
+          "$type": "color"
+        },
+        "50": {
+          "$value": "#fbf6f0",
+          "$type": "color"
+        },
+        "100": {
+          "$value": "#f0eae4",
+          "$type": "color"
+        },
+        "200": {
+          "$value": "#dcd6d1",
+          "$type": "color"
+        },
+        "300": {
+          "$value": "#c2bdb7",
+          "$type": "color"
+        },
+        "400": {
+          "$value": "#a39d98",
+          "$type": "color"
+        },
+        "500": {
+          "$value": "#847f7b",
+          "$type": "color"
+        },
+        "600": {
+          "$value": "#6c6863",
+          "$type": "color"
+        },
+        "700": {
+          "$value": "#5b5753",
+          "$type": "color"
+        },
+        "800": {
+          "$value": "#46423d",
+          "$type": "color"
+        },
+        "900": {
+          "$value": "#2c2824",
+          "$type": "color"
+        },
+        "950": {
+          "$value": "#16130f",
+          "$type": "color"
+        },
+        "night": {
+          "$value": "#161310",
+          "$type": "color",
+          "$description": "The page in dark mode"
+        },
+        "night-raised": {
+          "$value": "#221f1b",
+          "$type": "color",
+          "$description": "Cards and menus in dark mode"
+        }
+      }
+    },
+    "space": {
+      "3xs": {
+        "$value": "4",
+        "$type": "spacing"
+      },
+      "2xs": {
+        "$value": "8",
+        "$type": "spacing"
+      },
+      "xs": {
+        "$value": "12",
+        "$type": "spacing"
+      },
+      "s": {
+        "$value": "16",
+        "$type": "spacing"
+      },
+      "m": {
+        "$value": "24",
+        "$type": "spacing"
+      },
+      "l": {
+        "$value": "32",
+        "$type": "spacing"
+      },
+      "xl": {
+        "$value": "48",
+        "$type": "spacing"
+      },
+      "2xl": {
+        "$value": "64",
+        "$type": "spacing"
+      },
+      "3xl": {
+        "$value": "96",
+        "$type": "spacing"
+      }
+    },
+    "radius": {
+      "small": {
+        "$value": "4",
+        "$type": "borderRadius"
+      },
+      "medium": {
+        "$value": "8",
+        "$type": "borderRadius"
+      },
+      "round": {
+        "$value": "9999",
+        "$type": "borderRadius"
+      }
+    },
+    "border": {
+      "thin": {
+        "$value": "1",
+        "$type": "borderWidth"
+      },
+      "focus": {
+        "$value": "3",
+        "$type": "borderWidth",
+        "$description": "The focus outline"
+      }
+    },
+    "font": {
+      "family": {
+        "heading": {
+          "$value": "Bricolage Grotesque",
+          "$type": "fontFamilies"
+        },
+        "body": {
+          "$value": "Atkinson Hyperlegible Next",
+          "$type": "fontFamilies"
+        }
+      },
+      "weight": {
+        "regular": {
+          "$value": "400",
+          "$type": "fontWeights"
+        },
+        "semibold": {
+          "$value": "600",
+          "$type": "fontWeights"
+        },
+        "bold": {
+          "$value": "700",
+          "$type": "fontWeights"
+        }
+      }
+    },
+    "size": {
+      "target": {
+        "$value": "44",
+        "$type": "sizing",
+        "$description": "The smallest tap target in the header, slider and lightbox"
+      },
+      "content": {
+        "$value": "1280",
+        "$type": "sizing",
+        "$description": "The widest the page content gets"
+      },
+      "focus-offset": {
+        "$value": "2",
+        "$type": "dimension",
+        "$description": "The gap between an element and its focus outline"
+      }
+    },
+    "breakpoint": {
+      "medium": {
+        "$value": "640",
+        "$type": "dimension",
+        "$description": "40rem: two columns"
+      },
+      "wide": {
+        "$value": "1024",
+        "$type": "dimension",
+        "$description": "64rem: the full menu, three cards in a row"
+      },
+      "container": {
+        "$value": "480",
+        "$type": "dimension",
+        "$description": "30rem: a component's photo moves beside its text"
+      }
+    },
+    "duration": {
+      "fast": {
+        "$value": "150",
+        "$type": "number",
+        "$description": "Milliseconds: links and buttons"
+      },
+      "slow": {
+        "$value": "250",
+        "$type": "number",
+        "$description": "Milliseconds: menus and the lightbox"
+      }
+    },
+    "shadow": {
+      "raised": {
+        "$value": [
+          {
+            "offsetX": "0",
+            "offsetY": "2",
+            "blur": "8",
+            "spread": "0",
+            "color": "rgba(22, 19, 15, 0.12)",
+            "inset": false
+          }
+        ],
+        "$type": "shadow",
+        "$description": "A card that's hovered over"
+      },
+      "overlay": {
+        "$value": [
+          {
+            "offsetX": "0",
+            "offsetY": "8",
+            "blur": "24",
+            "spread": "0",
+            "color": "rgba(22, 19, 15, 0.24)",
+            "inset": false
+          }
+        ],
+        "$type": "shadow",
+        "$description": "Menus, the lightbox, dialogs"
+      }
+    }
+  },
+  "light": {
+    "color": {
+      "background": {
+        "$value": "{color.neutral.50}",
+        "$type": "color"
+      },
+      "surface": {
+        "$value": "{color.neutral.0}",
+        "$type": "color"
+      },
+      "text": {
+        "$value": "{color.neutral.900}",
+        "$type": "color"
+      },
+      "muted": {
+        "$value": "{color.neutral.700}",
+        "$type": "color"
+      },
+      "border": {
+        "$value": "{color.neutral.200}",
+        "$type": "color"
+      },
+      "action": {
+        "$value": "{color.green.700}",
+        "$type": "color",
+        "$description": "Links, buttons, focus rings"
+      },
+      "on-action": {
+        "$value": "{color.neutral.0}",
+        "$type": "color"
+      },
+      "accent": {
+        "$value": "{color.sand.500}",
+        "$type": "color"
+      },
+      "accent-text": {
+        "$value": "{color.sand.700}",
+        "$type": "color"
+      },
+      "tint": {
+        "$value": "{color.sand.100}",
+        "$type": "color"
+      },
+      "on-tint": {
+        "$value": "{color.sand.800}",
+        "$type": "color"
+      }
+    }
+  },
+  "dark": {
+    "color": {
+      "background": {
+        "$value": "{color.neutral.night}",
+        "$type": "color"
+      },
+      "surface": {
+        "$value": "{color.neutral.night-raised}",
+        "$type": "color"
+      },
+      "text": {
+        "$value": "{color.neutral.100}",
+        "$type": "color"
+      },
+      "muted": {
+        "$value": "{color.neutral.400}",
+        "$type": "color"
+      },
+      "border": {
+        "$value": "{color.neutral.800}",
+        "$type": "color"
+      },
+      "action": {
+        "$value": "{color.green.400}",
+        "$type": "color",
+        "$description": "Links, buttons, focus rings"
+      },
+      "on-action": {
+        "$value": "{color.neutral.950}",
+        "$type": "color"
+      },
+      "accent": {
+        "$value": "{color.sand.400}",
+        "$type": "color"
+      },
+      "accent-text": {
+        "$value": "{color.sand.300}",
+        "$type": "color"
+      },
+      "tint": {
+        "$value": "{color.sand.900}",
+        "$type": "color"
+      },
+      "on-tint": {
+        "$value": "{color.sand.200}",
+        "$type": "color"
+      }
+    }
+  },
+  "phone": {
+    "font": {
+      "size": {
+        "step--1": {
+          "$value": "14.17",
+          "$type": "fontSizes"
+        },
+        "step-0": {
+          "$value": "17",
+          "$type": "fontSizes"
+        },
+        "step-1": {
+          "$value": "20.4",
+          "$type": "fontSizes"
+        },
+        "step-2": {
+          "$value": "24.48",
+          "$type": "fontSizes"
+        },
+        "step-3": {
+          "$value": "29.38",
+          "$type": "fontSizes"
+        },
+        "step-4": {
+          "$value": "35.25",
+          "$type": "fontSizes"
+        },
+        "step-5": {
+          "$value": "42.3",
+          "$type": "fontSizes"
+        }
+      }
+    }
+  },
+  "wide": {
+    "font": {
+      "size": {
+        "step--1": {
+          "$value": "14.4",
+          "$type": "fontSizes"
+        },
+        "step-0": {
+          "$value": "18",
+          "$type": "fontSizes"
+        },
+        "step-1": {
+          "$value": "22.5",
+          "$type": "fontSizes"
+        },
+        "step-2": {
+          "$value": "28.12",
+          "$type": "fontSizes"
+        },
+        "step-3": {
+          "$value": "35.16",
+          "$type": "fontSizes"
+        },
+        "step-4": {
+          "$value": "43.95",
+          "$type": "fontSizes"
+        },
+        "step-5": {
+          "$value": "54.93",
+          "$type": "fontSizes"
+        }
+      }
+    }
+  },
+  "$themes": [
+    {
+      "name": "Light",
+      "group": "Mode",
+      "description": "",
+      "selectedTokenSets": {
+        "values": "enabled",
+        "light": "enabled"
+      }
+    },
+    {
+      "name": "Dark",
+      "group": "Mode",
+      "description": "",
+      "selectedTokenSets": {
+        "values": "enabled",
+        "dark": "enabled"
+      }
+    },
+    {
+      "name": "Phone",
+      "group": "Screen",
+      "description": "360 pixels wide",
+      "selectedTokenSets": {
+        "phone": "enabled"
+      }
+    },
+    {
+      "name": "Wide",
+      "group": "Screen",
+      "description": "1280 pixels wide",
+      "selectedTokenSets": {
+        "wide": "enabled"
+      }
+    }
+  ],
+  "$metadata": {
+    "tokenSetOrder": [
+      "values",
+      "light",
+      "dark",
+      "phone",
+      "wide"
+    ],
+    "activeThemes": [
+      "Mode/Light",
+      "Screen/Phone"
+    ],
+    "activeSets": [
+      "values",
+      "light",
+      "phone"
+    ]
+  }
+}

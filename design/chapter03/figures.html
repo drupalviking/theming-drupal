@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Chapter 3 figures</title>
+<!-- Only for Figure 3.5's two turned-down pairs: the club's own fonts are self-hosted below. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..800&amp;family=Source+Sans+3:wght@300..800&amp;family=Source+Serif+4:opsz,wght@8..60,400..800&amp;display=swap">
+<!--
+  The figures of Chapter 3, Designing Lens & Trail. Each <figure id="..."> is
+  screenshotted by tools/design_figures.py into manuscript/images/<id>.png.
+  The colors and sizes are the club's design decisions from the chapter; the
+  fonts are the self-hosted files in design/fonts/.
+-->
+<style>
+@font-face { font-family: "Bricolage Grotesque"; src: url("../fonts/bricolage-grotesque/BricolageGrotesque[opsz,wdth,wght].ttf") format("truetype"); font-weight: 200 800; font-stretch: 75% 100%; }
+@font-face { font-family: "Atkinson Hyperlegible Next"; src: url("../fonts/atkinson-hyperlegible-next/AtkinsonHyperlegibleNext[wght].ttf") format("truetype"); font-weight: 200 800; }
+@font-face { font-family: "Atkinson Hyperlegible Next"; font-style: italic; src: url("../fonts/atkinson-hyperlegible-next/AtkinsonHyperlegibleNext-Italic[wght].ttf") format("truetype"); font-weight: 200 800; }
+
+:root {
+  --green-50:#e4fbf3; --green-100:#d3efe6; --green-200:#baddd2; --green-300:#9ac6b8; --green-400:#75ab9b; --green-500:#4c8f7c; --green-600:#2f7865; --green-700:#1f6f5c; --green-800:#184d40; --green-900:#0c362c; --green-950:#032019;
+  --sand-50:#fff3e8; --sand-100:#ffe2c8; --sand-200:#f0cdac; --sand-300:#dcb189; --sand-400:#c69360; --sand-500:#ad712f; --sand-600:#955907; --sand-700:#895103; --sand-800:#603703; --sand-900:#442602; --sand-950:#2a1500;
+  --neutral-0:#ffffff; --neutral-50:#fbf6f0; --neutral-100:#f0eae4; --neutral-200:#dcd6d1; --neutral-300:#c2bdb7; --neutral-400:#a39d98; --neutral-500:#847f7b; --neutral-600:#6c6863; --neutral-700:#5b5753; --neutral-800:#46423d; --neutral-900:#2c2824; --neutral-950:#16130f;
+  --heather-100:#f9def6; --heather-500:#a2699d; --heather-700:#82477d; --heather-800:#5a3156;
+  --font-heading: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Atkinson Hyperlegible Next", system-ui, sans-serif;
+}
+/* The roles, light and dark. */
+.light { --bg:var(--neutral-50); --surface:var(--neutral-0); --text:var(--neutral-900); --muted:var(--neutral-700); --border:var(--neutral-200); --action:var(--green-700); --on-action:#fff; --accent:var(--sand-500); --accent-text:var(--sand-700); --tint:var(--sand-100); --on-tint:var(--sand-800); }
+.dark { --bg:#161310; --surface:#221f1b; --text:var(--neutral-100); --muted:var(--neutral-400); --border:var(--neutral-800); --action:var(--green-400); --on-action:var(--neutral-950); --accent:var(--sand-400); --accent-text:var(--sand-300); --tint:var(--sand-900); --on-tint:var(--sand-200); }
+
+* { box-sizing: border-box; }
+body { margin: 0; padding: 24px; background: #e9e6e2; font-family: var(--font-body); color: #2c2824; }
+figure { margin: 0 0 48px; padding: 24px; background: #fff; width: max-content; max-width: 1200px; }
+.row { display: flex; gap: 24px; align-items: flex-start; }
+.label { font: 600 13px/1.3 var(--font-body); color: #5b5753; letter-spacing: .04em; text-transform: uppercase; }
+.panel { background: var(--bg); color: var(--text); padding: 20px; border-radius: 8px; display: grid; gap: 14px; }
+
+/* Hike card */
+.card { width: 320px; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.card .photo { aspect-ratio: 3/2; background: linear-gradient(172deg, #a8bccb 0%, #cdd6d6 36%, #8a9a72 37%, #5d704f 60%, #3e4a36 100%); }
+.card .body { padding: 14px 16px 18px; display: grid; gap: 8px; }
+.card time { font-weight: 700; font-size: 15px; color: var(--muted); }
+.card h3 { margin: 0; font: 650 24px/1.15 var(--font-heading); font-variation-settings: "opsz" 24; }
+.card .facts { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge { padding: 2px 10px; border-radius: 999px; background: var(--tint); color: var(--on-tint); font-weight: 700; font-size: 14px; display: inline-flex; gap: 6px; align-items: center; }
+.card p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--muted); }
+.card .area { font-size: 14px; color: var(--muted); font-weight: 700; }
+.next { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: var(--accent-text); font-size: 15px; }
+.next i { width: 12px; height: 12px; border-radius: 50%; background: var(--accent); }
+.btn { background: var(--action); color: var(--on-action); padding: 10px 18px; border-radius: 4px; font-weight: 700; font-size: 16px; display: inline-block; }
+.link { color: var(--action); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+nav.menu { display: flex; gap: 18px; align-items: baseline; border-bottom: 1px solid var(--border); padding-bottom: 10px; font-size: 16px; }
+nav.menu b { font: 700 20px var(--font-heading); margin-right: auto; }
+nav.menu .current { color: var(--action); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+
+/* Contrast samples */
+.sample { width: 340px; padding: 22px; border-radius: 8px; display: grid; gap: 8px; }
+.sample .t { font: 650 26px/1.2 var(--font-heading); }
+.sample .b { font-size: 17px; }
+.verdict { font: 700 15px var(--font-body); }
+
+/* Scales */
+.scale { display: grid; grid-template-columns: 110px repeat(11, 82px); gap: 4px; align-items: stretch; margin-bottom: 10px; }
+.scale .name { font: 700 16px var(--font-body); align-self: center; }
+.chip { height: 74px; border-radius: 4px; padding: 6px; font: 600 12px/1.25 var(--font-body); display: flex; flex-direction: column; justify-content: flex-end; }
+.chip.base { outline: 3px solid #2c2824; outline-offset: 2px; }
+
+/* Type */
+.pair { width: 360px; display: grid; gap: 10px; padding: 18px; border: 1px solid #dcd6d1; border-radius: 8px; }
+.pair .h { font-size: 34px; line-height: 1.08; }
+.pair .h2 { font-size: 21px; line-height: 1.2; }
+.pair .t { font-size: 16px; line-height: 1.55; margin: 0; }
+.pair.chosen { outline: 3px solid var(--green-700); outline-offset: 3px; }
+.steps { display: grid; grid-template-columns: 90px 440px 640px; gap: 6px 24px; align-items: baseline; }
+.steps .k { font: 600 14px ui-monospace, Menlo, monospace; color: #5b5753; }
+.steps .v { font-family: var(--font-heading); line-height: 1.1; white-space: nowrap; }
+.steps .v small { font: 600 12px var(--font-body); color: #5b5753; margin-left: 8px; }
+
+/* Wireframes: greys only */
+.wire { --w:#2c2824; --g1:#f0eae4; --g2:#dcd6d1; --g3:#a39d98; background:#fff; border: 2px solid var(--w); border-radius: 18px; padding: 12px; font-family: var(--font-body); color: var(--w); }
+.wire .box { background: var(--g2); border-radius: 4px; display: grid; place-items: center; font-size: 13px; color: #46423d; }
+.wire .line { height: 10px; background: var(--g2); border-radius: 3px; }
+.facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.fact { background: var(--g1); border-radius: 4px; padding: 8px; }
+.fact b { display: block; font-size: 12px; color: #5b5753; font-weight: 600; }
+.fact span { font-size: 15px; font-weight: 700; }
+.callout { width: 26px; height: 26px; border-radius: 50%; background: var(--sand-500); color: #fff; font: 700 14px var(--font-body); display: inline-grid; place-items: center; flex: none; }
+
+/* Slider */
+.hero { position: relative; width: 900px; height: 380px; border-radius: 8px; overflow: hidden; background: linear-gradient(175deg, #7f99ad 0%, #b9c6c9 40%, #6f8460 41%, #3d4a35 100%); color: #fff; }
+.hero .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgb(22 19 15 / .78) 0%, rgb(22 19 15 / .45) 45%, rgb(22 19 15 / 0) 75%); }
+.hero .text { position: absolute; left: 40px; bottom: 70px; display: grid; gap: 12px; max-width: 460px; }
+.hero h2 { margin: 0; font: 750 46px/1.02 var(--font-heading); font-variation-settings: "opsz" 96; }
+.hero .controls { position: absolute; left: 40px; right: 40px; bottom: 22px; display: flex; gap: 10px; align-items: center; }
+.ctrl { width: 40px; height: 40px; border-radius: 50%; background: rgb(22 19 15 / .7); border: 2px solid #fff; display: grid; place-items: center; }
+.ctrl svg { width: 18px; height: 18px; }
+.dots { display: flex; gap: 8px; margin-left: 8px; }
+.dots i { width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; }
+.dots i.on { background: #fff; }
+
+/* Print */
+.paper { width: 595px; height: 842px; background: #fff; border: 1px solid #c2bdb7; box-shadow: 0 4px 18px rgb(0 0 0 / .15); padding: 56px 60px; font-family: var(--font-body); color: #000; display: grid; align-content: start; gap: 16px; }
+.paper header { display: flex; align-items: center; gap: 10px; font: 700 15px var(--font-heading); border-bottom: 1px solid #000; padding-bottom: 10px; }
+.paper h1 { margin: 0; font: 700 32px/1.1 var(--font-heading); }
+.paper dl { display: grid; grid-template-columns: 150px 1fr; gap: 6px 14px; margin: 0; font-size: 15px; }
+.paper dt { font-weight: 700; }
+.paper dd { margin: 0; }
+.paper p { margin: 0; font-size: 14px; line-height: 1.55; }
+.paper .url { font-size: 12px; color: #000; }
+</style>
+</head>
+<body>
+
+<!-- 3.1: the club green on white and on a dark background -->
+<figure id="03-green-contrast">
+  <div class="row">
+    <div class="sample" style="background:#fff;color:#1f6f5c;border:1px solid #dcd6d1">
+      <span class="t">Turnhouse Hill</span><span class="b">#1f6f5c on white</span>
+      <span class="verdict" style="color:#2c2824">6.02:1 · passes for text</span>
+    </div>
+    <div class="sample" style="background:#161310;color:#1f6f5c">
+      <span class="t">Turnhouse Hill</span><span class="b">#1f6f5c on #161310</span>
+      <span class="verdict" style="color:#f0eae4">3.07:1 · fails for text</span>
+    </div>
+    <div class="sample" style="background:#161310;color:#75ab9b">
+      <span class="t">Turnhouse Hill</span><span class="b">#75ab9b on #161310</span>
+      <span class="verdict" style="color:#f0eae4">7.10:1 · passes for text</span>
+    </div>
+  </div>
+</figure>
+
+<!-- 3.2: the scales -->
+<figure id="03-palette">
+  <div class="scale" id="scale-green"><span class="name">Green</span></div>
+  <div class="scale" id="scale-sand"><span class="name">Sandstone</span></div>
+  <div class="scale" id="scale-neutral"><span class="name">Neutral</span></div>
+</figure>
+
+<!-- 3.3: the three accent options -->
+<figure id="03-accent-options">
+  <div class="row">
+    <div class="panel light" style="--accent:var(--heather-500);--accent-text:var(--heather-700);--tint:var(--heather-100);--on-tint:var(--heather-800)">
+      <span class="label">A. Pentland heather</span><span class="next"><i></i>Next hike</span>
+      <div class="card"><div class="photo"></div><div class="body"><time>Sat 21 November · 9:30</time><h3>Turnhouse Hill and Carnethy Hill</h3><div class="facts"><span class="badge">Moderate</span><span class="badge">11.5 km</span></div></div></div>
+    </div>
+    <div class="panel light">
+      <span class="label">B. Old Town sandstone</span><span class="next"><i></i>Next hike</span>
+      <div class="card"><div class="photo"></div><div class="body"><time>Sat 21 November · 9:30</time><h3>Turnhouse Hill and Carnethy Hill</h3><div class="facts"><span class="badge">Moderate</span><span class="badge">11.5 km</span></div></div></div>
+    </div>
+    <div class="panel light" style="--accent:var(--green-500);--accent-text:var(--green-800);--tint:var(--green-100);--on-tint:var(--green-800)">
+      <span class="label">C. All green</span><span class="next"><i></i>Next hike</span>
+      <div class="card"><div class="photo"></div><div class="body"><time>Sat 21 November · 9:30</time><h3>Turnhouse Hill and Carnethy Hill</h3><div class="facts"><span class="badge">Moderate</span><span class="badge">11.5 km</span></div></div></div>
+    </div>
+  </div>
+</figure>
+
+<!-- 3.4: light and dark -->
+<figure id="03-light-dark">
+  <div class="row">
+    <div class="panel light" style="width:400px">
+      <span class="label">Light</span>
+      <nav class="menu"><b>Lens &amp; Trail</b><span class="current">Hikes</span><span>Albums</span><span>Join us</span></nav>
+      <span class="next"><i></i>Next hike</span>
+      <div class="card" style="width:auto"><div class="photo"></div><div class="body"><time>Sat 21 November · 9:30</time><h3>Turnhouse Hill and Carnethy Hill</h3><div class="facts"><span class="badge">Moderate</span><span class="badge">11.5 km</span></div><p>Two summits of the Pentlands from Flotterstone car park.</p><span class="area">Turnhouse Hill</span></div></div>
+      <div><span class="btn">Join the club</span></div>
+    </div>
+    <div class="panel dark" style="width:400px">
+      <span class="label" style="color:var(--muted)">Dark</span>
+      <nav class="menu"><b>Lens &amp; Trail</b><span class="current">Hikes</span><span>Albums</span><span>Join us</span></nav>
+      <span class="next"><i></i>Next hike</span>
+      <div class="card" style="width:auto"><div class="photo"></div><div class="body"><time>Sat 21 November · 9:30</time><h3>Turnhouse Hill and Carnethy Hill</h3><div class="facts"><span class="badge">Moderate</span><span class="badge">11.5 km</span></div><p>Two summits of the Pentlands from Flotterstone car park.</p><span class="area">Turnhouse Hill</span></div></div>
+      <div><span class="btn">Join the club</span></div>
+    </div>
+  </div>
+</figure>
+
+<!-- 3.5: the three font pairs -->
+<figure id="03-type-pairs">
+  <div class="row">
+    <div class="pair"><span class="label">1. Fraunces + Atkinson Hyperlegible Next</span>
+      <div class="h" style="font-family:Fraunces,Georgia,serif;font-weight:600">Photos and hikes around Edinburgh</div>
+      <div class="h2" style="font-family:Fraunces,Georgia,serif;font-weight:600">¿Quién se apunta a la excursión?</div>
+      <p class="t" style="font-family:var(--font-body)">We walk every other Saturday at 9:30. Membership is £20 a year, £10 for students.</p>
+      <span class="label" style="text-transform:none;letter-spacing:0">Warm and bookish, with an optical-size axis.</span></div>
+    <div class="pair"><span class="label">2. Source Serif 4 + Source Sans 3</span>
+      <div class="h" style="font-family:'Source Serif 4',Georgia,serif;font-weight:600">Photos and hikes around Edinburgh</div>
+      <div class="h2" style="font-family:'Source Serif 4',Georgia,serif;font-weight:600">¿Quién se apunta a la excursión?</div>
+      <p class="t" style="font-family:'Source Sans 3',system-ui,sans-serif">We walk every other Saturday at 9:30. Membership is £20 a year, £10 for students.</p>
+      <span class="label" style="text-transform:none;letter-spacing:0">A matched family: safe and very readable.</span></div>
+    <div class="pair chosen"><span class="label">3. Bricolage Grotesque + Atkinson Hyperlegible Next</span>
+      <div class="h" style="font-family:var(--font-heading);font-weight:700;font-variation-settings:'opsz' 48">Photos and hikes around Edinburgh</div>
+      <div class="h2" style="font-family:var(--font-heading);font-weight:650;font-variation-settings:'opsz' 24">¿Quién se apunta a la excursión?</div>
+      <p class="t">We walk every other Saturday at 9:30. Membership is £20 a year, £10 for students.</p>
+      <span class="label" style="text-transform:none;letter-spacing:0">The club's choice.</span></div>
+  </div>
+</figure>
+
+<!-- 3.6: variable font axes -->
+<figure id="03-variable-axes">
+  <div style="display:grid;gap:14px;font-family:var(--font-heading)">
+    <div class="label">Weight (wght): 200 to 800</div>
+    <div style="display:flex;gap:28px;font-size:44px">
+      <span style="font-weight:200">Trail</span><span style="font-weight:400">Trail</span><span style="font-weight:600">Trail</span><span style="font-weight:800">Trail</span></div>
+    <div class="label">Width (wdth): 75 to 100</div>
+    <div style="display:flex;gap:28px;font-size:44px;font-weight:650">
+      <span style="font-stretch:75%">Trail</span><span style="font-stretch:87.5%">Trail</span><span style="font-stretch:100%">Trail</span></div>
+    <div class="label">Optical size (opsz): 12 and 96, both at 44 pixels</div>
+    <div style="display:flex;gap:28px;font-size:44px;font-weight:650">
+      <span style="font-variation-settings:'opsz' 12">Carnethy</span><span style="font-variation-settings:'opsz' 96">Carnethy</span></div>
+  </div>
+</figure>
+
+<!-- 3.7: the type scale at two widths -->
+<figure id="03-type-scale">
+  <div class="steps" id="steps">
+    <span class="label">Step</span><span class="label">On a phone (360 pixels wide)</span><span class="label">On a wide screen (1280 pixels)</span>
+  </div>
+</figure>
+
+<!-- 3.8: the hike card's anatomy -->
+<figure id="03-hike-card">
+  <div class="row light" style="align-items:center;gap:36px">
+    <div class="card" style="width:340px">
+      <div class="photo" style="position:relative"><span class="callout" style="position:absolute;left:10px;top:10px">1</span></div>
+      <div class="body">
+        <div style="display:flex;gap:8px;align-items:center"><span class="callout">2</span><time>Sat 21 November · 9:30</time></div>
+        <div style="display:flex;gap:8px;align-items:center"><span class="callout">3</span><h3>Turnhouse Hill and Carnethy Hill</h3></div>
+        <div style="display:flex;gap:8px;align-items:center"><span class="callout">4</span><div class="facts"><span class="badge">▲▲ Moderate</span><span class="badge">11.5 km</span></div></div>
+        <div style="display:flex;gap:8px;align-items:center"><span class="callout">5</span><p>Two summits of the Pentlands from Flotterstone car park.</p></div>
+        <div style="display:flex;gap:8px;align-items:center"><span class="callout">6</span><span class="area">Turnhouse Hill</span></div>
+      </div>
+    </div>
+    <ol style="font-size:17px;line-height:1.7;margin:0;padding-left:22px;max-width:520px">
+      <li>Photo (the hike's Photo field), cropped to 3:2.</li>
+      <li>Date and time: the first thing a member checks.</li>
+      <li>Title: the link to the hike, and the only link in the card.</li>
+      <li>Difficulty in words and a small icon, and the distance. Never color alone.</li>
+      <li>A short teaser from the description.</li>
+      <li>The area (Book 1's Areas vocabulary), as text: the title is the only link.</li>
+    </ol>
+  </div>
+</figure>
+
+<!-- 3.9: the hike page on a phone, as a grey wireframe -->
+<figure id="03-hike-page">
+  <div class="row">
+    <div class="wire" style="width:360px;display:grid;gap:10px">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-family:var(--font-heading)">Lens &amp; Trail</b><span class="box" style="width:44px;height:30px">Menu</span></div>
+      <div class="box" style="aspect-ratio:16/9">Photo (16:9)</div>
+      <span style="font-size:13px;color:#5b5753">Photo: dave souza · CC BY-SA 4.0</span>
+      <b style="font:700 15px var(--font-body);color:#46423d">Saturday 21 November · 9:30</b>
+      <div style="font:700 28px/1.1 var(--font-heading)">Turnhouse Hill and Carnethy Hill</div>
+      <div class="facts-grid">
+        <div class="fact"><b>Meeting place</b><span>Flotterstone car park</span></div>
+        <div class="fact"><b>Distance</b><span>11.5 km</span></div>
+        <div class="fact"><b>Difficulty</b><span>Moderate</span></div>
+        <div class="fact"><b>Area</b><span>Turnhouse Hill</span></div>
+      </div>
+      <div class="box" style="height:44px;background:#2c2824;color:#fff">Directions</div>
+      <div class="box" style="height:120px">Map: the starting point</div>
+      <div class="line"></div><div class="line" style="width:90%"></div><div class="line" style="width:95%"></div><div class="line" style="width:60%"></div>
+      <b style="font:700 18px var(--font-heading)">Albums from this hike</b>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><div class="box" style="aspect-ratio:1">1:1</div><div class="box" style="aspect-ratio:1">1:1</div></div>
+    </div>
+    <ol style="font-size:16px;line-height:1.7;margin:0;padding-left:22px;max-width:420px">
+      <li>The photo and its credit.</li>
+      <li>When, then what.</li>
+      <li>The key facts in a grid: what a member checks at the trailhead.</li>
+      <li>The one action: directions to the meeting place.</li>
+      <li>Where to start: a map of the starting point (built later in the book).</li>
+      <li>The description, then the albums from this hike.</li>
+    </ol>
+  </div>
+</figure>
+
+<!-- 3.10: the logo -->
+<figure id="03-logo">
+  <div class="row" style="align-items:center;gap:40px">
+    <div style="background:#1f6f5c;padding:18px;border-radius:8px;display:grid;gap:8px;justify-items:center"><img src="book1-logo.svg" width="64" height="64" alt=""><span style="color:#fff;font-size:13px">Book 1</span></div>
+    <img src="../logo.svg" width="128" height="128" alt="">
+    <img src="../logo.svg" width="64" height="64" alt="">
+    <img src="../logo.svg" width="32" height="32" alt="">
+    <div style="background:#161310;padding:18px;border-radius:8px;display:flex;gap:14px;align-items:center"><img src="../logo.svg" width="64" height="64" alt=""><b style="font:700 26px var(--font-heading);color:#f0eae4">Lens &amp; Trail</b></div>
+    <div style="background:#fbf6f0;padding:18px;border-radius:8px;display:flex;gap:14px;align-items:center;border:1px solid #dcd6d1"><img src="../logo.svg" width="64" height="64" alt=""><b style="font:700 26px var(--font-heading);color:#2c2824">Lens &amp; Trail</b></div>
+  </div>
+</figure>
+
+<!-- 3.11: the hero slider -->
+<figure id="03-slider">
+  <div class="hero">
+    <div class="shade"></div>
+    <div class="text light">
+      <span style="font:700 15px var(--font-body);letter-spacing:.06em;text-transform:uppercase;color:#f0cdac">Next hike · Sat 21 November</span>
+      <h2>Turnhouse Hill and Carnethy Hill</h2>
+      <div><span class="btn">See the hike</span></div>
+    </div>
+    <div class="controls">
+      <span class="ctrl" title="Pause"><svg viewBox="0 0 24 24" fill="#fff"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg></span>
+      <span class="ctrl" title="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M15 5l-7 7 7 7"/></svg></span>
+      <span class="ctrl" title="Next"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M9 5l7 7-7 7"/></svg></span>
+      <span class="dots"><i class="on"></i><i></i><i></i></span>
+      <span style="margin-left:auto;font-size:14px;background:rgb(22 19 15 / .78);padding:4px 10px;border-radius:4px">Photo: Jaroslaw Musialkowski · CC BY-SA 4.0</span>
+    </div>
+  </div>
+</figure>
+
+<!-- 3.12: the printed hike page -->
+<figure id="03-print">
+  <div class="paper">
+    <header><img src="../logo.svg" width="28" height="28" alt="">Lens &amp; Trail · Photos and hikes around Edinburgh</header>
+    <h1>Turnhouse Hill and Carnethy Hill</h1>
+    <dl>
+      <dt>When</dt><dd>Saturday 21 November 2026, 9:30</dd>
+      <dt>Meeting place</dt><dd>Flotterstone car park</dd>
+      <dt>Distance</dt><dd>11.5 km</dd>
+      <dt>Difficulty</dt><dd>Moderate</dd>
+      <dt>Map</dt><dd>The starting point on OpenStreetMap<br><span class="url">(https://www.openstreetmap.org/search?query=Flotterstone)</span></dd>
+    </dl>
+    <p>Two summits of the Pentlands from Flotterstone car park, with views across the Firth of Forth on a clear day. Bring water, something warm, your camera, and a head torch: it gets dark before five in November.</p>
+    <p class="url">Printed from https://lens-and-trail-theme.ddev.site/hikes/turnhouse-hill</p>
+  </div>
+</figure>
+
+<script>
+const scales = { green: 'green', sand: 'sand', neutral: 'neutral' };
+const css = getComputedStyle(document.documentElement);
+for (const [id, name] of Object.entries(scales)) {
+  const row = document.getElementById('scale-' + id);
+  for (const step of [50,100,200,300,400,500,600,700,800,900,950]) {
+    const hex = css.getPropertyValue(`--${name}-${step}`).trim();
+    const c = document.createElement('div');
+    c.className = 'chip' + (name === 'green' && step === 700 ? ' base' : '');
+    c.style.background = hex;
+    c.style.color = step >= 500 ? '#fff' : '#16130f';
+    c.innerHTML = `${step}<br>${hex}`;
+    row.appendChild(c);
+  }
+}
+const steps = document.getElementById('steps');
+const names = [[5,'Lens & Trail'],[4,'Hikes this autumn'],[3,'Turnhouse Hill'],[2,'Meeting place'],[1,'Next hike'],[0,'We walk every other Saturday.'],[-1,'Photo: CC BY-SA 4.0']];
+for (const [s, text] of names) {
+  const a = 17 * 1.2 ** s, b = 18 * 1.25 ** s;
+  steps.insertAdjacentHTML('beforeend', `<span class="k">step ${s}</span><span class="v" style="font-size:${a}px">${text}<small>${a.toFixed(1)}px</small></span><span class="v" style="font-size:${b}px">${text}<small>${b.toFixed(1)}px</small></span>`);
+}
+</script>
+</body>
+</html>
