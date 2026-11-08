@@ -236,10 +236,21 @@ The two **badges** (difficulty and distance) are small boards of their own: a te
 
 Last, the card itself: a `color.surface` fill, a `border.thin` stroke in `color.border` (right-click the color token and choose **Stroke**), a `radius.medium` corner, **Clip content** on, so the photo's corners are rounded too, and its height set to **Fit content**, so it's always as tall as what's in it.
 
-%% Author: the steps up to the date were done by hand in Penpot, as written. The rest of the card (title, badges, teaser, area, and the card's own fill, stroke, corner and clipping) was built through Penpot's MCP server with the same properties and tokens; walk them by hand once more before the chapter is final, to check the clicks. The difficulty icon is "▲▲" in text for now; the Lucide icon comes with the icons. Chapter 3 says a photo's credit is shown even on a card, but its card figure has none: where does the credit go on the card (over the photo's corner, or in small type under it)? %%
+%% Author: the steps up to the date were done by hand in Penpot, as written. The rest of the card (title, badges, teaser, area, and the card's own fill, stroke, corner and clipping) was built through Penpot's MCP server with the same properties and tokens; walk them by hand once more before the chapter is final, to check the clicks. The difficulty icon is "▲▲" in text for now; the Lucide icon comes with the icons. The credit goes over the photo's bottom corner (the author, 2026-11-08). %%
 
 ![The finished hike card in Penpot with the Hike card board selected: the photo, the date, the title in Bricolage Grotesque, the Moderate and 11.5 km badges, the teaser and the area. The Layers list shows Photo and Body, with Date, Title, Badges, Teaser and Area inside Body; the Design panel shows the fill color.surface as a token](images/04-card-tokens.png)
 *Figure 4.17: The hike card. Every color, size and space in it is a token.*
+
+### The photo's credit
+
+Chapter 3 promised that every photo keeps its credit, even on a card. On the card, it goes where it takes no room: over the photo's bottom-right corner, in small white type on a dark label, as on the hero.
+
+1. Select `Photo`, right-click it and choose **Selection to board**. Name the new board `Media`. It holds the photo and, in a moment, the credit on top of it.
+2. With the **Text** tool, click inside `Media` and type `dave souza · CC BY-SA 4.0`. Apply `font.family.body`, `font.size.step--1` and `font.weight.regular`, and right-click `color.neutral.0` in the `values` set and choose **Fill**.
+3. Select the text, choose **Selection to board** again, and name the board `Credit`. Give it a **Flex layout**, `space.2xs` padding at the sides (**Paddings → Horizontal**) and `space.3xs` at the top and bottom (**Paddings → Vertical**), and a `color.neutral.950` fill.
+4. Drag `Credit` to the photo's bottom-right corner. Under **Constraints** in the **Design** panel, set it to **Right** and **Bottom**, so it stays in the corner when the photo changes size.
+
+The credit's colors are values, not roles: white on near-black in light *and* dark mode, because the photo under it is the same photo in both. (A label at 75% opacity would let the photo show through, but Penpot sets a fill to full opacity when you apply a color token, so the club's label is solid. It's easier to read that way, too.)
 
 ### A component, and a variant
 
@@ -266,12 +277,12 @@ Penpot puts the card and a copy of it in a new board with a purple outline, the 
 2. Rename the property to `Layout`, and give the two variants the values `Photo on top` and `Photo beside`.
 3. Make the second one different: select it, set its layout's direction to a **row**, its width to `600`, and its photo to `240` by `160` (3:2 again).
 
-![The two variants of the hike card: on the left, the photo on top of the text; on the right, a wider card with the photo on the left and the date, title, badges, teaser and area beside it](images/04-hike-card-variants.png)
+![The two variants of the hike card: on the left, the photo on top of the text; on the right, a wider card with the photo on the left and the date, title, badges, teaser and area beside it. Both photos have the credit dave souza, CC BY-SA 4.0, on a dark label in their bottom-right corner](images/04-hike-card-variants.png)
 *Figure 4.21: The hike card's two variants, Photo on top and Photo beside.*
 
 > **Try it:** Choose **Dark** in the Themes menu, and look at the card. Nothing in it was drawn twice: every color is a role, and the roles point at the dark values now.
 
-![The same two variants in dark mode: a dark brown card, light text, the title in near-white, and the badges dark sandstone with light text](images/04-hike-card-dark.png)
+![The same two variants in dark mode: a dark brown card, light text, the title in near-white, the badges dark sandstone with light text, and the photo credits unchanged, white on near-black](images/04-hike-card-dark.png)
 *Figure 4.22: The same card with the Dark theme. That's what the two tiers of tokens are for.*
 
 ## The hike page on a phone
@@ -369,6 +380,6 @@ The map stays a grey box: it's a placeholder for something the theme builds late
 ![The same hike page in dark mode: a near-black page, light text, dark raised boxes for the facts, a light green Directions button with dark text, and a dark grey map](images/04-hike-page-phone-dark.png)
 *Figure 4.27: The hike page with the Dark theme.*
 
-%% Author: done by hand in Penpot, as written: the Wireframes page, the board from the iPhone 12 Mini preset, its layout, fill, padding and gap, the Key facts board with its grid layout, row gap and auto rows, and dragging the button from Assets. Done through the MCP server with the same tokens: the column gap of Key facts (the token menu was too tall for the screen: its top, with Gaps → All, was cut off; check how a reader on a laptop gets to it), the four facts, the Button main component, and the rest of the page. Checked by hand: Ctrl+D in a full grid adds a third column; Ctrl+D into an empty cell wasn't tried (the grid was already full). Figures 4.26 and 4.27 are exported at 1x (360 pixels wide) and could use a 2x export for print. The card's photo credit is still open (over the photo's corner, or under it); the card has none yet. %%
+%% Author: done by hand in Penpot, as written: the Wireframes page, the board from the iPhone 12 Mini preset, its layout, fill, padding and gap, the Key facts board with its grid layout, row gap and auto rows, and dragging the button from Assets. Done through the MCP server with the same tokens: the column gap of Key facts (the token menu was too tall for the screen: its top, with Gaps → All, was cut off; check how a reader on a laptop gets to it), the four facts, the Button main component, and the rest of the page. Checked by hand: Ctrl+D in a full grid adds a third column; Ctrl+D into an empty cell wasn't tried (the grid was already full). Figures 4.26 and 4.27 are exported at 1x (360 pixels wide) and could use a 2x export for print. The card's photo credit is built through the MCP (a Media board with the photo and an absolutely placed Credit board, constraints right and bottom); its steps weren't clicked by hand, and Figures 4.18 to 4.20 were taken before it was added. %%
 
 %% Author: next sections (to come): the other wireframes, exporting `design/tokens.json` and the Penpot file. %%
