@@ -96,7 +96,7 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | **Part 1: Foundations** |  |
 | 1. What a Theme Is, and What We'll Build | Proposed. |
 | 2. Choosing an Approach | Proposed. From `research/choosing-an-approach.md`. |
-| 3. Designing Lens & Trail | **Drafted** (2026-11-07), for the author's review. The brief (with utumallt.is as the layout reference), the colors (green, Old Town sandstone, warm neutrals; values and roles; dark mode with a toggle; forced colors), Bricolage Grotesque + Atkinson Hyperlegible Next (variable, self-hosted), a fluid type scale, space and layout, the hike card and page, photos, icons, Book 1's logo redrawn, motion (slider, lightbox, parallax, reduced motion), print. 14 figures from `design/chapter03/figures.html` (`tools/design_figures.py 03`) and the core site. |
+| 3. Designing Lens & Trail | **Drafted** (2026-11-07), for the author's review. The brief (with utumallt.is as the layout reference), the colors (green, Old Town sandstone, warm neutrals; values and roles; dark mode with a toggle; forced colors), Bricolage Grotesque + Atkinson Hyperlegible Next (variable, self-hosted), a fluid type scale, space and layout, the hike card and page, photos, icons, Book 1's logo redrawn, motion (slider, lightbox, parallax, reduced motion), print. 16 figures: 12 from `design/chapter03/figures.html` (`tools/design_figures.py 03`), 2 from the core site, 2 of utumallt.is. |
 | 4. The Design in Penpot | Proposed. Split from Chapter 3: a Penpot account, design tokens (W3C format), wireframes, export, Using Figma?. |
 | 5. Generating the Themes | Proposed. `lens_trail` (Starterkit) and `lens_trail_cms` (Mercury); `tools/tokens.py`. |
 | 5. Regions and the Page Template | Proposed. |

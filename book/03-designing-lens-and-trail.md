@@ -40,12 +40,19 @@ The club asked for a little spice, too: a hero slider on the front page, a light
 
 ### Learning from a site that works
 
-You rarely design from nothing. Looking at a site that already does the job well saves you from rediscovering its answers. For the hikes, we looked at [Út um allt](https://utumallt.is) ("out and about"), a guide to walking, cycling and running routes around Reykjavík, made by Hilmar's company. Its look isn't ours, but two things in it are exactly what the club needs:
+You rarely design from nothing. Looking at a site that already does the job well saves you from rediscovering its answers. For the hikes, we looked at [Út um allt](https://utumallt.is) ("out and about"), a guide to walking, cycling and running routes around Reykjavík, made by Hilmar's company, Um að gera ehf. Its look isn't ours (it's dark blue, with pale blue badges), but two things in it are exactly what the club needs.
 
-- **A route in a list is a card**: a photo, the title, the length, the difficulty in words, a short teaser, and the area. Nothing else, and the whole card is one link.
-- **A route's own page has a key facts block** near the top: duration, distance, difficulty, ascent, surface, hazards, each with a small label and a big value. Below that, a button that opens a map at the start of the route.
+**A route in a list is a card**: a photo, the title, the length and the difficulty as badges, with the difficulty in words ("Level 1", "For Everybody"), a short teaser, and the municipality. Nothing about the route that you'd only need once you've chosen it.
 
-That's a good fit for Book 1's Hike content type, which has a date, a meeting place, a distance, a difficulty, a hike leader, an area and a photo. We'll come back to the card and the page in "The pieces of a hike".
+![Út um allt's Hiking Routes page in English: the site's logo over a band of misty forest, and four route cards on a dark blue background, each with a photo, a heart for saving it, a walking icon, the title (such as Around Helgafell in Hafnarfjörður), badges such as Walk: 8.34km and Difficulty: Level 2, a two-line teaser, and the municipality](images/03-utumallt-list.png)
+*Figure 3.1: Routes as cards on Út um allt. The badges say the length and the difficulty in words.*
+
+**A route's own page has a block of key facts**: duration, distance, difficulty, elevation gain, maximum altitude, when it's open, each with an icon, a label and a value. The six most useful facts are shown, and a **More** button opens the rest (surface, width of the path, hazards, obstacles, services, the GPX file). Above the facts are the description and an **Open Map** button with the route's starting point.
+
+![Út um allt's Detailed Information block for the Vífilsstaðavatn route: six pale blue boxes with an icon, a label and a value each: Duration 30 - 60 minutes, Distance 2.62km, Difficulty Level 1, Cumulative Elevation Gain 90,5m, Maximum Altitude 114,5m, Available Always, and a More button below them](images/03-utumallt-facts.png)
+*Figure 3.2: A route's key facts on Út um allt, with the less important ones behind More.*
+
+That's a good fit for Book 1's Hike content type, which has a date, a meeting place, a distance, a difficulty, a hike leader, an area and a photo. One thing we'll change: Út um allt's visitors read about a route before they choose it, so the facts can come after the description. The club's members have already chosen: they're at the car park, so the club's facts move up, right under the title. We'll come back to the card and the page in "The pieces of a hike".
 
 > **Try it:** Pick two outdoor or club websites you like (a hiking club, a running club, a mountain rescue team). For each, write down in one sentence who it's for and what it shows first on a phone. Does the first screen match what its visitors need first? You've reverse-engineered a brief.
 
@@ -71,7 +78,7 @@ And one more rule that's often forgotten: **color alone must never carry the mea
 So, the club's green. As text on white, it's 6.02:1: it passes. As text on a near-black dark mode background, it's 3.07:1: it fails, by a long way.
 
 ![Three samples of the words Turnhouse Hill: the club green #1f6f5c on white, 6.02:1, passes for text; the same green on the near-black #161310, 3.07:1, fails for text; and a lighter green #75ab9b on #161310, 7.10:1, passes for text](images/03-green-contrast.png)
-*Figure 3.1: The club's green works on white, but not on a dark background. Dark mode needs a lighter green of its own.*
+*Figure 3.3: The club's green works on white, but not on a dark background. Dark mode needs a lighter green of its own.*
 
 That one measurement shapes the whole color system: the club can't have *one* green. It needs a family of greens, from very light to very dark, and the right one for each job.
 
@@ -132,7 +139,7 @@ A **color scale** is a family of one hue, numbered from light to dark: 50 for th
 We made the club's scales with **OKLCH**, a way of describing color as lightness, chroma (how colorful) and hue (which color). Its lightness matches what our eyes see, so steps that are evenly spaced in OKLCH also *look* evenly spaced, and that's hard to do by picking hex values by hand. The club's green turns out to have an OKLCH lightness of 0.49, so it sits at step 700, with lighter greens above it and darker ones below. CSS understands OKLCH directly (`oklch()` has been widely available since November 2025), but the club's scales are written out as hex values, because every tool, Penpot included, understands those.
 
 ![Three color scales of eleven steps each, from 50 to 950: Green (from #e4fbf3 to #032019, with the club's #1f6f5c at 700 outlined), Sandstone (from #fff3e8 to #2a1500) and Neutral (from #fbf6f0 to #16130f)](images/03-palette.png)
-*Figure 3.2: The club's three color scales. The outlined green is Book 1's `#1f6f5c`.*
+*Figure 3.4: The club's three color scales. The outlined green is Book 1's `#1f6f5c`.*
 
 ### The accent: three options
 
@@ -145,7 +152,7 @@ We looked at three accents:
 - **C. All green**: no second color at all. Highlights are pale greens, and the photos carry all the color.
 
 ![The same piece of the club's site three times, in light mode: a Next hike marker and a hike card for Turnhouse Hill and Carnethy Hill with the badges Moderate and 11.5 km. In A the marker and badges are heather purple, in B sandstone ochre, in C pale green](images/03-accent-options.png)
-*Figure 3.3: The three accents. The club chose B, Old Town sandstone.*
+*Figure 3.5: The three accents. The club chose B, Old Town sandstone.*
 
 The club chose **B, Old Town sandstone**. It's warm next to the cool green, so the two don't blur into each other, and it's at home in both of the club's landscapes, the hills and the city. Heather was lovely but close to a link's traditional purple, and "All green" was calm but made the badges and the links look too alike.
 
@@ -179,8 +186,8 @@ These are the club's roles, and the contrast of each pair that has to be read:
 
 Every pair passes AA, most of them comfortably. Two details are worth a second look. The *accent* role is only for things that aren't text, so it needs only 3:1, and the darker *accent-text* exists for when sandstone has to be read. And the borders are decorative: a card's edge isn't needed to use the card (the whole card is a link with a clear title), so the borders are allowed to be soft. A text field's border is different, because you need to see it to find the field, so form fields will get a darker border in the forms chapter.
 
-![The same piece of the club's site in light and dark mode side by side: the menu with Hikes as the current page, the Next hike marker, a hike card for Turnhouse Hill and Carnethy Hill, and a Join the club button. In dark mode the background is near-black, the card dark brown, the link and button a lighter green, and the badges dark sandstone with light text](images/03-light-dark.png)
-*Figure 3.4: The same roles, pointing at different values in light and dark mode.*
+![The same piece of the club's site in light and dark mode side by side: the menu with Hikes as the current page, the Next hike marker, a hike card for Turnhouse Hill and Carnethy Hill, and a Join the club button. In dark mode the background is near-black, the card dark brown, the current menu item and the button a lighter green, and the badges dark sandstone with light text](images/03-light-dark.png)
+*Figure 3.6: The same roles, pointing at different values in light and dark mode.*
 
 > **Drupalism: token.** In design, a **design token** is a named design decision, like `color-action` or `space-m`, stored in a file that both designers and developers use. Drupal has *tokens* too, and they're something else entirely: placeholders like `[node:title]` that Drupal replaces with a value, as in Book 1's Pathauto patterns. In this book, "token" means a design token, unless we're talking about Pathauto.
 
@@ -213,10 +220,10 @@ That sounds like it would break any design, and that's the point: the design has
 > **Try it:** Look at the club's site in forced colors mode, without Windows. Open a hike on the core site (`https://lens-and-trail-theme.ddev.site:8443/hikes/turnhouse-hill`) in Chrome, open the developer tools (**More tools** > **Developer tools**), open the **Rendering** panel (the three-dot menu in the developer tools, **More tools** > **Rendering**), and set **Emulate CSS media feature forced-colors** to **forced-colors: active**. What happened to the club's logo?
 
 ![The Turnhouse Hill and Carnethy Hill page in Olivero: the header with the club's logo and name in white on a green block, the main menu, and the hike's title and photo](images/03-olivero-normal.png)
-*Figure 3.5: The hike in Olivero, with Book 1's logo on the club's green.*
+*Figure 3.7: The hike in Olivero, with Book 1's logo on the club's green.*
 
 ![The same page with forced colors: the green block has gone, the site name and menu links are blue on white, and where the logo was there's nothing to see](images/03-olivero-forced-colors.png)
-*Figure 3.6: The same page in forced colors mode. The green background is removed, and Book 1's white logo disappears with it.*
+*Figure 3.8: The same page in forced colors mode. The green background is removed, and Book 1's white logo disappears with it.*
 
 Book 1's logo is white lines on nothing: it only shows because Olivero puts it on a green background. In forced colors, the background goes, and the logo is white on white. Our logo will have to bring its own background ("The logo", below).
 
@@ -235,7 +242,7 @@ The club looked at three pairs:
 3. **Bricolage Grotesque + Atkinson Hyperlegible Next**: two sans-serifs, a lively, slightly quirky heading face over a very legible body face.
 
 ![Three font pairs, each with the heading Photos and hikes around Edinburgh, the Spanish subheading ¿Quién se apunta a la excursión?, and two lines of body text about walking every other Saturday and the membership fee: 1. Fraunces + Atkinson Hyperlegible Next, 2. Source Serif 4 + Source Sans 3, 3. Bricolage Grotesque + Atkinson Hyperlegible Next, outlined as the club's choice](images/03-type-pairs.png)
-*Figure 3.7: The three pairs, with English and Spanish text from the club's site.*
+*Figure 3.9: The three pairs, with English and Spanish text from the club's site.*
 
 The club chose **3, Bricolage Grotesque and Atkinson Hyperlegible Next**. Bricolage Grotesque has the energy of a poster for an outing, and it looks at home next to photos, where a serif felt a little like a newspaper. **Atkinson Hyperlegible Next** comes from the Braille Institute of America and was designed for readers with low vision: letters that look alike in many fonts (capital I, lowercase l and the number 1; O and 0) are drawn to look different. That's a gift on a phone outdoors, and it matters for a club that gives out times and distances.
 
@@ -251,7 +258,7 @@ The club's two fonts are variable:
 - **Bricolage Grotesque** has three axes: weight (`wght`, 200 to 800), width (`wdth`, 75 to 100, from condensed to normal) and **optical size** (`opsz`, 12 to 96).
 
 ![The word Trail in Bricolage Grotesque at weights 200, 400, 600 and 800, then at widths 75, 87.5 and 100; and the word Carnethy at the same size with optical size 12 and 96: the 12 version has looser spacing and sturdier details, the 96 version is tighter and finer](images/03-variable-axes.png)
-*Figure 3.8: Bricolage Grotesque's three axes.*
+*Figure 3.10: Bricolage Grotesque's three axes.*
 
 Optical size is the clever one. Type that's printed small needs to be sturdier and more loosely spaced to stay readable, and big type looks better tighter and finer; type designers used to draw separate versions for each. With an `opsz` axis, the browser picks the right one for the size automatically (`font-optical-sizing: auto` is the default). The width axis will come in handy, too: a long Spanish heading on a phone can get a little narrower instead of breaking onto a third line.
 
@@ -272,7 +279,7 @@ A **type scale** is a set of sizes for text, each a fixed **ratio** bigger than 
 A phone and a wide screen want different scales, though. On a phone, a big ratio makes headings huge and crowds out everything else; on a wide screen, a small ratio makes the headings timid. The usual answer was a different scale at each breakpoint, so sizes jumped as the window got wider. The club's scale is **fluid** instead: each step grows smoothly with the width of the screen, from a minimum on a 360-pixel phone to a maximum on a 1280-pixel screen. Body text goes from 17 to 18 pixels, and the ratio from 1.2 to 1.25.
 
 ![The club's seven type steps, from step 5 (Lens & Trail) down to step -1 (Photo: CC BY-SA 4.0), side by side on a phone, 360 pixels wide, and on a wide screen, 1280 pixels wide: step 5 grows from 42.3 to 54.9 pixels, body text (step 0) from 17 to 18, and step -1 stays at about 14](images/03-type-scale.png)
-*Figure 3.9: The club's type scale on a phone and on a wide screen. The bigger the step, the more it grows.*
+*Figure 3.11: The club's type scale on a phone and on a wide screen. The bigger the step, the more it grows.*
 
 CSS's `clamp()` function does it: a minimum, a preferred size that grows with the window's width (the `vw` part), and a maximum. This is what the scale looks like as CSS, and you don't need to work out the numbers by hand: a script will write them from the design tokens when we generate the themes.
 
@@ -351,24 +358,24 @@ WCAG 2.2 also asks that the focused element isn't hidden behind something else, 
 
 Hikes appear in lists all over the site: the front page, the hikes page, the sidebar, the archive. Each time, as a **card**, following the Út um allt pattern.
 
-![A hike card with six numbered parts: 1 the photo, 2 the date and time Sat 21 November 9:30, 3 the title Turnhouse Hill and Carnethy Hill, 4 the badges Moderate with two small triangles and 11.5 km, 5 a short teaser, 6 the area Turnhouse Hill; with a list explaining each part](images/03-hike-card.png)
-*Figure 3.10: The hike card's parts.*
+![A hike card with six numbered parts: 1 the photo, 2 the date and time Sat 21 November 9:30, 3 the title Turnhouse Hill and Carnethy Hill, 4 the badges Moderate with two small triangles and 11.5 km, 5 a short teaser, 6 the area Turnhouse Hill as plain text; with a list explaining each part](images/03-hike-card.png)
+*Figure 3.12: The hike card's parts.*
 
 1. The **photo**, from the hike's Photo field, cropped to **3:2**.
 2. The **date and time**, before the title: for an outing, "when" decides whether you read on.
 3. The **title**, which is the card's link. One link per card, not three (photo, title, "Read more") all going to the same place, which a screen reader user would hear three times.
 4. The **difficulty** and the **distance**, as badges. Difficulty is a word (*Easy*, *Moderate*, *Hard*, from Book 1's Difficulty field) with a small icon, never only a color.
 5. A **teaser**, the first sentence or two of the description.
-6. The **area**, from Book 1's Areas vocabulary.
+6. The **area**, from Book 1's Areas vocabulary, as plain text. On the hike page it's a link to the area's page; on the card, the title is the only link.
 
 ### The hike page
 
 On a hike's own page, the order follows the brief: when, then what, then everything a member checks at the trailhead, then how to get there.
 
 ![A grey wireframe of a hike page at phone width: the site name and a Menu button, a 16:9 photo with its credit, the date, the title Turnhouse Hill and Carnethy Hill, a two-by-two grid of facts (Meeting place: Flotterstone car park, Distance: 11.5 km, Difficulty: Moderate, Area: Turnhouse Hill), a dark Directions button, a map of the starting point, lines of description text, and Albums from this hike with two square photos](images/03-hike-page.png)
-*Figure 3.11: The hike page on a phone, as a grey wireframe. The colors come later; a wireframe is about what goes where.*
+*Figure 3.13: The hike page on a phone, as a grey wireframe. The colors come later; a wireframe is about what goes where.*
 
-The **key facts** grid is the Út um allt idea: a small label and a big value, in a grid of two columns on a phone, so the meeting place and the distance are on screen without scrolling. The one button is **Directions**: it opens a map app at the meeting place, which is what a member needs on a Saturday morning. (There's no "Join the hike" button: the club doesn't take bookings, as Book 1's How to join page says.) The **map** below it shows where the walk starts; making it is a short how-to later in the book. And at the bottom, Book 1's "Albums from this hike" block, as square photos.
+The **key facts** grid is the Út um allt idea, moved up: a small label and a big value, in a grid of two columns on a phone, so the meeting place and the distance are on screen without scrolling. A hike has four facts, so they all fit, and there's no need for a More button. The one button is **Directions**: it opens a map app at the meeting place, which is what a member needs on a Saturday morning. (There's no "Join the hike" button: the club doesn't take bookings, as Book 1's How to join page says.) The **map** below it shows where the walk starts; making it is a short how-to later in the book. And at the bottom, Book 1's "Albums from this hike" block, as square photos.
 
 This is a **wireframe**: a drawing of a page in grey boxes, without colors or real images, to decide what goes where before deciding what it looks like. The next chapter draws wireframes for the club's main pages in Penpot.
 
@@ -396,7 +403,7 @@ The club's site needs about fifteen small icons: a calendar, a pin for the meeti
 Book 1 gave the club a logo in its Chapter 16: a circle (the lens), a smaller circle (the sun) and a line of hills, in white. It's the club's, and people know it, so we keep the drawing. But we saw what happens to it in forced colors, and on the club's new light background it would be white on almost white. So the logo gets **its own background**: a cream disc inside the lens, with the lens and the hills in the club's green and the sun in sandstone.
 
 ![Book 1's logo in white on a green tile, then the redrawn logo at 128, 64 and 32 pixels: a green circle on a cream disc, a sandstone sun, and a green line of hills; then the logo with the name Lens & Trail on a near-black background and on the light background](images/03-logo.png)
-*Figure 3.12: Book 1's logo, and the same drawing redrawn for the club's theme. With a background of its own, it works on light and dark pages, and in forced colors mode.*
+*Figure 3.14: Book 1's logo, and the same drawing redrawn for the club's theme. With a background of its own, it works on light and dark pages, and in forced colors mode.*
 
 The logo is `design/logo.svg`. It has a `<title>`, so a screen reader can name it when it's shown on its own; in the header it's next to the site name, so there it'll be marked as decoration instead, which is a detail for the header chapter. At 32 pixels the sun and the hills are still readable, which matters for the favicon (the little icon in the browser tab), made from the same drawing in the header chapter.
 
@@ -409,7 +416,7 @@ Movement on a page draws the eye, which is exactly why it has to be used with ca
 The front page opens with a **hero**: a big photo with a heading and a button. The club's is a **slider** (also called a carousel): a few slides, such as the next hike, the latest album and an invitation to join, one after another.
 
 ![A front page hero: a wide photo of the Pentland Hills darkened on the left, the words Next hike, Sat 21 November, the heading Turnhouse Hill and Carnethy Hill, a See the hike button, and below them round Pause, Previous and Next buttons, three dots with the first filled, and the photo credit on a dark background on the right](images/03-slider.png)
-*Figure 3.13: The hero slider, with its controls and the photo's credit.*
+*Figure 3.15: The hero slider, with its controls and the photo's credit.*
 
 Sliders have a bad reputation, and it's earned: most of them move on their own, too fast to read, with no way to stop them, and few visitors get past the first slide. The club's slider is designed to avoid the worst of it:
 
@@ -450,7 +457,7 @@ With reduced motion on, the club's site:
 Hike leaders like Jordi print the hike page and put it in a map case. A web page printed as it is wastes paper on the menu, the footer and the sidebar, and leaves out what matters on paper: where a link goes. So the club's theme has a **print stylesheet** (CSS that's only used when printing), designed now and built in the chapter on templates for content.
 
 ![A printed A4 page: a small logo and Lens & Trail, Photos and hikes around Edinburgh, a line, the title Turnhouse Hill and Carnethy Hill, a list of When, Meeting place, Distance, Difficulty and Map with the OpenStreetMap address written out, the description, and the address of the page it was printed from](images/03-print.png)
-*Figure 3.14: The hike page, printed.*
+*Figure 3.16: The hike page, printed.*
 
 On paper:
 
@@ -515,5 +522,5 @@ You can now:
 - [Wakamai Fondue](https://wakamaifondue.com), to see what's inside a font file.
 - [Lucide](https://lucide.dev), the club's icons.
 - The W3C's [ARIA Authoring Practices: Carousel](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/), for how an accessible slider behaves.
-- [Út um allt](https://utumallt.is), the route guide the club's hike cards and hike pages learned from.
+- [Út um allt](https://utumallt.is), by Um að gera ehf., the route guide the club's hike cards and hike pages learned from.
 - For comparison, WordPress's [`theme.json`](https://developer.wordpress.org/block-editor/how-to-guides/themes/global-settings-and-styles/) documentation.
