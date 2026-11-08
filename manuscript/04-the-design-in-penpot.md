@@ -6,7 +6,7 @@ This chapter puts the design into **Penpot**, a free and open source design tool
 
 You don't need to have used a design tool before. We hadn't used Penpot either when we started this chapter, and we'll go slowly, one click at a time. Nothing in this chapter changes the two sites: they still run Olivero and Mercury, as Book 1 left them. The next chapter generates the themes, and the tokens from this chapter are where their colors and sizes come from.
 
-%% Author: written as we go (2026-11-08). Done so far: the file, the tokens, the fonts and the hike card. Still to come: the hike page on a phone, the other wireframes, exporting, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
+%% Author: written as we go (2026-11-08). Done so far: the file, the tokens, the fonts, the hike card and the hike page on a phone. Still to come: the other wireframes, exporting, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
 
 ## Penpot
 
@@ -274,4 +274,101 @@ Penpot puts the card and a copy of it in a new board with a purple outline, the 
 ![The same two variants in dark mode: a dark brown card, light text, the title in near-white, and the badges dark sandstone with light text](images/04-hike-card-dark.png)
 *Figure 4.22: The same card with the Dark theme. That's what the two tiers of tokens are for.*
 
-%% Author: next sections (to come): the hike page on a phone, the other wireframes, exporting `design/tokens.json` and the Penpot file. %%
+## The hike page on a phone
+
+The card is a part. A **wireframe** is a whole page, and the first one is the page a member opens most: a hike, on a phone, on the morning of the walk. Chapter 3 drew it in grey (Figure 3.13); now it gets the club's tokens, the card's photo, and a button.
+
+### A page for wireframes
+
+1. In the **Layers** tab, click **+** next to **Pages**. Penpot adds *Page 1*. Double-click it and name it `Wireframes`.
+2. Choose the **Board** tool (**B**) and drag a board on the canvas. Its size doesn't matter yet.
+3. In the **Design** panel, open **Size presets**. Penpot has the sizes of many phones, tablets and screens; type `Mini` in the search box and choose **iPhone 12 Mini**, which is 360 by 780 pixels. The search looks at the names, not the sizes, so typing `360` finds nothing.
+
+![The Size presets list in the Design panel, searched for Mini: iPhone 13 Mini 375 by 812, iPhone 12 Mini 360 by 780 and iPad Mini 8.3in 744 by 1133](images/04-size-presets.png)
+*Figure 4.23: A board the size of a small phone. Chapter 3 designs for 360 pixels wide.*
+
+4. Name the board `Hike page, phone`.
+5. Give it a **Flex layout** in a **column**, like the card.
+6. With the board selected, open the **Tokens** tab, click the `light` set and click `color.background`: the page gets the club's warm off-white. Then, in the `values` set, right-click `space.s` and choose **Paddings → All**, and right-click it again and choose **Row Gap**.
+
+The height of 780 pixels is a phone's screen, but a page is as long as its content. Once there's something in the board, Penpot makes it taller to fit, because a board with a layout fits its content unless you give it a fixed height.
+
+### The key facts, in a grid
+
+The four key facts sit in two columns and two rows. That's a job for Penpot's other layout, the **grid layout**: the same idea as CSS grid, which is how the theme will build it too.
+
+1. Choose the **Board** tool and drag a board inside the page. Name it `Key facts`.
+2. In the **Design** panel, remove its white **Fill** with the **−** next to it, and set its width to **Fill** under **Flex element**, so it's as wide as the page's content.
+3. Click **+** next to **Layout** and choose **Grid layout**. Penpot draws two columns and two rows in pink: a 2-by-2 grid is what you get by default, and that's what the facts need.
+4. Open the **Tokens** tab and right-click `space.2xs`. Under **Gaps**, choose **All**, for 8 pixels between the facts in both directions.
+
+> **Click in the Layers list.** A click on the canvas selects the outermost board under the pointer. To select a board inside another one, click its name in the **Layers** list.
+
+The grid's rows are still **1fr** each: equal shares of the board's height. A fact's height should come from its text, so:
+
+1. Click **Edit grid** in the **Layout** section.
+2. Click **Rows 2** to show the two rows, and change each one from **FR** to **AUTO**.
+3. Click **Done** at the top of the canvas.
+
+![The grid editor for Key facts: pink numbered handles for the columns, marked 1FR, and the rows, marked AUTO, on the canvas; in the Design panel, Columns 2 with 1fr, 1fr, and Rows 2 with auto, auto](images/04-grid-edit.png)
+*Figure 4.24: Editing the grid. Two equal columns, and rows as tall as what's in them.*
+
+Each fact is a small board in one of the grid's cells, with a label and a value:
+
+| Part | Font | Size | Weight | Color |
+|---|---|---|---|---|
+| The fact's board | | | | `color.surface` fill, `border.thin` in `color.border`, `radius.small`, `space.xs` padding, `space.3xs` row gap |
+| `Label` (Meeting place) | `font.family.body` | `step--1` | `regular` | `color.muted` |
+| `Value` (Flotterstone car park) | `font.family.body` | `step-0` | `bold` | `color.text` |
+
+Make one, then select it and press **Ctrl+D** (**Cmd+D** on a Mac) three times: in a grid, each copy goes in the next empty cell. (Once the grid is full, Penpot makes room for another copy by adding a column. If that happens, press **Ctrl+Z** to undo it.) Change the copies' texts to *Distance: 11.5 km*, *Difficulty: Moderate* and *Area: Turnhouse Hill*. Set each fact's height to **Fill**, so the two facts in a row are the same height even when *Flotterstone car park* wraps onto two lines.
+
+### A button from the Components page
+
+The page has one button, **Directions**. The club's sites will have more buttons, all the same shape, so the button is a component, like the card. It's on the `Components` page as `Button`: a board with a flex layout, a `color.action` fill, a `radius.small` corner, `space.m` padding at the sides and `space.xs` at the top and bottom, and a label in `font.family.body`, `step-0`, `bold`, `color.on-action`. It's 45 pixels high, so it's above the 44-pixel tap target (`size.target`) from Chapter 3.
+
+To use it on the hike page:
+
+1. Open the **Assets** tab, and open **Components**. The button and the hike card are there, as pictures.
+2. Drag the button onto the hike page.
+3. In the **Layers** list, drag it to directly below `Key facts`. (Where you drop it on the canvas, Penpot puts it inside the board under the pointer, and that may be the map's board rather than the page. The Layers list is the reliable way to put it in the right place.)
+4. Under **Flex element**, set its width to **Fill**: on a phone, the one button of the page is as wide as the page.
+5. Name the layer `Directions`.
+
+![The Directions button selected on the hike page, as wide as the page. The Layers list shows Directions with the diamond-outline icon of a copy, and the Design panel's Component section says Copy, Directions, Button](images/04-button-instance.png)
+*Figure 4.25: A copy of the button. The **Component** section says it's a **Copy** of **Button**.*
+
+That copy is an **instance**. Change the main `Button` on the `Components` page (a bigger corner, say), and every copy of it changes too, on every page. You can change a copy's text without breaking that link: Penpot keeps the change, and takes everything else from the main component.
+
+### The rest of the page
+
+Everything else on the page is a text, a photo or a box you already know how to make. From the top:
+
+| Layer | What it is | Tokens |
+|---|---|---|
+| `Header` | A board in a **row**, with **Justify** set to space between: the site name and the menu button | |
+| `Site name` | *Lens & Trail* | `font.family.heading`, `step-1`, `bold`, `color.text` |
+| `Menu button` | A board with the text *Menu*, 44 pixels high | `size.target` height, `color.surface` fill, `border.thin` in `color.border`, `radius.small` |
+| `Photo and credit` | A board in a column with the photo, at 16:9 (328 by 185), and its credit | `space.3xs` row gap, `radius.small` on the photo |
+| `Credit` | *Photo: dave souza · CC BY-SA 4.0* | `font.family.body`, `step--1`, `regular`, `color.muted` |
+| `Date` | *Saturday 21 November · 9:30* | `font.family.body`, `step-0`, `bold`, `color.muted` |
+| `Title` | *Turnhouse Hill and Carnethy Hill* | `font.family.heading`, `step-4`, `semibold`, `color.text` |
+| `Key facts` and `Directions` | From the last two sections | |
+| `Map` | A board, 200 pixels high, with the text *Map: the starting point* in the middle | `color.border` fill, `radius.small` |
+| `Description` | A paragraph about the walk | `font.family.body`, `step-0`, `regular`, `color.text` |
+| `Albums heading` | *Albums from this hike* | `font.family.heading`, `step-2`, `semibold`, `color.text` |
+| `Albums` | A board in a **row**, with two square photos, 160 by 160 | `space.2xs` column gap, `radius.small` on the photos |
+
+The map stays a grey box: it's a placeholder for something the theme builds later in the book, and a wireframe only has to say where it goes. The two album photos are Book 1's *Carnethy Hill from Turnhouse Hill* by Jim Barton and *Carnethy Hill views* by Alan O'Dowd, both under CC BY-SA 2.0.
+
+![The finished hike page at 360 pixels wide: Lens & Trail and a Menu button, the photo of Glencorse Reservoir with its credit, the date, the title in big Bricolage Grotesque, the four key facts in white boxes, a green Directions button, a grey map, the description, and Albums from this hike with two square photos of Carnethy Hill](images/04-hike-page-phone.png)
+*Figure 4.26: The hike page on a phone, with the club's tokens.*
+
+> **Try it:** Choose **Dark** in the Themes menu again. The page, the facts, the button and the map all change, because every color on the page is a role. The Directions button turns light green with dark text: that's `color.action` and `color.on-action` in the `dark` set, chosen in Chapter 3 to keep their contrast.
+
+![The same hike page in dark mode: a near-black page, light text, dark raised boxes for the facts, a light green Directions button with dark text, and a dark grey map](images/04-hike-page-phone-dark.png)
+*Figure 4.27: The hike page with the Dark theme.*
+
+%% Author: done by hand in Penpot, as written: the Wireframes page, the board from the iPhone 12 Mini preset, its layout, fill, padding and gap, the Key facts board with its grid layout, row gap and auto rows, and dragging the button from Assets. Done through the MCP server with the same tokens: the column gap of Key facts (the token menu was too tall for the screen: its top, with Gaps → All, was cut off; check how a reader on a laptop gets to it), the four facts, the Button main component, and the rest of the page. Checked by hand: Ctrl+D in a full grid adds a third column; Ctrl+D into an empty cell wasn't tried (the grid was already full). Figures 4.26 and 4.27 are exported at 1x (360 pixels wide) and could use a 2x export for print. The card's photo credit is still open (over the photo's corner, or under it); the card has none yet. %%
+
+%% Author: next sections (to come): the other wireframes, exporting `design/tokens.json` and the Penpot file. %%
