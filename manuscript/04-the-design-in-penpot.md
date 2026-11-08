@@ -6,7 +6,7 @@ This chapter puts the design into **Penpot**, a free and open source design tool
 
 You don't need to have used a design tool before. We hadn't used Penpot either when we started this chapter, and we'll go slowly, one click at a time. Nothing in this chapter changes the two sites: they still run Olivero and Mercury, as Book 1 left them. The next chapter generates the themes, and the tokens from this chapter are where their colors and sizes come from.
 
-%% Author: written as we go (2026-11-08). Done so far: the file, the tokens, the fonts, the hike card, the hike page on a phone, the other wireframes and the style tile. Still to come: exporting, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
+%% Author: written as we go (2026-11-08). All sections drafted (2026-11-08); waiting for the author's review. %%
 
 ## Penpot
 
@@ -427,4 +427,119 @@ There's one style tile, not two. Tokens follow the theme that's active for the w
 
 %% Author: the other wireframes, the Header and Footer components and the style tile were built through Penpot's MCP server (2026-11-08), with the same tokens and components, and exported as PNG at 1x into `design/wireframes/` (19 files, 11 MB). Choices to check: the content on them (teasers of the other hikes, the footer's "Meet us" heading, the 404's wording "You're a little off the trail", the dark mode toggle as Light · Dark · Auto in the menu and a round button with a placeholder circle in the wide header, the language switcher as "English · Español"); North Berwick has no photo in Book 1, so its card shows a grey box; the focus outline on the style tile has no 2-pixel gap (`size.focus-offset`) yet. %%
 
-%% Author: next sections (to come): exporting `design/tokens.json` and the Penpot file, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
+## Taking the design out of Penpot
+
+The design is drawn, and right now it lives on Penpot's servers. A theme can't read it there. Three things go into the book's `design/` folder, where the next chapters, and readers who never open Penpot, can find them: the tokens as a file, the wireframes as images, and the whole Penpot file as a backup anyone can import.
+
+### The tokens
+
+Exporting the tokens is the import from earlier in this chapter, run the other way:
+
+1. Open the **Tokens** tab, click **Tools** at the bottom, and choose **Export**.
+2. Leave **Single file** chosen. **Multiple files** gives one file per set, in a folder; the content is the same, and one file is easier to keep track of.
+3. Click **Export**, and save the file as `design/tokens.json` in your copy of the book's repository.
+
+![The Export tokens dialog: the tabs Single file and Multiple files, a preview of the JSON starting with the values set and the space tokens s, xs and 3xl, and the buttons Cancel and Export](images/04-export-tokens.png)
+*Figure 4.34: Exporting the tokens. The preview is the file you get.*
+
+Open the file in your editor and compare it with `code/chapter04/lens-and-trail-tokens.json`, the file we imported. The tokens are the same 101, with the same values and descriptions, but Penpot writes them its own way. The order of the tokens is different, every token has a `$description`, even an empty one, and the font families have become lists:
+
+<!-- include: design/tokens.json lines=126-142 -->
+
+A list is what the W3C format allows for a font family, a font and the fonts to fall back to, the way CSS's `font-family` does it. The themes have changed a little too: Penpot gives each one an `id`, and it has dropped the descriptions we gave *Phone* and *Wide*.
+
+None of this matters to Penpot, which reads both files the same way. It matters to the next chapter, which turns `design/tokens.json` into CSS with a small script, and the script reads the file Penpot exports, not the one we typed. From now on, Penpot is where the club's design changes, and `design/tokens.json` is what the themes get. When a color or a size changes, it changes in Penpot, and the tokens are exported again.
+
+> **Try it:** Export the tokens once more, without changing anything, over your `design/tokens.json`, and run `git diff design/tokens.json`. If you haven't changed a token or switched a theme since the first export, there's no difference: the export is the same every time for the same tokens. (Switching themes changes the `$metadata` at the end of the file, which records the active ones.) That's what makes a diff useful, later, when something did change.
+
+### The wireframes, as images
+
+Every board can be exported as an image. Penpot calls what to export, and at what size, an **export setting**, and a board can have several.
+
+1. Select the `Hike page, phone` board on the **Wireframes** page.
+2. Scroll to the bottom of the **Design** panel, and click **+** next to **Export**. Penpot adds a setting: **PNG**, at **1x**.
+3. Click **Export 1 element**, and save the image.
+
+![The Design panel scrolled down to the Export section for the selected Hike page, phone board: PNG, 1x, a Suffix field, and the button Export 1 element](images/04-board-export.png)
+*Figure 4.35: An export setting on the hike page.*
+
+**1x** means one pixel in the image for each pixel on the board: the phone wireframe becomes an image 360 pixels wide. **2x** doubles it, for sharp images on high-density screens and in print, at four times the file size. The club's wireframes are at 1x; they're for reading, and seventeen pages at 2x would make the repository heavy for no reason. **SVG** is in the list too, but Penpot's SVG files load their fonts and photos from Penpot's servers, so they don't show properly without a connection. PNG doesn't need anything.
+
+Once every board has an export setting, you don't have to export them one at a time. Press **Shift+Ctrl+E** (**Shift+Cmd+E** on a Mac), or choose **File → Export** from the main menu (the **⋮** next to the file's name): Penpot lists every board on the page that has an export setting, and exports the ones you tick.
+
+![The Export selection dialog: 17 of 17 elements selected, a list of the wireframes with their sizes, such as Hike page, wide at 1280x1427, Menu open, 800 at 800x780 and Lightbox, phone at 360x780, all as PNG, and the buttons Cancel and Export](images/04-export-dialog.png)
+*Figure 4.36: Every board with an export setting, in one dialog.*
+
+The book's images are in `design/wireframes/`, named after their boards: `hike-page-phone.png`, `hikes-list-800.png`, and so on, nineteen in all, with the style tile in light and dark.
+
+### The Penpot file
+
+The last thing to save is the file itself.
+
+1. Open the main menu (**⋮** next to the file's name), and choose **File → Download Penpot file (.penpot)**.
+2. Save it as `design/lens-and-trail.penpot`.
+
+![The main menu open, with File chosen and its submenu: Add as Shared Library, Pin this version, Version history, Export, Download Penpot file (.penpot) and Export boards as PDF](images/04-file-menu-download.png)
+*Figure 4.37: Download Penpot file is in the File menu.*
+
+A `.penpot` file is a ZIP archive: the pages, components and tokens as JSON, and the photos as images. You can download it from the dashboard too: right-click a file's card in **Drafts**, and choose **Download Penpot file (.penpot)**.
+
+Anyone can open it in their own Penpot account, which is how a reader who skipped the drawing gets the club's design to play with:
+
+1. On the dashboard, open **Drafts**, and click the menu (**⋮**) at the top right, next to **+ New file**.
+2. Choose **Import Penpot files**, and pick `design/lens-and-trail.penpot`.
+3. Penpot checks the file and lists it. Click **Continue**, then **Accept**.
+
+![The Drafts page with its menu open at the top right, showing Import Penpot files](images/04-import-penpot-files.png)
+*Figure 4.38: Importing a Penpot file into Drafts.*
+
+![The Import Penpot files dialog with one file, Lens & Trail, ticked, and the button Continue](images/04-import-dialog-penpot.png)
+*Figure 4.39: Penpot has read the file, and is ready to import it.*
+
+The import is a new file, with its own pages, components and tokens. We tried it with the book's file: the copy had all three pages, the six components, and the tokens with their four themes.
+
+## The design without Penpot
+
+You don't need Penpot for the rest of the book. If you'd rather not make an account, or you use another design tool, everything the next chapters need is in the `design/` folder:
+
+| File | What it is | Who uses it |
+| --- | --- | --- |
+| `design/tokens.json` | The 101 tokens, in five sets, with four themes | The next chapter, which turns them into CSS; any design tool that reads the W3C format |
+| `design/wireframes/` | Every page as a PNG at 1x, and the style tile in light and dark | You, while building the themes: open the page you're working on next to the browser |
+| `design/lens-and-trail.penpot` | The whole Penpot file | Anyone who wants to change the design in Penpot |
+| `design/logo.svg`, `design/fonts/` | The logo and the fonts, from Chapter 3 | The themes |
+
+`tokens.json` is a text file, and it reads well without a tool: open it in your editor, and you can look up any value by its name. The wireframes are plain images. Neither needs anything installed.
+
+> **Using Figma?** Figma calls tokens **variables**. A set of them is a **collection**, and the alternatives in it, such as light and dark, are its **modes**: the club's *Mode* group would be a collection with two modes. Figma can import a JSON file in the W3C format, so `design/tokens.json` can go into Figma too, with some limits: Figma's help says each file becomes one mode, and font families must be a single name, where Penpot exports a list. Figma's help lists importing, exporting and more than one mode for its paid plans. The wireframes are images, and import into Figma like any other. What doesn't travel is the drawing itself: Figma and Penpot can't open each other's files. The tokens are what both tools share, which is one more reason the themes are built from them and not from the drawings.
+
+## Summary
+
+You can now:
+
+- make a Penpot account and a file, and find your way around its canvas, layers, assets and tokens;
+- make design tokens by hand: a set, a value, a role that refers to a value, and a theme that switches sets on;
+- read a design tokens file in the W3C format, and import one into Penpot;
+- use Penpot's copies of Google Fonts, and say why the themes still host their own;
+- build a component with flex layout, where every color, size and space is a token, and give it variants;
+- draw a page as a board at a phone's width, with a grid layout, instances of components, and real content;
+- check a design in dark mode and in another language by switching a theme or changing the text;
+- export the tokens, the wireframes and the Penpot file, and import a Penpot file again;
+- explain how Penpot's sets and themes compare with Figma's collections and modes.
+
+## Exercises
+
+1. Draw the hike page at 1280 pixels yourself. Duplicate the `Hike page, phone` board, choose **Wide** in the Themes menu, make the board 1280 pixels wide, and swap the header for an instance of `Header / Wide`. What has to change besides the width? Compare your page with `design/wireframes/hike-page-wide.png`.
+2. Change `radius.medium` in the `values` set from 8 to 12, and watch the card and the button. Export the tokens over `design/tokens.json` and run `git diff design/tokens.json`: how many lines changed? Then set it back to 8.
+3. North Berwick has no photo in Book 1, so its card shows a grey box. Design a card for a hike without a photo: add a second property to the hike card, `Photo`, with the values `Yes` and `No`. What should the card show where the photo was, or should the text move up? *(challenge)*
+4. Choose **Dark** and **Wide** in the Themes menu and look at every page on the Wireframes page. Find one thing that doesn't change between the modes, and say whether it should.
+5. Draw the **News** card you sketched in Chapter 3's exercises as a component, with tokens only: no colors or sizes typed in. Then switch to **Dark**: anything that stays light was typed in, not taken from a token. *(challenge)*
+
+## Want to know more?
+
+- Penpot's help: [Design Tokens](https://help.penpot.app/user-guide/design-tokens/), [Exporting layers](https://help.penpot.app/user-guide/export-import/exporting-layers/) and [Export/Import Penpot files](https://help.penpot.app/user-guide/export-import/export-import-files/).
+- Penpot's [Self-hosting Guide](https://help.penpot.app/technical-guide/getting-started/), for running Penpot on your own server with Docker.
+- [Penpot's MCP server](https://help.penpot.app/mcp/), which lets an AI assistant read and draw in a Penpot file. We drew most of the club's other wireframes with it, with the same tokens and components as the ones in this chapter.
+- The W3C Design Tokens Community Group's [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/), the format `tokens.json` follows, and [designtokens.org](https://www.designtokens.org) for the tools that read it.
+- [Style Tiles](https://styletil.es/), on style tiles and why they help.
+- Figma's help: [Guide to variables in Figma](https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma) and [Modes for variables](https://help.figma.com/hc/en-us/articles/15343816063383), which covers importing and exporting them.
