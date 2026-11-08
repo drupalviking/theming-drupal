@@ -24,7 +24,7 @@ ddev exec vendor/bin/dr generate-theme lens_trail --name "Lens & Trail" --descri
 Run it in the core site's folder. Piece by piece:
 
 - `ddev exec` runs the command inside the site's web container, where the right PHP version is.
-- `vendor/bin/dr` is Drupal's own command-line tool. It's not Drush: it's a small tool that comes with core, for a handful of jobs such as installing a site, clearing the cache, and generating a theme. Run `ddev exec vendor/bin/dr list` to see them all.
+- `vendor/bin/dr` is Drupal's own command-line tool. It's not Drush: it's a small tool that comes with core, for a handful of jobs such as installing a site, rebuilding the cache, and generating a theme. Run `ddev exec vendor/bin/dr list` to see them all.
 - `generate-theme lens_trail` makes a theme with the machine name `lens_trail`. A machine name is the name Drupal uses in code and in file names: lowercase letters, numbers and underscores, and it can't start with a number. Choose it carefully, because changing it later means renaming every file and everything that refers to it.
 - `--name` and `--description` are what the **Appearance** page shows.
 - `--path web/themes/custom` is where the theme goes. Themes you write live in `themes/custom`; themes you download from drupal.org go in `themes/contrib`, where Composer puts them.
@@ -149,11 +149,13 @@ cp design/logo.svg web/themes/custom/lens_trail/logo.svg
 
 (Run it from wherever you keep the book's files, or download `design/logo.svg` from the book's repository.) In Book 1, the club uploaded its logo in Olivero's settings, so Olivero had it and the new theme didn't. A logo in the theme's folder is the theme's default, and it's in version control with the rest of the theme, so it's the better place for a logo that's part of the design. Chapter 3 redrew the mark on a cream disc of its own, so it shows on light pages, on dark pages, and in forced colors mode.
 
-**The screenshot.** The screenshot is a PNG, 588 by 438 pixels, named `screenshot.png`. Ours is the top of the front-page wireframe from Chapter 4, `design/wireframes/front-page-wide.png`, scaled down. Any image editor can do it: crop the wireframe to the top 1280 by 954 pixels, and scale it to 588 by 438. Or use ours, from `code/chapter05/steps/02-logo/core/lens_trail/screenshot.png`.
+**The screenshot.** The screenshot is a PNG, 588 by 438 pixels, named `screenshot.png`. Ours is the top of the club's front page from Chapter 4's wireframes, scaled down, with one change: the photos are replaced by the club's default photo, the logo on sand that a hike without a photo gets. Use ours, from `code/chapter05/steps/02-logo/core/lens_trail/screenshot.png`, or make your own in Penpot: duplicate the *Front page, wide* board, give each photo the `Default photo` image fill (as the North Berwick card has), hide the photo credits, export the board, crop the top 1280 by 954 pixels, and scale it to 588 by 438.
 
 The screenshot is the theme as it *will* look, not as it looks today, and that's fine: it's what the theme is for.
 
-![The Installed themes part of the Appearance page: Lens & Trail 1.0.0 (default theme), with a screenshot of the club's front page as designed in Chapter 4, with the hero photo of a boat on a loch and Next hikes below; under it, Default Admin](images/05-appearance.png)
+> **Why not the photos?** Licenses. The theme's code is licensed under the GPL, version 2 or later, like Drupal itself, and so is every file in the theme's folder. Book 1's photos were taken by other people, who shared them under CC BY-SA, and only they can change that license. CC BY-SA 4.0 can be combined with the GPL version 3, but not version 2, so a screenshot made from those photos couldn't be licensed like the rest of the theme. The default photo, the layout and the logo are the club's own work, so the screenshot can be GPL like everything else. It matters most if you ever share a theme on drupal.org: its [licensing FAQ](https://www.drupal.org/about/licensing) asks that what you commit to a project is under the GPL, version 2 or later, and allows assets such as fonts and icons under other licenses only as an exception, with conditions. A theme where every file is GPL never has to ask. Before you put any image in a theme, ask who made it and under which license.
+
+![The Installed themes part of the Appearance page: Lens & Trail 1.0.0 (default theme), with a screenshot of the club's front page as designed in Chapter 4, with the default photo, the club's logo on sand, in the hero and in the hike cards; under it, Default Admin](images/05-appearance.png)
 *Figure 5.6: The theme with the club's screenshot. The logo is in the header of every page now too.*
 
 ## Fewer templates
@@ -173,7 +175,7 @@ The 21 identical ones can go. Delete these files from `web/themes/custom/lens_tr
 | `navigation` | `links`, `menu-local-action`, `pager`, `vertical-tabs` |
 | `views` | `views-view-grid`, `views-view-list`, `views-view-unformatted` |
 
-Each file name ends in `.html.twig`. Then clear the cache (**Configuration** > **Performance** > **Clear all caches**, or `ddev drush cache:rebuild`), so Drupal looks for templates again. Without a template in the theme, Drupal uses the one in the core module that defines it, which is the same markup.
+Each file name ends in `.html.twig`. Then rebuild the cache, so Drupal looks for templates again: `ddev drush cache:rebuild`, or **Configuration** > **Performance** > **Clear all caches**. Both do the same thing, and "rebuild" is the better word for it: Drupal doesn't only empty its caches, it rebuilds what it knows about the site, such as its list of templates, routes and services. Drush's command was `drush cache-clear all` until Drupal 8, when it became `cache:rebuild`; the button kept its old name. Without a template in the theme, Drupal uses the one in the core module that defines it, which is the same markup.
 
 We checked: we saved the HTML of ten of the club's pages before and after, the front page, a hike, the hikes list, an album, the login form, the Spanish front page and four more, and the only differences were the random IDs Drupal gives each request. The theme now has 60 templates.
 
@@ -307,7 +309,7 @@ Then add both files to the `base` library in `lens_trail.libraries.yml`:
 
 <!-- diff: code/chapter05/steps/03-fewer-templates/core/lens_trail/lens_trail.libraries.yml code/chapter05/steps/04-tokens/core/lens_trail/lens_trail.libraries.yml -->
 
-They're in the `base` category, so Drupal puts them before the `component` files: the tokens are defined before anything uses them, and Starterkit's component CSS can still override the base rules where it needs to. Clear the cache, and reload the front page.
+They're in the `base` category, so Drupal puts them before the `component` files: the tokens are defined before anything uses them, and Starterkit's component CSS can still override the base rules where it needs to. Rebuild the cache, and reload the front page.
 
 ![The front page with the club's tokens: a warm off-white background, the club's logo, the site name and the menu links in the club's green, dark brown text in a plain sans-serif, and big bold headings Welcome to Lens & Trail and Next hikes; the hike titles below are green links](images/05-front-tokens.png)
 *Figure 5.7: The front page with tokens.css and base.css.*

@@ -100,7 +100,8 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 
 ## Backlog
 
-- **The theme screenshot's license** (Chapter 5): `lens_trail/screenshot.png` is the front-page wireframe, with Book 1's photos (dave souza, Jarosław Musiałkowski, CC BY-SA 4.0). The theme's code is GPL-2.0-or-later; CC BY-SA 4.0 is one-way compatible with GPLv3 only. Decide: keep it (it's a picture in the theme folder, credited), make a screenshot without the photos (the default photo in their place), or say in the README how it's licensed.
+- ~~**The theme screenshot's license**~~ Done (the author chose option b, 2026-11-08: "licenses are really important"): `screenshot.png` is now made from a temporary copy of the front-page board with the `Default photo` image fill and the credits hidden (copy deleted afterward), so it's all the book's own work and GPL like the theme; the chapter has a "Why not the photos?" box.
+- **Cache wording** (the author, 2026-11-08): say "rebuild the cache" (`cache:rebuild`); name the button **Clear all caches** only as its label.
 - **`use-step.sh` and blocks**: a step can't carry block placements (they're site configuration). Chapter 5's eight moved blocks are moved by a script on the test site. Consider a `tools/` helper that applies a chapter's block placements, so `setup.sh` + `use-step.sh` reproduce a chapter's screenshots.
 - **Push Book 1's `chore/export-site-recipe`, then test as a reader**: the pinned commit is only on the author's machine, so a fresh clone stops with "has no commit 223b3ca" (tested 2026-11-07: the clone and the message work). After the push, run `tools/setup.sh` from a fresh clone in an empty folder (with the authors' sites' DDEV project names free, or on another machine).
 - **Pin Book 1 after its merge**: `data/book1.yml` points at `223b3ca` on Book 1's `chore/export-site-recipe`. When the author merges it, the commit stays valid; if it's rebased or squashed, put the new commit there.
