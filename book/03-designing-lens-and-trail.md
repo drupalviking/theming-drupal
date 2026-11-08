@@ -377,7 +377,7 @@ On a hike's own page, the order follows the brief: when, then what, then everyth
 
 The **key facts** grid is the Út um allt idea, moved up: a small label and a big value, in a grid of two columns on a phone, so the meeting place and the distance are on screen without scrolling. A hike has four facts, so they all fit, and there's no need for a More button. The one button is **Directions**: it opens a map app at the meeting place, which is what a member needs on a Saturday morning. (There's no "Join the hike" button: the club doesn't take bookings, as Book 1's How to join page says.) The **map** below it shows where the walk starts; making it is a short how-to later in the book. And at the bottom, Book 1's "Albums from this hike" block, as square photos.
 
-This is a **wireframe**: a drawing of a page in grey boxes, without colors or real images, to decide what goes where before deciding what it looks like. The next chapter draws wireframes for the club's main pages in Penpot.
+This is a **wireframe**: a drawing of a page in grey boxes, without colors or real images, to decide what goes where before deciding what it looks like. The next chapter draws wireframes for the club's main pages in Penpot. By then the colors and fonts are decided, so it draws them with the club's tokens instead of grey: a wireframe in color is also a check of the design, in light and dark.
 
 ## Photos, icons and the logo
 
