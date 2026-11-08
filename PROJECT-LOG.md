@@ -2,7 +2,7 @@
 
 Decisions, history, and open items for *Theming Drupal*. `README.md` has the layout, the commands, and the chapter status. Keep both up to date at the end of every chapter.
 
-Last updated: 2026-11-07.
+Last updated: 2026-11-08.
 
 ## Where we are
 
@@ -10,7 +10,7 @@ Read this first when picking the work up in a new session.
 
 - **2026-11-07: the book was started.** Scaffold, research, the test sites (built from Book 1's export) and `OUTLINE.md` (reviewed and accepted by the author) are on `chore/scaffold`; the remote is `github.com/drupalviking/theming-drupal`, and the author pushes. Nothing is drafted.
 - **Chapter 3 drafted** on `feature/chapter-03-design` (2026-11-07), waiting for the author's review: `manuscript/03-designing-lens-and-trail.md`, 16 figures. The author picked palette **B, Old Town sandstone** and font pair **3, Bricolage Grotesque + Atkinson Hyperlegible Next** (options page: https://claude.ai/artifact/PNXN3sTZMCA7yvh3sXqo74). Next, after the review: Chapter 4, *The Design in Penpot*.
-- **Chapter 4 started** on the same branch (the author, 2026-11-08): grilling done, all of Claude's recommendations (see Decisions: Chapter 4). Waiting for the author's Penpot account and the MCP connection.
+- **Chapter 4 started** on the same branch (the author, 2026-11-08): grilling done, all of Claude's recommendations (see Decisions: Chapter 4). Penpot's MCP is connected (2026-11-08) to the author's file **Lens & Trail** (one page, empty). `code/chapter04/lens-and-trail-tokens.json` is written (generated once from Chapter 3's values; contrast and references checked, not yet imported). Next: the by-hand steps with the author, Claude taking screenshots.
 - **The folder** is still `themeing-drupal`. It will be renamed to `theming-drupal` (the author, 2026-11-07); do it outside a Claude session that has it as its working directory.
 - **The test sites** (DDEV, outside this repository), built by `tools/setup.sh` from Book 1's export at the commit in `data/book1.yml` (2026-11-07: `223b3ca`, on Book 1's `chore/export-site-recipe`, not merged yet):
   - `~/websites/open-university/lens-and-trail-theme`: Book 1's core site (Drupal 12.0.0-beta2, Olivero). `https://lens-and-trail-theme.ddev.site:8443`, `admin` / `12345`.
