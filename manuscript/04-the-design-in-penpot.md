@@ -6,7 +6,7 @@ This chapter puts the design into **Penpot**, a free and open source design tool
 
 You don't need to have used a design tool before. We hadn't used Penpot either when we started this chapter, and we'll go slowly, one click at a time. Nothing in this chapter changes the two sites: they still run Olivero and Mercury, as Book 1 left them. The next chapter generates the themes, and the tokens from this chapter are where their colors and sizes come from.
 
-%% Author: written as we go (2026-11-08). Done so far: the file, the tokens, the fonts, the hike card and the hike page on a phone. Still to come: the other wireframes, exporting, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
+%% Author: written as we go (2026-11-08). Done so far: the file, the tokens, the fonts, the hike card, the hike page on a phone, the other wireframes and the style tile. Still to come: exporting, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
 
 ## Penpot
 
@@ -382,4 +382,49 @@ The map stays a grey box: it's a placeholder for something the theme builds late
 
 %% Author: done by hand in Penpot, as written: the Wireframes page, the board from the iPhone 12 Mini preset, its layout, fill, padding and gap, the Key facts board with its grid layout, row gap and auto rows, and dragging the button from Assets. Done through the MCP server with the same tokens: the column gap of Key facts (the token menu was too tall for the screen: its top, with Gaps → All, was cut off; check how a reader on a laptop gets to it), the four facts, the Button main component, and the rest of the page. Checked by hand: Ctrl+D in a full grid adds a third column; Ctrl+D into an empty cell wasn't tried (the grid was already full). Figures 4.26 and 4.27 are exported at 1x (360 pixels wide) and could use a 2x export for print. The card's photo credit is built through the MCP (a Media board with the photo and an absolutely placed Credit board, constraints right and bottom); its steps weren't clicked by hand, and Figures 4.18 to 4.20 were taken before it was added. %%
 
-%% Author: next sections (to come): the other wireframes, exporting `design/tokens.json` and the Penpot file. %%
+## The other wireframes
+
+The card, the button and the hike page are everything Penpot asks of you: boards, layouts, tokens, components and their copies. The rest of the club's pages are made from the same parts, so we won't go through them click by click. They're all in the file, on the `Wireframes` page, and as pictures in the book's `design/wireframes/` folder:
+
+| Page | Widths | What it decides |
+|---|---|---|
+| Hike page | 360, 1280, and 360 in Spanish | The facts and the button first on a phone; beside the photo on a wide screen |
+| Front page | 360, 1280 | The hero slider, the next three hikes, the newest photos, Join the club |
+| Hikes list | 360, 800, 1280 | The Difficulty filter, and the cards in one column, then with the photo beside, then three in a row |
+| Album, and its lightbox | 360, 1280 | Square photos in a grid; one photo on a dark background, with its credit |
+| Menu | 360 and 800 (open), 1280 (the mega menu) | The menu button and its panel; the Hikes panel on a wide screen |
+| 404 | 360, 1280 | A friendly way back to the hikes |
+
+Two more components came out of them, on the `Components` page: the **Header** and the **Footer**, each in a phone and a wide version (`Header / Phone` and `Header / Wide`: a slash in a component's name puts it in a group in the Assets tab). Every page uses copies of them, so the menu is drawn once.
+
+![The front page at 1280 pixels: the header with the logo and the menu, a wide hero photo darkened on the left with Next hike, the date, Turnhouse Hill and Carnethy Hill and a See the hike button, round pause, previous and next buttons and three dots; then Next hikes as three cards, Newest photos as six photos in three columns, a sandstone Join the club box with a How to join button, and the footer](images/04-front-page-wide.png)
+*Figure 4.28: The front page on a wide screen.*
+
+The hikes list at 800 pixels is there for one reason: the cards. At 800 pixels the list still has one card in a row (three in a row only come at 64 rem, 1024 pixels), and each card's container is 768 pixels wide, more than the 30 rem (480 pixels) from Chapter 3, so the card uses its **Photo beside** variant. That's a container query, decided in the design: the card asks how much room it has, not how wide the window is.
+
+![The hikes list at 800 pixels: Upcoming hikes, a Difficulty filter with an Apply button, and four hike cards in one column, each with its photo on the left and its text on the right](images/04-hikes-list-800.png)
+*Figure 4.29: At 800 pixels, one column of cards, with their photos beside the text.*
+
+The Spanish hike page is a copy of the English one with Book 1's Spanish texts in it, and it found the first thing the design has to make room for: Drupal's Spanish date (*sábado, 21 de noviembre de 2026, a las 09:30*, Book 1's format) takes two lines on a phone where the English one takes one, and *Estacionamiento de Flotterstone* wraps in its box. Both still fit, which is the point of checking.
+
+![The hike page in Spanish at 360 pixels: Menú, the photo with Foto: dave souza, the date sábado, 21 de noviembre de 2026, a las 09:30 on two lines, the title Turnhouse Hill y Carnethy Hill, the facts Punto de encuentro, Distancia, Dificultad and Zona, a Cómo llegar button, the map, the description and Álbumes de esta excursión](images/04-hike-page-phone-es.png)
+*Figure 4.30: The hike page in Spanish. The date needs two lines.*
+
+![The mega menu at 1280 pixels: under the header, a white panel with a soft shadow and three columns: Areas (Pentland Hills, Arthur's Seat, East Lothian, Edinburgh), Next hikes with two hikes and the links All upcoming hikes and Hike archive, and a photo of the Pentlands in winter with its credit](images/04-mega-menu-wide.png)
+*Figure 4.31: The Hikes mega menu. It uses the `shadow.overlay` token: it floats above the page.*
+
+### A style tile
+
+A **style tile** is one board with the design's parts side by side, without a page around them: the colors, the type, the buttons, badges and the card, and the spacing. It's the page a developer keeps open while writing CSS. The club's is on a page of its own, `Style tile`.
+
+There's one style tile, not two. Tokens follow the theme that's active for the whole file, so the dark style tile is the same board, exported with **Dark** chosen in the Themes menu.
+
+![The style tile in light mode: the logo and Lens & Trail, eleven color swatches from background to on-tint, the type samples Photos and hikes around Edinburgh and ¿Quién se apunta a la excursión?, body text, a credit and a link, a Join the club button, a Menu button, four badges, a focused button with its outline, a hike card with the photo beside, and the spacing scale as bars](images/04-style-tile-light.png)
+*Figure 4.32: The style tile, Light.*
+
+![The same style tile in dark mode: near-black background, light text, a light green button with dark text, dark sandstone badges, and the card on a dark raised surface](images/04-style-tile-dark.png)
+*Figure 4.33: The same board, Dark.*
+
+%% Author: the other wireframes, the Header and Footer components and the style tile were built through Penpot's MCP server (2026-11-08), with the same tokens and components, and exported as PNG at 1x into `design/wireframes/` (19 files, 11 MB). Choices to check: the content on them (teasers of the other hikes, the footer's "Meet us" heading, the 404's wording "You're a little off the trail", the dark mode toggle as Light · Dark · Auto in the menu and a round button with a placeholder circle in the wide header, the language switcher as "English · Español"); North Berwick has no photo in Book 1, so its card shows a grey box; the focus outline on the style tile has no 2-pixel gap (`size.focus-offset`) yet. Figure 4.27 (dark phone page) was taken before the description changed to Book 1's real text; retake it with the other figures. %%
+
+%% Author: next sections (to come): exporting `design/tokens.json` and the Penpot file, getting the design without Penpot, the Using Figma? box, Summary, Exercises, Want to know more. %%
