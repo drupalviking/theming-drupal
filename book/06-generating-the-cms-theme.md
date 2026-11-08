@@ -400,7 +400,7 @@ ddev drush cache:rebuild
 Mercury's type is Outfit and Inter. The club's is Bricolage Grotesque for headings and Atkinson Hyperlegible Next for text, and the files are in `design/fonts/`. To change over:
 
 1. Delete `fonts/Outfit/` and `fonts/Inter/` from the theme.
-2. Copy `design/fonts/bricolage-grotesque/` and `design/fonts/atkinson-hyperlegible-next/` into the theme's `fonts/` folder, each with its `OFL.txt`, the font's license. The fonts are free to use and to pass on, as long as the license goes along with them. Everything else in a Drupal theme is normally under the GPL, and the Free Software Foundation lists the OFL as a free license that isn't compatible with the GPL. So the fonts don't become part of the GPL code: they stay under their own license, in their own folders, with that license beside them. Mercury ships Outfit and Inter the same way.
+2. Copy `design/fonts/bricolage-grotesque/` and `design/fonts/atkinson-hyperlegible-next/` into the theme's `fonts/` folder, each with its `OFL.txt`, the font's license. The fonts are free to use and to pass on, as long as the license goes along with them. The code in a Drupal theme is normally under the GPL, but the OFL is a different license: the Free Software Foundation lists it as a free license for fonts, and doesn't say whether it's compatible with the GPL. So we don't treat the fonts as part of the GPL code: they stay under their own license, in their own folders, with that license beside them. Mercury ships Outfit and Inter the same way.
 3. Replace `src/fonts.css`:
 
 `src/fonts.css` ([source](../code/chapter06/steps/03-fonts/cms/mercury/src/fonts.css))
@@ -520,4 +520,4 @@ You can now:
 - npm's documentation for [`npm ci`](https://docs.npmjs.com/cli/commands/npm-ci).
 - WCAG 2.2: [Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html).
 - The [SIL Open Font License](https://openfontlicense.org), which the club's fonts use.
-- The Free Software Foundation's [list of licenses](https://www.gnu.org/licenses/license-list.html), with its comments on the OFL and the GPL.
+- The Free Software Foundation's [list of licenses](https://www.gnu.org/licenses/license-list.html), with its entry on the OFL under fonts.

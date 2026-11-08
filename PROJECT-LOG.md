@@ -104,7 +104,7 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 
 ## Backlog
 
-- ~~**OFL fonts in a theme, and the GPL**~~ Decided (the author, 2026-11-08): keep the OFL fonts in the theme, each with its `OFL.txt`, and say plainly in the book that they stay under their own license and aren't GPL-compatible (Chapter 6).
+- ~~**OFL fonts in a theme, and the GPL**~~ Decided (the author, 2026-11-08): keep the OFL fonts in the theme, each with its `OFL.txt`, and say plainly in the book that they stay under their own license (Chapter 6). The FSF's license list calls the OFL a free license for fonts and gives no verdict on GPL compatibility (checked 2026-11-08): don't claim either way.
 - **Tailwind scanning `build/` in Mercury** (the author: no upstream report for now): `!build/` in `.gitignore` makes Tailwind read `build/motion.js`. Our copy uses `@source not "../build"`.
 - **Mercury's rough edges, for later chapters**: focused labels and borders use `accent` (forms, Chapter 20); hover scale ignores reduced motion, heading accent variant uses `text-accent` (accessibility, Chapter 23); `npm run dev` doesn't watch Tailwind (#3592160); a worked example of bringing in an upstream fix such as #3592157 (keeping up to date, Chapter 25).
 - **`06-focus.png`** was taken by a one-off script (Tab to the button, crop), not by `tools/screenshots.py`.
