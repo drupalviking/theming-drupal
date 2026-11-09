@@ -123,6 +123,15 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 
 ## Backlog
 
+### Bugs found in other projects
+
+**Every bug we find in Drupal core, contrib or other tools goes here** (the author, 2026-11-09). Don't report any of them upstream: the author reviews the whole list when the book is done and decides which to report.
+
+- **Devel 5.5.0 and 5.x-dev on Drupal 12.0.0-beta2** (found 2026-11-09, Chapter 11). Devel says it supports `^12`, but: (1) Drush stops with a fatal error, because `interact()` in `src/Drush/Commands/DevelHookCommand.php` and `DevelEventCommand.php` lacks the `: void` that Symfony's `Command::interact()` now has; (2) every page gives a 500, `InvalidArgumentException: Drupal\devel\DevelDumperPluginManager only supports annotation-based discovery`. One web search found no existing issue; drupal.org's queue couldn't be searched directly. **Recheck when Drupal 12 is released (expected December 2026)**, then keep or rewrite Chapter 11's Devel box, or drop Devel from it.
+- **Mercury's schema on Drupal 12** (found 2026-11-09, Chapter 10): `Choice` without the named `choices:` key fails on Drupal 12 ("$options must be an associative array or NULL"), in `config/schema/mercury.schema.yml`.
+
+### Other
+
 - **`use-step.sh` and `node_modules`**: its `rsync --delete` removes the CMS theme's `node_modules`. Add an exclude.
 
 - **`sdc_critical_css`** (looked at 2026-11-09, the author asked): inlines the CSS of chosen components and global files. Not for Chapter 8: 1.0.1 requires Drupal ^10 || ^11 (the core site is on 12), the core site has no SDCs before Chapter 13, about 20 sites and one maintainer, and its effect on cascade layer order is untested. Reconsider as a box once it supports Drupal 12.
@@ -131,7 +140,6 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 - **Chapter 7's block moves and the temporary Hero block** are done by hand or script on the test site; see the `use-step.sh` item below.
 - **`10-suggestion-debug.png`**: the same one-off script.
 - **`11-dump.png` and `11-card-spanish.png`**: one-off too (a temporary `dump()` and a temporary translation).
-- **Devel on Drupal 12**: not found in one search of the issue queue; decide whether to report it (`interact(): void` in its Drush commands, and annotation-only `DevelDumperPluginManager`).
 - **`09-twig-debug-card.png` and `09-cms-twig-debug.png`** too: a one-off script from real page source. A debug-figure mode in `tools/screenshots.py` would cover all three.
 - **`07-twig-debug.png`** was made by a one-off script from real page source, not by `tools/screenshots.py`.
 
