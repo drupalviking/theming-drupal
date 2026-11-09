@@ -103,7 +103,7 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | 6. Generating the Drupal CMS Site's Theme | **Reviewed** (2026-11-08). Mercury copied as `mercury` (same machine name: the Canvas pages use its components); Node pinned in DDEV; `tokens.py` writes Tailwind's `@theme`. |
 | 7. Regions and the Page Template | **Reviewed** (2026-11-09). Ten regions, `page.html.twig` back from core, `css/layout.css` with Grid and `:has()`; the Drupal CMS site's regions are Canvas slots. |
 | 8. Libraries and a CSS Architecture | **Reviewed** (2026-11-09). Starterkit cleanup (61 to 19 templates), libraries, cascade layers, reset for normalize, WOFF2 fonts for both sites. |
-| 9. Twig Basics | **Drafted** (2026-11-09) on `feature/chapter-09-twig`, for the author's review. Twig syntax, debug and suggestions, `node--hike--card.html.twig` (h3, classes, `hike-card` library), printing parts of `content` with measured cache tags, escaping, Drupal's 25 Twig additions. |
+| 9. Twig Basics | **Reviewed** (2026-11-09). Twig syntax, debug and suggestions, `node--hike--card.html.twig` (h3, classes, `hike-card` library), printing parts of `content` with measured cache tags, escaping, Drupal's 25 Twig additions. |
 | 10. Preprocess Functions and Theme Settings | Proposed. |
 | 11. Twig in Depth | Proposed. |
 | 12. JavaScript the Drupal Way | Proposed. |
