@@ -1,0 +1,5 @@
+{# An empty field is still an array, so this is always true. #}
+{% if content.field_elevation_gain %}
+  <h2>{{ 'Climb'|t }}</h2>
+  {{ content.field_elevation_gain }}
+{% endif %}

@@ -98,3 +98,30 @@ The module also needs its info file, `code/chapter10/snippets/hike_walking_time/
 A theme's preprocess function is still the right tool when a value only makes sense for one design. As a test, ask yourself: if we changed themes tomorrow, would the club want to keep this? For the walking time, yes. For a class that makes one badge round, no.
 
 Remember to take the theme's version out if you do this, or the card will say it twice.
+
+## Chapter 11, exercise 5: a macro for the walking time
+
+`node--hike--card.html.twig` ([source](../code/chapter11/snippets/macro-answer.html.twig))
+
+```twig
+{% macro walking_time(time, tag = 'div') %}
+  <{{ tag }} class="hike-card__walking-time">
+    {% if time %}
+      {{ 'About @time on foot'|t({'@time': time}) }}
+    {% else %}
+      {{ 'Walking time not known'|t }}
+    {% endif %}
+  </{{ tag }}>
+{% endmacro %}
+
+{% import _self as card %}
+
+{{ card.walking_time(walking_time) }}
+{{ card.walking_time(null, 'p') }}
+```
+
+On the front page, this gave each card its walking time in a `div`, and the second call a `p` that said *Walking time not known*.
+
+Two things are worth noticing. The default for `tag` is a plain string, because a default has to be a constant; that's also why the fallback sentence is inside the macro, marked with `|t`, and not in the macro's argument list. And the macro has to be told the time: it can't see `walking_time` from the template around it.
+
+Is it worth having? With one call on one template, no. We'd keep the `if` in the template. A macro earns its place when the markup appears a few times in the same file.

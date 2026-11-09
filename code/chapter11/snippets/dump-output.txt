@@ -1,0 +1,24 @@
+array:2 [
+  0 => "field_date"
+  1 => "field_difficulty"
+]
+array:18 [
+  0 => "#theme"
+  1 => "#title"
+  2 => "#label_display"
+  3 => "#view_mode"
+  4 => "#language"
+  5 => "#field_name"
+  6 => "#field_type"
+  7 => "#field_translatable"
+  8 => "#entity_type"
+  9 => "#bundle"
+  10 => "#object"
+  11 => "#items"
+  12 => "#formatter"
+  13 => "#is_multiple"
+  14 => "#third_party_settings"
+  15 => 0
+  16 => "#cache"
+  17 => "#weight"
+]

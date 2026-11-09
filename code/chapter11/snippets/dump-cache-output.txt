@@ -1,0 +1,17 @@
+array:6 [
+  0 => "#entity"
+  1 => "#type"
+  2 => "#title"
+  3 => "#url"
+  4 => "#options"
+  5 => "#cache"
+]
+array:3 [
+  "contexts" => array:1 [
+    0 => "user.permissions"
+  ]
+  "tags" => array:1 [
+    0 => "taxonomy_term:58"
+  ]
+  "max-age" => -1
+]

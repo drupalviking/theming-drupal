@@ -118,7 +118,7 @@ Split from "Generating the Themes" (the author, 2026-11-08): this chapter is the
 - `{% extends %}`, `{% embed %}`, `{% include %}`, macros.
 - Translation in templates (`{% trans %}`, `|t`, placeholders) — foundation for Chapter 24.
 - Twig's sandbox and what Drupal doesn't allow, and why (security).
-- Debugging: `dump()`, Devel's `kint`/`dpm` alternatives, the Twig debug comments.
+- Debugging: `dump()`, Devel's `dpm`/`devel_dump` (and its state on Drupal 12), the Twig debug comments.
 
 ### 12. JavaScript the Drupal Way
 

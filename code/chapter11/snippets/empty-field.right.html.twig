@@ -1,0 +1,5 @@
+{# Render it, then ask whether anything came out. #}
+{% if content.field_elevation_gain|render %}
+  <h2>{{ 'Climb'|t }}</h2>
+  {{ content.field_elevation_gain }}
+{% endif %}
