@@ -117,7 +117,7 @@ And using it from the card:
 
 <!-- include: code/chapter11/snippets/include.html.twig as=node--hike--card.html.twig -->
 
-An included template can see all the variables of the template that included it, unless you say `only`, as we did. Use `only`. When we left it out, the file could quietly print `label` and `walking_time`, and a file that depends on where it's used is hard to reuse. With `only`, everything it needs is listed where it's called.
+An included template can see all the variables of the template that included it, unless you say `only`, as we did. Use `only`. When we left it out, the file could quietly print `label` and `walking_time`, and a file that depends on where it's used is hard to reuse. With `only`, everything it needs is listed where it's called. We're taking this one out again for now, but you'll be writing `include` for real in the components chapter, where it's how a template calls a component.
 
 ### Macros: a function that makes markup
 
