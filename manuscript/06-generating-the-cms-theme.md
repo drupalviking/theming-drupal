@@ -6,8 +6,6 @@ Three things are new compared with the previous chapter. There's a build step th
 
 The site starts where Book 1 left it: Drupal {{ number:drupal_version }} with Drupal CMS, Mercury {{ number:mercury_version }} as its theme, and pages built in Canvas.
 
-%% Author: drafted 2026-11-08 on feature/chapter-06-cms-theme. All 12 recommendations accepted; collisions: option a. Changed while building: spacing tokens also get the club prefix, because --spacing-xl changed Mercury's max-w-xl. Added: a :focus-visible rule (Mercury's ring is 2.1:1 on cream), the logo and the screenshot. Please check the OFL question in the report. %%
-
 ![The front page in Mercury: the Mercury logo, a large hero with the placeholder text Your hero content goes here, and a dark button](images/06-front-before.png)
 *Figure 6.1: The front page in Mercury, as Book 1 left it.*
 

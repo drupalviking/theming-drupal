@@ -1,0 +1,32 @@
+name: 'Lens & Trail'
+type: theme
+'base theme': false
+version: 1.0.0
+libraries:
+  - lens_trail/base
+  - core/normalize
+libraries-extend:
+  core/drupal.dropbutton:
+    - lens_trail/dropbutton
+  core/drupal.dialog:
+    - lens_trail/dialog
+  file/drupal.file:
+    - lens_trail/file
+  core/drupal.progress:
+    - lens_trail/progress
+  core/drupal.tablesort:
+    - lens_trail/drupal.tablesort
+description: 'The theme of Lens & Trail, a photography and hiking club in Edinburgh.'
+core_version_requirement: ^12
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  secondary_menu: 'Secondary menu'
+  breadcrumb: Breadcrumb
+  highlighted: Highlighted
+  help: Help
+  hero: Hero
+  content: Content
+  sidebar: Sidebar
+  footer: Footer
+generator: 'starterkit_theme:12.0.0-beta2'

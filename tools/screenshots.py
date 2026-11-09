@@ -65,6 +65,14 @@ SHOTS = {
         ("after", "07-hike-after-phone", "core", "/hikes/glencorse-reservoir-winter-loop", 360, 740, False),
         ("hero", "07-front-hero", "core", "/", 1280, 700, False),
     ],
+    "08": [
+        ("clean", "08-hike-cleaned", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 1000, False),
+        ("after", "08-hike-after", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 1000, False),
+        ("after", "08-front-after", "core", "/", 1280, 1000, False),
+        ("dark", "08-hike-after-dark", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 1000, False),
+        ("cms", "08-cms-front", "cms", "/", 1280, 1000, False),
+        ("cms", "08-cms-join", "cms", "/join", 1280, 1000, False),
+    ],
 }
 
 
