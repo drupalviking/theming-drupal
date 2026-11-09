@@ -1,0 +1,82 @@
+base:
+  version: VERSION
+  aggregate_target:
+    css: true
+  css:
+    base:
+      css/layers.css:
+        weight: -100
+      css/fonts.css: {}
+      css/reset.css: {}
+      css/tokens.css: {}
+      css/base.css: {}
+    layout:
+      css/layout.css: {}
+    component:
+      css/components/container-inline.css:
+        weight: -10
+      css/components/details.css:
+        weight: -10
+      css/components/form.css:
+        weight: -10
+      css/components/inline-form.css:
+        weight: -10
+      css/components/tabledrag.css:
+        weight: -10
+      css/components/tableselect.css:
+        weight: -10
+      css/components/textarea.css:
+        weight: -10
+      css/components/ui-dialog.css:
+        weight: -10
+dialog:
+  version: VERSION
+  css:
+    component:
+      css/components/dialog.css:
+        weight: -10
+dropbutton:
+  version: VERSION
+  css:
+    component:
+      css/components/dropbutton.css:
+        weight: -10
+file:
+  version: VERSION
+  css:
+    component:
+      css/components/file.css:
+        weight: -10
+image-widget:
+  version: VERSION
+  css:
+    component:
+      css/components/image-widget.css: {  }
+progress:
+  version: VERSION
+  css:
+    component:
+      css/components/progress.css:
+        weight: -10
+drupal.tablesort:
+  version: VERSION
+  css:
+    component:
+      css/components/tablesort.css:
+        weight: -10
+
+exposed-filters:
+  version: VERSION
+  css:
+    component:
+      css/components/exposed-filters.css: {}
+  dependencies:
+    - lens_trail/base
+
+hike-card:
+  version: VERSION
+  css:
+    component:
+      css/components/hike-card.css: {}
+  dependencies:
+    - lens_trail/base

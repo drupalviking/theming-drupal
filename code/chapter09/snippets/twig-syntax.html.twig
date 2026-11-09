@@ -1,0 +1,9 @@
+{# A comment: Twig removes it, so it never reaches the browser. #}
+<p>{{ label }}</p>
+{% if view_mode == 'card' %}
+  <p>{{ 'Next hike'|t }}</p>
+{% endif %}
+{% set hike_count = hikes|length %}
+{% for hike in hikes %}
+  <p>{{ loop.index }} of {{ hike_count }}: {{ hike }}</p>
+{% endfor %}

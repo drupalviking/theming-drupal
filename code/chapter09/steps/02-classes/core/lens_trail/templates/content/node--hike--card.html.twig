@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * A hike in the Card view mode, as in the Next hikes block.
+ *
+ * Differs from core's node.html.twig in the heading: the block's title is the
+ * h2, so each card's title is an h3, and it gives the card and two of its
+ * fields classes. For the variables, see core's template.
+ */
+#}
+{{ attach_library('lens_trail/hike-card') }}
+<article{{ attributes.addClass('hike-card') }}>
+
+  {{ title_prefix }}
+  <h3{{ title_attributes.addClass('hike-card__title') }}>
+    <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+  </h3>
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('hike-card__facts') }}>
+    {{ content.field_date|add_class('hike-card__date') }}
+    {{ content.field_difficulty|add_class('hike-card__difficulty') }}
+    {{ content|without('field_date', 'field_difficulty') }}
+  </div>
+
+</article>

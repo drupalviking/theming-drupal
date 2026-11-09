@@ -1,0 +1,16 @@
+{{ attach_library('lens_trail/hike-card') }}
+<article{{ attributes.addClass('hike-card', 'hike-card--' ~ node.field_difficulty.value|clean_class) }}>
+
+  {{ title_prefix }}
+  <h3{{ title_attributes.addClass('hike-card__title') }}>
+    <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+  </h3>
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('hike-card__facts') }}>
+    {{ content.field_date|add_class('hike-card__date') }}
+    {{ content.field_difficulty|add_class('hike-card__difficulty') }}
+    {{ content|without('field_date', 'field_difficulty') }}
+  </div>
+
+</article>
