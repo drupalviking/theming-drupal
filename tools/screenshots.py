@@ -79,6 +79,10 @@ SHOTS = {
         ("after", "09-front-after-phone", "core", "/", 360, 740, False, ".hike-card"),
         ("dark", "09-front-after-dark", "core", "/", 1280, 800, False, ".hike-card"),
     ],
+    "10": [
+        ("walking", "10-front-walking-time", "core", "/", 1280, 800, False, ".hike-card"),
+        ("settings", "10-theme-settings", "core", "/admin/appearance/settings/lens_trail", 1280, 900, True, "#edit-color-scheme--wrapper"),
+    ],
 }
 
 

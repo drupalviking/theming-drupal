@@ -1,0 +1,4 @@
+name: Hike walking time
+type: module
+description: Shows an estimated walking time for hikes, as a field on Manage display.
+core_version_requirement: ^11.3 || ^12
