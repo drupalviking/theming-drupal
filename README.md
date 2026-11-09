@@ -101,7 +101,7 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | 4. The Design in Penpot | **Reviewed** (2026-11-08) on `feature/chapter-04-penpot`; the MCP-built steps are still to be walked by hand. The design is in `design/`: `tokens.json`, `lens-and-trail.penpot` and `wireframes/`. |
 | 5. Generating the Core Site's Theme | **Reviewed** (2026-11-08). `lens_trail` from Starterkit (`vendor/bin/dr generate-theme`), the bare theme as a clean slate, the blocks moved, the club's logo and screenshot, 21 templates removed (the same as core's), `scripts/tokens.py` (`code/chapter05/scripts/`) writing `css/tokens.css`, a first `base.css`, dark mode from the tokens. Four steps, tested on the core site. 10 screenshots (`tools/screenshots.py 05`). |
 | 6. Generating the Drupal CMS Site's Theme | **Reviewed** (2026-11-08). Mercury copied as `mercury` (same machine name: the Canvas pages use its components); Node pinned in DDEV; `tokens.py` writes Tailwind's `@theme`. |
-| 7. Regions and the Page Template | Proposed. |
+| 7. Regions and the Page Template | **Reviewed** (2026-11-09). Ten regions, `page.html.twig` back from core, `css/layout.css` with Grid and `:has()`; the Drupal CMS site's regions are Canvas slots. |
 | 8. Libraries and a CSS Architecture | Proposed. |
 | 9. Twig Basics | Proposed. |
 | 10. Preprocess Functions and Theme Settings | Proposed. |
@@ -123,7 +123,7 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | 24. Multilingual Theming | Proposed. |
 | 25. Keeping a Theme Up to Date | Proposed. |
 | Appendix A. Twig Reference | Proposed. |
-| Appendix B. Answers to the Advanced Exercises | Proposed. |
+| Appendix B. Answers to the Advanced Exercises | Started (Chapter 7's). |
 | Appendix C. Building the Sites Without Book 1 | Proposed. For readers who start here, and for teachers. |
 
 Chapter numbers will be checked once, at the end, together with every cross-reference.
@@ -142,3 +142,4 @@ Facts about releases and products that change quickly. Re-check each before a re
 - The test sites' rebuild (`tools/setup.sh`) installs Book 1's configuration with the Minimal profile, because Drupal can't install Standard from configuration (it has a `hook_install()`): the Status report says "Minimal". Check whether core still refuses.
 - Chapter 5 (2026-11-08, Drupal 12.0.0-beta2): `vendor/bin/dr generate-theme` (the `dr` tool is new in 11.4 and marked experimental; `core/scripts/drupal` deprecated in 11.4, removed in 13); what Starterkit generates (142 files, 81 templates, 31 CSS files, `src/Hook/LensTrailHooks.php` with a stray `@file` docblock, the *Classy* screenshot, `core_version_requirement: ^12`, no `regions`); 21 of its templates the same as core's; the `.theme` file deprecated in 11.5; the admin theme is *Default Admin*; blocks from missing regions go to the first region. Re-run the comparison (`code/chapter05/steps/03-fewer-templates`) on the release Drupal 12.
 - Chapter 6 (2026-11-08, Mercury 1.0.5, Drupal CMS 2.2.8): `--ring` undefined and the 50% focus ring (fixed upstream in #3592157, unreleased: check the next release); `drupal/cva` still a dependency; `.nvmrc` at 24; npm's install-scripts note; Tailwind's `--spacing-*` lookup for `max-w-*`.
+- Chapter 7 (2026-11-08, Drupal 12.0.0-beta2; Canvas on Drupal CMS 2.2.8): what `block_rebuild` does with a removed region (disabled, moved to the first region); Canvas page variants (`canvas.page_variant.theme_mercury`) replacing block placement; `:has()` widely available 2026-06-19.
