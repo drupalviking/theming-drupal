@@ -17,7 +17,212 @@ Here's the rule we used, file by file:
 - **A template goes when all it adds to core's are classes nothing uses any more.** So the templates leave with their CSS.
 - **A template stays with a reason.** Ours are `html` (the body classes), `page` (the regions), `region` (the class `layout.css` uses), `maintenance-page`, and the form and table templates whose classes the remaining CSS needs.
 
-That removes 42 templates and 16 CSS files, along with five libraries that have nothing left in them, and their lines in the info file. **19 templates remain.** You could do this one file at a time with `diff`, comparing each template with core's copy, and it's the method we recommend for your own themes. The result for the club's theme is in the book's repository, in `code/chapter08/steps/01-cleanup/`.
+That removes 42 templates and 16 CSS files, along with five libraries that have nothing left in them, and their lines in the info file. **19 templates remain.**
+
+Here's how to make the same change on your theme. For your own themes later on, we recommend going through the files one at a time with the rule above, comparing each template with core's copy using `diff`. For the club's theme that work is done, so you can take the result in two steps.
+
+First, remove the 58 files. The book's repository has a script with the list, `code/chapter08/scripts/cleanup.sh`, and you give it your theme's folder. If your theme is in Git, commit it first, so you can look at what changed and get it back. From the root of your site, adjusting the path to wherever you keep the book's files:
+
+`bash ../theming-drupal/code/chapter08/scripts/cleanup.sh web/themes/custom/lens_trail`
+
+<details><summary>The files the script removes</summary>
+
+`code/chapter08/scripts/cleanup.sh` ([source](../code/chapter08/scripts/cleanup.sh))
+
+```bash
+#!/usr/bin/env bash
+# Chapter 8's cleanup: remove the templates and CSS files the club's theme no
+# longer needs. Run it on a theme that's at the end of Chapter 7.
+#
+# Usage: cleanup.sh web/themes/custom/lens_trail
+set -euo pipefail
+
+cd "$1"
+test -f lens_trail.info.yml || { echo "No lens_trail.info.yml in $1" >&2; exit 1; }
+
+rm -f \
+  css/components/action-links.css \
+  css/components/breadcrumb.css \
+  css/components/button.css \
+  css/components/field.css \
+  css/components/icons.css \
+  css/components/indented.css \
+  css/components/item-list.css \
+  css/components/link.css \
+  css/components/links.css \
+  css/components/menu.css \
+  css/components/messages.css \
+  css/components/more-link.css \
+  css/components/node.css \
+  css/components/pager.css \
+  css/components/tabs.css \
+  css/components/user.css \
+  templates/block/block--local-actions-block.html.twig \
+  templates/block/block--local-tasks-block.html.twig \
+  templates/block/block--system-branding-block.html.twig \
+  templates/block/block--system-menu-block.html.twig \
+  templates/block/block.html.twig \
+  templates/content-edit/filter-caption.html.twig \
+  templates/content-edit/filter-tips.html.twig \
+  templates/content-edit/node-add-list.html.twig \
+  templates/content/comment.html.twig \
+  templates/content/links--node.html.twig \
+  templates/content/mark.html.twig \
+  templates/content/media.html.twig \
+  templates/content/node.html.twig \
+  templates/content/page-title.html.twig \
+  templates/content/taxonomy-term.html.twig \
+  templates/dataset/item-list.html.twig \
+  templates/field/field--comment.html.twig \
+  templates/field/field--node--created.html.twig \
+  templates/field/field--node--title.html.twig \
+  templates/field/field--node--uid.html.twig \
+  templates/field/field--text-long.html.twig \
+  templates/field/field--text-with-summary.html.twig \
+  templates/field/field--text.html.twig \
+  templates/field/field.html.twig \
+  templates/field/file-audio.html.twig \
+  templates/field/file-link.html.twig \
+  templates/field/file-video.html.twig \
+  templates/field/image.html.twig \
+  templates/field/link-formatter-link-separate.html.twig \
+  templates/field/time.html.twig \
+  templates/misc/status-messages.html.twig \
+  templates/navigation/breadcrumb.html.twig \
+  templates/navigation/menu-local-task.html.twig \
+  templates/navigation/menu-local-tasks.html.twig \
+  templates/navigation/menu.html.twig \
+  templates/user/user.html.twig \
+  templates/user/username.html.twig \
+  templates/views/views-mini-pager.html.twig \
+  templates/views/views-view-grouping.html.twig \
+  templates/views/views-view-summary-unformatted.html.twig \
+  templates/views/views-view-summary.html.twig \
+  templates/views/views-view.html.twig
+
+# Folders the removals left empty.
+find templates -type d -empty -delete
+```
+
+</details>
+
+Second, edit the two YAML files, so that Drupal stops asking for the CSS that's gone. In the info file, the `messages` library leaves, and so do the `libraries-extend` entries for `user` and `item-list`:
+
+```diff
+--- lens_trail.info.yml (before)
++++ lens_trail.info.yml (after)
+@@ -4,19 +4,14 @@
+ version: 1.0.0
+ libraries:
+   - lens_trail/base
+-  - lens_trail/messages
+   - core/normalize
+ libraries-extend:
+-  user/drupal.user:
+-    - lens_trail/user
+   core/drupal.dropbutton:
+     - lens_trail/dropbutton
+   core/drupal.dialog:
+     - lens_trail/dialog
+   file/drupal.file:
+     - lens_trail/file
+-  core/drupal.item-list:
+-    - lens_trail/item-list
+   core/drupal.progress:
+     - lens_trail/progress
+   core/drupal.tablesort:
+```
+
+In the libraries file, the eleven CSS files leave the `base` library, and the five libraries with nothing left in them go:
+
+```diff
+--- lens_trail.libraries.yml (before)
++++ lens_trail.libraries.yml (after)
+@@ -9,41 +9,19 @@
+     layout:
+       css/layout.css: {}
+     component:
+-      css/components/action-links.css:
+-        weight: -10
+-      css/components/breadcrumb.css:
+-        weight: -10
+-      css/components/button.css:
+-        weight: -10
+       css/components/container-inline.css:
+         weight: -10
+       css/components/details.css:
+         weight: -10
+       css/components/exposed-filters.css:
+         weight: -10
+-      css/components/field.css:
+-        weight: -10
+       css/components/form.css:
+         weight: -10
+-      css/components/icons.css:
+-        weight: -10
+       css/components/inline-form.css:
+-        weight: -10
+-      css/components/link.css:
+-        weight: -10
+-      css/components/links.css:
+-        weight: -10
+-      css/components/menu.css:
+-        weight: -10
+-      css/components/more-link.css:
+-        weight: -10
+-      css/components/pager.css:
+         weight: -10
+       css/components/tabledrag.css:
+         weight: -10
+       css/components/tableselect.css:
+-        weight: -10
+-      css/components/tabs.css:
+         weight: -10
+       css/components/textarea.css:
+         weight: -10
+@@ -72,23 +50,6 @@
+   css:
+     component:
+       css/components/image-widget.css: {  }
+-indented:
+-  version: VERSION
+-  css:
+-    component:
+-      css/components/indented.css: {  }
+-messages:
+-  version: VERSION
+-  css:
+-    component:
+-      css/components/messages.css:
+-        weight: -10
+-node:
+-  version: VERSION
+-  css:
+-    component:
+-      css/components/node.css:
+-        weight: -10
+ progress:
+   version: VERSION
+   css:
+@@ -101,15 +62,3 @@
+     component:
+       css/components/tablesort.css:
+         weight: -10
+-item-list:
+-  version: VERSION
+-  css:
+-    component:
+-      css/components/item-list.css:
+-        weight: -10
+-user:
+-  version: VERSION
+-  css:
+-    component:
+-      css/components/user.css:
+-        weight: -10
+```
+
+Prefer to copy? `code/chapter08/steps/01-cleanup/core/lens_trail/` is the whole theme after this step, and you can replace your theme's folder with it. Only do that if you've followed the book without changes of your own, because the copy puts ours in place of everything in the folder. It's also a good way to check your work: `diff -r` between your folder and ours should show nothing.
 
 Rebuild the cache, and open some pages. The HTML is simpler, and a few things look plainer: the menu has its bullets back, and a field's label is on its own line.
 

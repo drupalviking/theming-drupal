@@ -17,7 +17,29 @@ Here's the rule we used, file by file:
 - **A template goes when all it adds to core's are classes nothing uses any more.** So the templates leave with their CSS.
 - **A template stays with a reason.** Ours are `html` (the body classes), `page` (the regions), `region` (the class `layout.css` uses), `maintenance-page`, and the form and table templates whose classes the remaining CSS needs.
 
-That removes 42 templates and 16 CSS files, along with five libraries that have nothing left in them, and their lines in the info file. **19 templates remain.** You could do this one file at a time with `diff`, comparing each template with core's copy, and it's the method we recommend for your own themes. The result for the club's theme is in the book's repository, in `code/chapter08/steps/01-cleanup/`.
+That removes 42 templates and 16 CSS files, along with five libraries that have nothing left in them, and their lines in the info file. **19 templates remain.**
+
+Here's how to make the same change on your theme. For your own themes later on, we recommend going through the files one at a time with the rule above, comparing each template with core's copy using `diff`. For the club's theme that work is done, so you can take the result in two steps.
+
+First, remove the 58 files. The book's repository has a script with the list, `code/chapter08/scripts/cleanup.sh`, and you give it your theme's folder. If your theme is in Git, commit it first, so you can look at what changed and get it back. From the root of your site, adjusting the path to wherever you keep the book's files:
+
+`bash ../theming-drupal/code/chapter08/scripts/cleanup.sh web/themes/custom/lens_trail`
+
+<details><summary>The files the script removes</summary>
+
+<!-- include: code/chapter08/scripts/cleanup.sh as=code/chapter08/scripts/cleanup.sh -->
+
+</details>
+
+Second, edit the two YAML files, so that Drupal stops asking for the CSS that's gone. In the info file, the `messages` library leaves, and so do the `libraries-extend` entries for `user` and `item-list`:
+
+<!-- diff: code/chapter07/steps/02-layout/core/lens_trail/lens_trail.info.yml code/chapter08/steps/01-cleanup/core/lens_trail/lens_trail.info.yml as=lens_trail.info.yml -->
+
+In the libraries file, the eleven CSS files leave the `base` library, and the five libraries with nothing left in them go:
+
+<!-- diff: code/chapter07/steps/02-layout/core/lens_trail/lens_trail.libraries.yml code/chapter08/steps/01-cleanup/core/lens_trail/lens_trail.libraries.yml as=lens_trail.libraries.yml -->
+
+Prefer to copy? `code/chapter08/steps/01-cleanup/core/lens_trail/` is the whole theme after this step, and you can replace your theme's folder with it. Only do that if you've followed the book without changes of your own, because the copy puts ours in place of everything in the folder. It's also a good way to check your work: `diff -r` between your folder and ours should show nothing.
 
 Rebuild the cache, and open some pages. The HTML is simpler, and a few things look plainer: the menu has its bullets back, and a field's label is on its own line.
 
