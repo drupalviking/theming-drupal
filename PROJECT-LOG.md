@@ -2,11 +2,19 @@
 
 Decisions, history, and open items for *Theming Drupal*. `README.md` has the layout, the commands, and the chapter status. Keep both up to date at the end of every chapter.
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-09.
 
 ## Where we are
 
 Read this first when picking the work up in a new session.
+
+### Resume here (2026-11-09, end of day)
+
+- **Branch:** `feature/chapter-12-javascript`, last commit is the Chapter 12 draft. Working tree clean, nothing pushed. Chapters 5 to 11 are reviewed and merged into `main`.
+- **Waiting for the author:** the review of **Chapter 12, *JavaScript the Drupal Way***. Three questions are open: (1) keep the label **System**, or say **Site default**, since it means "back to the administrators' setting"; (2) leave the toggle below the header until the header chapter, or place it better now; (3) keep the Drupal 12 beta warning box about `Drupal.t()` and aggregation, or wait and remove it at the release.
+- **After the review:** make the changes, mark Chapter 12 **Reviewed** (README and this log), `python3 tools/build.py`, commit. Then the author pushes and merges. **Chapter 13 (Single Directory Components, the pilot chapter) needs a new branch, and a new "yes" from the author first.**
+- **The core test site** is on `tools/use-step.sh 12 01`, development mode off, `lens_trail.settings:color_scheme` is `system`. The CMS site is unchanged (Devel is enabled there, as before; its `canvas.component.block.system_menu_block.devel` and `system.menu.devel` show as different from sync after Chapter 11's test, not imported).
+- **Bugs found upstream** go in "Bugs found in other projects" in the backlog, never reported; the author reviews them when the book is done. Two to recheck when **Drupal 12 is released (expected December 2026)**: Devel (Chapter 11's box) and JavaScript translations with aggregation (Chapter 12's box and Figure 12.4).
 
 - **2026-11-07: the book was started.** Scaffold, research, the test sites (built from Book 1's export) and `OUTLINE.md` (reviewed and accepted by the author) are on `chore/scaffold`; the remote is `github.com/drupalviking/theming-drupal`, and the author pushes. Nothing is drafted.
 - **Chapter 3 drafted** on `feature/chapter-03-design` (2026-11-07), waiting for the author's review: `manuscript/03-designing-lens-and-trail.md`, 16 figures. The author picked palette **B, Old Town sandstone** and font pair **3, Bricolage Grotesque + Atkinson Hyperlegible Next** (options page: https://claude.ai/artifact/PNXN3sTZMCA7yvh3sXqo74). Next, after the review: Chapter 4, *The Design in Penpot*.
