@@ -1,0 +1,71 @@
+/*
+ * The club's first rules: the page's colors, fonts and sizes, from the
+ * design tokens in tokens.css, and the things every page needs.
+ */
+@layer base {
+  /* Light or dark, as the visitor's system is set: light-dark() follows this. */
+  :root {
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-step-0);
+    line-height: 1.5;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-family-heading);
+    line-height: 1.2;
+  }
+
+  h1 {
+    font-size: var(--font-size-step-5);
+  }
+
+  h2 {
+    font-size: var(--font-size-step-3);
+  }
+
+  h3 {
+    font-size: var(--font-size-step-2);
+  }
+
+  a {
+    color: var(--color-action);
+
+    /* A little closer to the text color, in light and in dark mode. */
+    &:hover {
+      color: color-mix(in oklab, var(--color-action), var(--color-text) 40%);
+    }
+  }
+
+  /* Where the keyboard is: the same on everything that can take focus. */
+  :focus-visible {
+    outline: var(--border-focus) solid var(--color-text);
+    outline-offset: var(--size-focus-offset);
+  }
+
+  /* For visitors who've asked their system for less movement. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Forced colors removes backgrounds, so the footer needs a line instead. */
+  @media (forced-colors: active) {
+    .site-footer {
+      border-block-start: var(--border-thin) solid CanvasText;
+    }
+  }
+}

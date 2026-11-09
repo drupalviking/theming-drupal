@@ -73,6 +73,12 @@ SHOTS = {
         ("cms", "08-cms-front", "cms", "/", 1280, 1000, False),
         ("cms", "08-cms-join", "cms", "/join", 1280, 1000, False),
     ],
+    "09": [
+        ("before", "09-front-before", "core", "/", 1280, 800, False, ".views-row article"),
+        ("after", "09-front-after", "core", "/", 1280, 800, False, ".hike-card"),
+        ("after", "09-front-after-phone", "core", "/", 360, 740, False, ".hike-card"),
+        ("dark", "09-front-after-dark", "core", "/", 1280, 800, False, ".hike-card"),
+    ],
 }
 
 
@@ -99,7 +105,7 @@ def main(chapter, tag=None):
             page.wait_for_load_state("networkidle")
             page.evaluate("document.fonts.ready")
             if scroll:
-                page.locator(scroll[0]).evaluate("el => el.scrollIntoView()")
+                page.locator(scroll[0]).first.evaluate("el => el.scrollIntoView()")
             page.screenshot(path=str(out / f"{name}.png"))
             context.close()
             print(f"manuscript/images/{name}.png")

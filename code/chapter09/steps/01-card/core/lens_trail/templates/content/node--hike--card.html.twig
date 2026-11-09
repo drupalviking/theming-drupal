@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * A hike in the Card view mode, as in the Next hikes block.
+ *
+ * Differs from core's node.html.twig in the heading: the block's title is the
+ * h2, so each card's title is an h3. For the variables, see core's template.
+ */
+#}
+<article{{ attributes }}>
+
+  {{ title_prefix }}
+  <h3{{ title_attributes }}>
+    <a href="{{ url }}" rel="bookmark">{{ label }}</a>
+  </h3>
+  {{ title_suffix }}
+
+  <div{{ content_attributes }}>
+    {{ content }}
+  </div>
+
+</article>

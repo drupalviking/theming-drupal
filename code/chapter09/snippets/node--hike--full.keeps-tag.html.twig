@@ -1,0 +1,5 @@
+<article{{ attributes }}>
+  {{ content.field_date }}
+  {# Everything else in content: printed, and its cache tags kept. #}
+  {{ content|without('field_date') }}
+</article>

@@ -98,7 +98,7 @@ Split from "Generating the Themes" (the author, 2026-11-08): this chapter is the
 
 - Syntax: output, tags, comments; variables in a template and where they come from.
 - Filters and functions Drupal adds (`|t`, `|without`, `|clean_class`, `link()`, `file_url()`…).
-- Twig debugging in depth: file name suggestions, picking the right template, copying it from Starterkit.
+- Twig debugging in depth: file name suggestions, picking the right template, copying it from core (Starterkit's copy has classes we don't use).
 - `attributes`, `title_attributes`, `content_attributes`: adding classes without losing Drupal's.
 - `{{ content }}` and printing parts of it (`content.field_date`) without breaking caching.
 
