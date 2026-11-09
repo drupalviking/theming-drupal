@@ -120,7 +120,7 @@ For the rest of Drupal's CSS, we mostly want this behavior. The little files fro
 
 <!-- include: code/chapter08/steps/02-layers/core/lens_trail/css/base.css as=css/base.css -->
 
-Dark mode is unchanged: it's still the tokens and `light-dark()`, and the toggle comes in the chapter on theme settings. There are four new things here.
+Dark mode is unchanged: it's still the tokens and `light-dark()`, and the toggle comes in the chapter on JavaScript. There are four new things here.
 
 **`color-mix()`** makes the hover color from two tokens. It works in light and dark mode without another token. Widely available since November 2025.
 

@@ -83,6 +83,11 @@ SHOTS = {
         ("walking", "10-front-walking-time", "core", "/", 1280, 800, False, ".hike-card"),
         ("settings", "10-theme-settings", "core", "/admin/appearance/settings/lens_trail", 1280, 900, True, "#edit-color-scheme--wrapper"),
     ],
+    "12": [
+        ("after", "12-header-toggle", "core", "/", 1280, 500, False),
+        ("after", "12-header-toggle-phone", "core", "/", 360, 740, False),
+        ("dark", "12-header-toggle-dark", "core", "/", 1280, 500, False),
+    ],
 }
 
 
