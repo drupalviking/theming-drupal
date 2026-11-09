@@ -1,0 +1,14 @@
+{% macro walking_time(time, tag = 'div') %}
+  <{{ tag }} class="hike-card__walking-time">
+    {% if time %}
+      {{ 'About @time on foot'|t({'@time': time}) }}
+    {% else %}
+      {{ 'Walking time not known'|t }}
+    {% endif %}
+  </{{ tag }}>
+{% endmacro %}
+
+{% import _self as card %}
+
+{{ card.walking_time(walking_time) }}
+{{ card.walking_time(null, 'p') }}

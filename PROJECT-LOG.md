@@ -22,6 +22,7 @@ Read this first when picking the work up in a new session.
 - **Chapter 9 drafted** on **`feature/chapter-09-twig`** (the author said yes, 2026-11-09), **reviewed** by the author (2026-11-09): `manuscript/09-twig-basics.md`, 6 figures, two steps (`01-card`, `02-classes`), core site only.
 
 - **Chapter 10 reviewed** by the author (2026-11-09) on **`feature/chapter-10-preprocess`**, ready to merge: `manuscript/10-preprocess-functions-and-theme-settings.md`, 3 figures, two steps (`01-walking-time`, `02-color-scheme`), core site only.
+- **Chapter 11 reviewed** by the author (2026-11-09) on **`feature/chapter-11-twig-in-depth`**, ready to merge: `manuscript/11-twig-in-depth.md`, 2 figures, no step (the theme doesn't change), core site tests only plus Devel on the CMS site.
 - **The folder** is still `themeing-drupal`. It will be renamed to `theming-drupal` (the author, 2026-11-07); do it outside a Claude session that has it as its working directory.
 - **The test sites** (DDEV, outside this repository), built by `tools/setup.sh` from Book 1's export at the commit in `data/book1.yml` (2026-11-07: `223b3ca`, on Book 1's `chore/export-site-recipe`, not merged yet):
   - `~/websites/open-university/lens-and-trail-theme`: Book 1's core site (Drupal 12.0.0-beta2, Olivero). `https://lens-and-trail-theme.ddev.site:8443`, `admin` / `12345`.
@@ -85,6 +86,7 @@ Made on 2026-11-07, at the start.
 | Chapter 6 (2026-11-08) | All of Claude's recommendations. Mercury copied and keeping the machine name `mercury`. In Tailwind, the club's colors and spacing get the prefix `club` (`--color-club-action`, `--spacing-club-m`): colors clash with `muted`, `accent` and Tailwind's palette, and `--spacing-xl` changes `max-w-xl` (found by comparing built rules, so spacing was added to the author's decision). Type, radius and fonts keep their names. `--secondary` and `--accent` both map to `tint`. One `:focus-visible` rule in `theme.css`, outside Tailwind's layers, because Mercury's ring at 50% is 2.1:1 on cream. `@source not "../build"` makes the build repeatable. `build/` and the lock file committed, `node_modules/` ignored. |
 | Chapter 7 (2026-11-08) | All of Claude's recommendations. Accepted in review: the hike page keeps its sidebar blocks until the hike page chapter; the landmark label is "More from the club". Regions: header, primary_menu, secondary_menu, breadcrumb, highlighted, help, hero, content, sidebar, footer (one Footer region, columns from Grid). `page.html.twig` is back, from core. Hero inside `<main>`, outside `.site-width`. Sidebar column from `:has()`. The CMS site gets a section, no code step. |
 | Chapter 10 (2026-11-09) | All of Claude's recommendations, plus the author on suggestions: don't keep one, but demonstrate well what they can do and where you'd use them, even if that sounds ridiculous on the club's site (four, tested with real templates, then removed). Walking time instead of "days until". Hook classes; `.theme` in a box. The color scheme setting only. Settings form as a hook, like Mercury. Own section on overrides with `audit_overrides.py` (Python, not the shell script first suggested: it strips Twig comments). |
+| Chapter 11 (2026-11-09) | All of Claude's recommendations: every tool demonstrated on the club's templates and removed; the full `include` vs `embed` comparison waits for Chapter 13; one sandbox failure; `dump()` first, Devel in a box; short CMS section; no WordPress box. Devel doesn't run on Drupal 12.0.0-beta2, so the box says so. |
 | Chapter 9 (2026-11-09) | All of Claude's recommendations. Accepted in review: the interim badge; the full table of Twig additions stays in the chapter. One real template, `node--hike--card.html.twig`, copied from core; Chapter 13 moves it into a component. No photo on the card until Chapter 14. The card title is `h3` (the Card view mode is used only under the Next hikes block's `h2`). Full table of Drupal's 25 Twig additions. Caching: the rule and a measured test; render arrays in Chapter 11. Short section on escaping. Drupal CMS site: a section, no code step. |
 | Chapter 8 (2026-11-09) | All of Claude's recommendations. Accepted in review: the plainer pages until later chapters style them; Bricolage pinned at optical size 36; the WOFF2 files in `design/fonts/`; the cleanup given to the reader as `scripts/cleanup.sh` and two diffs, with copying the step as the alternative. Remove appearance-only Starterkit CSS with its templates (42 templates, 16 CSS files); keep what makes things work. Layers: reset, tokens, base, layout, components, utilities, declared first by `css/layers.css`. `core/normalize` replaced by a small reset. `tokens.py --layer=tokens`. WOFF2 made with fontTools (`scripts/fonts.sh`): Latin, weight axis only, Bricolage at opsz 36. No preload on core. `sdc_critical_css` left out (see Backlog). |
 | Fonts in Penpot (2026-11-08) | **Penpot's own copies** (from Google Fonts) in the design: Penpot reads our variable TTFs as one nameless "Regular" style. Our files in `design/fonts/` are for the themes. The chapter says what we tried, with one figure. |
@@ -93,6 +95,7 @@ Made on 2026-11-07, at the start.
 
 ## History
 
+- **2026-11-09**: **Chapter 11 drafted**, *Twig in Depth*; tested on the core site (`dump()`, render array keys, cache tags per printing style, empty fields, `extends`, `include`, macro, `embed`, `|t`, `trans` and plurals in Spanish, the sandbox on a throwaway node), Devel's Twig functions on the CMS site. Found: Devel breaks Drush and every page on Drupal 12.0.0-beta2.
 - **2026-11-09**: **Chapter 10 drafted**, *Preprocess Functions and Theme Settings*; tested on the core site (walking time, the color scheme form with an anonymous visitor, schema validation, `.theme`, four suggestions with real templates, config/install on a throwaway theme, the module in Appendix B).
 - **2026-11-09**: **Chapter 9 drafted**, *Twig Basics*; tested on the core site (suggestions, headings, cache tags per way of printing, escaping, contrast, 320px reflow).
 - **2026-11-09**: **Chapter 8 drafted**, *Libraries and a CSS Architecture*; tested on both sites (layer order with aggregation on, the sidebar columns, hover, focus, forced colors, reduced motion, 320px reflow, fonts loading). `use-step.sh` deletes a CMS theme's `node_modules` (rsync --delete); restored with `npm ci`, build identical.
@@ -120,6 +123,15 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 
 ## Backlog
 
+### Bugs found in other projects
+
+**Every bug we find in Drupal core, contrib or other tools goes here** (the author, 2026-11-09). Don't report any of them upstream: the author reviews the whole list when the book is done and decides which to report.
+
+- **Devel 5.5.0 and 5.x-dev on Drupal 12.0.0-beta2** (found 2026-11-09, Chapter 11). Devel says it supports `^12`, but: (1) Drush stops with a fatal error, because `interact()` in `src/Drush/Commands/DevelHookCommand.php` and `DevelEventCommand.php` lacks the `: void` that Symfony's `Command::interact()` now has; (2) every page gives a 500, `InvalidArgumentException: Drupal\devel\DevelDumperPluginManager only supports annotation-based discovery`. One web search found no existing issue; drupal.org's queue couldn't be searched directly. **Recheck when Drupal 12 is released (expected December 2026)**, then keep or rewrite Chapter 11's Devel box, or drop Devel from it.
+- **Mercury's schema on Drupal 12** (found 2026-11-09, Chapter 10): `Choice` without the named `choices:` key fails on Drupal 12 ("$options must be an associative array or NULL"), in `config/schema/mercury.schema.yml`.
+
+### Other
+
 - **`use-step.sh` and `node_modules`**: its `rsync --delete` removes the CMS theme's `node_modules`. Add an exclude.
 
 - **`sdc_critical_css`** (looked at 2026-11-09, the author asked): inlines the CSS of chosen components and global files. Not for Chapter 8: 1.0.1 requires Drupal ^10 || ^11 (the core site is on 12), the core site has no SDCs before Chapter 13, about 20 sites and one maintainer, and its effect on cascade layer order is untested. Reconsider as a box once it supports Drupal 12.
@@ -127,6 +139,7 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 - **Sidebar blocks on the hike page** (Chapter 7, for the hike page chapter): the wireframe's right column is the hike's facts, but Join the club and Next hikes are still in `sidebar` there. Next hikes shows only on hike pages, so hiding it there means rethinking where it goes.
 - **Chapter 7's block moves and the temporary Hero block** are done by hand or script on the test site; see the `use-step.sh` item below.
 - **`10-suggestion-debug.png`**: the same one-off script.
+- **`11-dump.png` and `11-card-spanish.png`**: one-off too (a temporary `dump()` and a temporary translation).
 - **`09-twig-debug-card.png` and `09-cms-twig-debug.png`** too: a one-off script from real page source. A debug-figure mode in `tools/screenshots.py` would cover all three.
 - **`07-twig-debug.png`** was made by a one-off script from real page source, not by `tools/screenshots.py`.
 

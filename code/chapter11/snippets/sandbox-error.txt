@@ -1,0 +1,1 @@
+Twig\Sandbox\SecurityError: Calling "delete" method on a "Drupal\node\Entity\Node" object is not allowed in "themes/custom/lens_trail/templates/content/node--24.html.twig" at line 1.

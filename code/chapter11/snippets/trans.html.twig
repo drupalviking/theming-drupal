@@ -1,0 +1,8 @@
+{# With |t: for short strings. #}
+{{ 'About @time on foot'|t({'@time': walking_time}) }}
+
+{# With trans: the variable's name becomes the placeholder. #}
+{% trans %}On foot for about {{ walking_time }}{% endtrans %}
+
+{# Singular and plural. #}
+{% trans %}One hike{% plural hikes %}@count hikes{% endtrans %}
