@@ -6,8 +6,6 @@ Three pieces of Drupal decide that shape, and we'll work through them in order: 
 
 Nearly all of this chapter happens on the core site. The Drupal CMS site does the same job in a very different way, and we'll look at why near the end.
 
-%% Author: drafted 2026-11-08 on feature/chapter-07-regions. All 14 recommendations accepted. One change while building: Join the club and Next hikes keep Book 1's visibility here, because Next hikes shows only on hike pages (hiding it there would hide it everywhere). The hike page chapter settles it. See the report. %%
-
 ![The hike page with the theme from Chapter 5: the logo, the menus and the breadcrumb stacked at the top, then the title and the photo, all in one column](images/07-hike-before.png)
 *Figure 7.1: The hike page at the end of Chapter 5: everything in one column.*
 

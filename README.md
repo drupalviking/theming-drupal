@@ -101,7 +101,7 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | 4. The Design in Penpot | **Reviewed** (2026-11-08) on `feature/chapter-04-penpot`; the MCP-built steps are still to be walked by hand. The design is in `design/`: `tokens.json`, `lens-and-trail.penpot` and `wireframes/`. |
 | 5. Generating the Core Site's Theme | **Reviewed** (2026-11-08). `lens_trail` from Starterkit (`vendor/bin/dr generate-theme`), the bare theme as a clean slate, the blocks moved, the club's logo and screenshot, 21 templates removed (the same as core's), `scripts/tokens.py` (`code/chapter05/scripts/`) writing `css/tokens.css`, a first `base.css`, dark mode from the tokens. Four steps, tested on the core site. 10 screenshots (`tools/screenshots.py 05`). |
 | 6. Generating the Drupal CMS Site's Theme | **Reviewed** (2026-11-08). Mercury copied as `mercury` (same machine name: the Canvas pages use its components); Node pinned in DDEV; `tokens.py` writes Tailwind's `@theme`. |
-| 7. Regions and the Page Template | **Drafted** (2026-11-08) on `feature/chapter-07-regions`, for the author's review. Ten regions, `page.html.twig` back from core, `css/layout.css` with Grid and `:has()`; the Drupal CMS site's regions are Canvas slots. |
+| 7. Regions and the Page Template | **Reviewed** (2026-11-09). Ten regions, `page.html.twig` back from core, `css/layout.css` with Grid and `:has()`; the Drupal CMS site's regions are Canvas slots. |
 | 8. Libraries and a CSS Architecture | Proposed. |
 | 9. Twig Basics | Proposed. |
 | 10. Preprocess Functions and Theme Settings | Proposed. |
