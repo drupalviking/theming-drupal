@@ -165,7 +165,7 @@ Every override is a copy, and a copy has costs:
 - **Modules stop matching.** A contributed module's CSS and JavaScript expect its own markup.
 - **Nobody can tell what's what.** The next developer can't see which markup is Drupal's and which is yours, or why.
 
-We've seen a real site's move to components end with over a hundred overrides. Each one had looked reasonable on the day. So think hard before every one.
+Each override can look reasonable on the day, and they add up. So think hard before every one, and don't let "write another one" become the reflex.
 
 Before you override anything, go through this list, in this order, and stop at the first one that works:
 
