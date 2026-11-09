@@ -543,7 +543,7 @@ Add `css/fonts.css` to the `base` group of the library. There's no `@layer` here
 
 ## On the Drupal CMS site
 
-Tailwind has already made these decisions for Mercury. Tailwind's output is in layers of its own, `theme`, `base`, `components` and `utilities`, so `build/main.min.css` is everything Tailwind found a use for, in those layers.
+Tailwind has already made these decisions for Mercury. Tailwind's output is in layers of its own, `theme`, `base`, `components` and `utilities`, plus one called `properties` for its internal variables, so `build/main.min.css` is everything Tailwind found a use for, in those layers.
 
 And now Chapter 6's focus rule makes full sense. Mercury's `src/theme.css` isn't processed by Tailwind and isn't in a layer. It's unlayered, so it wins, by the very rule that makes things awkward for us on the core site. On that site, the same rule works in the theme's favor.
 
