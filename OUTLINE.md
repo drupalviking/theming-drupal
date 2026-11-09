@@ -105,8 +105,8 @@ Split from "Generating the Themes" (the author, 2026-11-08): this chapter is the
 ### 10. Preprocess Functions and Theme Settings
 
 - The `.theme` file; hooks in themes in Drupal 12 (procedural, and what OO hooks mean for themes; check what Drupal 12 supports).
-- Preprocess: adding variables (a hike's "days until"), suggestions of your own (`hook_theme_suggestions_HOOK_alter()`).
-- Theme settings: a form in `theme-settings.php`, config schema, the dark mode default and the hero toggle as examples.
+- Preprocess: adding variables (a hike's walking time, with Naismith's rule; "days until" is a warning about time and caching), suggestions of your own (`hook_theme_suggestions_HOOK_alter()`).
+- Theme settings: a form in `theme-settings.php`, config schema, the color scheme default as the example (the hero toggle waits for Chapter 17).
 - When to use preprocess and when Twig is enough.
 - **How much to override** (the author: be very clear about this). A theme that overrides a hundred theme hooks and templates is the wrong way to write a theme, however well each override works on its own. Why: every override is a copy that misses core's and contrib's fixes (security, accessibility, new features); upgrades turn into diffing a hundred files; contrib modules' markup stops matching their CSS and JS; other developers can't tell which markup is Drupal's and which is the theme's. One or two anonymized sentences, no more: a real site's move to components ended with over a hundred overrides. The point is the reminder, not the story: think hard before every override (the author, 2026-11-07).
 - The checklist before overriding anything: can site building do it (Book 1)? Can CSS do it on the existing markup? Can `attributes` or a class do it? Is there a specific suggestion, so the override touches one case, not all? Can a component be called from one template instead of overriding many? Only then: preprocess, or a theme hook override.

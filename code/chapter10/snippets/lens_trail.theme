@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * The older way: a function named after the theme, in lens_trail.theme.
+ */
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function lens_trail_preprocess_block(array &$variables): void {
+  $variables['attributes']['data-from-dot-theme'] = 'yes';
+}

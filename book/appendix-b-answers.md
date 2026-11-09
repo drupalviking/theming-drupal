@@ -31,3 +31,70 @@ Use the stored value, `node.field_difficulty.value`, rather than the printed lab
 Isn't that reaching past the render array, which the chapter warned about? It is, but no cache tag is lost here. The difficulty is a list field, so its value lives on the hike itself, and the hike's own tag, `node:7` for example, is already on the card. The warning is about values that come from *somewhere else*, such as a referenced term. And the value isn't printed as text, it goes through `clean_class`.
 
 Difficulty is a required field on the club's hikes, so every card has a value. On an optional field you'd want an `if` around the class, or a hike without a value would get the class `hike-card--`.
+
+## Chapter 10, exercise 5: moving the walking time out of the theme
+
+The calculation is about hikes, not about how a page looks, so it belongs in a module. Then any theme can have it, and an administrator can place it. A small module can offer it as a **pseudo-field**: something that appears on **Manage display** like a field, without being stored. There are two hooks, the first announcing it, and the second building it:
+
+`src/Hook/WalkingTimeHooks.php` ([source](../code/chapter10/snippets/hike_walking_time/src/Hook/WalkingTimeHooks.php))
+
+```php
+<?php
+
+namespace Drupal\hike_walking_time\Hook;
+
+use Drupal\Core\Datetime\DateFormatterInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Hook\Attribute\Hook;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+
+/**
+ * The walking time, as a pseudo-field any theme can show.
+ */
+class WalkingTimeHooks {
+
+  use StringTranslationTrait;
+
+  public function __construct(
+    protected DateFormatterInterface $dateFormatter,
+  ) {}
+
+  /**
+   * Implements hook_entity_extra_field_info().
+   */
+  #[Hook('entity_extra_field_info')]
+  public function extraFieldInfo(): array {
+    $extra['node']['hike']['display']['walking_time'] = [
+      'label' => $this->t('Walking time'),
+      'description' => $this->t("Estimated with Naismith's rule."),
+      'weight' => 10,
+      'visible' => FALSE,
+    ];
+    return $extra;
+  }
+
+  /**
+   * Implements hook_ENTITY_TYPE_view() for nodes.
+   */
+  #[Hook('node_view')]
+  public function nodeView(array &$build, EntityInterface $node, EntityViewDisplayInterface $display, string $view_mode): void {
+    if ($display->getComponent('walking_time') && !$node->get('field_distance')->isEmpty()) {
+      $minutes = $node->get('field_distance')->value * 12
+        + (int) $node->get('field_elevation_gain')->value / 100 * 10;
+      $build['walking_time'] = [
+        '#markup' => $this->t('About @time on foot', [
+          '@time' => $this->dateFormatter->formatInterval(round($minutes / 10) * 600),
+        ]),
+      ];
+    }
+  }
+
+}
+```
+
+The module also needs its info file, `code/chapter10/snippets/hike_walking_time/hike_walking_time.info.yml`. We installed it on the core site and placed **Walking time** on the hike's Teaser display, and all five hikes on `/hikes` showed it, through the theme's ordinary `{{ content }}`. Nothing in the theme had to change. Because it's in `content`, its cache data travels the normal way too.
+
+A theme's preprocess function is still the right tool when a value only makes sense for one design. As a test, ask yourself: if we changed themes tomorrow, would the club want to keep this? For the walking time, yes. For a class that makes one badge round, no.
+
+Remember to take the theme's version out if you do this, or the card will say it twice.
