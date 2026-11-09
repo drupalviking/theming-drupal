@@ -105,7 +105,7 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | 8. Libraries and a CSS Architecture | **Reviewed** (2026-11-09). Starterkit cleanup (61 to 19 templates), libraries, cascade layers, reset for normalize, WOFF2 fonts for both sites. |
 | 9. Twig Basics | **Reviewed** (2026-11-09). Twig syntax, debug and suggestions, `node--hike--card.html.twig` (h3, classes, `hike-card` library), printing parts of `content` with measured cache tags, escaping, Drupal's 25 Twig additions. |
 | 10. Preprocess Functions and Theme Settings | **Reviewed** (2026-11-09) on `feature/chapter-10-preprocess`. Hook classes, the walking time (Naismith's rule) from `preprocess_node`, four suggestions demonstrated and removed, a color scheme setting, the override checklist and `scripts/audit_overrides.py`. |
-| 11. Twig in Depth | **Drafted** (2026-11-09) on `feature/chapter-11-twig-in-depth`, for the author's review. Render arrays read from `dump()`, cache tags explained, the empty-field trap, `extends`/`include`/macros/`embed` tried and removed, translation tested in Spanish, the sandbox. No step: the theme doesn't change. |
+| 11. Twig in Depth | **Reviewed** (2026-11-09) on `feature/chapter-11-twig-in-depth`. Render arrays read from `dump()`, cache tags explained, the empty-field trap, `extends`/`include`/macros/`embed` tried and removed, translation tested in Spanish, the sandbox. No step: the theme doesn't change. |
 | 12. JavaScript the Drupal Way | Proposed. |
 | 13. Single Directory Components | Proposed. **The pilot chapter** (the Hike card). |
 | 14. Images | Proposed. |

@@ -22,7 +22,7 @@ Read this first when picking the work up in a new session.
 - **Chapter 9 drafted** on **`feature/chapter-09-twig`** (the author said yes, 2026-11-09), **reviewed** by the author (2026-11-09): `manuscript/09-twig-basics.md`, 6 figures, two steps (`01-card`, `02-classes`), core site only.
 
 - **Chapter 10 reviewed** by the author (2026-11-09) on **`feature/chapter-10-preprocess`**, ready to merge: `manuscript/10-preprocess-functions-and-theme-settings.md`, 3 figures, two steps (`01-walking-time`, `02-color-scheme`), core site only.
-- **Chapter 11 drafted** on **`feature/chapter-11-twig-in-depth`** (the author said yes, 2026-11-09), waiting for the author's review: `manuscript/11-twig-in-depth.md`, 2 figures, no step (the theme doesn't change), core site tests only plus Devel on the CMS site.
+- **Chapter 11 reviewed** by the author (2026-11-09) on **`feature/chapter-11-twig-in-depth`**, ready to merge: `manuscript/11-twig-in-depth.md`, 2 figures, no step (the theme doesn't change), core site tests only plus Devel on the CMS site.
 - **The folder** is still `themeing-drupal`. It will be renamed to `theming-drupal` (the author, 2026-11-07); do it outside a Claude session that has it as its working directory.
 - **The test sites** (DDEV, outside this repository), built by `tools/setup.sh` from Book 1's export at the commit in `data/book1.yml` (2026-11-07: `223b3ca`, on Book 1's `chore/export-site-recipe`, not merged yet):
   - `~/websites/open-university/lens-and-trail-theme`: Book 1's core site (Drupal 12.0.0-beta2, Olivero). `https://lens-and-trail-theme.ddev.site:8443`, `admin` / `12345`.
