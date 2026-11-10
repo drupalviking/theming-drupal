@@ -12,7 +12,7 @@ Read this first when picking the work up in a new session.
 
 - **Branch:** `feature/chapter-12-javascript`, last commit marks Chapter 12 reviewed. Nothing pushed. Chapters 5 to 11 are reviewed and merged into `main`; **Chapter 12 is reviewed and ready to merge** (the author pushes and merges).
 - **Next: Chapter 13 (Single Directory Components, the pilot chapter).** It needs a new branch, and a new "yes" from the author first. Then grill the author about scope.
-- **Open question for the author:** Chapter 3 (merged) still calls the toggle's third choice **System** (line 165 and the summary table), and the Penpot header wireframes may too. Chapter 12 now says **Site default**.
+- **Chapter 3 follows Site default** (the author, 2026-11-10): line 165 and the summary table. Still different: the Penpot wireframes show the toggle as Light · Dark · Auto (Chapter 4's `%%` note), and Chapter 3 calls the toggle "a button" where Chapter 12 builds three radio buttons.
 - **The core test site** is on `tools/use-step.sh 12 01` (with Site default), development mode off, JavaScript aggregation on, `lens_trail.settings:color_scheme` is `system`. No Spanish translations of the toggle (Figure 12.4's were temporary). The CMS site is unchanged (Devel is enabled there, as before; its `canvas.component.block.system_menu_block.devel` and `system.menu.devel` show as different from sync after Chapter 11's test, not imported).
 - **No config-drift check** in this project (the author, 2026-11-10: the test sites are built from recipes, and there is no drift).
 - **Bugs found upstream** go in "Bugs found in other projects" in the backlog, never reported; the author reviews them when the book is done. Two to recheck when **Drupal 12 is released (expected December 2026)**: Devel (Chapter 11's box) and JavaScript translations with aggregation (Chapter 12's box and Figure 12.4).
@@ -106,6 +106,7 @@ Made on 2026-11-07, at the start.
 
 ## History
 
+- **2026-11-10**: Chapter 3 says Site default too.
 - **2026-11-10**: **Chapter 12 reviewed**. Label renamed to Site default (code, text, Appendix B, Figures 12.1 to 12.4 retaken; Spanish *Predeterminado del sitio*). On a phone the label now wraps to a second line.
 - **2026-11-09**: **Chapter 12 drafted**, *JavaScript the Drupal Way*; tested on the core site (toggle, flash with and without the early script, shared cached pages, no JavaScript, blocked storage, the administrators' setting, real AJAX on `/hikes`, `once()`, keyboard, 320 pixels, forced colors, Spanish, ES modules).
 - **2026-11-09**: **Chapter 11 drafted**, *Twig in Depth*; tested on the core site (`dump()`, render array keys, cache tags per printing style, empty fields, `extends`, `include`, macro, `embed`, `|t`, `trans` and plurals in Spanish, the sandbox on a throwaway node), Devel's Twig functions on the CMS site. Found: Devel breaks Drush and every page on Drupal 12.0.0-beta2.

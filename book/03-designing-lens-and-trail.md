@@ -195,7 +195,7 @@ Every pair passes AA, most of them comfortably. Two details are worth a second l
 
 Phones and computers have a light and a dark appearance, and a website can follow it: CSS can ask for the visitor's setting with the `prefers-color-scheme` media query. That's the minimum, and it's what most sites do.
 
-The club goes one step further, with a **toggle** in the header: three choices, **Light**, **Dark** and **System**. *System* is the default, so a visitor who never touches the toggle gets their device's setting. Someone who reads the club's site at night with their phone in light mode can switch the site alone.
+The club goes one step further, with a **toggle** in the header: three choices, **Light**, **Dark** and **Site default**. *Site default* is where every visitor starts, and on the club's site it follows the device's setting, so a visitor who never touches the toggle gets just that. Someone who reads the club's site at night with their phone in light mode can switch the site alone.
 
 A toggle is a nice teaching moment, because it touches several things a theme has to get right:
 
@@ -472,7 +472,7 @@ On paper:
 |---|---|
 | Colors | The green `#1f6f5c` (green-700), a sandstone accent, warm neutrals; scales from 50 to 950. |
 | Roles | Values and roles; only the roles change in dark mode. All text pairs pass WCAG 2.2 AA. |
-| Dark mode | Light, dark and system, with a toggle; system by default. |
+| Dark mode | Light, dark and the site's default (the device's setting), with a toggle; the site's default to start with. |
 | Fonts | Bricolage Grotesque (headings) and Atkinson Hyperlegible Next (body), variable, self-hosted, OFL. |
 | Type scale | Seven fluid steps, body text 17 to 18 pixels, ratio 1.2 to 1.25, between 360 and 1280 pixels wide. |
 | Space | A scale on 4 pixels, from `3xs` (4) to `3xl` (96). |
