@@ -1,0 +1,54 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Hike card
+description: A hike in a list, with its photo, title, date and difficulty.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - title
+    - url
+  properties:
+    title:
+      type: string
+      title: Title
+      description: The hike's title, as plain text.
+      examples:
+        - Glencorse Reservoir winter loop
+    url:
+      type: string
+      format: uri-reference
+      title: Link
+      description: Where the title links to, usually the hike's page.
+      examples:
+        - /hikes/glencorse-reservoir-winter-loop
+    heading_level:
+      # number, not integer: SDC Styleguide can't read an integer from a demo
+      # file. With the enum, only 2, 3 and 4 get through either way.
+      type: number
+      title: Heading level
+      description: The title's heading level, one below the heading the cards are under.
+      enum:
+        - 2
+        - 3
+        - 4
+      default: 3
+slots:
+  photo:
+    title: Photo
+    description: The hike's photo, as an image Drupal has rendered. Optional.
+  facts:
+    title: Facts
+    description: The date, the difficulty and the walking time, rendered by Drupal.
+variants:
+  top:
+    title: Photo on top
+    description: The photo above the text, at any width.
+  beside:
+    title: Photo beside
+    description: The photo beside the text when the card is at least 30rem wide, on top when it's narrower.
+libraryOverrides:
+  # The layers are declared in the base library's first file, so it has to
+  # come first, or this file would declare a layer out of order.
+  dependencies:
+    - lens_trail/base

@@ -1,0 +1,7 @@
+{# Wrong: 5 isn't one of the heading levels the component allows. #}
+{% embed 'lens_trail:hike-card' with {
+  title: node.label,
+  url: url,
+  heading_level: 5,
+} %}
+{% endembed %}

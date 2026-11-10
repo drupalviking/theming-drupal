@@ -1,0 +1,10 @@
+name: Long title
+description: A title long enough to wrap, to check the spacing.
+props:
+  title: Turnhouse Hill, Carnethy Hill and Scald Law, with a detour to the Kirk Road
+  url: '#'
+  heading_level: 3
+  variant: beside
+slots:
+  photo: '<img src="/themes/custom/lens_trail/components/hike-card/demo/default-photo.svg" width="480" height="320" alt="">'
+  facts: '<div class="hike-card__date"><time datetime="2026-12-19T09:30:00Z">Saturday, 19 December 2026 at 09:30</time></div><div class="hike-card__difficulty">Easy</div><div class="hike-card__walking-time">About 1 hour 50 min on foot</div>'

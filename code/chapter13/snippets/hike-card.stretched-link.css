@@ -1,0 +1,29 @@
+/* Added at the end of hike-card.css: the whole card is the title's link. */
+@layer components {
+  .hike-card {
+    position: relative;
+  }
+
+  /* The link's ::after covers the card, so a click anywhere on it is a
+     click on the one link a screen reader announces. */
+  .hike-card__title a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  /* The focus ring around the whole card, since that's what's clickable. */
+  .hike-card:has(.hike-card__title a:focus-visible) {
+    outline: var(--border-focus) solid var(--color-text);
+    outline-offset: var(--size-focus-offset);
+
+    & .hike-card__title a:focus-visible {
+      outline: none;
+    }
+  }
+
+  /* Editors' contextual links stay above the cover. */
+  .hike-card .contextual {
+    z-index: 1;
+  }
+}

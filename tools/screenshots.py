@@ -88,6 +88,19 @@ SHOTS = {
         ("after", "12-header-toggle-phone", "core", "/", 360, 740, False),
         ("dark", "12-header-toggle-dark", "core", "/", 1280, 500, False),
     ],
+    # 13: "component" on step 01, the rest on step 03 (tools/use-step.sh 13 03),
+    # "cms" on step 04 after code/chapter13/site/cms.php.
+    "13": [
+        ("component", "13-front-component", "core", "/", 1280, 800, False, ".hike-card"),
+        ("variants", "13-hikes-wide", "core", "/hikes", 1280, 900, False, ".hike-card"),
+        ("variants", "13-hikes-phone", "core", "/hikes", 360, 900, False, ".hike-card"),
+        ("variants", "13-front-cards", "core", "/", 1280, 900, False, ".hike-card"),
+        ("dark", "13-hikes-wide-dark", "core", "/hikes", 1280, 900, False, ".hike-card"),
+        ("styleguide", "13-styleguide-beside", "core", "/styleguide/component/Lens%20%26%20Trail/lens_trail%3Ahike-card/beside", 1280, 600, True),
+        ("styleguide", "13-styleguide-top", "core", "/styleguide/component/Lens%20%26%20Trail/lens_trail%3Ahike-card/top", 1280, 800, True),
+        ("cms", "13-cms-home", "cms", "/home", 1280, 900, False, "[data-component-id='mercury:hike-card']"),
+        ("cms", "13-cms-home-phone", "cms", "/home", 360, 900, False, "[data-component-id='mercury:hike-card']"),
+    ],
 }
 
 

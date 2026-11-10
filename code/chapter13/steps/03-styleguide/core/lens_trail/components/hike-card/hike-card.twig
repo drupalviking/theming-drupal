@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * The Hike card: a hike in a list.
+ *
+ * Props: title, url, heading_level. Slots: photo, facts.
+ * Variants: top (the default), beside. Drupal puts the variant in the
+ * data-component-variant attribute, and the CSS reads it from there.
+ */
+#}
+{% set heading = 'h' ~ heading_level|default(3) %}
+<article{{ attributes.addClass('hike-card') }}>
+  <div class="hike-card__layout">
+    <div class="hike-card__text">
+      <{{ heading }} class="hike-card__title">
+        <a href="{{ url }}">{{ title }}</a>
+      </{{ heading }}>
+      <div class="hike-card__facts">
+        {% block facts %}
+          {{ facts }}
+        {% endblock %}
+      </div>
+    </div>
+    {% if photo %}
+      <div class="hike-card__photo">{{ photo }}</div>
+    {% endif %}
+  </div>
+</article>

@@ -1,0 +1,19 @@
+{# The same card with include: the facts are captured first, then passed. #}
+{% set facts %}
+  {{ title_suffix }}
+  {{ content.field_date|add_class('hike-card__date') }}
+  {{ content.field_difficulty|add_class('hike-card__difficulty') }}
+  {% if walking_time %}
+    <div class="hike-card__walking-time">{{ 'About @time on foot'|t({'@time': walking_time}) }}</div>
+  {% endif %}
+  {{ content|without('field_date', 'field_difficulty', 'field_photo') }}
+{% endset %}
+{{ include('lens_trail:hike-card', {
+  attributes: attributes,
+  title: node.label,
+  url: url,
+  heading_level: heading_level|default(3),
+  variant: 'beside',
+  photo: content.field_photo|render,
+  facts: facts,
+}, with_context = false) }}

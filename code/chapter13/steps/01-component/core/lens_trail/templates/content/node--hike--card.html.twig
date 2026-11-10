@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * A hike in the Card view mode, as in the Next hikes block.
+ *
+ * The markup and styles are in the Hike card component. This template only
+ * hands it the node's values. The block's title is the h2, so each card's
+ * title is an h3. For the variables, see core's node.html.twig.
+ */
+#}
+{% embed 'lens_trail:hike-card' with {
+  title: node.label,
+  url: url,
+  heading_level: 3,
+} %}
+  {% block facts %}
+    {{ title_suffix }}
+    {{ content.field_date|add_class('hike-card__date') }}
+    {{ content.field_difficulty|add_class('hike-card__difficulty') }}
+    {% if walking_time %}
+      <div class="hike-card__walking-time">{{ 'About @time on foot'|t({'@time': walking_time}) }}</div>
+    {% endif %}
+    {{ content|without('field_date', 'field_difficulty') }}
+  {% endblock %}
+{% endembed %}
