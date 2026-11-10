@@ -2,11 +2,20 @@
 
 Decisions, history, and open items for *Theming Drupal*. `README.md` has the layout, the commands, and the chapter status. Keep both up to date at the end of every chapter.
 
-Last updated: 2026-11-08.
+Last updated: 2026-11-10.
 
 ## Where we are
 
 Read this first when picking the work up in a new session.
+
+### Resume here (2026-11-10)
+
+- **Branch:** `feature/chapter-12-javascript`, last commit marks Chapter 12 reviewed. Nothing pushed. Chapters 5 to 11 are reviewed and merged into `main`; **Chapter 12 is reviewed and ready to merge** (the author pushes and merges).
+- **Next: Chapter 13 (Single Directory Components, the pilot chapter).** It needs a new branch, and a new "yes" from the author first. Then grill the author about scope.
+- **Chapter 3 follows Site default** (the author, 2026-11-10): line 165 and the summary table. Still different: the Penpot wireframes show the toggle as Light · Dark · Auto (Chapter 4's `%%` note), and Chapter 3 calls the toggle "a button" where Chapter 12 builds three radio buttons.
+- **The core test site** is on `tools/use-step.sh 12 01` (with Site default), development mode off, JavaScript aggregation on, `lens_trail.settings:color_scheme` is `system`. No Spanish translations of the toggle (Figure 12.4's were temporary). The CMS site is unchanged (Devel is enabled there, as before; its `canvas.component.block.system_menu_block.devel` and `system.menu.devel` show as different from sync after Chapter 11's test, not imported).
+- **No config-drift check** in this project (the author, 2026-11-10: the test sites are built from recipes, and there is no drift).
+- **Bugs found upstream** go in "Bugs found in other projects" in the backlog, never reported; the author reviews them when the book is done. Two to recheck when **Drupal 12 is released (expected December 2026)**: Devel (Chapter 11's box) and JavaScript translations with aggregation (Chapter 12's box and Figure 12.4).
 
 - **2026-11-07: the book was started.** Scaffold, research, the test sites (built from Book 1's export) and `OUTLINE.md` (reviewed and accepted by the author) are on `chore/scaffold`; the remote is `github.com/drupalviking/theming-drupal`, and the author pushes. Nothing is drafted.
 - **Chapter 3 drafted** on `feature/chapter-03-design` (2026-11-07), waiting for the author's review: `manuscript/03-designing-lens-and-trail.md`, 16 figures. The author picked palette **B, Old Town sandstone** and font pair **3, Bricolage Grotesque + Atkinson Hyperlegible Next** (options page: https://claude.ai/artifact/PNXN3sTZMCA7yvh3sXqo74). Next, after the review: Chapter 4, *The Design in Penpot*.
@@ -23,6 +32,7 @@ Read this first when picking the work up in a new session.
 
 - **Chapter 10 reviewed** by the author (2026-11-09) on **`feature/chapter-10-preprocess`**, ready to merge: `manuscript/10-preprocess-functions-and-theme-settings.md`, 3 figures, two steps (`01-walking-time`, `02-color-scheme`), core site only.
 - **Chapter 11 reviewed** by the author (2026-11-09) on **`feature/chapter-11-twig-in-depth`**, ready to merge: `manuscript/11-twig-in-depth.md`, 2 figures, no step (the theme doesn't change), core site tests only plus Devel on the CMS site.
+- **Chapter 12 reviewed** by the author (2026-11-10) on **`feature/chapter-12-javascript`**, ready to merge: `manuscript/12-javascript-the-drupal-way.md`, 4 figures, one step (`01-toggle`), core site only.
 - **The folder** is still `themeing-drupal`. It will be renamed to `theming-drupal` (the author, 2026-11-07); do it outside a Claude session that has it as its working directory.
 - **The test sites** (DDEV, outside this repository), built by `tools/setup.sh` from Book 1's export at the commit in `data/book1.yml` (2026-11-07: `223b3ca`, on Book 1's `chore/export-site-recipe`, not merged yet):
   - `~/websites/open-university/lens-and-trail-theme`: Book 1's core site (Drupal 12.0.0-beta2, Olivero). `https://lens-and-trail-theme.ddev.site:8443`, `admin` / `12345`.
@@ -86,6 +96,7 @@ Made on 2026-11-07, at the start.
 | Chapter 6 (2026-11-08) | All of Claude's recommendations. Mercury copied and keeping the machine name `mercury`. In Tailwind, the club's colors and spacing get the prefix `club` (`--color-club-action`, `--spacing-club-m`): colors clash with `muted`, `accent` and Tailwind's palette, and `--spacing-xl` changes `max-w-xl` (found by comparing built rules, so spacing was added to the author's decision). Type, radius and fonts keep their names. `--secondary` and `--accent` both map to `tint`. One `:focus-visible` rule in `theme.css`, outside Tailwind's layers, because Mercury's ring at 50% is 2.1:1 on cream. `@source not "../build"` makes the build repeatable. `build/` and the lock file committed, `node_modules/` ignored. |
 | Chapter 7 (2026-11-08) | All of Claude's recommendations. Accepted in review: the hike page keeps its sidebar blocks until the hike page chapter; the landmark label is "More from the club". Regions: header, primary_menu, secondary_menu, breadcrumb, highlighted, help, hero, content, sidebar, footer (one Footer region, columns from Grid). `page.html.twig` is back, from core. Hero inside `<main>`, outside `.site-width`. Sidebar column from `:has()`. The CMS site gets a section, no code step. |
 | Chapter 10 (2026-11-09) | All of Claude's recommendations, plus the author on suggestions: don't keep one, but demonstrate well what they can do and where you'd use them, even if that sounds ridiculous on the club's site (four, tested with real templates, then removed). Walking time instead of "days until". Hook classes; `.theme` in a box. The color scheme setting only. Settings form as a hook, like Mercury. Own section on overrides with `audit_overrides.py` (Python, not the shell script first suggested: it strips Twig comments). |
+| Chapter 12 (2026-11-09) | All of Claude's recommendations: the toggle as three radio buttons, made by JavaScript; an early script in the head; System means back to the administrators' setting; `drupalSettings` carries that setting; `Drupal.t()` with a context; one tested ES module section; a short CMS section; toggle on the core site only, placed under the header until the header chapter. No sun and moon icons yet. Review (2026-11-10): the third choice is labelled **Site default**, not System (it means back to the administrators' setting); the toggle stays below the header until the header chapter; the beta box about `Drupal.t()` and aggregation stays until the Drupal 12 release. |
 | Chapter 11 (2026-11-09) | All of Claude's recommendations: every tool demonstrated on the club's templates and removed; the full `include` vs `embed` comparison waits for Chapter 13; one sandbox failure; `dump()` first, Devel in a box; short CMS section; no WordPress box. Devel doesn't run on Drupal 12.0.0-beta2, so the box says so. |
 | Chapter 9 (2026-11-09) | All of Claude's recommendations. Accepted in review: the interim badge; the full table of Twig additions stays in the chapter. One real template, `node--hike--card.html.twig`, copied from core; Chapter 13 moves it into a component. No photo on the card until Chapter 14. The card title is `h3` (the Card view mode is used only under the Next hikes block's `h2`). Full table of Drupal's 25 Twig additions. Caching: the rule and a measured test; render arrays in Chapter 11. Short section on escaping. Drupal CMS site: a section, no code step. |
 | Chapter 8 (2026-11-09) | All of Claude's recommendations. Accepted in review: the plainer pages until later chapters style them; Bricolage pinned at optical size 36; the WOFF2 files in `design/fonts/`; the cleanup given to the reader as `scripts/cleanup.sh` and two diffs, with copying the step as the alternative. Remove appearance-only Starterkit CSS with its templates (42 templates, 16 CSS files); keep what makes things work. Layers: reset, tokens, base, layout, components, utilities, declared first by `css/layers.css`. `core/normalize` replaced by a small reset. `tokens.py --layer=tokens`. WOFF2 made with fontTools (`scripts/fonts.sh`): Latin, weight axis only, Bricolage at opsz 36. No preload on core. `sdc_critical_css` left out (see Backlog). |
@@ -95,6 +106,9 @@ Made on 2026-11-07, at the start.
 
 ## History
 
+- **2026-11-10**: Chapter 3 says Site default too.
+- **2026-11-10**: **Chapter 12 reviewed**. Label renamed to Site default (code, text, Appendix B, Figures 12.1 to 12.4 retaken; Spanish *Predeterminado del sitio*). On a phone the label now wraps to a second line.
+- **2026-11-09**: **Chapter 12 drafted**, *JavaScript the Drupal Way*; tested on the core site (toggle, flash with and without the early script, shared cached pages, no JavaScript, blocked storage, the administrators' setting, real AJAX on `/hikes`, `once()`, keyboard, 320 pixels, forced colors, Spanish, ES modules).
 - **2026-11-09**: **Chapter 11 drafted**, *Twig in Depth*; tested on the core site (`dump()`, render array keys, cache tags per printing style, empty fields, `extends`, `include`, macro, `embed`, `|t`, `trans` and plurals in Spanish, the sandbox on a throwaway node), Devel's Twig functions on the CMS site. Found: Devel breaks Drush and every page on Drupal 12.0.0-beta2.
 - **2026-11-09**: **Chapter 10 drafted**, *Preprocess Functions and Theme Settings*; tested on the core site (walking time, the color scheme form with an anonymous visitor, schema validation, `.theme`, four suggestions with real templates, config/install on a throwaway theme, the module in Appendix B).
 - **2026-11-09**: **Chapter 9 drafted**, *Twig Basics*; tested on the core site (suggestions, headings, cache tags per way of printing, escaping, contrast, 320px reflow).
@@ -128,6 +142,7 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 **Every bug we find in Drupal core, contrib or other tools goes here** (the author, 2026-11-09). Don't report any of them upstream: the author reviews the whole list when the book is done and decides which to report.
 
 - **Devel 5.5.0 and 5.x-dev on Drupal 12.0.0-beta2** (found 2026-11-09, Chapter 11). Devel says it supports `^12`, but: (1) Drush stops with a fatal error, because `interact()` in `src/Drush/Commands/DevelHookCommand.php` and `DevelEventCommand.php` lacks the `: void` that Symfony's `Command::interact()` now has; (2) every page gives a 500, `InvalidArgumentException: Drupal\devel\DevelDumperPluginManager only supports annotation-based discovery`. One web search found no existing issue; drupal.org's queue couldn't be searched directly. **Recheck when Drupal 12 is released (expected December 2026)**, then keep or rewrite Chapter 11's Devel box, or drop Devel from it.
+- **`Drupal.t()` translations with JavaScript aggregation on, Drupal 12.0.0-beta2** (found 2026-11-09, Chapter 12). The translation file (`public://languages/es_*.js`) is built and contains the strings, but with `js.preprocess` on, `core/modules/locale/locale.translation.js` (the placeholder) ends up in a 17-byte aggregate and `window.drupalTranslations` is undefined; with aggregation off, the file loads and the strings work. Cache rebuilds didn't help. One search found older, different issues ([#3089764](https://www.drupal.org/project/drupal/issues/3089764), [#2972582](https://www.drupal.org/project/drupal/issues/2972582)). Not tested on Drupal 11. **Recheck at the Drupal 12 release**, and update Chapter 12's box and Figure 12.4.
 - **Mercury's schema on Drupal 12** (found 2026-11-09, Chapter 10): `Choice` without the named `choices:` key fails on Drupal 12 ("$options must be an associative array or NULL"), in `config/schema/mercury.schema.yml`.
 
 ### Other
@@ -139,6 +154,8 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 - **Sidebar blocks on the hike page** (Chapter 7, for the hike page chapter): the wireframe's right column is the hike's facts, but Join the club and Next hikes are still in `sidebar` there. Next hikes shows only on hike pages, so hiding it there means rethinking where it goes.
 - **Chapter 7's block moves and the temporary Hero block** are done by hand or script on the test site; see the `use-step.sh` item below.
 - **`10-suggestion-debug.png`**: the same one-off script.
+- **`12-toggle-spanish.png`**: one-off (temporary translations, aggregation off).
+- **The toggle's place and icons**: the header chapter places it and decides on the sun and moon icons from Chapter 3.
 - **`11-dump.png` and `11-card-spanish.png`**: one-off too (a temporary `dump()` and a temporary translation).
 - **`09-twig-debug-card.png` and `09-cms-twig-debug.png`** too: a one-off script from real page source. A debug-figure mode in `tools/screenshots.py` would cover all three.
 - **`07-twig-debug.png`** was made by a one-off script from real page source, not by `tools/screenshots.py`.

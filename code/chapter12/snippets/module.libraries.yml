@@ -1,0 +1,6 @@
+hike-tools:
+  version: VERSION
+  js:
+    js/hike-tools.js: { attributes: { type: module } }
+  dependencies:
+    - core/drupal

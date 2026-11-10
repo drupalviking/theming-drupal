@@ -125,3 +125,24 @@ On the front page, this gave each card its walking time in a `div`, and the seco
 Two things are worth noticing. The default for `tag` is a plain string, because a default has to be a constant; that's also why the fallback sentence is inside the macro, marked with `|t`, and not in the macro's argument list. And the macro has to be told the time: it can't see `walking_time` from the template around it.
 
 Is it worth having? With one call on one template, no. We'd keep the `if` in the template. A macro earns its place when the markup appears a few times in the same file.
+
+## Chapter 12, exercise 5: following another tab
+
+The browser fires a `storage` event in every *other* tab of the same site when `localStorage` changes, and that's all we need. It goes at the end of `buildToggle()`:
+
+`js/color-scheme-toggle.js` ([source](../code/chapter12/snippets/color-scheme-toggle.sync.js))
+
+```javascript
+// Another tab changed the choice. A null key means storage was cleared.
+window.addEventListener('storage', (event) => {
+  if (event.key === storageKey || event.key === null) {
+    const choice = event.newValue || 'system';
+    applyChoice(choice);
+    fieldset.querySelector(`input[value="${choice}"]`).checked = true;
+  }
+});
+```
+
+`event.newValue` is empty when the entry has been removed, which is what our **Site default** choice does, and so `|| 'system'` covers that. A null `event.key` means that all of storage was cleared.
+
+We tested it with two tabs: choosing Dark in one changed the colors and the selected radio button in the other, and choosing Site default changed both back. The event doesn't fire in the tab that made the change, so there's no risk of a loop.
