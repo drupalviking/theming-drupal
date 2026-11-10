@@ -106,7 +106,7 @@ The plan for each chapter is in `OUTLINE.md` (2026-11-07, revised with the autho
 | 9. Twig Basics | **Reviewed** (2026-11-09). Twig syntax, debug and suggestions, `node--hike--card.html.twig` (h3, classes, `hike-card` library), printing parts of `content` with measured cache tags, escaping, Drupal's 25 Twig additions. |
 | 10. Preprocess Functions and Theme Settings | **Reviewed** (2026-11-09) on `feature/chapter-10-preprocess`. Hook classes, the walking time (Naismith's rule) from `preprocess_node`, four suggestions demonstrated and removed, a color scheme setting, the override checklist and `scripts/audit_overrides.py`. |
 | 11. Twig in Depth | **Reviewed** (2026-11-09) on `feature/chapter-11-twig-in-depth`. Render arrays read from `dump()`, cache tags explained, the empty-field trap, `extends`/`include`/macros/`embed` tried and removed, translation tested in Spanish, the sandbox. No step: the theme doesn't change. |
-| 12. JavaScript the Drupal Way | **Drafted** (2026-11-09) on `feature/chapter-12-javascript`, for the author's review. The color scheme toggle: progressive enhancement, an early script in the head, behaviors and `once()` (with a real AJAX test), `drupalSettings`, `Drupal.t()` with context, ES modules. Core site only. |
+| 12. JavaScript the Drupal Way | **Reviewed** (2026-11-10) on `feature/chapter-12-javascript`. The color scheme toggle (Light, Dark, Site default): progressive enhancement, an early script in the head, behaviors and `once()` (with a real AJAX test), `drupalSettings`, `Drupal.t()` with context, ES modules. Core site only. |
 | 13. Single Directory Components | Proposed. **The pilot chapter** (the Hike card). |
 | 14. Images | Proposed. |
 | **Part 2: The parts of a page** |  |

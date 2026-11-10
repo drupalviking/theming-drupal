@@ -27,7 +27,7 @@
 
   function applyChoice(choice) {
     const root = document.documentElement;
-    // "System" goes back to what the site's administrators have chosen.
+    // "Site default" goes back to what the site's administrators have chosen.
     const scheme = choice === 'system' ? drupalSettings.lensTrail.colorScheme : choice;
     if (scheme === 'light' || scheme === 'dark') {
       root.setAttribute('data-color-scheme', scheme);
@@ -40,7 +40,7 @@
     const options = {
       light: Drupal.t('Light', {}, { context: 'Color scheme' }),
       dark: Drupal.t('Dark', {}, { context: 'Color scheme' }),
-      system: Drupal.t('System', {}, { context: 'Color scheme' }),
+      system: Drupal.t('Site default', {}, { context: 'Color scheme' }),
     };
     const current = storedChoice();
 

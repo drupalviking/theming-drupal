@@ -56,6 +56,6 @@ The browser fires a `storage` event in every *other* tab of the same site when `
 
 <!-- include: code/chapter12/snippets/color-scheme-toggle.sync.js lines=70-77 as=js/color-scheme-toggle.js -->
 
-`event.newValue` is empty when the entry has been removed, which is what our **System** choice does, and so `|| 'system'` covers that. A null `event.key` means that all of storage was cleared.
+`event.newValue` is empty when the entry has been removed, which is what our **Site default** choice does, and so `|| 'system'` covers that. A null `event.key` means that all of storage was cleared.
 
-We tested it with two tabs: choosing Dark in one changed the colors and the selected radio button in the other, and choosing System changed both back. The event doesn't fire in the tab that made the change, so there's no risk of a loop.
+We tested it with two tabs: choosing Dark in one changed the colors and the selected radio button in the other, and choosing Site default changed both back. The event doesn't fire in the tab that made the change, so there's no risk of a loop.

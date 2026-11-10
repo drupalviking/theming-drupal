@@ -84,13 +84,13 @@ A bit of CSS, in `css/components/color-scheme-toggle.css`:
 
 After a cache rebuild:
 
-![The site header with a Color scheme group of three radio buttons: Light, Dark and System, with System selected](images/12-header-toggle.png)
+![The site header with a Color scheme group of three radio buttons: Light, Dark and Site default, with Site default selected](images/12-header-toggle.png)
 *Figure 12.1: The toggle in the header. It's plain on purpose: the header chapter gives the whole header its design and its proper place*
 
 ![The same header in dark colors](images/12-header-toggle-dark.png)
 *Figure 12.2: The same page on a device set to dark*
 
-![The header on a phone, with the toggle on one line below the menus](images/12-header-toggle-phone.png)
+![The header on a phone, with the toggle below the menus and Site default wrapped onto a second line](images/12-header-toggle-phone.png)
 *Figure 12.3: On a phone*
 
 The labels are at least 44 pixels high, as the design asks for everything in the header. We checked the toggle with the keyboard (the arrow keys change the choice, and the focus ring is there), at 320 pixels wide with no sideways scrolling, and in forced colors. The radio buttons' green has a contrast of 5.6:1 in light mode and 7.1:1 in dark. And there's no transition on the colors, so there's nothing to turn off for people who've asked for reduced motion.
@@ -99,7 +99,7 @@ The labels are at least 44 pixels high, as the design asks for everything in the
 
 ## Passing a value from PHP
 
-There's one thing left. What should **System** do on a site whose administrators have set the color scheme to Dark? We decided it means "go back to what the site has chosen", and otherwise the setting would stop working for anyone who'd ever touched the toggle. So the script needs to know the setting. The early script may already have overwritten the attribute, so the page can't tell it.
+There's one thing left. What should **Site default** do on a site whose administrators have set the color scheme to Dark? Just what it says: go back to what the site has chosen. Otherwise the setting would stop working for anyone who'd ever touched the toggle. So the script needs to know the setting. The early script may already have overwritten the attribute, so the page can't tell it.
 
 That's what `drupalSettings` is for: values from PHP, handed to JavaScript as part of the page. It's one more line in the hook from the preprocess chapter:
 
@@ -107,7 +107,7 @@ That's what `drupalSettings` is for: values from PHP, handed to JavaScript as pa
 
 On the page, it arrives as JSON, and `drupalSettings.lensTrail.colorScheme` is the value. Name your settings after your theme, so they can't collide with anyone else's. And remember that everything in it is visible in the page's source, so never put a secret there.
 
-We tested it with the setting at Dark. A new visitor got dark colors with **System** selected. Choosing **Light** gave light, and it stayed light after a reload. Choosing **System** again brought back dark.
+We tested it with the setting at Dark. A new visitor got dark colors with **Site default** selected. Choosing **Light** gave light, and it stayed light after a reload. Choosing **Site default** again brought back dark.
 
 ## Strings in JavaScript
 
@@ -119,7 +119,7 @@ Second, look at the `context` in the toggle's calls. We almost missed this: on t
 
 Once the strings are translated, under **User interface translation** as in the previous chapter:
 
-![The header in Spanish, with the toggle reading Combinación de colores, Claro, Oscuro and Sistema](images/12-toggle-spanish.png)
+![The header in Spanish, with the toggle reading Combinación de colores, Claro, Oscuro and Predeterminado del sitio](images/12-toggle-spanish.png)
 *Figure 12.4: The toggle in Spanish, on Drupal 12.0.0-beta2 with JavaScript aggregation turned off*
 
 > **Watch out, while Drupal 12 is in beta.** That caption matters. On 12.0.0-beta2, with JavaScript aggregation on, the translations didn't reach the page: the file with them was there and correct, but the page didn't load it, so the labels stayed in English. With aggregation off, as above, it worked. If yours stay in English, that's the first thing to check.

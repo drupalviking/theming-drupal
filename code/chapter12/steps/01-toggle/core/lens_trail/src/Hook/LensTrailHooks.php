@@ -88,7 +88,7 @@ class LensTrailHooks {
     if (in_array($scheme, ['light', 'dark'], TRUE)) {
       $variables['html_attributes']->setAttribute('data-color-scheme', $scheme);
     }
-    // The toggle goes back to this when a visitor chooses "System".
+    // The toggle goes back to this when a visitor chooses "Site default".
     $variables['#attached']['drupalSettings']['lensTrail']['colorScheme'] = $scheme;
   }
 
