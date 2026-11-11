@@ -16,7 +16,7 @@ A **Single Directory Component**, SDC for short, is a folder with everything one
 
 The folder goes in `components/` in a theme or a module, at any depth. Drupal finds it by itself, and gives it an ID made of the theme's name and the folder's name: ours will be `lens_trail:hike-card`. That's what templates use to call it.
 
-The point isn't only tidiness. A component has a **contract**: the `.component.yml` lists the values it takes, what type each one is, and which are required. Templates that use the card have to keep to it, and Drupal checks that they do. And because the component doesn't know where its values come from, the same card can be filled from a node, from a list, from a styleguide, or by an editor.
+The point isn't only tidiness. A component has a **contract**: the `.component.yml` lists the values it takes, what type each one is, and which are required. Templates that use the card have to keep to that contract, and Drupal checks that they do. And because the component doesn't know where its values come from, the same card can be filled from a node, from a list, from a styleguide, or by an editor.
 
 > **Drupalism:** "Component" means an SDC in this book, and in most theming talk. But Drupal's own code also has "Components": the PHP libraries under `core/lib/Drupal/Component`, such as `Utility` and `Serialization`, that can be used outside Drupal. They have nothing to do with themes. If someone says "a Drupal component", ask which they mean.
 
