@@ -124,7 +124,7 @@ This part is site building, as in the first book's chapter on display modes:
 3. Set its format to **Thumbnail**, then use the gear to choose the image style **Max 650x650**, with no link. Leave lazy loading on.
 4. **Save**.
 
-The Thumbnail formatter shows the media item's image, with its alt text, in an image style. It's a stopgap: the images chapter gives the card proper responsive images, and the photo credit the design puts in its corner.
+The Thumbnail formatter shows the picture in the media item's Thumbnail field, which for a photo is the original upload, at full size, with its alt text, in the image style you choose. That's all it shows: none of the media item's other fields, so no photo credit, and one copy for every screen, so no responsive images. The first book's chapter on media compares it with **Rendered entity** in "Which formatter, when?". Here it's a stopgap that keeps the template simple for now: the images chapter switches the card to Rendered entity with a media view mode, which gives it proper responsive images, and the photo credit the design puts in its corner.
 
 ### A photo slot, and variants
 
