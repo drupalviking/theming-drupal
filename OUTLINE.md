@@ -149,8 +149,8 @@ Split from "Generating the Themes" (the author, 2026-11-08): this chapter is the
 
 ### 15. The Header and the Footer
 
-- **Header**: branding (logo, site name, slogan) and the site branding block's template; search (core Search or a link); the language switcher (English/Spanish); the user menu (log in, my account); sticky or not, and its cost on small screens; the header as a component and as a region.
-- **Footer**: footer regions, the footer menu (Book 1's Chapter 14), the Club info block (a content block with fields: its own template), social links, the license line (CC BY-SA for photos).
+- **Header**: branding (logo and site name in one link, the slogan off) and the site branding block's template; the favicon; no search (a decision, explained); the language switcher (English · Español, a landmark name, `lang`); the color scheme toggle as a disclosure button; Log in moved to the footer; sticky or not, and its cost on small screens (a Try it); the header from regions on core, from Canvas's page template on Drupal CMS.
+- **Footer**: a Footer bottom region, the footer menu (Book 1's Chapter 14), the Club info block (a content block with fields: its own templates, by block type), Flickr as a text link, the license line (CC BY-SA, a content block), Powered by Drupal (why it's there, and why the club keeps it).
 - Skip link and landmarks (`<header>`, `<nav>`, `<footer>`).
 
 ### 16. Menus, in Depth

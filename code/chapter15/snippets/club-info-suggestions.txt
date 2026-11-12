@@ -1,0 +1,13 @@
+<!-- THEME HOOK: 'block' -->
+<!--
+FILE NAME SUGGESTIONS:
+   ▪️ block--lens-trail-club-info.html.twig
+   ▪️ block--block-content--19f6c629-4f13-4a62-9800-aaaf8e48385d.html.twig
+   ▪️ block--block-content--id-view--lens-trail-club-info--full.html.twig
+   ▪️ block--block-content--id--lens-trail-club-info.html.twig
+   ▪️ block--block-content--view-type--club-info--full.html.twig
+   ✅ block--block-content--type--club-info.html.twig
+   ▪️ block--block-content--view--full.html.twig
+   ▪️ block--block-content.html.twig
+   ▪️ block.html.twig
+-->

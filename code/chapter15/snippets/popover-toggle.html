@@ -1,0 +1,14 @@
+<!-- The toggle's markup with the Popover API: no script to open, close,
+     dismiss or keep aria-expanded in step. The script would still build it
+     (so visitors without JavaScript don't see it) and handle the radios. -->
+<div class="color-scheme-toggle">
+  <button type="button" class="color-scheme-toggle__button" popovertarget="color-scheme-choices">
+    <span class="visually-hidden">Color scheme</span>
+  </button>
+  <fieldset id="color-scheme-choices" class="color-scheme-toggle__choices" popover>
+    <legend>Color scheme</legend>
+    <label><input type="radio" name="color-scheme" value="light"> Light</label>
+    <label><input type="radio" name="color-scheme" value="dark"> Dark</label>
+    <label><input type="radio" name="color-scheme" value="system" checked> Site default</label>
+  </fieldset>
+</div>

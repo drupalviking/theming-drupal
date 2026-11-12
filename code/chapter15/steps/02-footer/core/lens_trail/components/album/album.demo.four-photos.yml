@@ -1,0 +1,29 @@
+name: Four photos
+description: A grid of four photos, each with its credit below. Click one to open the lightbox. The photos are the club's default photo; the markup around each one copies what templates/media/media--image--album.html.twig makes, so change both together.
+slots:
+  # SDC Styleguide renders a slot written as text as a Twig template, so the
+  # demo can use the Photo component itself.
+  photos: |
+    {% set svg = '/themes/custom/lens_trail/components/photo/demo/default-photo.svg' %}
+    {% for photo in [
+      {caption: 'Carnethy Hill from Turnhouse Hill', photographer: 'Jim Barton', license: 'CC BY-SA 2.0', source: 'https://commons.wikimedia.org/'},
+      {caption: 'The view west from Carnethy Hill', photographer: "Alan O'Dowd", license: 'CC BY-SA 2.0', source: 'https://commons.wikimedia.org/'},
+      {caption: 'Glencorse Reservoir from the hillside', photographer: 'Jaroslaw Musialkowski', license: 'CC BY-SA 4.0', source: 'https://commons.wikimedia.org/'},
+      {caption: 'A burn in the snow, without a source', photographer: 'Bops92', license: 'CC BY-SA 4.0', source: ''},
+    ] %}
+      <li class="album__item">
+        {% set image %}
+          <a class="album__link" href="{{ svg }}" data-srcset="{{ svg }} 1280w" data-caption="{{ photo.caption }}">
+            <img src="{{ svg }}" width="1280" height="720" alt="" loading="lazy">
+          </a>
+        {% endset %}
+        {# As on an album page: the caption is for the lightbox, not the grid. #}
+        {{ include('lens_trail:photo', {
+          image: image,
+          photographer: photo.photographer,
+          license: photo.license,
+          source: photo.source,
+          credit: 'below',
+        }, with_context = false) }}
+      </li>
+    {% endfor %}

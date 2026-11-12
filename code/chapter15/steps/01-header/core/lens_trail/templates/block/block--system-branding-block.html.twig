@@ -1,0 +1,32 @@
+{% extends "block.html.twig" %}
+{#
+/**
+ * @file
+ * The club's logo and name, as one link to the front page.
+ *
+ * The logo is decoration here (alt=""): the name next to it says the same
+ * thing, and a screen reader would otherwise read "Lens & Trail" twice, or
+ * core's "Home" and then the name.
+ *
+ * Available variables, from the block:
+ * - site_logo: The URL of the logo, from the theme's settings.
+ * - site_name: The name of the site, if the block shows it.
+ * - site_slogan: The slogan, if the block shows it.
+ */
+#}
+{% set attributes = attributes.addClass('site-branding') %}
+{% block content %}
+  {% if site_logo or site_name %}
+    <a href="{{ path('<front>') }}" rel="home" class="site-branding__link">
+      {% if site_logo %}
+        <img src="{{ site_logo }}" alt="" width="48" height="48" class="site-branding__logo">
+      {% endif %}
+      {% if site_name %}
+        <span class="site-branding__name">{{ site_name }}</span>
+      {% endif %}
+    </a>
+  {% endif %}
+  {% if site_slogan %}
+    <p class="site-branding__slogan">{{ site_slogan }}</p>
+  {% endif %}
+{% endblock %}
