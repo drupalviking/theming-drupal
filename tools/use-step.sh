@@ -3,6 +3,7 @@
 #
 # Usage: tools/use-step.sh <chapter> <step> [--no-default]
 #   e.g. tools/use-step.sh 04 01      (or the full name: 01-generate)
+#        tools/use-step.sh d 01       (an appendix: code/appendix-d/)
 #
 # A step folder has one subfolder per test site, each holding theme folders:
 #
@@ -31,7 +32,12 @@ if [[ $# -lt 2 ]]; then
   exit 1
 fi
 
-chapter="chapter$1"
+# A chapter is a number (05); an appendix is a letter (d), in code/appendix-d/.
+if [[ "$1" =~ ^[A-Za-z]$ ]]; then
+  chapter="appendix-$(echo "$1" | tr '[:upper:]' '[:lower:]')"
+else
+  chapter="chapter$1"
+fi
 step_dir=$(find "code/$chapter/steps" -maxdepth 1 -type d -name "$2*" 2>/dev/null | sort | head -n 1)
 if [[ -z "$step_dir" ]]; then
   echo "No step matching '$2' in code/$chapter/steps" >&2

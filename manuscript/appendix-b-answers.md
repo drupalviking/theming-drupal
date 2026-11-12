@@ -59,3 +59,13 @@ The browser fires a `storage` event in every *other* tab of the same site when `
 `event.newValue` is empty when the entry has been removed, which is what our **Site default** choice does, and so `|| 'system'` covers that. A null `event.key` means that all of storage was cleared.
 
 We tested it with two tabs: choosing Dark in one changed the colors and the selected radio button in the other, and choosing Site default changed both back. The event doesn't fire in the tab that made the change, so there's no risk of a loop.
+
+## Chapter 13, exercise 5: a card you can click anywhere
+
+Wrapping the whole card in a link isn't the answer: the card already has a link, and a link can't contain another. Even without one, a screen reader would read the whole card as the link's name. The usual answer is a **stretched link**: the title's link stays as it is, and an empty `::after` on it is stretched over the whole card. This goes at the end of `components/hike-card/hike-card.css`:
+
+<!-- include: code/chapter13/snippets/hike-card.stretched-link.css as=components/hike-card/hike-card.css -->
+
+`position: relative` on the card makes it the box that `inset: 0` fills. The focus ring moves to the card, because a ring around the title alone wouldn't tell a keyboard user that the photo is part of it too. And the contextual links get `z-index: 1`, or the cover would sit on top of them.
+
+We tested it on `/hikes`: a click on the photo and a click on the walking time both opened the hike, Tab put a 3-pixel ring around the whole card, and, logged in, the pencil button still opened its menu. The price: you can't select the card's text with the mouse any more, because the cover is in the way. For a card that's mostly a way to somewhere else, that's usually fine. For one with text people copy, such as an address, it isn't, and then only the title should be the link.

@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * The Hike card: a hike in a list.
+ *
+ * Props: title, url, heading_level. Slots: facts.
+ */
+#}
+{% set heading = 'h' ~ heading_level|default(3) %}
+<article{{ attributes.addClass('hike-card') }}>
+  <{{ heading }} class="hike-card__title">
+    <a href="{{ url }}">{{ title }}</a>
+  </{{ heading }}>
+  <div class="hike-card__facts">
+    {% block facts %}
+      {{ facts }}
+    {% endblock %}
+  </div>
+</article>

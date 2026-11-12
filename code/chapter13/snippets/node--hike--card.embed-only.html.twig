@@ -1,0 +1,10 @@
+{# Wrong: with only, the block can't see content or walking_time. #}
+{% embed 'lens_trail:hike-card' with {
+  title: node.label,
+  url: url,
+} only %}
+  {% block facts %}
+    {{ content.field_date }}
+    {{ content.field_difficulty }}
+  {% endblock %}
+{% endembed %}

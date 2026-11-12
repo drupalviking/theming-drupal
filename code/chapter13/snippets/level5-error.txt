@@ -1,0 +1,1 @@
+Component validation failed in Twig file [themes/custom/lens_trail/templates/content/node--hike--card.html.twig] for component [lens_trail:hike-card]: [lens_trail:hike-card/heading_level] Does not have a value in the enumeration [2,3,4]. The provided value is: "5".
