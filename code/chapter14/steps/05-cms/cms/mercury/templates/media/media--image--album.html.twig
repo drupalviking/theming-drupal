@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * An Image media item in the Album view mode: one photo in an album's grid.
+ *
+ * The square photo links to a large version of itself (large.href, made in
+ * ThemeHooks::preprocessMedia()). The link also carries what the lightbox
+ * needs: the sizes for its srcset, and the caption. The Photo component puts
+ * the credit below the photo.
+ * For the variables, see core's media.html.twig.
+ */
+#}
+{% set image %}
+  <a class="album__link block overflow-hidden rounded-sm [&_img]:aspect-square [&_img]:object-cover" href="{{ large.href }}" data-srcset="{{ large.srcset }}" data-caption="{{ media.label }}">
+    {{- content.field_media_image -}}
+  </a>
+{% endset %}
+<div{{ attributes }}>
+  {{ title_suffix.contextual_links }}
+  {{ include('mercury:photo', {
+    image: image,
+    photographer: media.field_photographer.value,
+    license: content.field_license.0['#markup'],
+    source: media.field_source.uri,
+    credit: 'below',
+  }, with_context = false) }}
+</div>

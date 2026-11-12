@@ -1,0 +1,47 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Photo
+description: A photo with its credit, as the club's license asks for. The credit goes over the photo's corner, or below it with a caption.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - photographer
+    - license
+  properties:
+    photographer:
+      type: string
+      title: Photographer
+      examples:
+        - Jaroslaw Musialkowski
+    license:
+      type: string
+      title: License
+      description: The license's short name, as it's shown.
+      examples:
+        - CC BY-SA 4.0
+    source:
+      type: string
+      format: uri-reference
+      title: Source
+      description: Where the photo comes from. The photographer's name links to it.
+      examples:
+        - https://commons.wikimedia.org/wiki/File:Pentland_Hills_-_Glencorse_Reservoir.jpg
+    caption:
+      type: string
+      title: Caption
+      description: What the photo shows, before the credit. Only shown when the credit is below the photo.
+      examples:
+        - Glencorse Reservoir from the hillside
+    credit:
+      type: string
+      title: Credit
+      description: Over the photo's bottom corner (a banner) or below it (a lightbox).
+      enum:
+        - over
+        - below
+      default: over
+slots:
+  image:
+    title: Image
+    description: The photo, as an image Drupal has rendered.

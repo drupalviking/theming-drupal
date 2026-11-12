@@ -2,16 +2,18 @@
 
 /**
  * @file
- * Makes a recipe that adds Book 1's hikes to the Drupal CMS test site.
+ * Makes a recipe that adds Book 1's hikes and albums to the Drupal CMS test site.
  *
  * Book 1 builds the club's site on Drupal core; its Drupal CMS site has no
  * Hike content type. This book themes hikes on both sites, so tools/setup.sh
  * runs this script on the Drupal CMS site and applies the recipe it makes.
  *
  * The recipe comes from Book 1's export of the core site (its sites/core):
- * the Hike content type with its fields and displays, the Areas vocabulary,
- * the Hike leader role, the photo credit fields on Image media, and the hikes
- * with the areas, photos, files and hike leaders they use.
+ * the Hike and Gallery (album) content types with their fields and displays,
+ * the Areas vocabulary, the Hike leader role, the photo credit fields and the
+ * Banner and Album view modes of Image media, and the hikes and albums with
+ * the areas, photos, files and hike leaders they use. (Not the albums'
+ * comments: comments aren't set up on the Drupal CMS site.)
  *
  * Usage, from the Drupal CMS site's folder:
  *   ddev drush php:script hikes-recipe.php -- BOOK1_SITES_CORE OUTPUT_DIR
@@ -36,6 +38,19 @@ $config = [
   'pathauto.pattern.areas', 'pathauto.pattern.areas_es',
   // The Hike leader field lists only users with this role.
   'user.role.hike_leader',
+  // Albums.
+  'node.type.gallery', 'language.content_settings.node.gallery',
+  'field.storage.node.field_photos', 'field.storage.node.field_hike',
+  'field.field.node.gallery.field_area', 'field.field.node.gallery.field_body',
+  'field.field.node.gallery.field_hike', 'field.field.node.gallery.field_photos',
+  'core.entity_form_display.node.gallery.default',
+  'core.entity_view_display.node.gallery.default',
+  'core.entity_view_display.node.gallery.teaser',
+  'pathauto.pattern.albums', 'pathauto.pattern.albums_es',
+  // The media view modes the hike page and the albums use.
+  'core.entity_view_mode.media.banner', 'core.entity_view_mode.media.album',
+  'core.entity_view_display.media.image.banner',
+  'core.entity_view_display.media.image.album',
 ];
 foreach ($hike_fields as $field) {
   $config[] = "field.storage.node.$field";
@@ -48,7 +63,10 @@ foreach ($credit_fields as $field) {
 
 // What differs on the Drupal CMS site.
 const WORKFLOW = 'basic_editorial';       // Book 1's core site has "editorial".
-const PHOTO_VIEW_MODE = '16_9_large';     // The core site's "banner" isn't there.
+// Image styles and responsive image styles the core site has and Drupal CMS
+// doesn't, and Drupal CMS's nearest ones.
+const IMAGE_STYLES = ['max_1300x1300' => 'uncropped_960w_webp'];
+const RESPONSIVE_STYLES = ['banner' => '16_9_wide'];
 const TEXT_FORMATS = ['basic_html' => 'content_format', 'full_html' => 'content_format'];
 const ID_FIELDS = ['node' => 'nid', 'taxonomy_term' => 'tid', 'media' => 'mid', 'file' => 'fid', 'user' => 'uid'];
 
@@ -126,6 +144,13 @@ function clean(array &$data): void {
     if ($kind === 'media') {
       unset($section['field_themes']);
     }
+    if ($kind === 'node') {
+      unset($section['comment']);
+      // Drupal CMS puts every new content type in its workflow (an ECA model,
+      // "Enable moderation for new content types"), albums too, which Book 1
+      // didn't. Without a state, an album would come in as a draft.
+      $section['moderation_state'] ??= [['value' => 'published']];
+    }
     if ($kind === 'user') {
       unset($section['field_about_me'], $section['field_camera'], $section['user_picture']);
       // Of Book 1's roles, only Hike leader comes along.
@@ -159,22 +184,42 @@ foreach ($config as $name) {
       fn($perm) => str_replace('use editorial transition', 'use ' . WORKFLOW . ' transition', $perm),
       $data['permissions']);
   }
+  // Comments aren't set up on the Drupal CMS site: no comment field.
+  unset($data['content']['comment'], $data['hidden']['comment']);
+  if (isset($data['dependencies'])) {
+    foreach ($data['dependencies'] as $kind => $deps) {
+      $data['dependencies'][$kind] = array_values(array_filter(array_map(function ($dep) {
+        foreach (IMAGE_STYLES as $from => $to) {
+          $dep = $dep === "image.style.$from" ? "image.style.$to" : $dep;
+        }
+        foreach (RESPONSIVE_STYLES as $from => $to) {
+          $dep = $dep === "responsive_image.styles.$from" ? "responsive_image.styles.$to" : $dep;
+        }
+        return $dep;
+      }, $deps), fn($dep) => !str_contains($dep, 'comment')));
+    }
+  }
   foreach ($data['content'] ?? [] as $field => $settings) {
-    if (($settings['settings']['view_mode'] ?? NULL) === 'banner') {
-      $data['content'][$field]['settings']['view_mode'] = PHOTO_VIEW_MODE;
+    $style = $settings['settings']['image_style'] ?? NULL;
+    if ($style && isset(IMAGE_STYLES[$style])) {
+      $data['content'][$field]['settings']['image_style'] = IMAGE_STYLES[$style];
+    }
+    $style = $settings['settings']['responsive_image_style'] ?? NULL;
+    if ($style && isset(RESPONSIVE_STYLES[$style])) {
+      $data['content'][$field]['settings']['responsive_image_style'] = RESPONSIVE_STYLES[$style];
     }
   }
   write_yaml("$out/config/$name.yml", $data);
 }
 
-// The content: the hikes, and everything they point at.
+// The content: the hikes and albums, and everything they point at.
 $by_uuid = [];
 foreach (glob("$src/content/content/*/*.yml") as $file) {
   $data = Yaml::parseFile($file);
   $by_uuid[$data['_meta']['uuid']] = ['file' => $file, 'data' => $data];
 }
 $todo = array_keys(array_filter($by_uuid,
-  fn($e) => $e['data']['_meta']['entity_type'] === 'node' && $e['data']['_meta']['bundle'] === 'hike'));
+  fn($e) => $e['data']['_meta']['entity_type'] === 'node' && in_array($e['data']['_meta']['bundle'], ['hike', 'gallery'])));
 $keep = [];
 while ($todo) {
   $uuid = array_pop($todo);
@@ -207,9 +252,10 @@ foreach ($keep as $uuid => $data) {
 }
 
 write_yaml("$out/recipe.yml", [
-  'name' => 'Lens & Trail hikes (Drupal CMS site)',
-  'description' => "Book 1's Hike content type and hikes, for theming them on the Drupal CMS site. Made by tools/hikes-recipe.php; do not edit by hand.",
+  'name' => 'Lens & Trail hikes and albums (Drupal CMS site)',
+  'description' => "Book 1's hikes and albums, for theming them on the Drupal CMS site. Made by tools/hikes-recipe.php; do not edit by hand.",
   'type' => 'Site',
+  // Albums get into the workflow by themselves (see clean()).
   'config' => ['actions' => ['workflows.workflow.' . WORKFLOW => ['addNodeTypes' => ['hike']]]],
 ]);
 ksort($counts);

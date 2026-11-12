@@ -1,0 +1,154 @@
+/**
+ * @file
+ * The Album component: a grid of square photos, and its lightbox.
+ */
+@layer components {
+  .album {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-s);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media (min-width: 40rem) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (min-width: 64rem) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .album__link {
+    display: block;
+    border-radius: var(--radius-small);
+    overflow: hidden;
+
+    & img {
+      aspect-ratio: 1;
+      object-fit: cover;
+    }
+  }
+
+  /* The lightbox. Dark around the photo in both color schemes, like a
+     slide projector: the photo is what's lit. */
+  .lightbox {
+    inline-size: 100%;
+    block-size: 100%;
+    max-inline-size: none;
+    max-block-size: none;
+    margin: 0;
+    padding: var(--space-m);
+    border: 0;
+    background: var(--color-neutral-950);
+    color: var(--color-neutral-0);
+
+    /* Phones: the count and Close above the photo, the arrows below it, as
+       in the design. */
+    &[open] {
+      display: grid;
+      grid-template-areas:
+        "count close"
+        "figure figure"
+        "previous next";
+      grid-template-rows: auto 1fr auto;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: var(--space-s);
+    }
+
+    &::backdrop {
+      background: var(--color-neutral-950);
+    }
+
+    & a {
+      color: inherit;
+    }
+
+    & button {
+      display: grid;
+      place-items: center;
+      inline-size: var(--size-target);
+      block-size: var(--size-target);
+      border: 0;
+      border-radius: var(--radius-round);
+      background: var(--color-neutral-0);
+      color: var(--color-neutral-950);
+      font-size: var(--font-size-step-2);
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    /* The focus ring has to show on the dark background as well. */
+    & :focus-visible {
+      outline: 3px solid var(--color-neutral-0);
+      outline-offset: var(--size-focus-offset);
+    }
+  }
+
+  .lightbox__count {
+    grid-area: count;
+    margin: 0;
+  }
+
+  .lightbox__close {
+    grid-area: close;
+    justify-self: end;
+  }
+
+  .lightbox__figure {
+    grid-area: figure;
+    justify-self: center;
+    display: grid;
+    gap: var(--space-2xs);
+    margin: 0;
+    max-inline-size: min(100%, 64rem);
+  }
+
+  .lightbox__image {
+    max-inline-size: 100%;
+    max-block-size: 75vh;
+    margin-inline: auto;
+    object-fit: contain;
+  }
+
+  .lightbox__caption {
+    font-size: var(--font-size-step--1);
+  }
+
+  .lightbox__previous {
+    grid-area: previous;
+  }
+
+  .lightbox__next {
+    grid-area: next;
+    justify-self: end;
+  }
+
+  /* Wider: the arrows go either side of the photo, halfway down. */
+  @media (min-width: 40rem) {
+    .lightbox {
+      padding-inline: calc(var(--size-target) + 2 * var(--space-m));
+    }
+
+    /* Without a grid area, an absolutely positioned item in a grid is
+       placed against the whole dialog. With one, 50% would be halfway down
+       its own row. */
+    .lightbox__previous,
+    .lightbox__next {
+      grid-area: auto;
+      position: absolute;
+      inset-block-start: 50%;
+      translate: 0 -50%;
+    }
+
+    .lightbox__previous {
+      inset-inline-start: var(--space-m);
+    }
+
+    .lightbox__next {
+      inset-inline-end: var(--space-m);
+    }
+  }
+}

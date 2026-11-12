@@ -111,6 +111,20 @@ SHOTS = {
         ("dark", "appendix-d-text-dark", "core", "/styleguide/section/text", 1280, 1300, True),
         ("cms", "appendix-d-cms-demo", "cms", "/styleguide/component/Lens%20%26%20Trail/mercury%3Ahike-card/beside", 1280, 700, True),
     ],
+    # 14: "art" on step 02 (tools/use-step.sh 14 02, after code/chapter14/site/
+    # 02-focal-point.sh and 02-art-direction.php), the rest on step 04 (after
+    # 04-album.php), "cms" on step 05 (after 05-cms.php). The center crop, the
+    # focal point widget and the lightboxes need clicks or a changed crop, and
+    # were taken with a one-off script.
+    "14": [
+        ("art", "14-banner-focal", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 800, False, "h1"),
+        ("art", "14-banner-phone", "core", "/hikes/glencorse-reservoir-winter-loop", 360, 740, False, "h1"),
+        ("photo", "14-hike-credit", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 800, False, "h1"),
+        ("photo", "14-album", "core", "/galleries/pentlands-21-november", 1280, 900, False, "h1"),
+        ("photo", "14-album-phone", "core", "/galleries/pentlands-21-november", 360, 740, False, ".album"),
+        ("cms", "14-cms-hike", "cms", "/hikes/glencorse-reservoir-winter-loop", 1280, 900, False, "h1"),
+        ("cms", "14-cms-album", "cms", "/galleries/pentlands-21-november", 1280, 900, False, ".album"),
+    ],
 }
 
 
@@ -138,6 +152,8 @@ def main(chapter, tag=None):
             page.evaluate("document.fonts.ready")
             if scroll:
                 page.locator(scroll[0]).first.evaluate("el => el.scrollIntoView()")
+                # Lazy images below the first screen load once they're in view.
+                page.wait_for_timeout(1000)
             page.screenshot(path=str(out / f"{name}.png"))
             context.close()
             print(f"manuscript/images/{name}.png")

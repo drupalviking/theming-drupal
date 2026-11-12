@@ -1,0 +1,10 @@
+{#
+/**
+ * @file
+ * A grid of photos, which a lightbox (album.js) takes over when JavaScript
+ * runs. Without JavaScript, each photo is a link to its large version.
+ */
+#}
+<ul class="album m-0 grid list-none grid-cols-2 gap-club-s p-0 sm:grid-cols-3 lg:grid-cols-4">
+  {% block photos %}{{ photos }}{% endblock %}
+</ul>

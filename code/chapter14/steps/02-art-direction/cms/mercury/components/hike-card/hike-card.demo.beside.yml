@@ -1,0 +1,15 @@
+name: Photo beside
+description: As in a wide column. A demo has to fill in every prop, so the photo is the club's default photo.
+props:
+  title: Glencorse Reservoir winter loop
+  url: /first-hike
+  heading_level: 3
+  layout: beside
+  date: '2026-12-19T09:30:00Z'
+  difficulty: easy
+  walking_time: About 1 hour 50 min on foot
+  photo:
+    src: /themes/custom/mercury/components/hike-card/demo/default-photo.svg
+    alt: ''
+    width: 480
+    height: 320

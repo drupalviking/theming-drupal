@@ -1,0 +1,21 @@
+# The club's breakpoints, from the design (Chapter 3): the layout changes at
+# 40rem and 64rem. Responsive image styles use them for art direction: a
+# different crop of a photo at a different width.
+lens_trail.narrow:
+  label: Narrow
+  mediaQuery: ''
+  weight: 0
+  multipliers:
+    - 1x
+lens_trail.medium:
+  label: Medium
+  mediaQuery: 'all and (min-width: 40rem)'
+  weight: 1
+  multipliers:
+    - 1x
+lens_trail.wide:
+  label: Wide
+  mediaQuery: 'all and (min-width: 64rem)'
+  weight: 2
+  multipliers:
+    - 1x
