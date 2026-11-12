@@ -1,0 +1,179 @@
+diff --git a/crop.info.yml b/crop.info.yml
+index 0269e732de8e80661766c1bdb0b924aba90894c1..fb95a4ca6f621a762b4ed3bfdcea4d05d7f2e1a1 100644
+--- a/crop.info.yml
++++ b/crop.info.yml
+@@ -1,6 +1,6 @@
+ name: Crop API
+ description: 'Provides storage and API for image crops.'
+-core_version_requirement: '^9.3 || ^10 || ^11'
++core_version_requirement: '^10.2 || ^11 || ^12'
+ package: Media
+ type: module
+ dependencies:
+diff --git a/crop.install b/crop.install
+index 35d8ef9cfdfb62424bd86e8f7ed22a5f3b84af90..4fec6f66c5161732b31901b72a080de92907ed12 100644
+--- a/crop.install
++++ b/crop.install
+@@ -25,7 +25,7 @@ function crop_requirements($phase) {
+       'title' => t('Crop API'),
+       'value' => t('This branch of Crop API is not compatible with the version of Media Entity installed.'),
+       'description' => t('This branch of Crop API is not compatible with the version of Media Entity installed.'),
+-      'severity' => REQUIREMENT_ERROR,
++      'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Error : REQUIREMENT_ERROR),
+     ];
+   }
+ 
+diff --git a/modules/crop_media_entity/crop_media_entity.info.yml b/modules/crop_media_entity/crop_media_entity.info.yml
+index 49b0d919687a96c7e166dd934a8566c413b35ca4..80d2fbbb347b78f4ed5d1809f0a43108d354240f 100644
+--- a/modules/crop_media_entity/crop_media_entity.info.yml
++++ b/modules/crop_media_entity/crop_media_entity.info.yml
+@@ -1,6 +1,6 @@
+ name: Media entity crop
+ description: 'Deprecated.'
+-core_version_requirement: '^9.3 || ^10 || ^11'
++core_version_requirement: '^10.2 || ^11 || ^12'
+ package: Media
+ type: module
+ hidden: true
+diff --git a/src/Attribute/CropEntityProvider.php b/src/Attribute/CropEntityProvider.php
+new file mode 100644
+index 0000000000000000000000000000000000000000..b530c021cdffd9d96d8864f55096ef02f0eaa7ea
+--- /dev/null
++++ b/src/Attribute/CropEntityProvider.php
+@@ -0,0 +1,38 @@
++<?php
++
++declare(strict_types=1);
++
++namespace Drupal\crop\Attribute;
++
++use Drupal\Component\Plugin\Attribute\Plugin;
++use Drupal\Core\StringTranslation\TranslatableMarkup;
++
++/**
++ * Attribute class for crop entity provider plugins.
++ *
++ * @see \Drupal\crop\Annotation\CropEntityProvider
++ * @see \Drupal\crop\EntityProviderManager
++ * @see plugin_api
++ */
++#[\Attribute(\Attribute::TARGET_CLASS)]
++class CropEntityProvider extends Plugin {
++
++  /**
++   * Constructs a CropEntityProvider attribute.
++   *
++   * @param string $entity_type
++   *   Entity type plugin provides. Also used as the plugin ID.
++   * @param \Drupal\Core\StringTranslation\TranslatableMarkup|null $label
++   *   (optional) The human-readable name of the crop entity provider.
++   * @param string|\Drupal\Core\StringTranslation\TranslatableMarkup $description
++   *   (optional) A brief description of the crop entity provider.
++   */
++  public function __construct(
++    public readonly string $entity_type,
++    public readonly ?TranslatableMarkup $label = NULL,
++    public readonly string|TranslatableMarkup $description = '',
++  ) {
++    parent::__construct($entity_type);
++  }
++
++}
+diff --git a/src/CropTypeListBuilder.php b/src/CropTypeListBuilder.php
+index c8608152c09a9cb02b6a02cdfb7282b9fb15749f..ade56100e870d31ee6d6f03d49b319487aeb49f4 100644
+--- a/src/CropTypeListBuilder.php
++++ b/src/CropTypeListBuilder.php
+@@ -3,6 +3,7 @@
+ namespace Drupal\crop;
+ 
+ use Drupal\Component\Utility\Xss;
++use Drupal\Core\Cache\CacheableMetadata;
+ use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
+ use Drupal\Core\Entity\EntityInterface;
+ use Drupal\Core\Entity\EntityStorageInterface;
+@@ -137,14 +138,14 @@ class CropTypeListBuilder extends ConfigEntityListBuilder {
+   /**
+    * {@inheritdoc}
+    */
+-  public function getDefaultOperations(EntityInterface $entity): array {
++  public function getDefaultOperations(EntityInterface $entity, ?CacheableMetadata $cacheability = NULL): array {
+     $flush = [
+       'title' => $this->t('Flush'),
+       'weight' => 200,
+       'url' => $entity->toUrl('flush-form'),
+     ];
+ 
+-    return parent::getDefaultOperations($entity) + [
++    return parent::getDefaultOperations($entity, $cacheability ?? new CacheableMetadata()) + [
+       'flush' => $flush,
+     ];
+ 
+diff --git a/src/Entity/Crop.php b/src/Entity/Crop.php
+index a534755e31194e8a6ab8ba65a17fc7c24dcb1a57..0777517e785a06b384deedb9413dc6cfffcb2931 100644
+--- a/src/Entity/Crop.php
++++ b/src/Entity/Crop.php
+@@ -254,12 +254,15 @@ class Crop extends ContentEntityBase implements CropInterface {
+   public function preSaveRevision(EntityStorageInterface $storage, \stdClass $record) {
+     parent::preSaveRevision($storage, $record);
+ 
+-    if (!$this->isNewRevision() && isset($this->original) && (!isset($record->revision_log) || $record->revision_log === '')) {
++    // D12: EntityBase::$original was renamed to $originalEntity with no BC
++    // magic getter (change record 3295826) -- use getOriginal() when present.
++    $original_entity = method_exists($this, 'getOriginal') ? $this->getOriginal() : $this->original;
++    if (!$this->isNewRevision() && isset($original_entity) && (!isset($record->revision_log) || $record->revision_log === '')) {
+       // If we are updating an existing crop without adding a new revision, we
+       // need to make sure $entity->revision_log is reset whenever it is empty.
+       // Therefore, this code allows us to avoid clobbering an existing log
+       // entry with an empty one.
+-      $record->revision_log = $this->original->revision_log->value;
++      $record->revision_log = $original_entity->revision_log->value;
+     }
+   }
+ 
+diff --git a/src/EntityProviderManager.php b/src/EntityProviderManager.php
+index 78cdf80588eff31864067153d46faa4d7e39aee6..e7713c145b4ac79364d607e8a971d6b3cd1b1a32 100644
+--- a/src/EntityProviderManager.php
++++ b/src/EntityProviderManager.php
+@@ -5,6 +5,7 @@ namespace Drupal\crop;
+ use Drupal\Core\Cache\CacheBackendInterface;
+ use Drupal\Core\Extension\ModuleHandlerInterface;
+ use Drupal\Core\Plugin\DefaultPluginManager;
++use Drupal\crop\Attribute\CropEntityProvider;
+ 
+ /**
+  * Manages crop entity provider plugins.
+@@ -23,7 +24,7 @@ class EntityProviderManager extends DefaultPluginManager {
+    *   The module handler.
+    */
+   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
+-    parent::__construct('Plugin/Crop/EntityProvider', $namespaces, $module_handler, 'Drupal\crop\EntityProviderInterface', 'Drupal\crop\Annotation\CropEntityProvider');
++    parent::__construct('Plugin/Crop/EntityProvider', $namespaces, $module_handler, 'Drupal\crop\EntityProviderInterface', CropEntityProvider::class, 'Drupal\crop\Annotation\CropEntityProvider');
+ 
+     $this->alterInfo('crop_entity_provider_info');
+     $this->setCacheBackend($cache_backend, 'crop_entity_provider_plugins');
+diff --git a/src/Plugin/Validation/Constraint/CropTypeAspectRatioValidationConstraintValidator.php b/src/Plugin/Validation/Constraint/CropTypeAspectRatioValidationConstraintValidator.php
+index 3221789ef5fc57097cea2c89b578bf4821279008..c38ed988b33c91e498e923b038cb577092b52384 100644
+--- a/src/Plugin/Validation/Constraint/CropTypeAspectRatioValidationConstraintValidator.php
++++ b/src/Plugin/Validation/Constraint/CropTypeAspectRatioValidationConstraintValidator.php
+@@ -13,7 +13,7 @@ class CropTypeAspectRatioValidationConstraintValidator extends ConstraintValidat
+   /**
+    * {@inheritdoc}
+    */
+-  public function validate($value, Constraint $constraint) {
++  public function validate(mixed $value, Constraint $constraint): void {
+     /** @var \Drupal\crop\Entity\CropType $value */
+     $aspect_ratio = $value->getAspectRatio();
+     if (!empty($aspect_ratio) && !preg_match($value::VALIDATION_REGEXP, $aspect_ratio)) {
+diff --git a/src/Plugin/Validation/Constraint/CropTypeMachineNameValidationConstraintValidator.php b/src/Plugin/Validation/Constraint/CropTypeMachineNameValidationConstraintValidator.php
+index 29fb5244a5f510cee36fee87350a7580b78cc626..621924c3e19a1543a7e5f5a93856553aa8052f62 100644
+--- a/src/Plugin/Validation/Constraint/CropTypeMachineNameValidationConstraintValidator.php
++++ b/src/Plugin/Validation/Constraint/CropTypeMachineNameValidationConstraintValidator.php
+@@ -13,7 +13,7 @@ class CropTypeMachineNameValidationConstraintValidator extends ConstraintValidat
+   /**
+    * {@inheritdoc}
+    */
+-  public function validate($value, Constraint $constraint) {
++  public function validate(mixed $value, Constraint $constraint): void {
+     // '0' is invalid, since elsewhere we check it using empty().
+     /** @var \Drupal\crop\Entity\CropType $value */
+     if (trim($value->id()) == '0') {
