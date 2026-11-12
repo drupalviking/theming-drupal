@@ -218,11 +218,17 @@ We checked the cards with the keyboard (each card is one stop, its title link, w
 
 To check a component, you've had to find a page that uses it, with content that shows what you want to see: a long title, no photo, a narrow column. A **styleguide** shows components on their own, with made-up values, so you can see every case on one page, before any content exists.
 
-The best known is **Storybook**, and there's a Drupal module for it. But Storybook needs Node and npm, which the core site has managed without, and when we looked (November 2026) the Storybook module's newest release, 1.0.4, supported Drupal up to 11, not 12. So we tried **SDC Styleguide**, a module with no build step:
+The best known is **Storybook**, and there's a Drupal module for it. Storybook is a separate application: it runs on Node, has its own build, and shows the components outside Drupal, so the module's job is to keep the two in step. That's a lot of machinery for a site that has managed without Node so far, and when we looked (November 2026) the Storybook module's newest release, 1.0.4, supported Drupal up to 11, not 12.
+
+**SDC Styleguide** takes the other road. It's a contributed module, and the styleguide is a part of the site itself, under **Appearance**. It finds every component on the site by itself, and draws each example with Drupal and the site's own theme, so what you see is what the site would show: the same Twig, the same libraries, the same CSS. There's nothing to install outside Drupal and nothing to build. Besides the examples, it has a form that makes new examples from values you type in, an accessibility check under every example, and two pages for the theme's colors and type.
+
+In this chapter we use what the Hike card needs: installing the module, writing examples for the card, and keeping other people's components out of the way. **Appendix D, *The Styleguide***, covers the rest, and gives the styleguide the club's own Colors and Text pages, made from the design tokens. From here on, every chapter that makes a component gives it examples, so the styleguide grows with the theme.
+
+The module comes from Composer, like any other:
 
 <!-- include: code/chapter13/snippets/styleguide-install.sh as=terminal -->
 
-It adds **/styleguide/explorer**, for people with the **Use the SDC Explorer** permission. Each component shows up there, and each **demo** file next to it becomes one example. A demo is named `<component>.demo.<name>.yml`:
+It adds **Appearance** › **SDC Styleguide** (`/styleguide/explorer`), for people with the **Use the SDC Explorer** permission. Each component shows up there, and each **demo** file next to it becomes one example. A demo is named `<component>.demo.<name>.yml`:
 
 <!-- include: code/chapter13/steps/03-styleguide/core/lens_trail/components/hike-card/hike-card.demo.beside.yml as=components/hike-card/hike-card.demo.beside.yml -->
 
@@ -254,9 +260,7 @@ The explorer lists more than the Hike card, and some of it looks broken. Under *
 ![SDC Styleguide Settings: Exclude Modules with navigation ticked, and Exclude Themes with lens_trail unticked and olivero ticked](images/13-styleguide-settings.png)
 *Figure 13.8: Only the club's components in the explorer*
 
-Colors and Text are for the theme to replace with its own, and Appendix D, *The Styleguide*, does that for the club, from the design tokens. It also shows the rest of the module: the demo form, which writes a demo's YAML for you, the accessibility check under every demo, and the layout switcher. From here on, every chapter that makes a component gives it demos, so the styleguide grows with the theme.
-
-Whether Storybook earns its place in this book is still an open question. For now, SDC Styleguide does what the core site needs without Node.
+Colors and Text stay as they are for now: they're for the theme to replace with its own, and Appendix D does that for the club.
 
 ## On the Drupal CMS site
 
