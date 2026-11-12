@@ -172,6 +172,7 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 
 ### Other
 
+- **Book 1's lists and About page on the Drupal CMS test site** (the author, 2026-11-12: after the Chapter 15 review, on its own branch). Extend `tools/hikes-recipe.php` with `views.view.hikes`, `views.view.albums` and `views.view.photos` from Book 1's export (adapted like the rest: image styles, workflow), the About page, and main menu links for Hikes, Albums and About; rebuild the test site and test each page. Then give Chapter 15's Drupal CMS menu the core site's items (it has only Home and Join us).
 - **Tailwind is introduced in one sentence**: done on `feature/chapter-06-tailwind` (2026-11-12), see "Where we are".
 - **Appendix E, *Build Tools*** (the author, 2026-11-12): Sass, PostCSS, Tailwind, and the CSS and JavaScript bundlers and builders, with what they are and a short section on each. In OUTLINE. Grill the author on the list and the depth before drafting.
 - **Book 1 follow-ups, to decide together when this book is done** (the author, 2026-11-12: by then Drupal 12, or at least its RC, may be out, and some of these may have solved themselves):
