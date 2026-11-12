@@ -31,8 +31,9 @@ $album->removeImageStyleMappings();
 $album->addImageStyleMapping('responsive_image.viewport_sizing', '1x', [
   'image_mapping_type' => 'sizes',
   'image_mapping' => [
-    // Two columns on phones, three from 40rem, four from 64rem.
-    'sizes' => '(min-width: 80rem) 190px, (min-width: 64rem) 15vw, (min-width: 40rem) 30vw, 45vw',
+    // Two columns on phones, three from 40rem, four from 64rem (where the
+    // sidebar takes a third of the page), and no wider than 185px from 80rem.
+    'sizes' => '(min-width: 80rem) 185px, (min-width: 64rem) calc(15vw - 0.75rem), (min-width: 40rem) calc(33vw - 1.6rem), calc(50vw - 2rem)',
     'sizes_image_styles' => ['album_square', 'album_square_large'],
   ],
 ]);

@@ -1,0 +1,107 @@
+base:
+  version: VERSION
+  aggregate_target:
+    css: true
+  css:
+    base:
+      css/layers.css:
+        weight: -100
+      css/fonts.css: {}
+      css/reset.css: {}
+      css/tokens.css: {}
+      css/base.css: {}
+    layout:
+      css/layout.css: {}
+    component:
+      css/components/container-inline.css:
+        weight: -10
+      css/components/details.css:
+        weight: -10
+      css/components/form.css:
+        weight: -10
+      css/components/inline-form.css:
+        weight: -10
+      css/components/tabledrag.css:
+        weight: -10
+      css/components/tableselect.css:
+        weight: -10
+      css/components/textarea.css:
+        weight: -10
+      css/components/ui-dialog.css:
+        weight: -10
+dialog:
+  version: VERSION
+  css:
+    component:
+      css/components/dialog.css:
+        weight: -10
+dropbutton:
+  version: VERSION
+  css:
+    component:
+      css/components/dropbutton.css:
+        weight: -10
+file:
+  version: VERSION
+  css:
+    component:
+      css/components/file.css:
+        weight: -10
+image-widget:
+  version: VERSION
+  css:
+    component:
+      css/components/image-widget.css: {  }
+progress:
+  version: VERSION
+  css:
+    component:
+      css/components/progress.css:
+        weight: -10
+drupal.tablesort:
+  version: VERSION
+  css:
+    component:
+      css/components/tablesort.css:
+        weight: -10
+
+exposed-filters:
+  version: VERSION
+  css:
+    component:
+      css/components/exposed-filters.css: {}
+  dependencies:
+    - lens_trail/base
+
+color-scheme-early:
+  version: VERSION
+  header: true
+  js:
+    js/color-scheme-early.js: {}
+
+color-scheme-toggle:
+  version: VERSION
+  css:
+    component:
+      css/components/color-scheme-toggle.css: {}
+  js:
+    js/color-scheme-toggle.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/once
+    - lens_trail/base
+
+styleguide:
+  version: VERSION
+  css:
+    component:
+      css/components/styleguide.css: {}
+  dependencies:
+    - lens_trail/base
+
+styleguide-pattern:
+  version: VERSION
+  css:
+    theme:
+      css/components/styleguide-pattern.css: {}
