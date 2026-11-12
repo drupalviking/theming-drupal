@@ -160,6 +160,13 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 
 ### Other
 
+- **Book 1 follow-ups, to decide together when this book is done** (the author, 2026-11-12: by then Drupal 12, or at least its RC, may be out, and some of these may have solved themselves):
+  1. **Teach "a module that isn't ready for my Drupal yet" in Book 1**: Composer's lenient plugin (`mglaman/composer-drupal-lenient`), the issue queue's Drupal 12 patch, a version bump, and testing that it really works (annotation-only plugins break on Drupal 12). It fits Book 1's Chapter 11 (*Does it work with my Drupal?*) and Appendix B (*Patches, and never editing vendor*). This book's Chapter 14 then points back to it instead of teaching it.
+  2. **One way for Book 1's modules without Drupal 12**: today it's three ways: development branches with `minimum-stability: dev` (Chapter 17: Pathauto, Redirect, Simple XML Sitemap), moving them into Drupal CMS boxes (Metatag in Chapter 17, Backup and Migrate in Chapter 20, Focal Point in Chapter 9), or only naming them (Chapter 22: Webform, Registration, Group, Simplenews, Commerce, Flag). With the patching technique, some could move to the core site.
+  3. **Focal Point on Book 1's core site** (Chapter 9): it works on Drupal 12 with the merge requests (this book's Chapter 14). If Book 1 adds it, this book's core site gets it from Book 1's export instead of its own step.
+  4. **Hike on Book 1's Drupal CMS site** (option c of 2026-11-12): instead of this book's `tools/hikes-recipe.php`.
+  5. **Re-pin Book 1** (`data/book1.yml`) after any of these, and rebuild the test sites: every chapter's figures would need a check.
+
 - **Hikes on the Drupal CMS site, follow-ups**: the credit fields on Image media are on no form or display yet (the images chapter); the hike's Card display is Book 1's, without Chapter 13's changes (the Drupal CMS section of the hike page chapter); Chapter 13's Canvas cards can link to real hike pages instead of `/first-hike` (after both branches are merged); Appendix C: how a reader who built their own Drupal CMS site in Book 1 adds the hikes; or move it into Book 1 (option c).
 - **`13-canvas-library.png` and `13-canvas-form.png`**: one-off Playwright script (logged in, clicks in the Canvas editor), not in `tools/screenshots.py`.
 - **Site building in a step**: Chapter 13's `code/chapter13/site/core.php` and `cms.php` are the first scripts for what the reader does by hand; the `use-step.sh` helper idea below could run them.
