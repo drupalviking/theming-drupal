@@ -4,7 +4,7 @@ The core site has its theme. Now it's the Drupal CMS site's turn, and the road i
 
 Three things are new compared with the previous chapter. There's a build step this time, with Node.js and npm. Our tokens have to get along with a naming system that was there first. And instead of starting from a clean slate, we start from a finished design and change only what makes it the club's.
 
-The site starts where Book 1 left it: Drupal 11.4.11 with Drupal CMS, Mercury 1.0.5 as its theme, and pages built in Canvas.
+The site starts where Book 1 left it: Drupal 11.4.11 with Drupal CMS, Mercury 1.0.5 as its theme, and pages built in Canvas. One thing is added. Book 1 builds the hikes only on the core site, and its Drupal CMS site has no Hike content type, so there's nothing there for a hike page or a Hike card to show. This book themes hikes on both sites, so the test site gets Book 1's Hike content type, the areas, and the six hikes with their photos, in English and Spanish. `tools/setup.sh` does that for you (Appendix C tells how), and if you worked through Book 1 yourself, the same appendix shows how to add them to your own site.
 
 ![The front page in Mercury: the Mercury logo, a large hero with the placeholder text Your hero content goes here, and a dark button](images/06-front-before.png)
 *Figure 6.1: The front page in Mercury, as Book 1 left it.*

@@ -244,4 +244,4 @@ The final pass over both finished themes (accessibility has been checked in ever
 
 - **A. Twig reference**: the syntax, Drupal's filters and functions, and the variables of the templates the book touches.
 - **B. Answers to the advanced exercises.**
-- **C. Building the Sites Without Book 1**: for readers who start with this book, and for teachers. What `tools/setup.sh` needs (DDEV, Git), what it does (Book 1's export, `site:install --existing-config`, the content recipe), how long it takes, and what to do when it fails.
+- **C. Building the Sites Without Book 1**: for readers who start with this book, and for teachers. What `tools/setup.sh` needs (DDEV, Git), what it does (Book 1's export, `site:install --existing-config`, the content recipe, and on the Drupal CMS site Book 1's hikes through `tools/hikes-recipe.php`), how long it takes, and what to do when it fails. **For readers who built their own Drupal CMS site in Book 1**: adding the hikes to it with the same script and recipe (Book 1 builds the hikes only on the core site; the author, 2026-11-12).

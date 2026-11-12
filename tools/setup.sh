@@ -23,7 +23,12 @@
 #      configuration (the same site UUID, modules, content types, views...);
 #   3. `drush recipe`: Book 1's content (hikes, albums, photos, menus...),
 #      then Book 1's after-import.php for what an import can't bring;
-#   4. a DDEV snapshot called `start`: the site as Book 1 leaves it.
+#   4. on the Drupal CMS site only, Book 1's hikes: Book 1 builds them on the
+#      core site alone, and this book themes them on both. tools/hikes-recipe.php
+#      makes a recipe from Book 1's core export (the Hike content type, the
+#      areas, the hikes and their photos) that fits Drupal CMS;
+#   5. a DDEV snapshot called `start`: the site as Book 1 leaves it (with the
+#      hikes on the Drupal CMS site).
 #
 # Which version of Book 1: data/book1.yml pins a commit of Book 1's repository,
 # so a change in Book 1 never changes this book's sites by surprise. To move to
@@ -155,6 +160,21 @@ SETTINGS
   if [[ -f book1-export/after-import.php ]]; then
     ddev drush php:script book1-export/after-import.php -- /var/www/html/book1-export
   fi
+  # Book 1 builds the hikes only on the core site, and this book themes them on
+  # both: the Drupal CMS site gets them from Book 1's core export, through a
+  # recipe that tools/hikes-recipe.php makes to fit Drupal CMS.
+  if [[ "$name" == cms ]]; then
+    echo "== Book 1's hikes on the Drupal CMS site"
+    if [[ "$BOOK1_REF" == WORKTREE ]]; then
+      mkdir -p book1-export/core
+      cp -R "$BOOK1/sites/core/config" "$BOOK1/sites/core/content" book1-export/core/
+    else
+      git -C "$BOOK1" archive "$BOOK1_REF" sites/core/config sites/core/content | tar -x -C book1-export --strip-components=1
+    fi
+    cp "$REPO/tools/hikes-recipe.php" book1-export/
+    ddev drush php:script book1-export/hikes-recipe.php -- /var/www/html/book1-export/core /var/www/html/book1-export/hikes
+    ddev drush recipe ../book1-export/hikes
+  fi
   # Pathauto doesn't generate the aliases of translations that come in with an
   # import (the Spanish hikes and terms). Generating them again fills them in;
   # the English ones come out the same.
@@ -164,7 +184,7 @@ SETTINGS
   ddev drush cache:rebuild
   ddev snapshot --name=start
   cd "$REPO"
-  echo "Ready: $(ddev describe "$project" -j | sed -n 's/.*"primary_url": *"\([^"]*\)".*/\1/p' | head -1) (admin / 12345; DDEV snapshot 'start' is Book 1's final state)"
+  echo "Ready: $(ddev describe "$project" -j | sed -n 's/.*"primary_url": *"\([^"]*\)".*/\1/p' | head -1) (admin / 12345; DDEV snapshot 'start' is Book 1's final state, with Book 1's hikes on the Drupal CMS site)"
 }
 
 case "${1:-both}" in
