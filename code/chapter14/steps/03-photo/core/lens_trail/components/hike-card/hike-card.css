@@ -1,0 +1,81 @@
+/**
+ * @file
+ * The Hike card component. Drupal attaches it wherever the card is used.
+ */
+@layer components {
+  .hike-card {
+    /* The card's own width decides the layout, not the screen's. A
+       container no longer takes its width from what's inside it, so in a
+       wrapper that shrinks to fit, it would shrink to nothing. */
+    container-type: inline-size;
+    inline-size: 100%;
+    overflow: hidden;
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background: var(--color-surface);
+  }
+
+  .hike-card__layout {
+    display: grid;
+  }
+
+  /* The photo comes after the text in the HTML, so a screen reader meets the
+     title first, and it's drawn on top. */
+  .hike-card__photo {
+    order: -1;
+
+    & :is(img, svg) {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+    }
+  }
+
+  /* The default photo takes its colors from the color roles, so it follows
+     dark mode like the rest of the card. */
+  .hike-card__default-photo {
+    background: var(--color-tint);
+    color: var(--color-on-tint);
+  }
+
+  .hike-card__text {
+    padding: var(--space-s);
+  }
+
+  .hike-card__title {
+    margin-block: 0 var(--space-2xs);
+    font-size: var(--font-size-step-1);
+  }
+
+  .hike-card__facts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2xs) var(--space-xs);
+    font-size: var(--font-size-step--1);
+  }
+
+  .hike-card__date,
+  .hike-card__walking-time {
+    color: var(--color-muted);
+  }
+
+  .hike-card__difficulty {
+    padding-inline: var(--space-2xs);
+    border-radius: var(--radius-round);
+    background: var(--color-tint);
+    color: var(--color-on-tint);
+  }
+
+  /* Photo beside, when the card has room for it: Chapter 3's 30rem. A
+     container query can't style the container itself, so it's the layout
+     inside the card that changes. */
+  @container (inline-size >= 30rem) {
+    [data-component-variant="beside"] .hike-card__layout {
+      grid-template-columns: 2fr 3fr;
+      align-items: start;
+    }
+  }
+}

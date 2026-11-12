@@ -1,0 +1,43 @@
+/**
+ * @file
+ * The Photo component: a photo with its credit.
+ */
+@layer components {
+  .photo {
+    position: relative;
+    margin: 0;
+
+    & img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  /* Over the photo's bottom corner, as in the design: white on the darkest
+     neutral, the same in light and dark mode, because it sits on a photo,
+     not on the page. */
+  .photo--credit-over .photo__caption {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-end: 0;
+    max-inline-size: 100%;
+    padding: var(--space-3xs) var(--space-xs);
+    background: var(--color-neutral-950);
+    color: var(--color-neutral-0);
+    font-size: var(--font-size-step--1);
+
+    & a {
+      color: inherit;
+    }
+  }
+
+  .photo--credit-below .photo__caption {
+    padding-block-start: var(--space-2xs);
+    font-size: var(--font-size-step--1);
+  }
+
+  .photo__title::after {
+    content: ". ";
+  }
+}
