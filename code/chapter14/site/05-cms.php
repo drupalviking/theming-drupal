@@ -11,9 +11,13 @@
  *    the theme's breakpoints. The Banner display uses it, and loads at once.
  * 2. A responsive image style, Album: squares, with the sizes of the grid.
  *    The Album display uses it.
+ * 3. The same focal point on the Glencorse Reservoir photo as on the core
+ *    site (in the book, a click on the photo in the media form).
  */
 
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\crop\Entity\Crop;
+use Drupal\image\Entity\ImageStyle;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
 $banner = ResponsiveImageStyle::load('banner') ?: ResponsiveImageStyle::create(['id' => 'banner', 'label' => 'Banner']);
@@ -59,5 +63,13 @@ foreach (['banner' => ['banner', 'eager'], 'album' => ['album', 'lazy']] as $mod
   $image['type'] = 'responsive_image';
   $image['settings'] = ['responsive_image_style' => $style, 'image_link' => '', 'image_loading' => ['attribute' => $loading]];
   $display->setComponent('field_media_image', $image)->save();
+}
+// The photo of the hike Glencorse Reservoir winter loop. Focal Point gave it
+// a point in the middle when the recipe imported it.
+$hikes = \Drupal::entityTypeManager()->getStorage('node')->loadByProperties(['title' => 'Glencorse Reservoir winter loop']);
+$file = reset($hikes)->get('field_photo')->entity->get('field_media_image')->entity;
+Crop::findCrop($file->getFileUri(), 'focal_point')->setPosition(864, 1100)->save();
+foreach (ImageStyle::loadMultiple() as $style) {
+  $style->flush($file->getFileUri());
 }
 echo "Done.\n";

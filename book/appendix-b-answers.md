@@ -188,3 +188,11 @@ Wrapping the whole card in a link isn't the answer: the card already has a link,
 `position: relative` on the card makes it the box that `inset: 0` fills. The focus ring moves to the card, because a ring around the title alone wouldn't tell a keyboard user that the photo is part of it too. And the contextual links get `z-index: 1`, or the cover would sit on top of them.
 
 We tested it on `/hikes`: a click on the photo and a click on the walking time both opened the hike, Tab put a 3-pixel ring around the whole card, and, logged in, the pencil button still opened its menu. The price: you can't select the card's text with the mouse any more, because the cover is in the way. For a card that's mostly a way to somewhere else, that's usually fine. For one with text people copy, such as an address, it isn't, and then only the title should be the link.
+
+## Chapter 14, exercise 5: a srcset for the default photo
+
+No, and there's nothing to give one to. `srcset` and `sizes` exist because a photo is made of pixels: a copy that's too small looks blurry, and one that's too large wastes bytes, so the browser needs several copies to choose from. The default photo is an SVG, a drawing made of lines, which the browser draws sharp at any size, on any screen. One drawing serves every width.
+
+And it isn't even a file. The Hike card writes the SVG into the page itself, so there's no request to make, early or late, and nothing for `loading` or `fetchpriority` to change. It costs its markup instead: about 340 characters per card without a photo. On `/hikes`, with two such cards, that's under 700 characters, before compression, on a page that came over the wire in under 5 kilobytes. If the club had a hundred hikes without photos on one page, a single `default-photo.svg` file, cached once, would start to pay off; but it would lose what the chapter on components chose inline SVG for: the drawing takes the page's colors, in dark mode too.
+
+So the right answer is to leave it as it is. An image style can't work on an SVG anyway: Drupal's image toolkit only scales and crops pixels.

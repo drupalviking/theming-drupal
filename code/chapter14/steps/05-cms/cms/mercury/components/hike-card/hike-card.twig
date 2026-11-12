@@ -29,7 +29,18 @@
       </div>
     </div>
     {% if photo.src %}
-      <img src="{{ photo.src }}" alt="{{ photo.alt }}" width="{{ photo.width }}" height="{{ photo.height }}" loading="lazy" class="-order-1 aspect-[3/2] w-full object-cover">
+      {# Canvas's own image component makes the srcset from Canvas's image
+         style, in the widths Canvas allows. The sizes: "auto" lets a browser
+         that knows it use the card's real width, because the photo loads
+         lazily; the rest is for the others (three cards a row from 48rem). #}
+      {% include 'canvas:image' with {
+        src: photo.src,
+        alt: photo.alt,
+        width: photo.width,
+        height: photo.height,
+        sizes: 'auto, (min-width: 48rem) 33vw, 100vw',
+        class: '-order-1 aspect-[3/2] w-full object-cover',
+      } only %}
     {% else %}
       {# No photo yet: the club's default photo, as on the core site. #}
       <svg class="-order-1 aspect-[3/2] w-full bg-club-tint text-club-on-tint" viewBox="0 0 480 320" aria-hidden="true" focusable="false">

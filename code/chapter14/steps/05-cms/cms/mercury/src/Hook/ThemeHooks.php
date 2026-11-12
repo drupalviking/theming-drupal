@@ -164,7 +164,6 @@ final class ThemeHooks {
     }
   }
 
-
   /**
    * Implements hook_preprocess_field().
    *

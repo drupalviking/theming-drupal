@@ -1,0 +1,7 @@
+TYPE            BYTES  FILE
+image/jpeg    1104043  original: glencorse-reservoir-portrait_1.jpg
+image/avif      70867  banner_large/glencorse-reservoir-portrait_1.jpg.avif
+image/avif      46840  banner_phone_large/glencorse-reservoir-portrait_1.jpg.avif
+image/avif      44980  banner/glencorse-reservoir-portrait_1.jpg.avif
+image/avif      17969  banner_small/glencorse-reservoir-portrait_1.jpg.avif
+image/avif      16284  banner_phone/glencorse-reservoir-portrait_1.jpg.avif
