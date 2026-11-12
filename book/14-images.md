@@ -938,6 +938,44 @@ The arrows are positioned absolutely, halfway down. But they were also grid item
 
 We tried the album with the keyboard: Tab reaches each square, Enter opens it, the arrow keys move, Tab stays inside the dialog, Escape closes it, and the focus lands on the right square. With JavaScript turned off, each square opened its large copy. And with Ctrl-click, a new tab, as a link should.
 
+The Album gets a demo for the styleguide too, so you can try the grid and the lightbox at any width without an album page. Its one slot is the list of photos. A demo can't render a media item, but SDC Styleguide renders a slot written as text as a Twig template, so the demo can loop over four made-up photos and call the real Photo component for each:
+
+`components/album/album.demo.four-photos.yml` ([source](../code/chapter14/steps/04-album/core/lens_trail/components/album/album.demo.four-photos.yml))
+
+```yaml
+name: Four photos
+description: A grid of four photos, each with its credit below. Click one to open the lightbox. The photos are the club's default photo; the markup around each one copies what templates/media/media--image--album.html.twig makes, so change both together.
+slots:
+  # SDC Styleguide renders a slot written as text as a Twig template, so the
+  # demo can use the Photo component itself.
+  photos: |
+    {% set svg = '/themes/custom/lens_trail/components/photo/demo/default-photo.svg' %}
+    {% for photo in [
+      {caption: 'Carnethy Hill from Turnhouse Hill', photographer: 'Jim Barton', license: 'CC BY-SA 2.0', source: 'https://commons.wikimedia.org/'},
+      {caption: 'The view west from Carnethy Hill', photographer: "Alan O'Dowd", license: 'CC BY-SA 2.0', source: 'https://commons.wikimedia.org/'},
+      {caption: 'Glencorse Reservoir from the hillside', photographer: 'Jaroslaw Musialkowski', license: 'CC BY-SA 4.0', source: 'https://commons.wikimedia.org/'},
+      {caption: 'A burn in the snow, without a source', photographer: 'Bops92', license: 'CC BY-SA 4.0', source: ''},
+    ] %}
+      <li class="album__item">
+        {% set image %}
+          <a class="album__link" href="{{ svg }}" data-srcset="{{ svg }} 1280w" data-caption="{{ photo.caption }}">
+            <img src="{{ svg }}" width="1280" height="720" alt="" loading="lazy">
+          </a>
+        {% endset %}
+        {# As on an album page: the caption is for the lightbox, not the grid. #}
+        {{ include('lens_trail:photo', {
+          image: image,
+          photographer: photo.photographer,
+          license: photo.license,
+          source: photo.source,
+          credit: 'below',
+        }, with_context = false) }}
+      </li>
+    {% endfor %}
+```
+
+The link around each photo copies what `media--image--album.html.twig` makes, so if you change one, change the other. The photos are the club's default photo, the same as in the Photo component's demos. We tried the lightbox in the styleguide: it opened at the photo we clicked, the arrow keys moved, and Escape brought the focus back to the right square.
+
 > **Try it:** Open an album, open a photo, and look at the Network tab as you go to the next one. The browser fetches one Max copy per photo, in the size that fits your screen, and only when you get to it.
 
 ## On the Drupal CMS site

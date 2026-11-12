@@ -284,6 +284,12 @@ The arrows are positioned absolutely, halfway down. But they were also grid item
 
 We tried the album with the keyboard: Tab reaches each square, Enter opens it, the arrow keys move, Tab stays inside the dialog, Escape closes it, and the focus lands on the right square. With JavaScript turned off, each square opened its large copy. And with Ctrl-click, a new tab, as a link should.
 
+The Album gets a demo for the styleguide too, so you can try the grid and the lightbox at any width without an album page. Its one slot is the list of photos. A demo can't render a media item, but SDC Styleguide renders a slot written as text as a Twig template, so the demo can loop over four made-up photos and call the real Photo component for each:
+
+<!-- include: code/chapter14/steps/04-album/core/lens_trail/components/album/album.demo.four-photos.yml as=components/album/album.demo.four-photos.yml -->
+
+The link around each photo copies what `media--image--album.html.twig` makes, so if you change one, change the other. The photos are the club's default photo, the same as in the Photo component's demos. We tried the lightbox in the styleguide: it opened at the photo we clicked, the arrow keys moved, and Escape brought the focus back to the right square.
+
 > **Try it:** Open an album, open a photo, and look at the Network tab as you go to the next one. The browser fetches one Max copy per photo, in the size that fits your screen, and only when you get to it.
 
 ## On the Drupal CMS site
