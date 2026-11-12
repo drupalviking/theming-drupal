@@ -39,6 +39,7 @@ Book 1's voice:
   clean answer. Light humor and the author's emoticons (`;-)`, `:-)`) are welcome.
 - Explain *why*, not only how: why the file is named that way, what happens if you leave it out.
   Every new term is explained the first time it appears, in plain words, before the technical name.
+- **Introduce every new tool, module or product properly** (the author's rule, 2026-11-12): when something new comes in (SDC Styleguide, Storybook, a contributed module, an outside service), give it a paragraph or two before using it: what it is, where it lives, what it does for the club's sites, and why we picked it over the alternatives. Never brush it off in a clause ("So we tried X, a module with no build step:") and go straight to the install command. The same goes for alternatives we turn down: say what they are before saying why not.
 - Point to other chapters, and to Book 1, in full friendly sentences, never a bare "Chapter 7."
 - Never talk down. Tone check before finishing:
   `grep -niE "\b(simply|obviously|easy|easily|of course|clearly|trivial|basically|just)\b" manuscript/NN-*.md`

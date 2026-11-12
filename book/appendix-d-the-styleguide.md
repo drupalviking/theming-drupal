@@ -612,7 +612,7 @@ After a cache rebuild, the two pages:
 
 SDC Styleguide works on the Drupal CMS site too, installed the same way. Two things are different there.
 
-**The explorer is full.** Mercury's components are made for editors in Canvas, and the explorer lists them all, grouped, about thirty of them, none with demos. We leave them in: they're the site's real components, and the demo form is a quick way to see one with your own values.
+**The explorer is full.** Mercury's components are made for editors in Canvas, and the explorer lists them all, grouped, about thirty of them, none with demos. We leave them in: they're the club's theme's real components, and the demo form is a quick way to see one with your own values. We couldn't hide them anyway: the settings leave out a whole module or theme at a time, and the club's theme is Mercury, so leaving Mercury out would hide the Hike card too. What we do leave out, at **Configuration** › **User interface** › **SDC Styleguide Settings**, is the same clutter as on the core site: **navigation**, and **canvas**, whose one component is an **Image** for Canvas's own use. Mercury has an **Image** too, and that one stays, so after this the explorer lists one Image instead of two. Then rebuild the cache, since saving the settings doesn't.
 
 **A Canvas component's demo has to fill in every prop.** The module passes every prop the demo leaves out as an empty value, and Canvas's components check their props strictly: an optional prop that's empty fails, and the demo stops with an error. So the Canvas card's demo has the walking time and a photo, even though both are optional, and the photo is an object, as Canvas gives it:
 
