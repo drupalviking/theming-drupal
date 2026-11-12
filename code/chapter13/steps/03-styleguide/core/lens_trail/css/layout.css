@@ -1,0 +1,61 @@
+/*
+ * The page's layout: the header's row, the width of the content, and the
+ * columns of the main area. The components inside come in later chapters.
+ *
+ * A media query can't use a custom property, so 64rem is written out here:
+ * it's the --breakpoint-wide token.
+ */
+@layer layout {
+  /* The page content is centered, and never wider than the design says. */
+  .site-width {
+    max-inline-size: var(--size-content);
+    margin-inline: auto;
+    padding-inline: var(--space-m);
+  }
+
+  /* On a phone everything is stacked, in the order of the HTML. */
+  .site-header {
+    display: grid;
+    gap: var(--space-xs);
+    padding: var(--space-s) var(--space-m);
+
+    /* Logo on the left, the menu in the middle, the languages on the right. */
+    @media (min-width: 64rem) {
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: var(--space-l);
+    }
+  }
+
+  .page-columns {
+    display: grid;
+    gap: var(--space-xl);
+    padding-block: var(--space-l);
+
+    /* A second column only on the pages that have something to put in it. */
+    @media (min-width: 64rem) {
+      &:has(> .layout-sidebar) {
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      }
+    }
+  }
+
+  /* Space between the rows of a list, such as the hike cards. Lists get
+     their own layout in the chapter on views. */
+  .views-row + .views-row {
+    margin-block-start: var(--space-m);
+  }
+
+  .site-footer {
+    margin-block-start: var(--space-2xl);
+    padding-block: var(--space-xl);
+    background-color: var(--color-surface);
+
+    /* The footer's blocks share a row when they fit, however many there are. */
+    & .region-footer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+      gap: var(--space-l);
+    }
+  }
+}

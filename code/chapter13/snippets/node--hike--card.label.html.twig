@@ -1,0 +1,6 @@
+{# Wrong: label is a render array, and the title prop wants a string. #}
+{% embed 'lens_trail:hike-card' with {
+  title: label,
+  url: url,
+} %}
+{% endembed %}

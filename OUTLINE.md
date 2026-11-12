@@ -11,6 +11,7 @@ The chapter-by-chapter plan for *Theming Drupal*, for the author to grill. Propo
 - **Design tokens.** One token file from Penpot (`design/tokens.json`, W3C DTCG format) is the source of every color, size and font. `tokens.py` (Python, no npm; in the project's `scripts/`) turns it into CSS custom properties for `lens_trail` and Tailwind's `@theme` for `mercury`.
 - **The design is the readers' too** (the author, 2026-11-07). Everything from Chapter 3 is in the repository, under the book's CC BY-SA license: the Penpot file itself (`design/lens-and-trail.penpot`, Penpot's export format, to import into the reader's own free account), the tokens (`design/tokens.json`), and the wireframes as SVG and PNG, for readers who don't use Penpot at all. Every later change to the design ("Revisiting the design") updates all three.
 - **"Revisiting the design" boxes.** When a later chapter finds that a design decision from Chapter 3 doesn't work (a color that fails contrast in dark mode, a font size too small in Spanish), it changes the design in the open: Penpot, then tokens, then rebuild. That's how a real project changes course.
+- **Every component gets demos** (the author, 2026-11-12). From Chapter 13 on, each chapter that makes a component adds its demo files, so SDC Styleguide grows into the club's real styleguide.
 - **Dark mode, reduced motion, forced colors, print, self-hosted variable fonts**: designed in Chapter 3, built in Chapter 8, and checked again in each chapter that adds something visual.
 
 ---
@@ -32,7 +33,7 @@ From `research/choosing-an-approach.md`.
 - The options: core's Starterkit, a subtheme (Olivero), Mercury as a starterkit, contrib base themes (Radix, UI Suite, Emulsify), from scratch. Usage numbers, what each depends on, what breaks in two or three years.
 - Why Olivero isn't a base theme, and why Mercury says not to subtheme it.
 - Build tools: what Sass, PostCSS, Tailwind, bundlers and Storybook solve, and what native CSS does today. When a build step is worth it (the CMS site) and when it isn't (the core site).
-- Storybook: what it is, the Storybook module (decided after the pilot).
+- Previewing components: Storybook (Node, a build, its module) and **SDC Styleguide**, the one the book uses (the author, 2026-11-12: it's part of the site, lighter than Storybook, no Node). Taught in Chapter 13 and Appendix D.
 - A box: subthemes still make sense for a family of sites sharing a base theme you own.
 
 ### 3. Designing Lens & Trail
@@ -134,7 +135,7 @@ Split from "Generating the Themes" (the author, 2026-11-08): this chapter is the
 - Props vs slots; variants; `include` vs `embed`.
 - Component CSS in layers; container queries for a card that fits any column.
 - CMS site: the same card with Tailwind; how it shows up in Canvas (detailed in Chapter 21).
-- Storybook on this card (the pilot decides whether it stays).
+- SDC Styleguide on this card: demos, hiding other modules' and themes' components (the author, 2026-11-12: it stays; the rest in Appendix D).
 
 ### 14. Images
 
@@ -244,4 +245,5 @@ The final pass over both finished themes (accessibility has been checked in ever
 
 - **A. Twig reference**: the syntax, Drupal's filters and functions, and the variables of the templates the book touches.
 - **B. Answers to the advanced exercises.**
+- **D. The Styleguide** (the author, 2026-11-12): SDC Styleguide in full: installing it and its permission, demo files and the demo form that writes them, excluding other modules' and themes' components, the accessibility check and the layout switcher, the club's own Colors and Text pages from the design tokens (replacing the module's samples), and its known bugs.
 - **C. Building the Sites Without Book 1**: for readers who start with this book, and for teachers. What `tools/setup.sh` needs (DDEV, Git), what it does (Book 1's export, `site:install --existing-config`, the content recipe), how long it takes, and what to do when it fails.

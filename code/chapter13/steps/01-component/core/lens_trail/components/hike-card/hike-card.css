@@ -1,0 +1,35 @@
+/**
+ * @file
+ * The Hike card component. Drupal attaches it wherever the card is used.
+ */
+@layer components {
+  .hike-card {
+    padding-block: var(--space-s);
+    border-block-end: var(--border-thin) solid var(--color-border);
+  }
+
+  .hike-card__title {
+    margin-block: 0 var(--space-2xs);
+    font-size: var(--font-size-step-1);
+  }
+
+  .hike-card__facts {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2xs) var(--space-xs);
+    font-size: var(--font-size-step--1);
+  }
+
+  .hike-card__date,
+  .hike-card__walking-time {
+    color: var(--color-muted);
+  }
+
+  .hike-card__difficulty {
+    padding-inline: var(--space-2xs);
+    border-radius: var(--radius-round);
+    background: var(--color-tint);
+    color: var(--color-on-tint);
+  }
+}

@@ -1,0 +1,40 @@
+{#
+/**
+ * @file
+ * The Hike card: a hike in a list.
+ *
+ * Props: title, url, heading_level. Slots: photo, facts.
+ * Variants: top (the default), beside. Drupal puts the variant in the
+ * data-component-variant attribute, and the CSS reads it from there.
+ */
+#}
+{% set heading = 'h' ~ heading_level|default(3) %}
+<article{{ attributes.addClass('hike-card') }}>
+  <div class="hike-card__layout">
+    <div class="hike-card__text">
+      <{{ heading }} class="hike-card__title">
+        <a href="{{ url }}">{{ title }}</a>
+      </{{ heading }}>
+      <div class="hike-card__facts">
+        {% block facts %}
+          {{ facts }}
+        {% endblock %}
+      </div>
+    </div>
+    <div class="hike-card__photo">
+      {% if photo %}
+        {{ photo }}
+      {% else %}
+        {# No photo yet: the club's default photo, the logo on the tint color.
+           It's decoration, so screen readers skip it. #}
+        <svg class="hike-card__default-photo" viewBox="0 0 480 320" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="240" cy="160" r="26"/>
+            <circle cx="240" cy="152" r="7"/>
+            <path d="M216 174 L230 160 L238 168 L248 156 L264 174"/>
+          </g>
+        </svg>
+      {% endif %}
+    </div>
+  </div>
+</article>
