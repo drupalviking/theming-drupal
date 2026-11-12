@@ -75,7 +75,7 @@ python3 tools/build.py
 
 ### The test sites
 
-The themes are tested on two DDEV sites, rebuilt from Book 1's finished sites. **Readers can do the same, without having worked through Book 1**: `tools/setup.sh` needs only DDEV and Git, clones Book 1 next to this folder if it isn't there, and makes the two sites next to this folder too. Book 1 exports them into its `sites/` folder (its `tools/export-sites.sh`: Composer files, configuration, and content as a recipe), and this book pins the Book 1 commit it builds on in `data/book1.yml`. Separate sites mean the two books never break each other's screenshots.
+The themes are tested on two DDEV sites, rebuilt from Book 1's finished sites. **Readers can do the same, without having worked through Book 1**: `tools/setup.sh` needs only DDEV and Git, clones Book 1 next to this folder if it isn't there, and makes the two sites next to this folder too. Book 1 exports them into its `sites/` folder (its `tools/export-sites.sh`: Composer files, configuration, and content as a recipe), and this book pins the Book 1 commit it builds on in `data/book1.yml`. Book 1 builds the hikes only on its core site, so the Drupal CMS site also gets them, from Book 1's core export, through a recipe that `tools/hikes-recipe.php` makes to fit Drupal CMS (the author, 2026-11-12). Separate sites mean the two books never break each other's screenshots.
 
 ```bash
 git clone https://github.com/drupalviking/theming-drupal.git
