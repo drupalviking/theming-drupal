@@ -2,6 +2,9 @@
 # Chapter 13's SDC Styleguide on the core test site, as the chapter does it by
 # hand: the module from Composer, installed, and the components of core's
 # Navigation module and of Olivero left out of the explorer.
+# On the core site (PHP 8.5), SDC Styleguide 1.3.3 also gets a patch of ours:
+# it uses the (double) cast, which PHP 8.5 deprecates, and the explorer shows
+# the deprecation messages. No issue or patch upstream (2026-11-12).
 #
 # Usage, from the core test site's folder (../lens-and-trail-theme):
 #   bash ../theming-drupal/code/chapter13/site/styleguide.sh
@@ -10,7 +13,13 @@
 # club's theme, which has the Hike card):
 #   bash ../theming-drupal/code/chapter13/site/styleguide.sh cms
 set -euo pipefail
+BOOK2=$(cd "$(dirname "$0")/../../.." && pwd)
 
+if [ "${1:-core}" = core ]; then
+  mkdir -p patches
+  cp "$BOOK2/code/chapter13/patches/sdc_styleguide-php85-float-cast.patch" patches/
+  ddev composer config --json extra.patches.drupal/sdc_styleguide '[{"description": "PHP 8.5: (double) cast deprecated, use (float). Ours, no upstream issue (2026-11-12)", "url": "patches/sdc_styleguide-php85-float-cast.patch"}]'
+fi
 ddev composer require drupal/sdc_styleguide
 ddev drush pm:install sdc_styleguide -y
 if [ "${1:-core}" = cms ]; then

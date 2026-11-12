@@ -1,0 +1,38 @@
+--- a/src/Plugin/SDCStyleguideStoryPropertyType/NumberPropertyTypeHandler.php
++++ b/src/Plugin/SDCStyleguideStoryPropertyType/NumberPropertyTypeHandler.php
+@@ -63,14 +63,14 @@
+    * {@inheritDoc}
+    */
+   public function convertSubmittedValueToType(&$convertedValue, $submittedValue) : void {
+-    $convertedValue = filter_var($submittedValue, FILTER_VALIDATE_INT) ?: (double)$submittedValue;
++    $convertedValue = filter_var($submittedValue, FILTER_VALIDATE_INT) ?: (float)$submittedValue;
+   }
+ 
+   /**
+    * {@inheritDoc}
+    */
+   public function convertTypeToValueForStorage(&$convertedValue, $value) : void {
+-    $convertedValue = filter_var($value, FILTER_VALIDATE_INT) ?: (double)$value;
++    $convertedValue = filter_var($value, FILTER_VALIDATE_INT) ?: (float)$value;
+   }
+ 
+   /**
+@@ -78,6 +78,6 @@
+    */
+   public function convertStoredValueToType(&$convertedValue, $storedValue, array $propertyDefinition) : void {
+     $int = filter_var($storedValue, FILTER_VALIDATE_INT);
+-    $convertedValue = $int != FALSE ? $int : (double)$storedValue;
++    $convertedValue = $int != FALSE ? $int : (float)$storedValue;
+   }
+ }
+--- a/src/Service/SDCDemoManager.php
++++ b/src/Service/SDCDemoManager.php
+@@ -168,7 +168,7 @@
+         }
+         else if ($propertySettings['type'] == 'number') {
+           $int = filter_var($originalValue, FILTER_VALIDATE_INT);
+-          $originalValue = $int != FALSE ? $int : (double)$originalValue;
++          $originalValue = $int != FALSE ? $int : (float)$originalValue;
+         }
+         else if ($propertySettings['type'] == 'array') {
+           if (empty($originalValue)) {
