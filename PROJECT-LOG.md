@@ -106,6 +106,7 @@ Made on 2026-11-07, at the start.
 | Sign-up (2026-11-08) | **In words only**, no screenshots: sign-up pages change often. |
 | WordPress boxes (2026-11-07) | **Only the bare necessities** (the author): "If you come from WordPress, you need to adapt here." Not a comparison of everything. |
 | Hikes on the Drupal CMS site (2026-11-12) | **Book 1's hikes are added to the Drupal CMS test site** by a recipe made from Book 1's core export (`tools/hikes-recipe.php`, applied by `tools/setup.sh`), so both tracks theme the same club. Adding Hike to Book 1's Drupal CMS site itself stays an option (the author: Book 1 can still change when a decision turns out wrong). |
+| Modules without Drupal 12 (2026-11-12) | **Patch them and go on** (the author): `mglaman/composer-drupal-lenient`, the issue queue's Drupal 12 patch or a version bump, tested properly; worst case, the text is rewritten if no Drupal 12 release comes. The steps are in the write-chapter skill. |
 
 ## History
 
@@ -155,6 +156,7 @@ What each chapter adds to the two themes, so later chapters and exercises don't 
 - **SDC Styleguide 1.3.3** (found 2026-11-10, Chapter 13): (1) the README says demo files are `*.story.*.yml`, the code reads `*.demo.*.yml`; (2) no property handler for `type: integer`, so an integer prop in a demo becomes NULL ("Cannot read value from demo file for property Heading level type integer"), and a required one fails validation.
 - **SDC Styleguide 1.3.3** (found 2026-11-12, Chapter 13): (1) core's Navigation components (Badge, Message, Title, Toolbar button) have props without a `title`, and the demo form gives PHP warnings ("Undefined array key \"title\"" in `StringPropertyTypeHandler::buildFormElement()` line 31 and `SDCDemoForm::buildForm()` line 184); (2) saving the settings (Exclude Modules/Themes) doesn't clear the explorer's cache, so the excluded components stay until a cache rebuild. Not reported.
 - **SDC Styleguide 1.3.3** (found 2026-11-12, Appendix D): (3) a prop left out of a demo is passed as NULL, so a component with optional typed props (any Canvas component) fails validation unless the demo fills in every prop; (4) axe-core, highlight.js and OverlayScrollbars load from cdnjs. Not reported.
+- **Focal Point, MR !67 on #3634508 "Drupal 12 readiness"** (found 2026-11-12, Chapter 14): the merge request adds the hooks class as `src/ Hook/FocalPointHooks.php`, with a space in the folder name, so PSR-4 can't find `Drupal\focal_point\Hook\FocalPointHooks`. Our patch renames it to `src/Hook`. Also: with a version bump only, Focal Point's image effects and Crop's entity providers aren't discovered on Drupal 12 (annotations), and installing Crop that way leaves it without its tables. Not reported.
 
 ### Other
 

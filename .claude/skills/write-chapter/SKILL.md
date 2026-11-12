@@ -29,6 +29,18 @@ questions they skip, use your recommendation and say so in the report.
 - For CSS features, check browser support on [Baseline](https://web.dev/baseline) and say when a feature
   became "widely available".
 
+### Contributed modules without a Drupal 12 release
+
+The core site runs Drupal 12 before most modules have a Drupal 12 release. When a chapter needs one, don't drop it and don't wait (the author's rule, 2026-11-12: most of them will get one, and they're 11.4-compatible already):
+
+1. Check the module's issue queue for a Drupal 12 issue (often "Drupal 12 readiness" or the Project Update Bot's "Automated Drupal 12 compatibility fixes"), as the global rule on contrib bugs says.
+2. Let Composer install it: `mglaman/composer-drupal-lenient` (allow the plugin, then list the package in `extra.drupal-lenient.allowed-list`).
+3. Try a **version bump patch** first (`core_version_requirement: '^10.3 || ^11 || ^12'` in every `.info.yml`), through composer-patches, saved under the site's `patches/`.
+4. **Test that it really works**, not only that it installs: install it on a snapshot, load its plugins (`getDefinition()`), and use it once. The usual breaker is **annotation-only plugin discovery**, which Drupal 12 removed: then a bump isn't enough, and the issue's merge request goes in as the patch instead (saved as a file, never the MR URL).
+5. Record it: the module, the patch and the issue in the README's "Check before publication" (replace with the release when it comes), and any bug in a merge request in "Bugs found in other projects". If nothing works, say so to the author before writing around it.
+
+Found 2026-11-12: Focal Point and Crop need their merge requests (Focal Point !67, Crop !37); a bump alone leaves their plugins undiscovered.
+
 ## 3. Voice
 
 Book 1's voice:
