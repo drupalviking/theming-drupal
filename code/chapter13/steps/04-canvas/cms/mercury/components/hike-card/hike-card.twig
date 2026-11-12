@@ -13,7 +13,7 @@
   moderate: 'Moderate'|t,
   hard: 'Hard'|t,
 } %}
-{% set beside = layout|default('top') == 'beside' and photo %}
+{% set beside = layout|default('top') == 'beside' %}
 <article{{ attributes.addClass('@container w-full overflow-hidden rounded-lg border border-club-border bg-club-surface') }}>
   <div class="grid{{ beside ? ' @[30rem]:grid-cols-[2fr_3fr] @[30rem]:items-start' }}">
     <div class="p-club-s">
@@ -30,6 +30,15 @@
     </div>
     {% if photo.src %}
       <img src="{{ photo.src }}" alt="{{ photo.alt }}" width="{{ photo.width }}" height="{{ photo.height }}" loading="lazy" class="-order-1 aspect-[3/2] w-full object-cover">
+    {% else %}
+      {# No photo yet: the club's default photo, as on the core site. #}
+      <svg class="-order-1 aspect-[3/2] w-full bg-club-tint text-club-on-tint" viewBox="0 0 480 320" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+          <circle cx="240" cy="160" r="26"/>
+          <circle cx="240" cy="152" r="7"/>
+          <path d="M216 174 L230 160 L238 168 L248 156 L264 174"/>
+        </g>
+      </svg>
     {% endif %}
   </div>
 </article>

@@ -363,7 +363,7 @@ The contract grows by one slot and two **variants**:
  slots:
 +  photo:
 +    title: Photo
-+    description: The hike's photo, as an image Drupal has rendered. Optional.
++    description: The hike's photo, as an image Drupal has rendered. Optional. Without it, the card shows the club's default photo.
    facts:
      title: Facts
      description: The date, the difficulty and the walking time, rendered by Drupal.
@@ -384,7 +384,7 @@ A variant is a named version of the same component: same props, same slots, diff
 ```diff
 --- components/hike-card/hike-card.twig (before)
 +++ components/hike-card/hike-card.twig (after)
-@@ -3,17 +3,26 @@
+@@ -3,17 +3,38 @@
   * @file
   * The Hike card: a hike in a list.
   *
@@ -414,9 +414,21 @@ A variant is a named version of the same component: same props, same slots, diff
 +        {% endblock %}
 +      </div>
 +    </div>
-+    {% if photo %}
-+      <div class="hike-card__photo">{{ photo }}</div>
-+    {% endif %}
++    <div class="hike-card__photo">
++      {% if photo %}
++        {{ photo }}
++      {% else %}
++        {# No photo yet: the club's default photo, the logo on the tint color.
++           It's decoration, so screen readers skip it. #}
++        <svg class="hike-card__default-photo" viewBox="0 0 480 320" aria-hidden="true" focusable="false">
++          <g fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
++            <circle cx="240" cy="160" r="26"/>
++            <circle cx="240" cy="152" r="7"/>
++            <path d="M216 174 L230 160 L238 168 L248 156 L264 174"/>
++          </g>
++        </svg>
++      {% endif %}
++    </div>
    </div>
  </article>
 ```
@@ -458,7 +470,19 @@ The node template hands over the photo and chooses the variant:
  {% endembed %}
 ```
 
-The photo is filled in the other way, as a value: `content.field_photo|render`. The `|render` is the empty-field trap from the chapter on Twig in depth again. A hike without a photo still has a `field_photo` key with cache information in it, which Twig counts as something. Rendered, it's an empty string, and the component's `{% if photo %}` leaves the photo's `div` out. That's two of the hikes on the test site.
+The photo is filled in the other way, as a value: `content.field_photo|render`. The `|render` is the empty-field trap from the chapter on Twig in depth again. A hike without a photo still has a `field_photo` key with cache information in it, which Twig counts as something. Rendered, it's an empty string, and the component's `{% if photo %}` sees nothing. That's two of the hikes on the test site.
+
+### When there's no photo
+
+What the card does then is the component's business. Leave the photo out, and a card without one is a different shape from its neighbors, with a hole where the design has a picture. So the design in Chapter 4 has a **default photo** for it: the club's logo in `color.on-tint` on `color.tint`. The component draws it in the `{% else %}`, in the diff above.
+
+Three choices in those few lines:
+
+- **Inline SVG, not an image file.** An `<img>` can't see the page's CSS, so a file would be sandstone in dark mode too. Inline, the SVG draws its lines in `currentColor`, and the CSS in the next section gives it the color roles (`.hike-card__default-photo`), so it follows the color scheme like the rest of the card.
+- **`aria-hidden="true"`.** The default photo says nothing about the hike, so it's decoration, and screen readers skip it. A real photo keeps its alt text.
+- **In the component, not in the content.** In the first book, the club's Photo field is a media reference, and Drupal's **Default image** setting only exists on plain image fields. A media reference can have a default value, but that's a real media item stored in every *new* hike: North Berwick would still have none, and the club's lists of photos would show the logo as one of them. The first book's chapter on media says so too. Missing content is something every component has to handle, so we handle it where the card is drawn.
+
+The design is in the book's repository as `design/default-photo.svg`, licensed as CC BY-SA 4.0 or GPL-2.0-or-later, so the theme can ship it.
 
 ### A card that knows its own width
 
@@ -493,13 +517,20 @@ Now the CSS. A media query asks how wide the *screen* is, but the card doesn't c
   .hike-card__photo {
     order: -1;
 
-    & img {
+    & :is(img, svg) {
       display: block;
       width: 100%;
       height: auto;
       aspect-ratio: 3 / 2;
       object-fit: cover;
     }
+  }
+
+  /* The default photo takes its colors from the color roles, so it follows
+     dark mode like the rest of the card. */
+  .hike-card__default-photo {
+    background: var(--color-tint);
+    color: var(--color-on-tint);
   }
 
   .hike-card__text {
@@ -535,7 +566,7 @@ Now the CSS. A media query asks how wide the *screen* is, but the card doesn't c
      container query can't style the container itself, so it's the layout
      inside the card that changes. */
   @container (inline-size >= 30rem) {
-    [data-component-variant="beside"] .hike-card__layout:has(.hike-card__photo) {
+    [data-component-variant="beside"] .hike-card__layout {
       grid-template-columns: 2fr 3fr;
       align-items: start;
     }
@@ -543,13 +574,12 @@ Now the CSS. A media query asks how wide the *screen* is, but the card doesn't c
 }
 ```
 
-`container-type: inline-size` makes the card a container, and `@container (inline-size >= 30rem)` asks about the nearest container around the element being styled. 30rem is Chapter 3's container switch. Three things here took us a try or two:
+`container-type: inline-size` makes the card a container, and `@container (inline-size >= 30rem)` asks about the nearest container around the element being styled. 30rem is Chapter 3's container switch. Two things here took us a try or two:
 
 - **A container can't query itself.** The card is the container, so a rule inside `@container` can style what's in the card, but not the card. That's why the grid is on the new `hike-card__layout` inside it.
 - **A container doesn't take its width from what's inside it.** In a normal block that makes no difference. But in a wrapper that shrinks to fit its content, as the styleguide's is later in this chapter, the card shrank to nothing. `inline-size: 100%` fixes that.
-- `:has(.hike-card__photo)` keeps a card without a photo in one column, instead of an empty one on the left.
 
-Container queries have been in every major browser since February 2023, and widely available on Baseline's scale since August 2025. `:has()` became widely available in June 2026.
+Container queries have been in every major browser since February 2023, and widely available on Baseline's scale since August 2025.
 
 Last, a little space between the rows of a list, in `css/layout.css`, until the chapter on Views gives lists their own layout:
 
@@ -573,8 +603,8 @@ Last, a little space between the rows of a list, in `css/layout.css`, until the 
 
 After a cache rebuild, the Next hikes block has photos, beside the text, because the block is in the wide content column:
 
-![The Next hikes block with three cards: two with a photo on the left and the text on the right, and North Berwick's card with no photo, text only](images/13-front-cards.png)
-*Figure 13.2: Photos beside the text, because the cards have room. North Berwick has no photo yet, and its card is one column*
+![The Next hikes block with three cards, each with a picture on the left and the text on the right; North Berwick's picture is the club's logo on light sandstone](images/13-front-cards.png)
+*Figure 13.2: Photos beside the text, because the cards have room. North Berwick has no photo yet, so it gets the default photo, and the cards keep their shape*
 
 ## One card, two headings
 
@@ -669,7 +699,7 @@ slots:
   facts: '<div class="hike-card__date"><time datetime="2026-12-19T09:30:00Z">Saturday, 19 December 2026 at 09:30</time></div><div class="hike-card__difficulty">Easy</div><div class="hike-card__walking-time">About 1 hour 50 min on foot</div>'
 ```
 
-The module's README calls these `.story.` files, but the code looks for `.demo.`, and only those worked when we tried. For the photo, we used the club's default photo, `design/default-photo.svg`, copied into the component's `demo` folder, because the club's photos aren't the theme's to ship. There are four demos in the step: photo beside, photo on top, no photo, and a long title.
+The module's README calls these `.story.` files, but the code looks for `.demo.`, and only those worked when we tried. For the photo, we used the club's default photo, `design/default-photo.svg`, copied into the component's `demo` folder, because the club's photos aren't the theme's to ship. The No photo demo has no photo at all, and shows the component's own default photo. There are four demos in the step: photo beside, photo on top, no photo, and a long title.
 
 ![The styleguide showing the Hike card with the default photo on the left and the text on the right](images/13-styleguide-beside.png)
 *Figure 13.6: The Photo beside demo. Make the window narrower, and the photo moves on top*
@@ -820,7 +850,7 @@ The markup, with the club's tokens as Tailwind classes:
   moderate: 'Moderate'|t,
   hard: 'Hard'|t,
 } %}
-{% set beside = layout|default('top') == 'beside' and photo %}
+{% set beside = layout|default('top') == 'beside' %}
 <article{{ attributes.addClass('@container w-full overflow-hidden rounded-lg border border-club-border bg-club-surface') }}>
   <div class="grid{{ beside ? ' @[30rem]:grid-cols-[2fr_3fr] @[30rem]:items-start' }}">
     <div class="p-club-s">
@@ -837,12 +867,21 @@ The markup, with the club's tokens as Tailwind classes:
     </div>
     {% if photo.src %}
       <img src="{{ photo.src }}" alt="{{ photo.alt }}" width="{{ photo.width }}" height="{{ photo.height }}" loading="lazy" class="-order-1 aspect-[3/2] w-full object-cover">
+    {% else %}
+      {# No photo yet: the club's default photo, as on the core site. #}
+      <svg class="-order-1 aspect-[3/2] w-full bg-club-tint text-club-on-tint" viewBox="0 0 480 320" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+          <circle cx="240" cy="160" r="26"/>
+          <circle cx="240" cy="152" r="7"/>
+          <path d="M216 174 L230 160 L238 168 L248 156 L264 174"/>
+        </g>
+      </svg>
     {% endif %}
   </div>
 </article>
 ```
 
-The structure is the core site's, so the two cards stay recognizably the same thing. `@container` and `@[30rem]:` are Tailwind's container queries, the same rule as ours, written as classes. The date arrives as text, and `|date('U')|format_date('long')` turns it into a date in the site's language. And the difficulty's labels go through `|t`, so the Spanish site can translate them.
+The structure is the core site's, so the two cards stay recognizably the same thing. `@container` and `@[30rem]:` are Tailwind's container queries, the same rule as ours, written as classes. The date arrives as text, and `|date('U')|format_date('long')` turns it into a date in the site's language. And the difficulty's labels go through `|t`, so the Spanish site can translate them. Without a photo, the card draws the same default photo as on the core site, with `bg-club-tint` and `text-club-on-tint`.
 
 Tailwind only builds the classes it finds in the theme's files, so the new classes need a build, as in the chapter on the Drupal CMS theme:
 
@@ -863,13 +902,13 @@ We gave the Home page a Next hikes section:
 
 1. Drag a **Section** from the library to below the hero. In its settings, set **Grid layout** to **33-33-33** and **Columns on mobile** to **1**, and turn on **Show header region**.
 2. Drag a **Heading** into the section's **Header**, with the text **Next hikes** and the **Heading level** **2**.
-3. Drag three **Hike cards** into the section's **Grid**, and fill them in with the first book's next three hikes. The Glencorse card gets the site's photo of Glencorse Reservoir from the media library. The other two have no photo on this site.
+3. Drag three **Hike cards** into the section's **Grid**, and fill them in with the first book's next three hikes. The Glencorse card gets the site's photo of Glencorse Reservoir from the media library. The other two have no photo on this site, and get the default photo.
 4. Click **Review changes**, and publish the page from there.
 
 ![The Canvas editor: the Layers panel shows the Section with its Heading and three Hike cards, and the Settings panel shows the third card's form: Title, Link, Heading level, Layout, Photo, Date and time, and Difficulty](images/13-canvas-form.png)
 *Figure 13.9: Every field in the form comes from the component's schema*
 
-![The Next hikes section on the Home page: three cards, the third with a photo of Glencorse Reservoir](images/13-cms-home.png)
+![The Next hikes section on the Home page: three cards, the first two with the default photo, the club's logo on light sandstone, and the third with a photo of Glencorse Reservoir](images/13-cms-home.png)
 *Figure 13.10: The Next hikes section on the Drupal CMS site*
 
 ![The same section on a phone, with the cards one below the other](images/13-cms-home-phone.png)
@@ -885,6 +924,7 @@ You can now:
 - describe a component's props in JSON Schema, and choose between a prop and a slot;
 - call a component from a template with `embed` or `include`, and know why `only` breaks `embed`;
 - give a component variants, and read the variant from `data-component-variant` in CSS;
+- give a component a fallback for content that's missing, here a default photo that follows dark mode;
 - make a component fit any column with a container query;
 - explain why a node can't have two different headings in one view mode, and fix it with another view mode;
 - preview components with SDC Styleguide and demo files;
@@ -905,5 +945,5 @@ The Hike card is now one folder on each site. It shows up in the Next hikes bloc
 - Drupal.org: [Single-Directory Components](https://www.drupal.org/docs/develop/theming-drupal/using-single-directory-components) and [Annotated example component.yml](https://www.drupal.org/docs/develop/theming-drupal/using-single-directory-components/annotated-example-componentyml).
 - [JSON Schema: Understanding JSON Schema](https://json-schema.org/understanding-json-schema/), for everything a prop can say.
 - The modules: [SDC Styleguide](https://www.drupal.org/project/sdc_styleguide), [Storybook](https://www.drupal.org/project/storybook) and [Canvas](https://www.drupal.org/project/canvas).
-- MDN: [Container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries) and [`:has()`](https://developer.mozilla.org/en-US/docs/Web/CSS/:has).
+- MDN: [Container queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries).
 - Tailwind CSS: [Container queries](https://tailwindcss.com/docs/responsive-design#container-queries).

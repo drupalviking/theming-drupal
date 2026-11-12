@@ -21,8 +21,20 @@
         {% endblock %}
       </div>
     </div>
-    {% if photo %}
-      <div class="hike-card__photo">{{ photo }}</div>
-    {% endif %}
+    <div class="hike-card__photo">
+      {% if photo %}
+        {{ photo }}
+      {% else %}
+        {# No photo yet: the club's default photo, the logo on the tint color.
+           It's decoration, so screen readers skip it. #}
+        <svg class="hike-card__default-photo" viewBox="0 0 480 320" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+            <circle cx="240" cy="160" r="26"/>
+            <circle cx="240" cy="152" r="7"/>
+            <path d="M216 174 L230 160 L238 168 L248 156 L264 174"/>
+          </g>
+        </svg>
+      {% endif %}
+    </div>
   </div>
 </article>

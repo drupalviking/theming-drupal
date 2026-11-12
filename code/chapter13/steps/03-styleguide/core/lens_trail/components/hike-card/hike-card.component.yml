@@ -36,7 +36,7 @@ props:
 slots:
   photo:
     title: Photo
-    description: The hike's photo, as an image Drupal has rendered. Optional.
+    description: The hike's photo, as an image Drupal has rendered. Optional. Without it, the card shows the club's default photo.
   facts:
     title: Facts
     description: The date, the difficulty and the walking time, rendered by Drupal.

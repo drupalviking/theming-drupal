@@ -24,13 +24,20 @@
   .hike-card__photo {
     order: -1;
 
-    & img {
+    & :is(img, svg) {
       display: block;
       width: 100%;
       height: auto;
       aspect-ratio: 3 / 2;
       object-fit: cover;
     }
+  }
+
+  /* The default photo takes its colors from the color roles, so it follows
+     dark mode like the rest of the card. */
+  .hike-card__default-photo {
+    background: var(--color-tint);
+    color: var(--color-on-tint);
   }
 
   .hike-card__text {
@@ -66,7 +73,7 @@
      container query can't style the container itself, so it's the layout
      inside the card that changes. */
   @container (inline-size >= 30rem) {
-    [data-component-variant="beside"] .hike-card__layout:has(.hike-card__photo) {
+    [data-component-variant="beside"] .hike-card__layout {
       grid-template-columns: 2fr 3fr;
       align-items: start;
     }
