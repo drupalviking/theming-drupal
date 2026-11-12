@@ -1,0 +1,41 @@
+/**
+ * @file
+ * The color scheme toggle, made by js/color-scheme-toggle.js.
+ */
+@layer components {
+  .color-scheme-toggle {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0 var(--space-xs);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: var(--font-size-step--1);
+
+    /* Under the logo and the menu, for now. The header chapter places it. */
+    grid-column: 1 / -1;
+    justify-self: end;
+
+    & legend {
+      float: inline-start;
+      margin-inline-end: var(--space-xs);
+      padding: 0;
+    }
+
+    & label {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3xs);
+      min-block-size: 44px;
+      cursor: pointer;
+    }
+
+    & input {
+      inline-size: 1.25em;
+      block-size: 1.25em;
+      margin: 0;
+      accent-color: var(--color-action);
+    }
+  }
+}

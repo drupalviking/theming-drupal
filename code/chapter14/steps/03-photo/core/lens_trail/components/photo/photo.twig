@@ -18,7 +18,7 @@
     <span class="photo__credit">
       {{ 'Photo:'|t }}
       {% if source %}<a href="{{ source }}">{{ photographer }}</a>{% else %}{{ photographer }}{% endif %}
-      · {{ license }}
+      · <span class="photo__license">{{ license }}</span>
     </span>
   </figcaption>
 </figure>

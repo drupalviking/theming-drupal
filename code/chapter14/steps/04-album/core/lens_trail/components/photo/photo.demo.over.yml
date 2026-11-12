@@ -1,0 +1,9 @@
+name: Credit over the photo
+description: As on a hike page. The credit sits in the bottom corner, white on black in both color schemes.
+props:
+  photographer: Jaroslaw Musialkowski
+  license: CC BY-SA 4.0
+  source: https://commons.wikimedia.org/wiki/File:Pentland_Hills_-_Glencorse_Reservoir.jpg
+  credit: over
+slots:
+  image: '<img src="/themes/custom/lens_trail/components/photo/demo/default-photo.svg" width="1280" height="720" alt="">'

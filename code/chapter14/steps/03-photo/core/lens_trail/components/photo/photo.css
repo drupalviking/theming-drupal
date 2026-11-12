@@ -37,6 +37,11 @@
     font-size: var(--font-size-step--1);
   }
 
+  /* "CC BY-SA 4.0" reads as one name: don't break it at the hyphen. */
+  .photo__license {
+    white-space: nowrap;
+  }
+
   .photo__title::after {
     content: ". ";
   }
