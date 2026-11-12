@@ -4,6 +4,9 @@ props:
   photographer: Jaroslaw Musialkowski
   license: CC BY-SA 4.0
   source: https://commons.wikimedia.org/wiki/File:Pentland_Hills_-_Glencorse_Reservoir.jpg
+  # SDC Styleguide passes a prop a demo leaves out as NULL, which a string
+  # prop refuses, so every prop is here. The caption only shows below.
+  caption: Glencorse Reservoir from the hillside
   credit: over
 slots:
   image: '<img src="/themes/custom/lens_trail/components/photo/demo/default-photo.svg" width="1280" height="720" alt="">'

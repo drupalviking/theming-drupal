@@ -3,6 +3,9 @@ description: As in the lightbox. A photo without a source has the photographer's
 props:
   photographer: Alan O'Dowd
   license: CC BY-SA 2.0
+  # SDC Styleguide passes a prop a demo leaves out as NULL, which a string
+  # prop refuses, so every prop is here. An empty source: no link.
+  source: ''
   caption: The view from Carnethy Hill
   credit: below
 slots:
