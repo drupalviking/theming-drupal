@@ -46,9 +46,113 @@ What if you forget to remove the contributed copy? Then the site has two themes 
 
 Reload the front page: it should look exactly as it did. That's the test.
 
+## Tailwind in a few minutes
+
+Before we build anything, let's learn to read what we're building. Mercury is styled with **Tailwind CSS**, and from here on, every Twig file in Mercury, and every component we add to it, is full of Tailwind's classes. They look strange at first: `px-6`, `xl:py-3.5`, `hover:bg-primary/85`. Once you know the handful of rules behind them, you can read any of them.
+
+Tailwind is a CSS framework, but not the kind that gives you a ready-made button and a grid. It gives you **utility classes**: small classes that each do one thing, such as `flex` (`display: flex`) or `font-medium` (a font weight of 500). You style an element by putting the classes it needs in its `class` attribute, in the HTML, instead of writing a rule for it in a stylesheet. Then Tailwind's build step reads your templates, finds the classes you used, and writes a CSS file with a rule for each of them, and for no others. That build step is why this site needs Node.js, as the next section shows.
+
+That's the opposite of the core site, where the theme has a stylesheet per component and the HTML only carries a name for it (`hike-card`). Neither is wrong, and we'll compare them at the end of this section. On the Drupal CMS site, we use Tailwind because Mercury does: its 25 components are written that way, and working with them is easier than working against them.
+
+### Reading a button
+
+Mercury's Button component is a good one to learn on, because it uses nearly every kind of class there is. Here's how it decides its classes (we'll come back to `html_cva` in a moment; for now, read the strings):
+
+<!-- include: code/chapter06/steps/03-fonts/cms/mercury/components/button/button.twig lines=6-37 as=components/button/button.twig -->
+
+And here's one of Mercury's buttons on the front page, the hero's **Call to action**, as Drupal renders it:
+
+<!-- include: code/chapter06/snippets/button-rendered.html as=html -->
+
+Take the classes in groups:
+
+- **One class, one property.** `flex`, `items-center`, `rounded-lg`, `font-medium`, `cursor-pointer`: each is one CSS declaration, named after it. `w-fit` is `width: fit-content`.
+- **Numbers are steps on a scale.** `px-6` is padding on the left and right (the *x* axis; `py` is top and bottom) of 6 spacing steps. A step is `--spacing`, which Mercury sets to 4 pixels, so `px-6` is 24 pixels. `gap-3` is 12 pixels between the button's children. `text-lg` is a step on the type scale, and `rounded-lg` one on the radius scale. Because every value comes from a scale, the spacing on a page stays consistent without anyone checking.
+- **A prefix and a colon add a condition.** `xl:py-3.5` is `py-3.5` *on screens at least 80rem wide*. The prefixes are Tailwind's breakpoints: `sm` 40rem, `md` 48rem, `lg` 64rem, `xl` 80rem and `2xl` 96rem. A class without a prefix applies everywhere, and the prefixed ones take over from their width up, so Tailwind is **mobile first**: you write the phone's style, then what changes on wider screens. `hover:`, `focus-visible:` and `disabled:` work the same way, for a state of the element instead of a screen width.
+- **A slash is an opacity.** `hover:bg-primary/85` is the primary color at 85% when the pointer is over the button. `focus-visible:ring-ring/50` is the focus ring's color at 50%.
+- **Square brackets are a value of your own.** `focus-visible:ring-[3px]` is a ring 3 pixels wide, a size that isn't on Tailwind's scale. Anything goes in the brackets, and Tailwind trusts you with it.
+- **`group` marks a parent** for its children. The arrow in the button has `group-hover:translate-x-1`: it moves one step to the right when the pointer is over the *group*, the button, not only over the arrow.
+
+That's what Tailwind's build makes of a few of those classes. We've made the minified file readable, but the rules are exactly what's in it:
+
+<!-- include: code/chapter06/snippets/button-rules.css as=build/main.min.css -->
+
+A few things worth noticing. Each rule is the class name, escaped where it has a colon, a slash or a bracket. The `xl:` rule is inside a media query. The `hover:` rules are inside `@media (hover: hover)`, so a phone, where there's no pointer to hover with, never gets stuck in the hover style after a tap. The opacity comes with a fallback: browsers that understand `color-mix()` get the 85% color, and the others the full color. And `group-hover:` became a selector that looks for a hovered `.group` around the element. You'll never write these rules, but when a class doesn't do what you expect, looking for its rule in `build/main.min.css` is the quickest way to find out why.
+
+The forms the rest of this book uses, in one place:
+
+| Class | Means | CSS it becomes, roughly |
+|---|---|---|
+| `p-4`, `px-6`, `mt-2` | padding, padding left and right, margin on top, in spacing steps | `padding: calc(var(--spacing) * 4)` |
+| `md:grid-cols-3` | from 48rem up | `@media (min-width: 48rem) { ... }` |
+| `hover:`, `focus-visible:`, `disabled:` | in that state | `:hover`, `:focus-visible`, `:disabled` |
+| `open:grid`, `backdrop:bg-black` | a `<dialog>` or `<details>` that's open; a dialog's backdrop | `:is([open], :popover-open, :open)`, `::backdrop` |
+| `after:content-['']` | the `::after` pseudo-element | `::after { content: '' }` |
+| `bg-primary/85` | a color at 85% | `color-mix(in oklab, var(--primary) 85%, transparent)` |
+| `ring-[3px]`, `z-[-1]` | a value of your own | `3px`, `-1` |
+| `size-(--size-target)` | the value of a CSS variable | `width: var(--size-target); height: var(--size-target)` |
+| `[&_img]:block` | a selector of your own; `&` is the element, `_` a space | `& img { display: block }` |
+| `group-hover:`, `in-[.accordion--open]:` | when a parent is hovered, or matches a selector | `:where(.group):hover *`, `:where(.accordion--open) *` |
+| `end-0`, `ps-4` | logical: the end and start of a line, which flip in right-to-left languages | `inset-inline-end: 0`, `padding-inline-start` |
+
+### Parents and siblings: `group-`, `peer-` and `in-`
+
+A Tailwind class sits on the element it styles, so styling an element because of *another* element needs a way to point at it. There are three:
+
+- **`group` and `group-*:`**. Put `group` on the parent, and a child's `group-hover:`, `group-focus-visible:` or `group-open:` applies when the parent is in that state. That's the button's arrow. Groups can be named, `group/card` and `group-hover/card:`, when one sits inside another.
+- **`peer` and `peer-*:`**. Put `peer` on an element, and a *later sibling's* `peer-checked:` or `peer-invalid:` applies when that element is checked or invalid: a label that turns red when the field before it is wrong. It only works for siblings that come after, because CSS can only look that way.
+- **`in-[...]:`**. Applies when *any* parent matches the selector in the brackets, with no `group` needed. Mercury's accordion uses it: its panel has classes that start with `in-[.accordion--open]:`, so the panel opens when the accordion around it gets the class `accordion--open`, which the accordion's script sets.
+
+### Variants, the CVA way
+
+Back to `html_cva` in the Button. A component often has a few fixed versions: small, medium and large; primary and secondary. **CVA**, short for *class variance authority*, is a pattern from the JavaScript world for choosing classes by version, and `html_cva()` is its Twig form, from Twig's own HTML extension. Drupal doesn't include it, so Mercury depends on the `drupal/cva` module, whose only job is to make `html_cva()` available in Drupal's Twig. That's the dependency from earlier in this chapter.
+
+`html_cva()` takes a `base`, the classes every version gets, and `variants`, the classes for each choice of each option. The template then asks for a combination with `apply()`:
+
+```twig
+button_variants.apply({size: 'large', variant: 'primary', width: 'fit', iconPosition: 'last'}, additional_classes)
+```
+
+and gets one string: the base, then `gap-3 px-6 py-3 text-lg xl:py-3.5 xl:text-xl` for large, `bg-primary text-primary-foreground hover:bg-primary/85` for primary, `w-fit`, `flex-row-reverse`, and last any classes the caller passed in. That's exactly the class attribute of the rendered button above. (The duplicate `duration-300 ease-in-out` from the variant is dropped: `apply()` removes repeated classes.)
+
+One thing `apply()` doesn't do is settle conflicts. If you pass `px-2` as an extra class to a large button, the button gets both `px-6` and `px-2`, and which one wins depends on their order in the *CSS file*, not in the class attribute. Some JavaScript projects add a tool, `tailwind-merge`, for that; in Twig there's none. So when you give a Mercury component extra classes, give it ones that don't fight its own.
+
+### Classes the build can't see
+
+Here's the rule that catches everyone once: **Tailwind's build only finds classes that are written out whole in a file.** It doesn't run Twig, PHP or JavaScript. It reads the theme's files as plain text, picks out everything that looks like a class name, and writes rules for the ones it recognizes. A class that's put together from pieces while the page is rendered doesn't exist when the build runs.
+
+We tried it with this template, added to the theme for the test and removed afterward:
+
+<!-- include: code/chapter06/snippets/rotate-test.twig as=components/rotate-test/rotate-test.twig -->
+
+After `npm run build`, the built CSS had a rule for one of them:
+
+<!-- include: code/chapter06/snippets/rotate-test.txt as=terminal -->
+
+The page has both classes in its HTML, and only `rotate-45` does anything. Nothing warns you: the build doesn't know `rotate-12` was ever meant, and the browser ignores a class without a rule.
+
+Mercury itself has a class like that, in its Icon component:
+
+<!-- include: code/chapter06/steps/03-fonts/cms/mercury/components/icon/icon.twig lines=10-21 as=components/icon/icon.twig -->
+
+`min-w:{{ resolved_size }}` becomes `min-w:24` on the page, and it has two problems. It's put together while the page is rendered, so the build never sees it; and it isn't Tailwind's syntax anyway, which would be `min-w-6` or `min-w-[24px]`. There's no rule for it in `build/main.min.css`, so it does nothing. The icons look right because the SVG inside has its own width, so nobody noticed. (Exercise 6 fixes it.)
+
+The cure is to write every class out whole, and choose between whole classes in Twig: a map from a size to a full class name (`{small: 'min-w-6', large: 'min-w-12'}`), as the Button's `html_cva()` does with its variants. When a class really has to come from somewhere the build can't read, such as a value an editor types in, Tailwind 4 has `@source inline("rotate-12")` in `src/main.css`, which tells the build to make that class whether it finds it or not. Use it sparingly: every class in it is in every page's CSS.
+
+### Plain CSS or Tailwind?
+
+The two sites in this book are styled in the two ways, so you'll get to know both. In short:
+
+- **Tailwind** keeps the styling next to the markup: you read an element and see how it looks, and you don't invent class names. The scales keep spacing and type consistent across a team. The CSS file stays small, because only the classes in use are built. The costs: long class attributes that are hard to scan, a build step with Node.js, and styles you can't change for the whole site in one place unless they come from the theme's variables, as the club's tokens do.
+- **Plain CSS**, as on the core site, needs no tools at all, and modern CSS has most of what made frameworks necessary: variables, nesting, layers and container queries. The markup stays readable, and a stylesheet per component can be overridden from outside without touching it. The costs: you name everything, and you keep the CSS and the markup in step yourself.
+
+Appendix E, *Build Tools*, puts Tailwind next to the other tools a theme meets, such as Sass, PostCSS and the bundlers.
+
+> **Tutorials for Tailwind 3.** Mercury uses Tailwind 4: its `package-lock.json` pins 4.1.18, and the newest release is {{ number:tailwind_version }}. Version 4 is set up in CSS: `@import "tailwindcss"` and an `@theme` block in `src/main.css`, as you'll see in this chapter. Most tutorials and answers online are still for version 3, which used a `tailwind.config.js` file, `@tailwind base;` lines and a `content` list of files to read. If a page tells you to edit `tailwind.config.js`, it's for version 3, and you'll need the version 4 way: the [upgrade guide](https://tailwindcss.com/docs/upgrade-guide) lists the differences.
+
 ## The build tools
 
-Mercury's CSS is built: the file the browser gets, `build/main.min.css`, is made by Tailwind from `src/main.css` and from the classes it finds in the theme's templates and components. **Tailwind** is a CSS framework where you style things with small classes in the HTML (`bg-primary`, `text-lg`), and its build step writes CSS for the classes you used and no others.
+Mercury's CSS is built: the file the browser gets, `build/main.min.css`, is made by Tailwind from `src/main.css` and from the classes it finds in the theme's templates and components, as the previous section showed.
 
 To run it we need Node.js, and we want everyone working on the site to have the same version. DDEV takes care of that. Add this line to `.ddev/config.yaml`, and run `ddev restart`:
 
@@ -220,6 +324,9 @@ You can now:
 - copy a contributed theme into your own project, keep its machine name, and say why that matters for Canvas pages;
 - remove the contributed copy without losing a dependency it brought along;
 - pin Node.js in DDEV, install with `npm ci`, and run Mercury's build;
+- read Tailwind's classes: scales, breakpoint and state prefixes, opacity, square brackets, `group-`, `peer-` and `in-`;
+- explain how `html_cva()` picks a component's classes, and why extra classes can fight them;
+- write classes so Tailwind's build finds them, and spot one it can't;
 - explain how Tailwind's `@theme`, Mercury's `theme.css` and the club's tokens fit together;
 - prevent name collisions with a prefix, and find them by comparing the built CSS;
 - map a design's roles to shadcn/ui's names, with dark mode coming from the tokens;
@@ -233,12 +340,14 @@ You can now:
 3. In `tokens.py`, take the `club` out of the spacing rule, and run the script and the build. Compare `.max-w-2xl` in `build/main.min.css` before and after. Then put it back.
 4. Add a class that isn't in Mercury yet, `bg-club-green-700`, to a component's Twig file. Rebuild the cache without running the build. What happens, and why? Run the build, and look again.
 5. Turn on **Dark** under Mercury's **Color scheme**, with your system in light mode, and look at the site. Which CSS rule does the work? Set it back to **Light**. *(challenge)*
+6. Fix Mercury's Icon component, from the section on classes the build can't see, so the minimum width works: write whole class names for each size, run the build, and find the rules in `build/main.min.css`. Which icon size would look different if the SVG didn't have a width of its own? *(challenge)*
 
 ## Want to know more?
 
 - Drupal.org: [the Mercury theme](https://www.drupal.org/project/mercury), and Mercury's own `CUSTOMIZING.md` in the theme's folder.
 - Mercury's issue about [the focus ring and more](https://www.drupal.org/project/mercury/issues/3592157).
-- Tailwind CSS: [theme variables](https://tailwindcss.com/docs/theme), and [how it finds classes in your files](https://tailwindcss.com/docs/detecting-classes-in-source-files).
+- Tailwind CSS: [styling with utility classes](https://tailwindcss.com/docs/styling-with-utility-classes), [hover, focus and other states](https://tailwindcss.com/docs/hover-focus-and-other-states), [responsive design](https://tailwindcss.com/docs/responsive-design), [theme variables](https://tailwindcss.com/docs/theme), [how it finds classes in your files](https://tailwindcss.com/docs/detecting-classes-in-source-files), and the [upgrade guide](https://tailwindcss.com/docs/upgrade-guide) from version 3.
+- Twig: [`html_cva`](https://twig.symfony.com/doc/3.x/functions/html_cva.html), and the Drupal module that makes it available, [CVA](https://www.drupal.org/project/cva).
 - [shadcn/ui's theming](https://ui.shadcn.com/docs/theming), where the variable names come from.
 - npm's documentation for [`npm ci`](https://docs.npmjs.com/cli/commands/npm-ci).
 - WCAG 2.2: [Non-text Contrast](https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html).
