@@ -1,0 +1,2 @@
+$ grep -o '\.rotate-[0-9]*{[^}]*}' build/main.min.css
+.rotate-45{rotate:45deg}
