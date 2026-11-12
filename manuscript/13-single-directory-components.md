@@ -245,6 +245,17 @@ Two things went wrong on the way, and both were useful:
 
 The styleguide also can't set the variant through the component's `variants`, but it passes any prop it's given, and `variant` is one.
 
+The explorer lists more than the Hike card, and some of it looks broken. Under **Styleguide** are **Colors** and **Text**, the module's own sample pages: a palette "heavily copied from Wikimedia Design. You must override this.", and headings with lorem ipsum. Under **Ungrouped** are every other component on the site that has no demo: four from core's Navigation module (the admin sidebar's) and Olivero's Teaser. Without a demo, a link opens the module's demo form instead of a preview, and the Navigation components' forms show PHP warnings, because their props have no titles. They aren't ours, so we hide them:
+
+1. Go to **Configuration** › **User interface** › **SDC Styleguide Settings**.
+2. Under **Exclude Modules**, tick **navigation**. Under **Exclude Themes**, tick **olivero**, and leave **lens_trail** alone.
+3. **Save configuration**, then rebuild the cache: the explorer keeps its list in the cache, and saving the settings doesn't clear it.
+
+![SDC Styleguide Settings: Exclude Modules with navigation ticked, and Exclude Themes with lens_trail unticked and olivero ticked](images/13-styleguide-settings.png)
+*Figure 13.8: Only the club's components in the explorer*
+
+Colors and Text are for the theme to replace with its own, and Appendix D, *The Styleguide*, does that for the club, from the design tokens. It also shows the rest of the module: the demo form, which writes a demo file for you, the accessibility check under every demo, and the layout switcher. From here on, every chapter that makes a component gives it demos, so the styleguide grows with the theme.
+
 Whether Storybook earns its place in this book is still an open question. For now, SDC Styleguide does what the core site needs without Node.
 
 ## On the Drupal CMS site
@@ -287,7 +298,7 @@ Tailwind only builds the classes it finds in the theme's files, so the new class
 Open the Home page in Canvas, and the card is in the **Library**, under **Lens & Trail**, the component's `group`:
 
 ![The Canvas editor with the Library open, searched for hike, showing Lens & Trail and the Hike card under it](images/13-canvas-library.png)
-*Figure 13.8: The Hike card in the Canvas library*
+*Figure 13.9: The Hike card in the Canvas library*
 
 We gave the Home page a Next hikes section:
 
@@ -297,15 +308,15 @@ We gave the Home page a Next hikes section:
 4. Click **Review changes**, and publish the page from there.
 
 ![The Canvas editor: the Layers panel shows the Section with its Heading and three Hike cards, and the Settings panel shows the third card's form: Title, Link, Heading level, Layout, Photo, Date and time, and Difficulty](images/13-canvas-form.png)
-*Figure 13.9: Every field in the form comes from the component's schema*
+*Figure 13.10: Every field in the form comes from the component's schema*
 
 ![The Next hikes section on the Home page: three cards, the first two with the default photo, the club's logo on light sandstone, and the third with a photo of Glencorse Reservoir](images/13-cms-home.png)
-*Figure 13.10: The Next hikes section on the Drupal CMS site*
+*Figure 13.11: The Next hikes section on the Drupal CMS site*
 
 ![The same section on a phone, with the cards one below the other](images/13-cms-home-phone.png)
-*Figure 13.11: On a phone*
+*Figure 13.12: On a phone*
 
-%% Author: on the test site, the section and cards were placed by code/chapter13/site/cms.php (same result as the steps above); the steps were checked against the editor's labels and Figure 13.9, but not walked by hand. The cards link to /first-hike, since the Drupal CMS site has no hike pages: is that right, or should they link somewhere else? %%
+%% Author: on the test site, the section and cards were placed by code/chapter13/site/cms.php (same result as the steps above); the steps were checked against the editor's labels and Figure 13.10, but not walked by hand. The cards link to /first-hike, since the Drupal CMS site has no hike pages: is that right, or should they link somewhere else? %%
 
 Try typing in the date, or choosing a difficulty: the editor can't give the card anything the schema doesn't allow. That's the difference between the two sites' cards in a sentence. On the core site, the contract is between templates and the component, and Drupal checks it while you work. On the Drupal CMS site, it's also between the component and an editor, and Canvas checks it every time someone fills it in. The chapter on components in Canvas and Layout Builder goes much further with this.
 
