@@ -101,6 +101,16 @@ SHOTS = {
         ("cms", "13-cms-home", "cms", "/home", 1280, 900, False, "[data-component-id='mercury:hike-card']"),
         ("cms", "13-cms-home-phone", "cms", "/home", 360, 900, False, "[data-component-id='mercury:hike-card']"),
     ],
+    # Appendix D: tools/use-step.sh d 01. The demo form, the accessibility panel
+    # and the layout switcher need clicks, and were taken with a one-off script.
+    "d": [
+        ("explorer", "appendix-d-explorer", "core", "/styleguide/explorer", 1280, 900, True),
+        ("sections", "appendix-d-colors", "core", "/styleguide/section/colors", 1280, 1780, True),
+        ("dark", "appendix-d-colors-dark", "core", "/styleguide/section/colors", 1280, 1780, True),
+        ("sections", "appendix-d-text", "core", "/styleguide/section/text", 1280, 1300, True),
+        ("dark", "appendix-d-text-dark", "core", "/styleguide/section/text", 1280, 1300, True),
+        ("cms", "appendix-d-cms-demo", "cms", "/styleguide/component/Lens%20%26%20Trail/mercury%3Ahike-card/beside", 1280, 700, True),
+    ],
 }
 
 

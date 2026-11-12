@@ -254,7 +254,7 @@ The explorer lists more than the Hike card, and some of it looks broken. Under *
 ![SDC Styleguide Settings: Exclude Modules with navigation ticked, and Exclude Themes with lens_trail unticked and olivero ticked](images/13-styleguide-settings.png)
 *Figure 13.8: Only the club's components in the explorer*
 
-Colors and Text are for the theme to replace with its own, and Appendix D, *The Styleguide*, does that for the club, from the design tokens. It also shows the rest of the module: the demo form, which writes a demo file for you, the accessibility check under every demo, and the layout switcher. From here on, every chapter that makes a component gives it demos, so the styleguide grows with the theme.
+Colors and Text are for the theme to replace with its own, and Appendix D, *The Styleguide*, does that for the club, from the design tokens. It also shows the rest of the module: the demo form, which writes a demo's YAML for you, the accessibility check under every demo, and the layout switcher. From here on, every chapter that makes a component gives it demos, so the styleguide grows with the theme.
 
 Whether Storybook earns its place in this book is still an open question. For now, SDC Styleguide does what the core site needs without Node.
 
