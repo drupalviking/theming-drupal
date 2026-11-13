@@ -1213,7 +1213,7 @@ We checked the footer with the keyboard, at 320 pixels wide, in dark mode and in
 
 On the Drupal CMS site, as Chapter 7 found, there's nothing on **Block layout**. The header and the footer are two of Mercury's components, **Navbar** and **Footer**, in Canvas's **page template** for the theme, and the blocks are components in their slots. This section does the same design there, with three kinds of change: Mercury's templates, a new component, and the page template in Canvas.
 
-The site starts with a navbar that shows the logo and one menu link, Home, and a footer with only "My privacy settings". The first book's Drupal CMS site has fewer pages than the core site: a Home page, How to join and a privacy policy, plus the hikes and albums the book's setup adds. So its main menu gets Home and **Join us** (How to join), added on **Structure** > **Menus** > **Main navigation**.
+The site starts with a navbar that shows the logo and the main menu's links, as Mercury's pills: Drupal CMS's own **Home**, and **Hikes**, **Albums** and **About**, which the book's setup brings from the first book along with the hikes, the albums and their lists. The footer has "My privacy settings" and the first book's "Upcoming hikes (RSS)". The first book's Drupal CMS site also has a How to join page that no menu links to, so the main menu gets **Join us**, added on **Structure** > **Menus** > **Main navigation**.
 
 ### The page template in Canvas
 
@@ -1720,13 +1720,13 @@ ddev exec -d /var/www/html/web/themes/custom/mercury npm ci
 ddev exec -d /var/www/html/web/themes/custom/mercury npm run build
 ```
 
-![The Drupal CMS site's header: the logo and Lens & Trail on the left, and on the right Home underlined in green, Join us, English · Español and the round toggle button](images/15-cms-header.png)
+![The Drupal CMS site's header: the logo and Lens & Trail on the left, and on the right Home underlined in green, Hikes, Albums, About, Join us, English · Español and the round toggle button](images/15-cms-header.png)
 *Figure 15.12: The Drupal CMS site's header*
 
-![The Drupal CMS site's footer: the logo and the name, Meet us with the meeting times, the email address and Flickr, and under a line, My privacy settings and Log in on the left, the license line and Powered by Drupal on the right](images/15-cms-footer.png)
+![The Drupal CMS site's footer: the logo and the name, Meet us with the meeting times, the email address and Flickr, and under a line, My privacy settings, Upcoming hikes (RSS) and Log in on the left, the license line and Powered by Drupal on the right](images/15-cms-footer.png)
 *Figure 15.13: The footer*
 
-![Mercury's menu panel on a phone, in dark mode: the logo and a close button at the top, Home and Join us, and at the bottom English · Español and the toggle, with its choices open above it and Dark chosen](images/15-cms-phone-menu.png)
+![Mercury's menu panel on a phone, in dark mode: the logo and a close button at the top, Home, Hikes, Albums, About and Join us, and at the bottom English · Español and the toggle, with its choices open above it and Dark chosen](images/15-cms-phone-menu.png)
 *Figure 15.14: On a phone, the toggle is in Mercury's menu panel, and its choices open upwards*
 
 ## Summary

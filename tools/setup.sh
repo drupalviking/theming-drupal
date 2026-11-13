@@ -163,7 +163,9 @@ SETTINGS
   fi
   # Book 1 builds the hikes and albums only on the core site, and this book
   # themes them on both: the Drupal CMS site gets them from Book 1's core export, through a
-  # recipe that tools/hikes-recipe.php makes to fit Drupal CMS.
+  # recipe that tools/hikes-recipe.php makes to fit Drupal CMS, with the lists
+  # (views), the About page and their menu links. A recipe can't bring config
+  # translations, so tools/import-translations.php saves the Spanish ones.
   if [[ "$name" == cms ]]; then
     echo "== Book 1's hikes and albums on the Drupal CMS site"
     if [[ "$BOOK1_REF" == WORKTREE ]]; then
@@ -172,9 +174,10 @@ SETTINGS
     else
       git -C "$BOOK1" archive "$BOOK1_REF" sites/core/config sites/core/content | tar -x -C book1-export --strip-components=1
     fi
-    cp "$REPO/tools/hikes-recipe.php" book1-export/
+    cp "$REPO/tools/hikes-recipe.php" "$REPO/tools/import-translations.php" book1-export/
     ddev drush php:script book1-export/hikes-recipe.php -- /var/www/html/book1-export/core /var/www/html/book1-export/hikes
     ddev drush recipe ../book1-export/hikes
+    ddev drush php:script book1-export/import-translations.php -- /var/www/html/book1-export/hikes/translations
   fi
   # Pathauto doesn't generate the aliases of translations that come in with an
   # import (the Spanish hikes and terms). Generating them again fills them in;
