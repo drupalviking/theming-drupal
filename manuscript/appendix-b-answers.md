@@ -77,3 +77,24 @@ No, and there's nothing to give one to. `srcset` and `sizes` exist because a pho
 And it isn't even a file. The Hike card writes the SVG into the page itself, so there's no request to make, early or late, and nothing for `loading` or `fetchpriority` to change. It costs its markup instead: about 340 characters per card without a photo. On `/hikes`, with two such cards, that's under 700 characters, before compression, on a page that came over the wire in under 5 kilobytes. If the club had a hundred hikes without photos on one page, a single `default-photo.svg` file, cached once, would start to pay off; but it would lose what the chapter on components chose inline SVG for: the drawing takes the page's colors, in dark mode too.
 
 So the right answer is to leave it as it is. An image style can't work on an SVG anyway: Drupal's image toolkit only scales and crops pixels.
+
+## Chapter 15, exercise 5: the toggle with the Popover API
+
+The markup is the toggle's, with two attributes in place of our open-and-close code: `popover` on the fieldset, and `popovertarget` on the button, naming the fieldset's `id`.
+
+<!-- include: code/chapter15/snippets/popover-toggle.html as=html -->
+
+What the browser now does for you, which we tested on a page with only this markup in Chromium:
+
+- **Opening and closing.** The button opens and closes the fieldset with no script at all, with the mouse and with Enter or Space.
+- **Escape**, which closes it and puts the focus back on the button.
+- **A click outside**, which closes it too. The specification calls this *light dismiss*.
+- **The focus order.** The open popover comes right after its button when you press Tab, wherever it is in the HTML.
+- **The state.** A button with `popovertarget` is exposed to screen readers as expanded or collapsed, as `aria-expanded` did for us. (Check it with your own screen reader: that mapping is the browsers' work, not ours.)
+- **The top layer.** An open popover is drawn above everything else on the page, so no `z-index` of the header or the page can cover it.
+
+So `setOpen()`, the three listeners and the `[hidden]` rule can go. What stays: the script still builds the toggle (so visitors without JavaScript don't see it) and still handles the radio buttons, which is Chapter 12's code. One thing doesn't close it any more: tabbing out of the choices leaves them open until a click or Escape. That's the popover's rule, and it's acceptable for a small box like this one.
+
+And what you lose: the place. A popover in the top layer isn't positioned by its parent, so `position: absolute` under the button no longer works, and the browser puts it in the middle of the window. Our test page showed it there, far from its button. The fix is **CSS anchor positioning**, which ties an element to another one (`anchor-name` on the button, `position-anchor` and `position-area` on the popover). It became Baseline "newly available" only in January 2026, when Firefox 147 shipped it, so in late 2026 a visitor on a browser a year or two old would still get the choices in the middle of the screen.
+
+The Popover API itself has been in every main browser since April 2024, and Baseline calls it "widely available" from October 2026. So the honest answer is: it's the better tool, and the club's toggle should move to it once anchor positioning is as widely available, in 2028 by Baseline's count. Until then, our own few lines of script put the choices where the design wants them, in every browser.

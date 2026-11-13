@@ -149,8 +149,8 @@ Split from "Generating the Themes" (the author, 2026-11-08): this chapter is the
 
 ### 15. The Header and the Footer
 
-- **Header**: branding (logo, site name, slogan) and the site branding block's template; search (core Search or a link); the language switcher (English/Spanish); the user menu (log in, my account); sticky or not, and its cost on small screens; the header as a component and as a region.
-- **Footer**: footer regions, the footer menu (Book 1's Chapter 14), the Club info block (a content block with fields: its own template), social links, the license line (CC BY-SA for photos).
+- **Header**: branding (logo and site name in one link, the slogan off) and the site branding block's template; the favicon; no search (a decision, explained); the language switcher (English · Español, a landmark name, `lang`); the color scheme toggle as a disclosure button; Log in moved to the footer; sticky or not, and its cost on small screens (a Try it); the header from regions on core, from Canvas's page template on Drupal CMS.
+- **Footer**: a Footer bottom region, the footer menu (Book 1's Chapter 14), the Club info block (a content block with fields: its own templates, by block type), Flickr as a text link, the license line (CC BY-SA, a content block), Powered by Drupal (why it's there, and why the club keeps it).
 - Skip link and landmarks (`<header>`, `<nav>`, `<footer>`).
 
 ### 16. Menus, in Depth
@@ -245,6 +245,6 @@ The final pass over both finished themes (accessibility has been checked in ever
 
 - **A. Twig reference**: the syntax, Drupal's filters and functions, and the variables of the templates the book touches.
 - **B. Answers to the advanced exercises.**
-- **C. Building the Sites Without Book 1**: for readers who start with this book, and for teachers. What `tools/setup.sh` needs (DDEV, Git), what it does (Book 1's export, `site:install --existing-config`, the content recipe, and on the Drupal CMS site Book 1's hikes through `tools/hikes-recipe.php`), how long it takes, and what to do when it fails. **For readers who built their own Drupal CMS site in Book 1**: adding the hikes to it with the same script and recipe (Book 1 builds the hikes only on the core site; the author, 2026-11-12).
+- **C. Building the Sites Without Book 1**: for readers who start with this book, and for teachers. What `tools/setup.sh` needs (DDEV, Git), what it does (Book 1's export, `site:install --existing-config`, the content recipe, and on the Drupal CMS site Book 1's hikes through `tools/hikes-recipe.php`), how long it takes, and what to do when it fails. **For readers who built their own Drupal CMS site in Book 1**: adding the hikes and albums to it with the same script and recipe (Book 1 builds them only on the core site; the author, 2026-11-12).
 - **D. The Styleguide** (the author, 2026-11-12): SDC Styleguide in full: installing it and its permission, demo files and the demo form that writes them, excluding other modules' and themes' components, the accessibility check and the layout switcher, the club's own Colors and Text pages from the design tokens (replacing the module's samples), and its known bugs.
 - **E. Build Tools** (the author, 2026-11-12): what CSS and JavaScript build tools are, and a short section on each one: Sass, PostCSS (and Autoprefixer), Tailwind, and the bundlers and builders (esbuild, Vite, webpack, Rollup, Parcel, Laravel Mix and others), each with what it does, where Drupal themes meet it, and what native CSS and JavaScript do today instead. Chapter 2 gives the overview and the decision; this appendix is the reference.

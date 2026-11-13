@@ -1,0 +1,83 @@
+/**
+ * @file
+ * The color scheme toggle, made by js/color-scheme-toggle.js: a round button
+ * in the header that shows and hides the three choices.
+ */
+@layer components {
+  .color-scheme-toggle {
+    position: relative;
+  }
+
+  .color-scheme-toggle__button {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--size-target);
+    block-size: var(--size-target);
+    padding: 0;
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-round);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color var(--duration-fast);
+
+    &:hover {
+      border-color: var(--color-action);
+    }
+
+    &[aria-expanded="true"] {
+      border-color: var(--color-action);
+      background-color: var(--color-tint);
+      color: var(--color-on-tint);
+    }
+
+    & svg {
+      inline-size: 1.5rem;
+      block-size: 1.5rem;
+    }
+  }
+
+  /* The choices open under the button, on top of the page. */
+  .color-scheme-toggle__choices {
+    position: absolute;
+    z-index: 10;
+    inset-block-start: calc(100% + var(--space-2xs));
+    inset-inline-end: 0;
+    display: grid;
+    min-inline-size: 12rem;
+    margin: 0;
+    padding: var(--space-xs) var(--space-s);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-overlay);
+    font-size: var(--font-size-step--1);
+
+    /* display: grid would beat the hidden attribute, so say it again. */
+    &[hidden] {
+      display: none;
+    }
+
+    & legend {
+      float: inline-start;
+      inline-size: 100%;
+      padding: 0;
+      font-weight: var(--font-weight-semibold);
+    }
+
+    & label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2xs);
+      min-block-size: var(--size-target);
+      cursor: pointer;
+    }
+
+    & input {
+      inline-size: 1.25em;
+      block-size: 1.25em;
+      margin: 0;
+      accent-color: var(--color-action);
+    }
+  }
+}

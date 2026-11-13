@@ -1,0 +1,36 @@
+/**
+ * @file
+ * What's in the footer that isn't a component of its own: the menus (the
+ * footer menu, and the User account menu with Log in), and the small print
+ * in the Footer bottom region.
+ */
+@layer components {
+  .site-footer {
+    font-size: var(--font-size-step--1);
+
+    & nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 var(--space-s);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    /* Small links, but still a target of at least 24 pixels (WCAG 2.2's
+       Target Size), and a little more. */
+    & nav a {
+      display: inline-flex;
+      align-items: center;
+      min-block-size: 2rem;
+    }
+
+    & .region-footer nav ul {
+      flex-direction: column;
+    }
+
+    & .region-footer-bottom p {
+      margin: 0;
+    }
+  }
+}

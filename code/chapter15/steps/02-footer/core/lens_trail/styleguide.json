@@ -1,0 +1,243 @@
+{
+  "generated": "By scripts/tokens.py --styleguide from design/tokens.json. Don't edit.",
+  "roles": [
+    {
+      "name": "background",
+      "property": "--color-background",
+      "description": "",
+      "light": {
+        "token": "color.neutral.50",
+        "hex": "#fbf6f0"
+      },
+      "dark": {
+        "token": "color.neutral.night",
+        "hex": "#161310"
+      }
+    },
+    {
+      "name": "surface",
+      "property": "--color-surface",
+      "description": "",
+      "light": {
+        "token": "color.neutral.0",
+        "hex": "#ffffff"
+      },
+      "dark": {
+        "token": "color.neutral.night-raised",
+        "hex": "#221f1b"
+      }
+    },
+    {
+      "name": "text",
+      "property": "--color-text",
+      "description": "",
+      "light": {
+        "token": "color.neutral.900",
+        "hex": "#2c2824"
+      },
+      "dark": {
+        "token": "color.neutral.100",
+        "hex": "#f0eae4"
+      }
+    },
+    {
+      "name": "muted",
+      "property": "--color-muted",
+      "description": "",
+      "light": {
+        "token": "color.neutral.700",
+        "hex": "#5b5753"
+      },
+      "dark": {
+        "token": "color.neutral.400",
+        "hex": "#a39d98"
+      }
+    },
+    {
+      "name": "border",
+      "property": "--color-border",
+      "description": "",
+      "light": {
+        "token": "color.neutral.200",
+        "hex": "#dcd6d1"
+      },
+      "dark": {
+        "token": "color.neutral.800",
+        "hex": "#46423d"
+      }
+    },
+    {
+      "name": "action",
+      "property": "--color-action",
+      "description": "Links, buttons, focus rings",
+      "light": {
+        "token": "color.green.700",
+        "hex": "#1f6f5c"
+      },
+      "dark": {
+        "token": "color.green.400",
+        "hex": "#75ab9b"
+      }
+    },
+    {
+      "name": "on-action",
+      "property": "--color-on-action",
+      "description": "",
+      "light": {
+        "token": "color.neutral.0",
+        "hex": "#ffffff"
+      },
+      "dark": {
+        "token": "color.neutral.950",
+        "hex": "#16130f"
+      }
+    },
+    {
+      "name": "accent",
+      "property": "--color-accent",
+      "description": "",
+      "light": {
+        "token": "color.sand.500",
+        "hex": "#ad712f"
+      },
+      "dark": {
+        "token": "color.sand.400",
+        "hex": "#c69360"
+      }
+    },
+    {
+      "name": "accent-text",
+      "property": "--color-accent-text",
+      "description": "",
+      "light": {
+        "token": "color.sand.700",
+        "hex": "#895103"
+      },
+      "dark": {
+        "token": "color.sand.300",
+        "hex": "#dcb189"
+      }
+    },
+    {
+      "name": "tint",
+      "property": "--color-tint",
+      "description": "",
+      "light": {
+        "token": "color.sand.100",
+        "hex": "#ffe2c8"
+      },
+      "dark": {
+        "token": "color.sand.900",
+        "hex": "#442602"
+      }
+    },
+    {
+      "name": "on-tint",
+      "property": "--color-on-tint",
+      "description": "",
+      "light": {
+        "token": "color.sand.800",
+        "hex": "#603703"
+      },
+      "dark": {
+        "token": "color.sand.200",
+        "hex": "#f0cdac"
+      }
+    }
+  ],
+  "pairs": [
+    {
+      "text": "text",
+      "on": "background",
+      "needs": 4.5,
+      "light": 13.61,
+      "dark": 15.51
+    },
+    {
+      "text": "muted",
+      "on": "surface",
+      "needs": 4.5,
+      "light": 7.16,
+      "dark": 6.12
+    },
+    {
+      "text": "action",
+      "on": "background",
+      "needs": 4.5,
+      "light": 5.61,
+      "dark": 7.1
+    },
+    {
+      "text": "on-action",
+      "on": "action",
+      "needs": 4.5,
+      "light": 6.02,
+      "dark": 7.1
+    },
+    {
+      "text": "accent",
+      "on": "surface",
+      "needs": 3,
+      "light": 4.05,
+      "dark": 6.05
+    },
+    {
+      "text": "accent-text",
+      "on": "background",
+      "needs": 4.5,
+      "light": 6.03,
+      "dark": 9.42
+    },
+    {
+      "text": "on-tint",
+      "on": "tint",
+      "needs": 4.5,
+      "light": 8.3,
+      "dark": 9.21
+    }
+  ],
+  "type_scale": [
+    {
+      "name": "step--1",
+      "property": "--font-size-step--1",
+      "phone": 14.17,
+      "wide": 14.4
+    },
+    {
+      "name": "step-0",
+      "property": "--font-size-step-0",
+      "phone": 17.0,
+      "wide": 18.0
+    },
+    {
+      "name": "step-1",
+      "property": "--font-size-step-1",
+      "phone": 20.4,
+      "wide": 22.5
+    },
+    {
+      "name": "step-2",
+      "property": "--font-size-step-2",
+      "phone": 24.48,
+      "wide": 28.12
+    },
+    {
+      "name": "step-3",
+      "property": "--font-size-step-3",
+      "phone": 29.38,
+      "wide": 35.16
+    },
+    {
+      "name": "step-4",
+      "property": "--font-size-step-4",
+      "phone": 35.25,
+      "wide": 43.95
+    },
+    {
+      "name": "step-5",
+      "property": "--font-size-step-5",
+      "phone": 42.3,
+      "wide": 54.93
+    }
+  ]
+}

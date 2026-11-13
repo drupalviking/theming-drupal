@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * An Image media item in the Banner view mode: the big photo at the top of a
+ * hike or news page.
+ *
+ * The Photo component draws the photo and its credit. This template only hands
+ * it the media's values: the rendered image, and the credit fields as text.
+ * For the variables, see core's media.html.twig.
+ */
+#}
+<div{{ attributes }}>
+  {{ title_suffix.contextual_links }}
+  {{ include('lens_trail:photo', {
+    image: content.field_media_image,
+    photographer: media.field_photographer.value,
+    license: content.field_license.0['#markup'],
+    source: media.field_source.uri,
+    credit: 'over',
+  }, with_context = false) }}
+</div>

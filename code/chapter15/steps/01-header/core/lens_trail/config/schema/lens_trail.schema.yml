@@ -1,0 +1,13 @@
+lens_trail.settings:
+  type: theme_settings
+  label: 'Lens & Trail settings'
+  mapping:
+    color_scheme:
+      type: string
+      label: 'Color scheme'
+      constraints:
+        Choice:
+          choices:
+            - system
+            - light
+            - dark

@@ -1,0 +1,43 @@
+/**
+ * @file
+ * The main menu in the header: one row of links that wraps when it runs out
+ * of room. The dropdown and the phone's Menu button come in the menus
+ * chapter.
+ */
+@layer components {
+  .region-primary-menu {
+    & ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 var(--space-xs);
+      /* The links' padding would push the first one in from the logo. */
+      margin: 0;
+      margin-inline-start: calc(-1 * var(--space-2xs));
+      padding: 0;
+      list-style: none;
+    }
+
+    & a {
+      display: inline-flex;
+      align-items: center;
+      min-block-size: var(--size-target);
+      padding-inline: var(--space-2xs);
+      color: var(--color-text);
+      font-weight: var(--font-weight-semibold);
+      text-decoration: none;
+      text-underline-offset: 0.3em;
+
+      &:hover {
+        color: var(--color-action);
+        text-decoration: underline;
+      }
+
+      /* The page you're on: Drupal marks the link for us. */
+      &[aria-current="page"] {
+        color: var(--color-action);
+        text-decoration: underline;
+        text-decoration-thickness: 2px;
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{% extends "block.html.twig" %}
+{#
+/**
+ * @file
+ * The language switcher: the core theme's template. The Language module
+ * makes the block a navigation landmark with no name; this gives it one.
+ */
+#}
+{% set attributes = attributes.setAttribute('aria-label', 'Language'|t) %}

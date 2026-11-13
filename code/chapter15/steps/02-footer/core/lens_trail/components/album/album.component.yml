@@ -1,0 +1,18 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Album
+description: A grid of photos. Each photo links to a large version of itself; with JavaScript, the link opens the photo in a lightbox instead, with the photo's caption and credit, and buttons for the previous and next photo.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  properties: {}
+slots:
+  photos:
+    title: Photos
+    description: One li element for each photo, each with a link to the large photo (class album__link, with data-srcset and data-caption).
+# Drupal makes a library for every component. The lightbox needs Drupal.t()
+# and once(), so they're added to it.
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

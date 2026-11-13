@@ -1,0 +1,50 @@
+{#
+/**
+ * @file
+ * The club's type in SDC Styleguide: the fluid type scale, and the text
+ * elements as the theme styles them, with the club's own words.
+ *
+ * Variables:
+ * - section: The section's machine name, "text".
+ * - information: What the hook gives: name and type_scale.
+ */
+#}
+{{ attach_library('lens_trail/styleguide') }}
+<div class="styleguide-page">
+  <h1>{{ information.name }}</h1>
+  <p>{{ 'Headings are in Bricolage Grotesque, everything else in Atkinson Hyperlegible Next. Every size grows with the screen, from its size on a 360-pixel phone to its size on a 1280-pixel screen.'|t }}</p>
+
+  <h2>{{ 'The type scale'|t }}</h2>
+  <table class="styleguide-table">
+    <thead>
+      <tr>
+        <th scope="col">{{ 'Step'|t }}</th>
+        <th scope="col">{{ 'Phone'|t }}</th>
+        <th scope="col">{{ 'Wide'|t }}</th>
+        <th scope="col">{{ 'Sample'|t }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for step in information.type_scale|reverse %}
+        <tr>
+          <th scope="row"><code>{{ step.name }}</code></th>
+          <td>{{ step.phone }}px</td>
+          <td>{{ step.wide }}px</td>
+          <td><p class="styleguide-scale__sample" style="font-size: var({{ step.property }})">Turnhouse Hill</p></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>{{ 'Text elements'|t }}</h2>
+  <h3>Turnhouse Hill and Carnethy Hill</h3>
+  <p>Two of the best-known tops in the Pentland Hills, with views over Edinburgh and the Firth of Forth on a clear day. We climb steadily from Flotterstone to Turnhouse Hill, follow the ridge to Carnethy Hill, and come back down through the glen.</p>
+  <p>Bring boots, a waterproof jacket, something warm, lunch, and your camera. <a href="#">How to join</a>, and <strong>membership is £20 a year</strong> (<em>£10 for students</em>).</p>
+  <ul>
+    <li>Hikes: every other Saturday, at 9:30.</li>
+    <li>Photo evenings: the first Thursday of the month, at 19:00.</li>
+  </ul>
+  <blockquote>
+    <p lang="es">¿Quién se apunta a la excursión?</p>
+  </blockquote>
+</div>

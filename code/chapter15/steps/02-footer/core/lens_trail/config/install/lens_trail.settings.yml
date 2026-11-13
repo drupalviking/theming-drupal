@@ -1,0 +1,6 @@
+color_scheme: system
+# The favicon is the logo itself, as SVG (see the header chapter).
+favicon:
+  use_default: false
+  path: themes/custom/lens_trail/favicon.svg
+  mimetype: image/svg+xml

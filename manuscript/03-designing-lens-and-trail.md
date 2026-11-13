@@ -167,7 +167,7 @@ The club goes one step further, with a **toggle** in the header: three choices, 
 A toggle is a nice teaching moment, because it touches several things a theme has to get right:
 
 - **CSS**: both palettes, and a way for the visitor's choice to beat the device's setting. CSS's `light-dark()` function picks between two colors depending on the page's `color-scheme`, which the toggle can change. It's been in every major browser since May 2024, and becomes "widely available" on Baseline's scale in November 2026.
-- **JavaScript**: the toggle is a button, and the choice is remembered in the browser (`localStorage`), not on the server.
+- **JavaScript**: the toggle is a button that opens the three choices, and the choice is remembered in the browser (`localStorage`), not on the server.
 - **Drupal's page cache**: for anonymous visitors, Drupal sends the same cached page to everyone. So the server can't put the visitor's choice into the HTML; the browser has to apply it, before the page is painted, or the page flashes white before turning dark. We'll build this in the JavaScript chapter, where that problem gets the attention it deserves.
 - **Accessibility**: the toggle is a real `<button>` (or a group of radio buttons), it says what it does, and it says which choice is active.
 

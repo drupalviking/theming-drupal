@@ -1,0 +1,12 @@
+{% extends "block.html.twig" %}
+{#
+/**
+ * @file
+ * The language switcher.
+ *
+ * The Language module makes this block a navigation landmark, but gives it
+ * no name. A name tells it apart from the main menu in a screen reader's
+ * list of landmarks.
+ */
+#}
+{% set attributes = attributes.setAttribute('aria-label', 'Language'|t) %}
