@@ -15,8 +15,17 @@
  * the areas, photos, files and hike leaders they use. (Not the albums'
  * comments: comments aren't set up on the Drupal CMS site.)
  *
+ * And the pages that list them: Book 1's Hikes view (/hikes, the archive,
+ * the feed, the Next hikes block), Albums (/galleries) and Photos (the
+ * Newest photos block), with their Spanish titles; the About page; and the
+ * menu links Book 1 made by hand: About and Hike archive in the main menu,
+ * Upcoming hikes (RSS) in the footer. Hikes and Albums are in the main menu
+ * through their views.
+ *
  * Usage, from the Drupal CMS site's folder:
  *   ddev drush php:script hikes-recipe.php -- BOOK1_SITES_CORE OUTPUT_DIR
+ *   ddev drush recipe OUTPUT_DIR
+ *   ddev drush php:script import-translations.php -- OUTPUT_DIR/translations
  */
 
 use Symfony\Component\Yaml\Yaml;
@@ -51,6 +60,17 @@ $config = [
   'core.entity_view_mode.media.banner', 'core.entity_view_mode.media.album',
   'core.entity_view_display.media.image.banner',
   'core.entity_view_display.media.image.album',
+  // The lists.
+  'views.view.hikes', 'views.view.albums', 'views.view.photos',
+];
+
+// Content Book 1 made that isn't a hike or an album, or found through one:
+// the About page, and three menu links.
+const EXTRA_CONTENT = [
+  'd11a3b70-97d8-497c-aca1-1c9c21f14219',  // The About page.
+  'f5831401-651e-4bcd-a8a6-5f8d5a1be131',  // Main menu: About.
+  '21c53b31-1444-404e-ad5e-b6f5a02daea7',  // Main menu: Hike archive.
+  'af7bb685-90ad-4808-8f77-d1ec7db61de8',  // Footer menu: Upcoming hikes (RSS).
 ];
 foreach ($hike_fields as $field) {
   $config[] = "field.storage.node.$field";
@@ -68,7 +88,7 @@ const WORKFLOW = 'basic_editorial';       // Book 1's core site has "editorial".
 const IMAGE_STYLES = ['max_1300x1300' => 'uncropped_960w_webp'];
 const RESPONSIVE_STYLES = ['banner' => '16_9_wide'];
 const TEXT_FORMATS = ['basic_html' => 'content_format', 'full_html' => 'content_format'];
-const ID_FIELDS = ['node' => 'nid', 'taxonomy_term' => 'tid', 'media' => 'mid', 'file' => 'fid', 'user' => 'uid'];
+const ID_FIELDS = ['node' => 'nid', 'taxonomy_term' => 'tid', 'media' => 'mid', 'file' => 'fid', 'user' => 'uid', 'menu_link_content' => 'id'];
 
 [$src, $out] = array_slice($extra ?? [], 0, 2) + [NULL, NULL];
 if (!$src || !$out) {
@@ -144,6 +164,14 @@ function clean(array &$data): void {
     if ($kind === 'media') {
       unset($section['field_themes']);
     }
+    if ($kind === 'node' && $data['_meta']['bundle'] === 'page') {
+      // Drupal CMS's Basic page keeps its text in field_content, and wants a
+      // description (for search engines and teasers): the first paragraph.
+      $section['field_content'] = $section['field_body'];
+      unset($section['field_body'], $section['layout_builder__layout']);
+      $first = strip_tags(explode('</p>', $section['field_content'][0]['value'])[0]);
+      $section['field_description'] = [['value' => html_entity_decode($first, ENT_QUOTES)]];
+    }
     if ($kind === 'node') {
       unset($section['comment']);
       // Drupal CMS puts every new content type in its workflow (an ECA model,
@@ -209,7 +237,17 @@ foreach ($config as $name) {
       $data['content'][$field]['settings']['responsive_image_style'] = RESPONSIVE_STYLES[$style];
     }
   }
+  // The empty text of a view has a text format too.
+  rename_formats($data);
   write_yaml("$out/config/$name.yml", $data);
+  // The Spanish translation, a language override. A recipe installs only
+  // the default collection, so these go in a folder of their own, which
+  // tools/import-translations.php saves after the recipe.
+  if (is_file("$src/config/language/es/$name.yml")) {
+    $spanish = Yaml::parseFile("$src/config/language/es/$name.yml");
+    rename_formats($spanish);
+    write_yaml("$out/translations/language/es/$name.yml", $spanish);
+  }
 }
 
 // The content: the hikes and albums, and everything they point at.
@@ -220,6 +258,7 @@ foreach (glob("$src/content/content/*/*.yml") as $file) {
 }
 $todo = array_keys(array_filter($by_uuid,
   fn($e) => $e['data']['_meta']['entity_type'] === 'node' && in_array($e['data']['_meta']['bundle'], ['hike', 'gallery'])));
+array_push($todo, ...EXTRA_CONTENT);
 $keep = [];
 while ($todo) {
   $uuid = array_pop($todo);
@@ -255,8 +294,22 @@ write_yaml("$out/recipe.yml", [
   'name' => 'Lens & Trail hikes and albums (Drupal CMS site)',
   'description' => "Book 1's hikes and albums, for theming them on the Drupal CMS site. Made by tools/hikes-recipe.php; do not edit by hand.",
   'type' => 'Site',
-  // Albums get into the workflow by themselves (see clean()).
-  'config' => ['actions' => ['workflows.workflow.' . WORKFLOW => ['addNodeTypes' => ['hike']]]],
+  'config' => [
+    // Not strict: the recipe can be applied again to a site that has an
+    // older version of it, whose config Drupal CMS has added to since (its
+    // Scheduler fields on every content type's form, for one). Config that's
+    // there already stays as it is; only the new items come in.
+    'strict' => FALSE,
+    // Albums get into the workflow by themselves (see clean()).
+    'actions' => [
+      'workflows.workflow.' . WORKFLOW => ['addNodeTypes' => ['hike']],
+      // Menu links can be translated, as on Book 1's site. Drupal CMS has
+      // this setting already, switched off, so it's an action, not a file.
+      'language.content_settings.menu_link_content.menu_link_content' => [
+        'setThirdPartySetting' => ['module' => 'content_translation', 'key' => 'enabled', 'value' => TRUE],
+      ],
+    ],
+  ],
 ]);
 ksort($counts);
 echo "$out: " . count($config) . " config items; content " . json_encode($counts) . "\n";
