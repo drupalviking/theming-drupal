@@ -1,0 +1,44 @@
+# Closed
+- listitem:
+  - link "Hikes":
+    - /url: /hikes
+  - button "More in Hikes"
+
+# Open
+- listitem:
+  - link "Hikes":
+    - /url: /hikes
+  - button "More in Hikes" [expanded]
+  - text: Areas
+  - list:
+    - listitem:
+      - link "Pentland Hills":
+        - /url: /areas/pentland-hills
+    - listitem:
+      - link "East Lothian":
+        - /url: /areas/east-lothian
+    - listitem:
+      - link "Edinburgh":
+        - /url: /areas/edinburgh
+  - text: Next hikes
+  - list:
+    - listitem:
+      - text: Sat 21 November · 9:30
+      - link "Turnhouse Hill and Carnethy Hill":
+        - /url: /hikes/turnhouse-hill
+    - listitem:
+      - text: Sat 5 December · 9:30
+      - link "North Berwick Law and the harbour":
+        - /url: /hikes/north-berwick-law-and-harbour
+  - link "All upcoming hikes":
+    - /url: /hikes
+  - list:
+    - listitem:
+      - link "Hike archive":
+        - /url: /hikes/archive
+  - 'figure "A burn in the Pentland Hills in winter. Photo: Bops92 · CC BY-SA 4.0"':
+    - img "A stream running through a snowy valley in the Pentland Hills"
+    - text: "A burn in the Pentland Hills in winter. Photo:"
+    - link "Bops92":
+      - /url: https://commons.wikimedia.org/wiki/File:Pentland_hills_winter.jpg
+    - text: · CC BY-SA 4.0

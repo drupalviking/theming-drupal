@@ -1,0 +1,38 @@
+# The header on a phone
+- banner:
+  - link "Lens & Trail":
+    - /url: /
+  - button "Search"
+  - button "Menu"
+
+# The open panel
+- dialog "Menu":
+  - button "Close"
+  - navigation "Main navigation":
+    - heading "Main navigation" [level=2]
+    - list:
+      - listitem:
+        - link "Hikes":
+          - /url: /hikes
+        - list:
+          - listitem:
+            - link "Hike archive":
+              - /url: /hikes/archive
+      - listitem:
+        - link "Albums":
+          - /url: /galleries
+      - listitem:
+        - link "About":
+          - /url: /about
+      - listitem:
+        - link "Join us":
+          - /url: /join
+  - navigation "Language":
+    - list:
+      - listitem:
+        - link "English":
+          - /url: /hikes/archive
+      - listitem:
+        - link "Español":
+          - /url: /es/excursiones/archivo
+  - button "Color scheme"

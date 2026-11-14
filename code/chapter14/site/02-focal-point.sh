@@ -15,7 +15,11 @@ ddev composer config --json extra.drupal-lenient.allowed-list '["drupal/focal_po
 # 2. The Drupal 12 merge requests from both issue queues, as patches.
 mkdir -p patches
 cp "$BOOK2/code/chapter14/patches/"*.patch patches/
-ddev composer config --json extra.patches.drupal/crop '[{"description": "Drupal 12 compatibility https://www.drupal.org/project/crop/issues/3629654 (MR !37)", "url": "patches/crop-3629654-drupal-12.patch"}]'
+# The second Crop patch is ours: on Drupal 12, Crop's procedural
+# hook_requirements() in crop.install stops every module from installing
+# ("Class crop_requirements does not exist"; core issue #3574003). It moves the
+# check into Drupal's requirements classes. Not posted upstream (2026-11-14).
+ddev composer config --json extra.patches.drupal/crop '[{"description": "Drupal 12 compatibility https://www.drupal.org/project/crop/issues/3629654 (MR !37)", "url": "patches/crop-3629654-drupal-12.patch"}, {"description": "Drupal 12: hook_requirements() as InstallRequirementsInterface and hook_runtime_requirements. Ours, see core #3574003 (2026-11-14)", "url": "patches/crop-drupal-12-requirements.patch"}]'
 ddev composer config --json extra.patches.drupal/focal_point '[{"description": "Drupal 12 readiness https://www.drupal.org/project/focal_point/issues/3634508 (MR !67, with its src/ Hook folder renamed to src/Hook)", "url": "patches/focal_point-3634508-drupal-12.patch"}]'
 
 # 3. The module. The site keeps its patches in patches.lock.json (Book 1's

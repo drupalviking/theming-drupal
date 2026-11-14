@@ -1,0 +1,115 @@
+diff --git a/crop.install b/crop.install
+index 4fec6f6..5e06443 100644
+--- a/crop.install
++++ b/crop.install
+@@ -5,33 +5,6 @@
+  * Install, update and uninstall functions for the Crop API module.
+  */
+ 
+-/**
+- * Implements hook_requirements().
+- */
+-function crop_requirements($phase) {
+-  $requirements = [];
+-
+-  // This branch of Crop API shouldn't be used with media_entity 1.x enabled.
+-  $incompatible = FALSE;
+-  if (\Drupal::moduleHandler()->moduleExists('media_entity')) {
+-    $info = \Drupal::service('extension.list.module')->getExtensionInfo('media_entity');
+-    if (version_compare($info['version'], '8.x-2') < 0) {
+-      $incompatible = TRUE;
+-    }
+-  }
+-
+-  if ($incompatible) {
+-    $requirements['crop_media'] = [
+-      'title' => t('Crop API'),
+-      'value' => t('This branch of Crop API is not compatible with the version of Media Entity installed.'),
+-      'description' => t('This branch of Crop API is not compatible with the version of Media Entity installed.'),
+-      'severity' => (class_exists('\\Drupal\\Core\\Extension\\Requirement\\RequirementSeverity') ? \Drupal\Core\Extension\Requirement\RequirementSeverity::Error : REQUIREMENT_ERROR),
+-    ];
+-  }
+-
+-  return $requirements;
+-}
+-
+ /**
+  * Implements hook_update_last_removed().
+  */
+diff --git a/src/Hook/CropRequirementsHooks.php b/src/Hook/CropRequirementsHooks.php
+new file mode 100644
+index 0000000..a05a3c5
+--- /dev/null
++++ b/src/Hook/CropRequirementsHooks.php
+@@ -0,0 +1,21 @@
++<?php
++
++namespace Drupal\crop\Hook;
++
++use Drupal\Core\Hook\Attribute\Hook;
++use Drupal\crop\Install\Requirements\CropRequirements;
++
++/**
++ * Runtime requirements for Crop API, on the status report.
++ */
++class CropRequirementsHooks {
++
++  /**
++   * Implements hook_runtime_requirements().
++   */
++  #[Hook('runtime_requirements')]
++  public function runtimeRequirements(): array {
++    return CropRequirements::getRequirements();
++  }
++
++}
+diff --git a/src/Install/Requirements/CropRequirements.php b/src/Install/Requirements/CropRequirements.php
+new file mode 100644
+index 0000000..06f7a1e
+--- /dev/null
++++ b/src/Install/Requirements/CropRequirements.php
+@@ -0,0 +1,44 @@
++<?php
++
++namespace Drupal\crop\Install\Requirements;
++
++use Drupal\Core\Extension\InstallRequirementsInterface;
++use Drupal\Core\Extension\Requirement\RequirementSeverity;
++
++/**
++ * Install-time requirements for Crop API.
++ *
++ * Was crop_requirements() in crop.install. On Drupal 12, a procedural
++ * hook_requirements() in an .install file breaks drupal_check_module() for
++ * every module ("Class crop_requirements does not exist").
++ */
++class CropRequirements implements InstallRequirementsInterface {
++
++  /**
++   * {@inheritdoc}
++   */
++  public static function getRequirements(): array {
++    $requirements = [];
++
++    // This branch of Crop API shouldn't be used with media_entity 1.x enabled.
++    $incompatible = FALSE;
++    if (\Drupal::hasService('module_handler') && \Drupal::moduleHandler()->moduleExists('media_entity')) {
++      $info = \Drupal::service('extension.list.module')->getExtensionInfo('media_entity');
++      if (version_compare($info['version'], '8.x-2') < 0) {
++        $incompatible = TRUE;
++      }
++    }
++
++    if ($incompatible) {
++      $requirements['crop_media'] = [
++        'title' => t('Crop API'),
++        'value' => t('This branch of Crop API is not compatible with the version of Media Entity installed.'),
++        'description' => t('This branch of Crop API is not compatible with the version of Media Entity installed.'),
++        'severity' => RequirementSeverity::Error,
++      ];
++    }
++
++    return $requirements;
++  }
++
++}

@@ -1,0 +1,65 @@
+/**
+ * @file
+ * The club's Colors and Text pages in SDC Styleguide.
+ */
+@layer components {
+  .styleguide-page {
+    max-inline-size: 60rem;
+    padding: var(--space-m);
+  }
+
+  .styleguide-swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+    gap: var(--space-m);
+    padding: 0;
+    list-style: none;
+  }
+
+  .styleguide-swatch__color {
+    display: block;
+    block-size: 4rem;
+    margin-block-end: var(--space-xs);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-medium);
+  }
+
+  .styleguide-swatch__name {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .styleguide-swatch__values {
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--font-size-step--1);
+    color: var(--color-muted);
+
+    & dt {
+      float: inline-start;
+      margin-inline-end: var(--space-2xs);
+    }
+  }
+
+  .styleguide-table {
+    inline-size: 100%;
+    border-collapse: collapse;
+
+    & th,
+    & td {
+      padding: var(--space-2xs) var(--space-xs);
+      border-block-end: var(--border-thin) solid var(--color-border);
+      text-align: start;
+    }
+  }
+
+  .styleguide-sample {
+    display: inline-block;
+    padding: var(--space-2xs) var(--space-xs);
+    border-radius: var(--radius-small);
+  }
+
+  .styleguide-scale__sample {
+    margin: 0;
+    font-family: var(--font-family-heading);
+    line-height: 1.2;
+  }
+}

@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * A photo with its credit.
+ *
+ * A figure, because the credit belongs to the photo: figcaption ties them
+ * together for screen readers too. The credit is text, so it can be selected,
+ * translated and read, which a credit burned into the image can't.
+ */
+#}
+{% set credit = credit|default('over') %}
+<figure class="photo photo--credit-{{ credit }}">
+  {% block image %}{{ image }}{% endblock %}
+  <figcaption class="photo__caption">
+    {% if caption and credit == 'below' %}
+      <span class="photo__title">{{ caption }}</span>
+    {% endif %}
+    <span class="photo__credit">
+      {{ 'Photo:'|t }}
+      {% if source %}<a href="{{ source }}">{{ photographer }}</a>{% else %}{{ photographer }}{% endif %}
+      · <span class="photo__license">{{ license }}</span>
+    </span>
+  </figcaption>
+</figure>

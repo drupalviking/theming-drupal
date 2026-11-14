@@ -1,0 +1,95 @@
+/**
+ * @file
+ * The search's look: the core theme's CSS, with Mercury's variable names.
+ * Plain CSS, like the color scheme toggle's.
+ */
+
+/* The wrapper steps aside, so the icon and the panel are items of the
+   Navbar's links row (a wrapping flex row) like the toggle next to them. */
+.search {
+  display: contents;
+}
+.search__button {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background-color: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: border-color 150ms;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+
+  &[aria-expanded="true"] {
+    border-color: var(--primary);
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+  }
+
+  & svg {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+  }
+}
+
+/* On a phone, the Navbar's links are at the bottom of Mercury's menu panel:
+   the field opens there, on a line of its own after the row's other items. */
+.search__panel {
+  order: 1;
+  flex-basis: 100%;
+
+  &[hidden] {
+    display: none;
+  }
+
+  /* The field and its button side by side, the field taking the room, up
+     to a width that suits a few words. */
+  & form {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    max-inline-size: 36rem;
+
+    & > :first-child {
+      flex: 1;
+      min-inline-size: 0;
+    }
+
+    & .form-item input {
+      inline-size: 100%;
+    }
+
+    /* Mercury gives the actions an equal share of a form row, and makes
+       the Navbar's buttons (its call-to-action links) nearly full width on
+       a phone, with a margin on each side. */
+    & .form-actions {
+      flex: none;
+
+      & .button.button {
+        inline-size: auto;
+        margin: 0;
+      }
+    }
+  }
+}
+
+/* From Mercury's md breakpoint, under the whole Navbar, from one side of the
+   container to the other: the Navbar is the nearest positioned element. */
+@media (min-width: 48rem) {
+  .search__panel {
+    position: absolute;
+    z-index: 600;
+    inset-inline: 0;
+    inset-block-start: 100%;
+    padding: 0.75rem 1rem;
+    border-block-end: 1px solid var(--border);
+    background-color: var(--background);
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 0.1);
+  }
+}

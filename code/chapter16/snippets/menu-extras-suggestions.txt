@@ -1,0 +1,10 @@
+<!-- THEME HOOK: 'menu' -->
+<!--
+FILE NAME SUGGESTIONS:
+   ▪️ menu--extras--main--primary-menu.html.twig
+   ✅ menu--extras--main.html.twig
+   ▪️ menu--extras.html.twig
+   ▪️ menu--main.html.twig
+   ▪️ menu.html.twig
+-->
+<!-- 💡 BEGIN CUSTOM TEMPLATE OUTPUT from 'themes/custom/lens_trail/templates/navigation/menu--extras--main.html.twig' -->

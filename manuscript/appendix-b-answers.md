@@ -98,3 +98,24 @@ So `setOpen()`, the three listeners and the `[hidden]` rule can go. What stays: 
 And what you lose: the place. A popover in the top layer isn't positioned by its parent, so `position: absolute` under the button no longer works, and the browser puts it in the middle of the window. Our test page showed it there, far from its button. The fix is **CSS anchor positioning**, which ties an element to another one (`anchor-name` on the button, `position-anchor` and `position-area` on the popover). It became Baseline "newly available" only in January 2026, when Firefox 147 shipped it, so in late 2026 a visitor on a browser a year or two old would still get the choices in the middle of the screen.
 
 The Popover API itself has been in every main browser since April 2024, and Baseline calls it "widely available" from October 2026. So the honest answer is: it's the better tool, and the club's toggle should move to it once anchor positioning is as widely available, in 2028 by Baseline's count. Until then, our own few lines of script put the choices where the design wants them, in every browser.
+
+## Chapter 16, exercise 5: a dropdown that opens on hover
+
+Three rules from WCAG's **Content on Hover or Focus** (1.4.13) shape the answer: what opens on hover must be possible to close without moving the pointer (**dismissible**), it must stay open while the pointer moves over it (**hoverable**), and it mustn't close on its own while it's still wanted (**persistent**). And two rules of our own: a pointer passing over Hikes on its way somewhere else shouldn't flash the panel, and nothing changes for touch and the keyboard.
+
+The answer adds to `js/main-menu.js`: a media query at the top, and, at the end of `enhance()`, a timer and four listeners.
+
+<!-- include: code/chapter16/snippets/main-menu.hover.js lines=14-15 as=js/main-menu.js -->
+
+<!-- include: code/chapter16/snippets/main-menu.hover.js lines=71-102 as=js/main-menu.js -->
+
+- **Pointer events, with `pointerType`.** `pointerenter` and `pointerleave` fire for a mouse, a pen and a finger alike; only `"mouse"` opens the dropdown. A finger's tap is still a click on the button.
+- **`pointerenter` and `pointerleave` on the item**, not on the link: they don't fire again when the pointer moves between an element and what's inside it, and the dropdown is inside the item. So moving from Hikes into the panel doesn't close it.
+- **Two waits.** 150 milliseconds before it opens, so a pointer passing over doesn't open it; 400 before it closes, so the pointer can cross the gap between the link and the panel, which isn't part of the item. Moving back in cancels the close.
+- **Escape anywhere.** The item's own Escape only works when the focus is in it. With a mouse, the focus is usually somewhere else, so a second listener on the document closes what a hover opened.
+- **Only on wide screens, and not in the side panel**, where the dropdown is always open.
+
+We tested it on the core site at 1280 pixels wide: a pointer passing over Hikes in 50 milliseconds left it closed; resting on it opened the panel; moving down into the panel kept it open; Escape closed it with the pointer still over it; and leaving closed it after the wait. Enter on the button, Escape back to the button, and a click all worked as before.
+
+One rough edge is left: hover over Hikes, wait for the panel, and then click the arrow, and the click closes it, because the hover already opened it. Many sites live with that. It's one more reason the club's menu opens on a click only, and why this is an exercise and not the chapter's code.
+

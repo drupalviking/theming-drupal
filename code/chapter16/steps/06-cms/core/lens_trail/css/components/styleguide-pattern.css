@@ -1,0 +1,13 @@
+/**
+ * @file
+ * SDC Styleguide's background pattern in the club's colors.
+ *
+ * The module draws its pattern with two custom properties, --c1 and --c2, in
+ * a file that isn't in a cascade layer. A rule in one of our layers would lose
+ * to it, so this one rule isn't in a layer either. It only changes the two
+ * colors, so the pattern follows the color scheme like the rest of the site.
+ */
+.sdc-styleguide-pattern {
+  --c1: var(--color-surface);
+  --c2: var(--color-background);
+}

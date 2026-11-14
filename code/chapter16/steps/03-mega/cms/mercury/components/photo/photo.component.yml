@@ -1,0 +1,38 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Photo
+description: A photo with its credit, as the club's license asks for. The core theme's component, styled with Tailwind.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - photographer
+    - license
+  properties:
+    photographer:
+      type: string
+      title: Photographer
+      examples:
+        - Jaroslaw Musialkowski
+    license:
+      type: string
+      title: License
+      examples:
+        - CC BY-SA 4.0
+    source:
+      type: string
+      format: uri-reference
+      title: Source
+      examples:
+        - https://commons.wikimedia.org/wiki/File:Pentland_Hills_-_Glencorse_Reservoir.jpg
+    credit:
+      type: string
+      title: Credit
+      enum:
+        - over
+        - below
+      default: over
+slots:
+  image:
+    title: Image
+    description: The photo, as an image Drupal has rendered.

@@ -1,0 +1,64 @@
+{#
+/**
+ * @file
+ * The club's colors in SDC Styleguide: every color role, and the contrast of
+ * each pair that has to be read.
+ *
+ * The values come from the design tokens, through the theme's
+ * hook_styleguide_sections_alter(). Each swatch is drawn with the role's own
+ * custom property, so it shows what the site uses now, in light or dark mode.
+ *
+ * Variables:
+ * - section: The section's machine name, "colors".
+ * - information: What the hook gives: name, roles and pairs.
+ */
+#}
+{{ attach_library('lens_trail/styleguide') }}
+<div class="styleguide-page">
+  <h1>{{ information.name }}</h1>
+  <p>{{ 'The color roles from the design tokens. Every color in the theme is one of these. Switch the color scheme, and the swatches change with it.'|t }}</p>
+
+  <h2>{{ 'Roles'|t }}</h2>
+  <ul class="styleguide-swatches">
+    {% for role in information.roles %}
+      <li class="styleguide-swatch">
+        <span class="styleguide-swatch__color" style="background: var({{ role.property }})"></span>
+        <code class="styleguide-swatch__name">{{ role.name }}</code>
+        {% if role.description %}
+          <div>{{ role.description }}</div>
+        {% endif %}
+        <dl class="styleguide-swatch__values">
+          <dt>{{ 'Light'|t }}</dt>
+          <dd>{{ role.light.token }} {{ role.light.hex }}</dd>
+          <dt>{{ 'Dark'|t }}</dt>
+          <dd>{{ role.dark.token }} {{ role.dark.hex }}</dd>
+        </dl>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h2>{{ 'Contrast'|t }}</h2>
+  <p>{{ 'Each pair that has to be read, with its contrast ratio. WCAG 2.2 AA asks for 4.5:1 for text, and 3:1 for things that are not text.'|t }}</p>
+  <table class="styleguide-table">
+    <thead>
+      <tr>
+        <th scope="col">{{ 'Pair'|t }}</th>
+        <th scope="col">{{ 'Sample'|t }}</th>
+        <th scope="col">{{ 'Light'|t }}</th>
+        <th scope="col">{{ 'Dark'|t }}</th>
+        <th scope="col">{{ 'Needs'|t }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for pair in information.pairs %}
+        <tr>
+          <th scope="row"><code>{{ pair.text }}</code> {{ 'on'|t }} <code>{{ pair.on }}</code></th>
+          <td><span class="styleguide-sample" style="color: var(--color-{{ pair.text }}); background: var(--color-{{ pair.on }})">Turnhouse Hill</span></td>
+          <td>{{ pair.light }}:1</td>
+          <td>{{ pair.dark }}:1</td>
+          <td>{{ pair.needs }}:1</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

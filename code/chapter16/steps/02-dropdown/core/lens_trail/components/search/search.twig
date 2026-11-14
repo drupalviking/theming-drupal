@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * The header's search: an icon that opens a search field under the header.
+ *
+ * Without JavaScript, the icon is a link to the search page, which has the
+ * full form, and the panel stays hidden: nothing on the page that can't work.
+ * search.js turns the link into a button that shows and hides the panel.
+ */
+#}
+<div{{ attributes.addClass('search') }} data-search>
+  <a class="search__button" href="{{ url }}">
+    {# A magnifying glass. The icon says nothing to a screen reader; the text does. #}
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="m15.5 15.5 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="visually-hidden">{{ 'Search'|t }}</span>
+  </a>
+  <search class="search__panel" id="{{ id }}"{% if label %} aria-label="{{ label }}"{% endif %} hidden>
+    <div class="site-width">
+      {{ form }}
+    </div>
+  </search>
+</div>
