@@ -45,14 +45,14 @@ SHOTS = {
     ],
     "06": [
         ("before", "06-front-before", "cms", "/", 1280, 1000, False),
-        ("before", "06-join-before", "cms", "/join", 1280, 1000, False),
+        ("before", "06-first-hike-before", "cms", "/first-hike", 1280, 1000, False),
         ("before", "06-page-before", "cms", "/taking-photos-hike", 1280, 900, False),
         ("after", "06-front-after", "cms", "/", 1280, 1000, False),
-        ("after", "06-join-after", "cms", "/join", 1280, 1000, False),
+        ("after", "06-first-hike-after", "cms", "/first-hike", 1280, 1000, False),
         ("after", "06-page-after", "cms", "/taking-photos-hike", 1280, 900, False),
         ("after", "06-front-after-phone", "cms", "/", 360, 740, False),
         ("dark", "06-front-after-dark", "cms", "/", 1280, 1000, False),
-        ("dark", "06-join-after-dark", "cms", "/join", 1280, 1000, False),
+        ("dark", "06-first-hike-after-dark", "cms", "/first-hike", 1280, 1000, False),
     ],
     "07": [
         ("before", "07-hike-before", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 1000, False),

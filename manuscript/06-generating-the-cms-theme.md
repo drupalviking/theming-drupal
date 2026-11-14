@@ -6,10 +6,10 @@ Three things are new compared with the previous chapter. There's a build step th
 
 The site starts where Book 1 left it: Drupal {{ number:drupal_version }} with Drupal CMS, Mercury {{ number:mercury_version }} as its theme, and pages built in Canvas. One thing is added. Book 1 builds the hikes only on the core site, and its Drupal CMS site has no Hike content type, so there's nothing there for a hike page or a Hike card to show. This book themes hikes on both sites, so the test site gets Book 1's Hike content type, the areas, and the six hikes with their photos, in English and Spanish. `tools/setup.sh` does that for you (Appendix C tells how), and if you worked through Book 1 yourself, the same appendix shows how to add them to your own site.
 
-![The front page in Mercury: the Mercury logo, a large hero with the placeholder text Your hero content goes here, and a dark button](images/06-front-before.png)
+![The front page in Mercury: the club's logo, the main menu, the language links as a bulleted list and a search box at the top; a large hero saying Welcome to Lens & Trail with a blue How to join button; then a paragraph about the club's meetings and a When and where card, all in Mercury's white, blue and black](images/06-front-before.png)
 *Figure 6.1: The front page in Mercury, as Book 1 left it.*
 
-![The How to join page in Mercury, with the text on the left and a When and where card on the right](images/06-join-before.png)
+![The First hike with Lens & Trail page in Mercury: a bright blue hero with the title in white, a paragraph, and two buttons, How to become a member in white and What to bring in black; below it, the heading What to expect and three grey cards with blue icons](images/06-first-hike-before.png)
 *Figure 6.2: A Canvas page in Mercury.*
 
 ## Starterkit or Mercury?
@@ -286,11 +286,11 @@ Last come the club's logo and picture, as on the core site. Mercury has two logo
 
 Run the build and rebuild the cache one more time, and look.
 
-![The front page in the club's design: the Lens and Trail logo, the hero heading in Bricolage Grotesque on cream, and a green button](images/06-front-after.png)
-*Figure 6.4: The front page in the club's design. The words are still Mercury's placeholder: they're content, and the site's editors can change them in Canvas.*
+![The front page in the club's design: the Lens and Trail logo, the hero heading Welcome to Lens & Trail in Bricolage Grotesque on cream, a green How to join button, and the When and where card with a thin warm border](images/06-front-after.png)
+*Figure 6.4: The front page in the club's design. Only the theme changed: the words, the button and the card are Book 1's content, as they were.*
 
-![The How to join page on cream, with the headings in Bricolage Grotesque and the text in Atkinson Hyperlegible Next](images/06-join-after.png)
-*Figure 6.5: How to join.*
+![The First hike page in the club's design: the hero in the club's green, the title and text in Bricolage Grotesque and Atkinson Hyperlegible Next, a white How to become a member button with green text, and a brown What to bring button; What to expect below on cream](images/06-first-hike-after.png)
+*Figure 6.5: The same Canvas page. Mercury's blue and black are now the club's green and brown, from the tokens.*
 
 ![The basic page Taking photos on a hike in the club's design](images/06-page-after.png)
 *Figure 6.6: A basic page, which isn't built in Canvas, gets the same design.*
@@ -298,8 +298,8 @@ Run the build and rebuild the cache one more time, and look.
 ![The front page on a 360-pixel phone screen in the club's design](images/06-front-after-phone.png)
 *Figure 6.7: The front page on a phone.*
 
-![The How to join page in dark mode, near-black background with light text and an outlined card](images/06-join-after-dark.png)
-*Figure 6.8: How to join, with the visitor's system set to dark.*
+![The First hike page in dark mode: a near-black header, the hero in a lighter green with dark text, a near-black How to become a member button and a sand-colored What to bring button, and What to expect in light text on near-black](images/06-first-hike-after-dark.png)
+*Figure 6.8: The First hike page, with the visitor's system set to dark.*
 
 > **Try it:** Press Tab through the front page, with the mouse put away. Can you always see where you are? Then set your system to dark mode and do it again.
 

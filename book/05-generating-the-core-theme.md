@@ -8,7 +8,7 @@ Then we'll do two things to make the theme the club's own. We'll remove the file
 
 The site starts where Book 1 left it: Drupal 12.0.0-beta2, with Olivero as its theme. Olivero isn't part of core in Drupal 12 any more; Book 1's site installs it from drupal.org, like any other contributed theme.
 
-![The hike page for the Glencorse Reservoir winter loop in Olivero, 1280 pixels wide: the club's logo and name on a green block at the top left, the main menu and the language links at the top right, the breadcrumb, the title in big dark type, the photo of the reservoir, and the Join the club and Next hikes blocks in a sidebar on the right](images/05-hike-olivero.png)
+![The hike page for the Glencorse Reservoir winter loop in Olivero, 1280 pixels wide: the club's logo and name on a green block at the top left, the main menu and the language links at the top right, a Search the club box under the header, the breadcrumb, the title in big dark type, the photo of the reservoir, and the Join the club and Next hikes blocks in a sidebar on the right](images/05-hike-olivero.png)
 *Figure 5.1: The hike page in Olivero, as Book 1 left it.*
 
 ## Generating the theme
@@ -220,7 +220,7 @@ Go to **Structure** > **Block layout**. The **Lens & Trail** tab is selected, be
 ![Block layout for Lens & Trail: the Left sidebar region holds Club info, Join the club, Page title, Footer, Help, Newest photos, Next hikes and Powered by Drupal; the Right sidebar region is empty; the Content region follows](images/05-block-layout.png)
 *Figure 5.3: Every block from a region Olivero has and Lens & Trail doesn't ended up in the first region, Left sidebar.*
 
-The main menu, the account menu, the language switcher, the branding, the breadcrumbs, the messages and the content found regions with the same name. Eight blocks didn't: Olivero's **Content Above**, **Sidebar**, **Footer Top** and **Footer Bottom** regions don't exist in Lens & Trail, so their blocks all went to **Left sidebar**, the page title among them. Move them for now:
+The main menu, the account menu, the language switcher, the branding, the breadcrumbs, the messages, the search box and the content found regions with the same name (the search box is in **Highlighted**, under the header, where Book 1's search chapter put it). Eight blocks didn't: Olivero's **Content Above**, **Sidebar**, **Footer Top** and **Footer Bottom** regions don't exist in Lens & Trail, so their blocks all went to **Left sidebar**, the page title among them. Move them for now:
 
 | Block | Region |
 |---|---|
@@ -235,12 +235,12 @@ Then click **Save blocks** at the bottom of the page. These regions are a stopga
 
 Now open the hike page again, and the front page.
 
-![The hike page in the new theme: a grey Drupal drop as the logo, Lens & Trail as a blue underlined link, the slogan, the main menu as a list of blue links with a small black triangle beside Hikes, the language links as a bulleted list, the breadcrumb Home » Upcoming hikes, and then the reservoir photo filling the whole width of the window](images/05-hike-bare.png)
+![The hike page in the new theme: a grey Drupal drop as the logo, Lens & Trail as a blue underlined link, the slogan, the main menu as a list of blue links with a small black triangle beside Hikes, the language links as a bulleted list, the breadcrumb Home » Upcoming hikes, the Search the club heading with a field and a grey Search button, then the title and the reservoir photo filling the whole width of the window](images/05-hike-bare.png)
 *Figure 5.4: The same hike page in Lens & Trail, straight from Starterkit.*
 
 This is what a page looks like with almost no style at all: the browser's own defaults, Times-like serif type, blue underlined links, and photos at the size their HTML gives them. The hike's photo says `width="1280"`, so it's 1280 pixels wide whatever the window: on a phone, it's four times wider than the screen. Starterkit's 31 CSS files are there, but they only style Drupal's interface (tabs, messages, forms), not the content.
 
-![The front page in the new theme: the Drupal drop, the site name and slogan, the menu and language links as lists, the heading Welcome to Lens & Trail, two paragraphs, and Next hikes with three hikes as big blue underlined headings with their date and difficulty, then Newest photos with photos side by side at full width](images/05-front-bare.png)
+![The front page in the new theme: the Drupal drop, the site name and slogan, the menu and language links as lists, the Search the club heading with its field and button, the heading Welcome to Lens & Trail, two paragraphs, and Next hikes with three hikes as big blue underlined headings with their date and difficulty, then Newest photos with photos side by side at full width](images/05-front-bare.png)
 *Figure 5.5: The front page, with no style of its own.*
 
 It's not pretty, but look at what *is* there: every block, every link, every heading, in a sensible order. That's Book 1's site building, and the HTML Drupal writes, doing their job. A page that makes sense without CSS is a page that works for a screen reader, for a search engine, and for a visitor on a slow connection whose CSS hasn't arrived yet. Everything from here on is presentation, and every line of it will be one the club chose.
@@ -759,19 +759,19 @@ Then add both files to the `base` library in `lens_trail.libraries.yml`:
 
 They're in the `base` category, so Drupal puts them before the `component` files: the tokens are defined before anything uses them, and Starterkit's component CSS can still override the base rules where it needs to. Rebuild the cache, and reload the front page.
 
-![The front page with the club's tokens: a warm off-white background, the club's logo, the site name and the menu links in the club's green, dark brown text in a plain sans-serif, and big bold headings Welcome to Lens & Trail and Next hikes; the hike titles below are green links](images/05-front-tokens.png)
+![The front page with the club's tokens: a warm off-white background, the club's logo, the site name and the menu links in the club's green, dark brown text in a plain sans-serif, the Search the club box, and big bold headings Welcome to Lens & Trail and Next hikes; the hike titles below are green links](images/05-front-tokens.png)
 *Figure 5.7: The front page with tokens.css and base.css.*
 
 It's still one long column, with lists where the menus should be. But the colors are the club's: the cream background (`color.background`), the dark brown text (`color.text`), the green links (`color.action`). The type scale is there too: the page title is step 5, the block titles step 3.
 
 The fonts aren't the club's yet. Bricolage Grotesque and Atkinson Hyperlegible Next aren't on most computers, so the browser uses its `sans-serif` font instead, the one the script put after each family. The chapter on libraries and CSS adds the font files to the theme, with `@font-face`.
 
-![The hike page with the club's tokens: the same header, the breadcrumb as green links, the title Glencorse Reservoir winter loop in big bold type, and the photo of the reservoir now exactly as wide as the window](images/05-hike-tokens.png)
+![The hike page with the club's tokens: the same header, the breadcrumb as green links, the Search the club box, the title Glencorse Reservoir winter loop in big bold type, and the photo of the reservoir now exactly as wide as the window](images/05-hike-tokens.png)
 *Figure 5.8: The hike page. The photo fits the window now: `max-width: 100%`.*
 
 On a phone, the type scale shows what it's for: the headings are smaller than on a wide screen, because each step's size is somewhere between its phone size and its wide size.
 
-![The front page on a phone, 360 pixels wide: the logo, the site name, the menu as a list, and Welcome to Lens & Trail breaking over two lines, smaller than on the wide screen](images/05-front-tokens-phone.png)
+![The front page on a phone, 360 pixels wide: the logo, the site name, the menu as a list, the Search the club box, and Welcome to Lens & Trail breaking over two lines, smaller than on the wide screen](images/05-front-tokens-phone.png)
 *Figure 5.9: The front page, 360 pixels wide. Step 5 is 42 pixels here, and 55 on a wide screen.*
 
 > **Try it:** Switch your computer to dark mode (on macOS, **System Settings** > **Appearance** > **Dark**; on Windows, **Settings** > **Personalization** > **Colors** > **Dark**), and reload the page. You can also stay in light mode and ask the browser to pretend: in Chrome's developer tools, press **Ctrl+Shift+P** (**Cmd+Shift+P** on a Mac), type `dark`, and choose **Emulate CSS prefers-color-scheme: dark**.
