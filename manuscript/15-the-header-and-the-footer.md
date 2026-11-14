@@ -187,7 +187,7 @@ The script is the toggle's, with three changes: it makes the button from the lin
 
 </details>
 
-The button is the toggle's round button, with the same tokens. The panel opens on top of the page, under the whole header, from one side of the window to the other:
+The button is the toggle's round button, with the same tokens. The panel opens on top of the page, under the whole header, from one side of the window to the other. What's inside it, the field and the **Search** button, is laid out but not styled: the button is still the browser's own, plain and grey. That's on purpose. The search form is the first of many forms on the club's site, and the same kind of button and field are on the search page itself and on the login page. Styling them here, for this one form, would mean doing it again for the others, so they all get their look together in the forms chapter, Chapter 20:
 
 <details><summary>components/search/search.css</summary>
 
