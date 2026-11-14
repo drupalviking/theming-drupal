@@ -174,12 +174,15 @@ Focal Point is one click per photo, it serves every shape we'll ever add, and it
 > ddev composer config --json extra.patches.drupal/crop '[{"description": "Drupal 12 compatibility https://www.drupal.org/project/crop/issues/3629654 (MR !37)", "url": "patches/crop-3629654-drupal-12.patch"}]'
 > ddev composer config --json extra.patches.drupal/focal_point '[{"description": "Drupal 12 readiness https://www.drupal.org/project/focal_point/issues/3634508 (MR !67, with its src/ Hook folder renamed to src/Hook)", "url": "patches/focal_point-3634508-drupal-12.patch"}]'
 >
-> # 3. The module; Composer applies the patches as it installs it.
+> # 3. The module. The site keeps its patches in patches.lock.json (Book 1's
+> # Chapter 22), so the lock is made again with the new ones, and applied.
 > ddev composer require drupal/focal_point
+> ddev composer patches-relock
+> ddev composer patches-repatch
 > ddev drush pm:install focal_point -y
 > ```
 >
-> `mglaman/composer-drupal-lenient` is a Composer plugin that lets Composer install a module whose release doesn't list your version of Drupal; you name the modules it may do that for. The patches are in the book's repository, under `code/chapter14/patches/`; `composer-patches`, which the site already has, applies them when it installs the modules. On the Drupal CMS site, which runs Drupal 11, none of this is needed: Focal Point comes with it.
+> `mglaman/composer-drupal-lenient` is a Composer plugin that lets Composer install a module whose release doesn't list your version of Drupal; you name the modules it may do that for. The patches are in the book's repository, under `code/chapter14/patches/`. The site already has `composer-patches`, with its list of applied patches in `patches.lock.json` (Book 1's Chapter 22), so after the new patches are added, `patches-relock` makes that list again and `patches-repatch` applies them. On the Drupal CMS site, which runs Drupal 11, none of this is needed: Focal Point comes with it.
 
 With the module installed, the image field's widget has to be the Focal Point one, on both of the image's forms:
 

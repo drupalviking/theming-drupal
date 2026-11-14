@@ -18,6 +18,9 @@ cp "$BOOK2/code/chapter14/patches/"*.patch patches/
 ddev composer config --json extra.patches.drupal/crop '[{"description": "Drupal 12 compatibility https://www.drupal.org/project/crop/issues/3629654 (MR !37)", "url": "patches/crop-3629654-drupal-12.patch"}]'
 ddev composer config --json extra.patches.drupal/focal_point '[{"description": "Drupal 12 readiness https://www.drupal.org/project/focal_point/issues/3634508 (MR !67, with its src/ Hook folder renamed to src/Hook)", "url": "patches/focal_point-3634508-drupal-12.patch"}]'
 
-# 3. The module; Composer applies the patches as it installs it.
+# 3. The module. The site keeps its patches in patches.lock.json (Book 1's
+# Chapter 22), so the lock is made again with the new ones, and applied.
 ddev composer require drupal/focal_point
+ddev composer patches-relock
+ddev composer patches-repatch
 ddev drush pm:install focal_point -y
