@@ -125,11 +125,12 @@ SHOTS = {
         ("cms", "14-cms-hike", "cms", "/hikes/glencorse-reservoir-winter-loop", 1280, 900, False, "h1"),
         ("cms", "14-cms-album", "cms", "/galleries/pentlands-21-november", 1280, 900, False, ".album"),
     ],
-    # 15: everything on step 03 (tools/use-step.sh 15 03, after code/chapter15/
-    # site/01-header.php and 02-footer.php on the core site and 03-cms.php on
-    # the Drupal CMS site). The open toggle, forced colors, Mercury's phone menu
-    # and the Canvas editor need clicks or emulation, and were taken with a
-    # one-off script.
+    # 15: everything on step 04 (tools/use-step.sh 15 04, after code/chapter15/
+    # site/01-header.php, 02-footer.php and 04-search.php on the core site and
+    # 03-cms.php on the Drupal CMS site), except the Canvas editor's figures,
+    # which show step 03. The open toggle and search, forced colors, Mercury's
+    # phone menu and the Canvas editor need clicks or emulation, and were taken
+    # with a one-off script.
     "15": [
         ("after", "15-header", "core", "/", 1280, 320, False),
         ("after", "15-header-phone", "core", "/", 360, 420, False),

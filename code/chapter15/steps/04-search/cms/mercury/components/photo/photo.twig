@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * A photo with its credit: the core theme's Photo component, with Tailwind.
+ */
+#}
+{% set over = credit|default('over') == 'over' %}
+<figure class="relative m-0 [&_img]:block [&_img]:h-auto [&_img]:w-full">
+  {{ image }}
+  <figcaption class="{{ over ? 'absolute end-0 bottom-0 max-w-full bg-club-neutral-950 px-club-xs py-club-3xs text-club-neutral-0' : 'pt-club-2xs' }} text-step--1">
+    {{ 'Photo:'|t }}
+    {% if source %}<a href="{{ source }}" class="{{ over ? 'text-inherit' : 'text-club-action' }} underline">{{ photographer }}</a>{% else %}{{ photographer }}{% endif %}
+    · <span class="whitespace-nowrap">{{ license }}</span>
+  </figcaption>
+</figure>

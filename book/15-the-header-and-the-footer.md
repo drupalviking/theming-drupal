@@ -2,7 +2,7 @@
 
 The header and the footer are on every page of the club's site, so they're the parts a visitor sees most. They're also where a theme meets the most of Drupal at once: the logo and the site's name, the main menu, the language switcher, the user account menu, the footer menu, a content block with the club's details, and a small block that says *Powered by Drupal*. All of them are blocks, made by core and by the first book's site building. The theme's job is to put them in their places and give them the design's look, without forking any of them.
 
-This chapter does that on both sites. On the core site, the header gets its row from the wireframe: the logo and the name on the left, the main menu in the middle, the languages and the color scheme toggle on the right. The toggle becomes the round button the design asked for, which opens Chapter 12's three choices. The footer gets the logo, the club's details and a line of small print with the license. Then we do the same on the Drupal CMS site, where the header and the footer aren't blocks in regions but components in Canvas's page template.
+This chapter does that on both sites. On the core site, the header gets its row from the wireframe: the logo and the name on the left, the main menu in the middle, the languages and the color scheme toggle on the right. The toggle becomes the round button the design asked for, which opens Chapter 12's three choices, and the first book's search box becomes a second round button, which opens a search field. The footer gets the logo, the club's details and a line of small print with the license. Then we do the same on the Drupal CMS site, where the header and the footer aren't blocks in regions but components in Canvas's page template.
 
 Two things are left for the next chapter: the main menu's dropdown, and the Menu button that hides the menu on a phone. Here the menu is a plain row of links that wraps when it runs out of room.
 
@@ -10,11 +10,11 @@ The core site starts where the images chapter left it. Its header is unstyled: t
 
 ## What's in the header, and what isn't
 
-The wireframe from the Penpot chapter has five things in the header: the logo with the club's name, the main menu, the two languages, and the round toggle button. That's fewer blocks than the header has now, so we had a few decisions to make first.
+The wireframe from the Penpot chapter has five things in the header: the logo with the club's name, the main menu, the two languages, and the round toggle button. That's fewer blocks than the header has now, so we had a few decisions to make first, and one of them adds a sixth thing.
 
 **Log in moves to the footer.** The club's members log in to add photos and hikes, a few times a month. Visitors never do. A link they never use, in the most valuable strip of the page, isn't worth its room, so the user account menu goes to the footer, where the members know to find it.
 
-**No search.** The club's site is small: six hikes a season, a few albums, a handful of pages. The main menu gets you to all of it in one click. A search box would take room in the header for very little, and a site that grows can add one later. (Search forms, the club's own and Drupal's, have their place in the chapter on forms.)
+**Search, behind a button.** The first book gave the club a search page in its Chapter 22, and a search box on every page: in the Highlighted region on the core site, under the header, and in the Navbar on the Drupal CMS site. The club's site is small: six hikes a season, a few albums, a handful of pages, and the main menu gets you to most of it in one click. A whole row for a search field, on every page, is a lot of room for that. But the archive grows every season, and people look for a hike they remember by its name. So search stays, as a round button with a magnifying glass next to the toggle, and the field opens under the header when someone wants it. (Search forms, the club's own and Drupal's, get their look in the chapter on forms.)
 
 **No slogan in the header.** "Photos and hikes around Edinburgh" is a good line, but next to the logo, the name and five menu links, it's one thing too many. It moves to the footer, where it has room.
 
@@ -874,26 +874,340 @@ One rule in it is worth a second look. `[hidden] { display: none }` is the brows
 
 The choices open on top of the page (`position: absolute`), under the button and lined up with its right edge, with the design's overlay shadow.
 
+## The search, behind a button
+
+The first book's search box is a block: the Search view's block display, which shows the view's search form, a field and a **Search** button. Chapter 5 left it in Highlighted, under the header. It moves into the header now, as a round button with a magnifying glass, and the field opens in a panel under the header.
+
+That's the toggle's pattern again, a disclosure, with one difference. Without JavaScript, the toggle isn't there at all, because its choices can't work without a script. A search can: the first book's search page, `/search`, has the same form. So the button starts out as a **link** to that page, and the script turns it into a button when it runs. A visitor whose browser doesn't run the script, or hasn't yet, on a slow connection, still gets to the search in one click. This way of working has a name, **progressive enhancement**: build what works with HTML alone, then let the script make it better.
+
+### A component and a block template
+
+The search has its own markup, CSS and JavaScript, which belong together, so it's a component, as in Chapter 13, in `components/search/`. It knows nothing about Views or blocks. It takes four things: the search page's address, an id for the panel, a name for screen readers, and the form, in a slot.
+
+`components/search/search.component.yml` ([source](../code/chapter15/steps/04-search/core/lens_trail/components/search/search.component.yml))
+
+```yaml
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Search
+description: A search icon in the header that opens a search field under it. Without JavaScript, the icon is a link to the search page.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - url
+    - id
+  properties:
+    url:
+      type: string
+      format: uri-reference
+      title: Search page
+      description: The search page, where the icon goes without JavaScript.
+      examples:
+        - /search
+    id:
+      type: string
+      title: ID
+      description: The id of the field's panel, which the button points to with aria-controls.
+      examples:
+        - site-search
+    label:
+      type: string
+      title: Label
+      description: What the panel is, for screen readers.
+      examples:
+        - Search the club
+slots:
+  form:
+    title: Form
+    description: The search form, as Drupal rendered it.
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once
+```
+
+`components/search/search.twig` ([source](../code/chapter15/steps/04-search/core/lens_trail/components/search/search.twig))
+
+```twig
+{#
+/**
+ * @file
+ * The header's search: an icon that opens a search field under the header.
+ *
+ * Without JavaScript, the icon is a link to the search page, which has the
+ * full form, and the panel stays hidden: nothing on the page that can't work.
+ * search.js turns the link into a button that shows and hides the panel.
+ */
+#}
+<div{{ attributes.addClass('search') }} data-search>
+  <a class="search__button" href="{{ url }}">
+    {# A magnifying glass. The icon says nothing to a screen reader; the text does. #}
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="m15.5 15.5 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="visually-hidden">{{ 'Search'|t }}</span>
+  </a>
+  <search class="search__panel" id="{{ id }}"{% if label %} aria-label="{{ label }}"{% endif %} hidden>
+    <div class="site-width">
+      {{ form }}
+    </div>
+  </search>
+</div>
+```
+
+The link's name is the word *Search*, visually hidden, and the icon is `aria-hidden`, as on the toggle. The panel is a `<search>` element, HTML's own landmark for a search, which screen readers list with the page's other landmarks; every current browser has known it since 2023, and an older one treats it as a `div`, which does no harm. It has the `hidden` attribute from the start, in the HTML, so without the script it never shows: the link goes to the search page instead.
+
+A component's CSS and JavaScript come along by themselves wherever it's used. `libraryOverrides` only adds what the script needs, `core/drupal` and `core/once`.
+
+So far the component isn't used anywhere. The block has to hand itself over to it, and that's a job for a block template. Twig's debug comments name the suggestions for the search block, and `block--views-block--search-block-1.html.twig` is the one for this view's block display, wherever it's placed:
+
+`templates/block/block--views-block--search-block-1.html.twig` ([source](../code/chapter15/steps/04-search/core/lens_trail/templates/block/block--views-block--search-block-1.html.twig))
+
+```twig
+{#
+/**
+ * @file
+ * The first book's search box block (the Search view's block display), as the
+ * header's search icon. The form goes into the Search component's form slot.
+ * When the block is set to show its title, the title isn't printed: it
+ * becomes the panel's name for screen readers instead (label is empty when
+ * the title is hidden).
+ *
+ * See block.html.twig for the variables.
+ */
+#}
+{{ include('lens_trail:search', {
+  url: path('view.search.page_1'),
+  id: 'site-search',
+  label: label,
+  form: content,
+}, with_context = false) }}
+```
+
+`path('view.search.page_1')` is the address of the view's page display, in the current language, so on a Spanish page the link goes to `/es/buscar`. The block's rendered form, `content`, goes into the slot. And the block's title, *Search the club*, which the first book set to show, isn't printed any more: it becomes the panel's name, the `aria-label` that a screen reader says when it reaches the landmark. When a block's title is hidden, `label` is empty, and the component leaves the name out.
+
+This template doesn't extend core's `block.html.twig`, so one thing of the block's goes: its contextual links, the pencil that offers **Configure block** when you point at a block while logged in. They belong to the wrapper we left out. For a block that's placed once and rarely changed, that's a fair trade, and **Block layout** still has it.
+
+### The script and the CSS
+
+The script is the toggle's, with three changes: it makes the button from the link, copying its class and its contents (the icon and the hidden word); opening the panel puts the focus in the field, so you can type at once; and it finds its components by their `data-search` attribute. Closing works the same four ways: the button again, Escape, a click elsewhere, and tabbing out.
+
+<details><summary>components/search/search.js</summary>
+
+`components/search/search.js` ([source](../code/chapter15/steps/04-search/core/lens_trail/components/search/search.js))
+
+```javascript
+/**
+ * @file
+ * Turns the header's search link into a button that opens a search field.
+ *
+ * The same disclosure as the color scheme toggle: aria-expanded says whether
+ * the panel is shown. Opening it puts the focus in the field; Escape closes it
+ * and puts the focus back on the button.
+ */
+(function (Drupal, once) {
+  function enhance(search) {
+    const link = search.querySelector('.search__button');
+    const panel = search.querySelector('.search__panel');
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = link.className;
+    button.setAttribute('aria-expanded', 'false');
+    button.setAttribute('aria-controls', panel.id);
+    button.innerHTML = link.innerHTML;
+    link.replaceWith(button);
+
+    function setOpen(open) {
+      button.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      if (open) {
+        const field = panel.querySelector('input[type="search"], input[type="text"]');
+        if (field) {
+          field.focus();
+        }
+      }
+    }
+
+    button.addEventListener('click', () => {
+      setOpen(panel.hidden);
+    });
+
+    search.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !panel.hidden) {
+        setOpen(false);
+        button.focus();
+      }
+    });
+
+    // A click anywhere else closes it, and so does tabbing out of it.
+    document.addEventListener('click', (event) => {
+      if (!search.contains(event.target)) {
+        setOpen(false);
+      }
+    });
+    search.addEventListener('focusout', (event) => {
+      if (event.relatedTarget && !search.contains(event.relatedTarget)) {
+        setOpen(false);
+      }
+    });
+  }
+
+  Drupal.behaviors.lensTrailSearch = {
+    attach(context) {
+      once('lens-trail-search', '[data-search]', context).forEach(enhance);
+    },
+  };
+})(Drupal, once);
+```
+
+</details>
+
+The button is the toggle's round button, with the same tokens. The panel opens on top of the page, under the whole header, from one side of the window to the other:
+
+<details><summary>components/search/search.css</summary>
+
+`components/search/search.css` ([source](../code/chapter15/steps/04-search/core/lens_trail/components/search/search.css))
+
+```css
+/**
+ * @file
+ * The header's search: a round icon like the color scheme toggle's, and a
+ * panel across the whole header, under it.
+ */
+@layer components {
+  .search__button {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--size-target);
+    block-size: var(--size-target);
+    padding: 0;
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-round);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color var(--duration-fast);
+
+    &:hover {
+      border-color: var(--color-action);
+    }
+
+    &[aria-expanded="true"] {
+      border-color: var(--color-action);
+      background-color: var(--color-tint);
+      color: var(--color-on-tint);
+    }
+
+    & svg {
+      inline-size: 1.5rem;
+      block-size: 1.5rem;
+    }
+  }
+
+  /* Under the header, from one side of the window to the other: the header
+     is the nearest positioned element (css/layout.css). */
+  .search__panel {
+    position: absolute;
+    z-index: 10;
+    inset-inline: 0;
+    inset-block-start: 100%;
+    padding-block: var(--space-s);
+    border-block-end: var(--border-thin) solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-overlay);
+
+    &[hidden] {
+      display: none;
+    }
+
+    /* The view's form: the field takes the room, up to a width that suits a
+       few words, and the button sits beside it. */
+    & form > div {
+      max-inline-size: 36rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: var(--space-xs);
+    }
+
+    & .form-item {
+      flex: 1 1 16rem;
+      margin: 0;
+    }
+
+    & input[type="text"],
+    & input[type="search"] {
+      inline-size: 100%;
+    }
+  }
+}
+```
+
+</details>
+
+`position: absolute` places an element against its nearest positioned ancestor, so the header gets `position: relative`, and the panel's `inset-block-start: 100%` is the header's bottom edge. The panel's `div` is Chapter 7's `.site-width`, so the field lines up with the content below. The last change in `layout.css` puts the blocks of the Secondary menu region in a row, so the search button sits next to the languages:
+
+```diff
+--- css/layout.css (before)
++++ css/layout.css (after)
+@@ -17,6 +17,8 @@
+      the content below. On a phone everything is stacked, in the order of
+      the HTML, so the order you see is the order you tab through. */
+   .site-header {
++    /* The search panel (components/search) opens under the header. */
++    position: relative;
+     border-block-end: var(--border-thin) solid var(--color-border);
+   }
+
+@@ -35,6 +37,14 @@
+   }
+
+   .site-header__tools {
++    display: flex;
++    flex-wrap: wrap;
++    align-items: center;
++    gap: var(--space-s);
++  }
++
++  /* The region's blocks (the languages and the search) in the same row. */
++  .site-header__tools > .region {
+     display: flex;
+     flex-wrap: wrap;
+     align-items: center;
+```
+
+### Moving the block
+
+The rest is site building. On **Block layout**, find **Search the club** in **Highlighted**, set its **Region** to **Secondary menu**, after the **Language switcher**, and save. On a phone, the button sits with the languages and the toggle, under the menu, for now.
+
+> **Try it:** Switch JavaScript off in the browser's developer tools (in Chrome, Ctrl-Shift-P or Cmd-Shift-P, then *Disable JavaScript*), and reload a page. The magnifying glass is still there. What happens when you click it? And with JavaScript back on, what does a screen reader say about the button before and after you press it?
+
 ## The header, done
 
-With the theme's changes and the site building above (the slogan, the menu's one level, the favicon, and the user account menu moved down to the Footer region for now), the header is done.
+With the theme's changes and the site building above (the slogan, the menu's one level, the favicon, the search box moved into the header, and the user account menu moved down to the Footer region for now), the header is done.
 
-![The core site's header on a wide screen: the round logo and Lens & Trail on the left, Hikes, Albums, About and Join us next to it, and English · Español and a round button with a half-filled circle on the right, above a thin line](images/15-header.png)
+![The core site's header on a wide screen: the round logo and Lens & Trail on the left, Hikes, Albums, About and Join us next to it, and English · Español, a round button with a magnifying glass and a round button with a half-filled circle on the right, above a thin line](images/15-header.png)
 *Figure 15.1: The header on a wide screen*
 
 ![The header with the toggle open: under the round button, a white box with a shadow and the heading Color scheme over three radio buttons, Light, Dark and Site default, with Site default chosen](images/15-toggle-open.png)
 *Figure 15.2: The toggle, open*
 
+![The header with the search open: under the whole header, a band with a shadow holding the label Search for, a search field with the focus in it and a plain Search button, lined up with the page's content; the round button with the magnifying glass is tinted](images/15-search-open.png)
+*Figure 15.3: The search, open*
+
 ![The same header in dark mode, with the toggle open on a dark brown box](images/15-toggle-open-dark.png)
-*Figure 15.3: In dark mode*
+*Figure 15.4: In dark mode*
 
-![The header on a phone: the logo and the name, then Hikes, Albums, About and Join us on two lines, then English · Español and the round button](images/15-header-phone.png)
-*Figure 15.4: On a phone, in the order of the HTML*
+![The header on a phone: the logo and the name, then Hikes, Albums, About and Join us on two lines, then English · Español and the two round buttons](images/15-header-phone.png)
+*Figure 15.5: On a phone, in the order of the HTML*
 
-![The header in forced colors mode: the logo with its own cream disc, the links in the system's link color, and the round button and the open box drawn with lines](images/15-header-forced.png)
-*Figure 15.5: In forced colors mode, the button and the box keep their outlines, and the logo keeps its background*
+![The header in forced colors mode: the logo with its own cream disc, the links in the system's link color, and the two round buttons and the open box drawn with lines](images/15-header-forced.png)
+*Figure 15.6: In forced colors mode, the buttons and the box keep their outlines, and the logo keeps its background*
 
-We checked it with the keyboard: Tab goes from the skip link to the logo, the four menu links, English, Español and the button; Enter opens the choices, Tab goes into them, the arrow keys choose, Escape closes them and puts the focus back on the button. At 320 pixels wide nothing scrolls sideways. And the choice survives a reload, through Chapter 12's early script.
+We checked it with the keyboard: Tab goes from the skip link to the logo, the four menu links, English, Español, the search button and the toggle; on the search button, Enter opens the field with the focus in it, and Escape closes it again. On the toggle, Enter opens the choices, Tab goes into them, the arrow keys choose, Escape closes them and puts the focus back on the button. At 320 pixels wide nothing scrolls sideways. And the choice survives a reload, through Chapter 12's early script.
 
 > **Try it:** Turn on a screen reader (VoiceOver on a Mac with Cmd-F5, Narrator on Windows with Ctrl-Win-Enter, or the free NVDA), and tab to the toggle. Listen for "collapsed" and "expanded" as you press it. Then open the screen reader's list of landmarks (VoiceOver: the rotor, Ctrl-Option-U; NVDA: Insert-F7) and find the language switcher by its name.
 
@@ -1196,16 +1510,16 @@ So it's a choice about what the club wants to say. The club kept it. Lens & Trai
 ## The footer, done
 
 ![Block layout's Footer and Footer bottom regions: Site branding (footer), Meet us, Footer and Newest photos (disabled) in Footer; License, User account menu and Powered by Drupal in Footer bottom](images/15-block-layout.png)
-*Figure 15.6: The footer's blocks on Block layout, with the new region*
+*Figure 15.7: The footer's blocks on Block layout, with the new region*
 
 ![The core site's footer on a wide screen, in three columns: the logo, Lens & Trail and the slogan; Meet us, with Meeting times, Email and Follow us as small capital headings over their text; and Privacy and Upcoming hikes (RSS). Under a thin line: Photos and text: CC BY-SA 4.0, Log in, and Powered by Drupal](images/15-footer.png)
-*Figure 15.7: The footer*
+*Figure 15.8: The footer*
 
 ![The footer on a phone, with the columns one under the other, and the small print on two lines](images/15-footer-phone.png)
-*Figure 15.8: On a phone*
+*Figure 15.9: On a phone*
 
 ![The Spanish footer in dark mode: Fotos y excursiones por Edimburgo, Encuéntranos with Horarios, Correo electrónico and Síguenos, Privacidad and Próximas excursiones (RSS), and the small print in Spanish](images/15-footer-dark-es.png)
-*Figure 15.9: In Spanish, in dark mode*
+*Figure 15.10: In Spanish, in dark mode*
 
 We checked the footer with the keyboard, at 320 pixels wide, in dark mode and in forced colors (where Chapter 8's line over the footer takes the place of its background). On the front page, Newest photos is there once, in the page's own layout.
 
@@ -1220,7 +1534,7 @@ The first book filled the page template already. Its navbar has the logo, the ma
 Open any page in Canvas. In the **Page data** panel on the right, under **Page template**, it says **Site default**, with an **Edit template** button:
 
 ![Canvas's Page data panel for the Home page: Title, URL alias, and under Page template, a drop-down set to Site default and an Edit template button](images/15-cms-page-template-link.png)
-*Figure 15.10: Where Canvas keeps the page template*
+*Figure 15.11: Where Canvas keeps the page template*
 
 The template opens in the same editor as a page. Its **Layers** panel shows the tree: the theme's page template component, with Mercury's three regions as its slots; the Navbar in Header, with its slots **Site logo**, **Navigation menu** and **CTAs**; the **Page content** marker in Content, where each page's own components go; and the Footer, with **Branding & Social**, **Call to action**, **Utility links** and **Copyright text**.
 
@@ -1236,7 +1550,7 @@ The first book's components are already in the slots: **Site branding** in **Sit
 Then **Review changes**, and publish.
 
 ![The page template in Canvas, with the Layers panel open: Mercury theme page template, with Content holding Page content, Header holding the Navbar with Site branding, Main navigation, Language switcher and Color scheme toggle, and Footer holding the Footer with Site branding, Heading, Text, Footer, User account menu, Text and Powered by Drupal. The preview shows the new header and footer around a striped Page content placeholder](images/15-cms-page-template.png)
-*Figure 15.11: The page template, with the header and the footer filled in*
+*Figure 15.12: The page template, with the header and the footer filled in*
 
 One thing works differently from **Block layout**: a block in Canvas has no **Translate** tab. The page template's texts are translated with Canvas Translate, as the first book did for the footer in its Chapter 18, and the new license line needs the same. (On a site built with this book's `tools/setup.sh`, the whole footer is English on the Spanish pages: the first book's export can't bring Canvas Translate's translations along yet.)
 
@@ -1709,6 +2023,293 @@ The core theme's early script comes along unchanged, as `js/color-scheme-early.j
 
 The last rule is new. On a phone, Mercury's Navbar puts its CTAs at the bottom of the menu panel, and choices that open downwards would open below the screen. So there they open upwards.
 
+### The search, as a component
+
+The first book's search box in the CTAs slot is a block too: the Search view's search form, as an **exposed form** block (the view's form on its own, without the view). Canvas renders a block component with the theme's block templates, as **Block layout** does, so the core site's trick works here: a block template hands the block to a Search component. The template has a different name, for a different block, and it calls `mercury:search`; the rest is the core theme's:
+
+`templates/block/block--views-exposed-filter-block--search-search.html.twig` ([source](../code/chapter15/steps/04-search/cms/mercury/templates/block/block--views-exposed-filter-block--search-search.html.twig))
+
+```twig
+{#
+/**
+ * @file
+ * The first book's search box (the Search view's exposed form, in the
+ * Navbar's CTAs slot) as the Navbar's search icon. The form goes into the
+ * Search component's form slot. When the block is set to show its title, the
+ * title isn't printed: it becomes the panel's name for screen readers instead
+ * (label is empty when the title is hidden).
+ *
+ * See block.html.twig for the variables.
+ */
+#}
+{{ include('mercury:search', {
+  url: path('view.search.page_1'),
+  id: 'site-search',
+  label: label,
+  form: content,
+}, with_context = false) }}
+```
+
+The component's template is the core theme's, without the `.site-width` wrapper, and its script is the core theme's in Mercury's way of writing one, like the toggle's. Its definition asks for the script to be loaded as a module, as the toggle's does:
+
+<details><summary>components/search/search.component.yml, search.twig and search.js</summary>
+
+`components/search/search.component.yml` ([source](../code/chapter15/steps/04-search/cms/mercury/components/search/search.component.yml))
+
+```yaml
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Search
+description: A search icon in the Navbar that opens a search field under it. Without JavaScript, the icon is a link to the search page. The core theme's Search component.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - url
+    - id
+  properties:
+    url:
+      type: string
+      format: uri-reference
+      title: Search page
+      description: The search page, where the icon goes without JavaScript.
+      examples:
+        - /search
+    id:
+      type: string
+      title: ID
+      description: The id of the field's panel, which the button points to with aria-controls.
+      examples:
+        - site-search
+    label:
+      type: string
+      title: Label
+      description: What the panel is, for screen readers.
+      examples:
+        - Search the club
+slots:
+  form:
+    title: Form
+    description: The search form, as Drupal rendered it.
+libraryOverrides:
+  js:
+    search.js:
+      attributes:
+        type: module
+  dependencies:
+    - core/drupal
+    - core/once
+```
+
+`components/search/search.twig` ([source](../code/chapter15/steps/04-search/cms/mercury/components/search/search.twig))
+
+```twig
+{#
+/**
+ * @file
+ * The Navbar's search: an icon that opens a search field under the Navbar.
+ *
+ * The core theme's component, with the same markup. Without JavaScript, the
+ * icon is a link to the search page and the panel stays hidden; search.js
+ * turns the link into a button that shows and hides the panel.
+ */
+#}
+<div{{ attributes.addClass('search') }}>
+  <a class="search__button" href="{{ url }}">
+    {# A magnifying glass. The icon says nothing to a screen reader; the text does. #}
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="m15.5 15.5 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span class="visually-hidden">{{ 'Search'|t }}</span>
+  </a>
+  <search class="search__panel" id="{{ id }}"{% if label %} aria-label="{{ label }}"{% endif %} hidden>
+    {{ form }}
+  </search>
+</div>
+```
+
+`components/search/search.js` ([source](../code/chapter15/steps/04-search/cms/mercury/components/search/search.js))
+
+```javascript
+/**
+ * @file
+ * The core theme's search script, in Mercury's way of writing a component's
+ * script (lib/component.js), like the color scheme toggle.
+ */
+import { ComponentType, ComponentInstance } from "../../lib/component.js";
+
+class Search extends ComponentInstance {
+  init() {
+    const link = this.el.querySelector(".search__button");
+    this.panel = this.el.querySelector(".search__panel");
+
+    this.button = document.createElement("button");
+    this.button.type = "button";
+    this.button.className = link.className;
+    this.button.setAttribute("aria-expanded", "false");
+    this.button.setAttribute("aria-controls", this.panel.id);
+    this.button.innerHTML = link.innerHTML;
+    link.replaceWith(this.button);
+
+    this.button.addEventListener("click", () => {
+      this.isOpen = this.panel.hidden;
+    });
+
+    // Escape, a click elsewhere, or tabbing out closes the panel.
+    this.el.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && this.isOpen) {
+        this.isOpen = false;
+        this.button.focus();
+      }
+    });
+    this.closeOnClick = (event) => {
+      if (!this.el.contains(event.target)) {
+        this.isOpen = false;
+      }
+    };
+    document.addEventListener("click", this.closeOnClick);
+    this.el.addEventListener("focusout", (event) => {
+      if (event.relatedTarget && !this.el.contains(event.relatedTarget)) {
+        this.isOpen = false;
+      }
+    });
+  }
+
+  get isOpen() {
+    return !this.panel.hidden;
+  }
+
+  // Opening the panel puts the focus in the field.
+  set isOpen(value) {
+    this.button.setAttribute("aria-expanded", String(value));
+    this.panel.hidden = !value;
+    if (value) {
+      this.panel.querySelector('input[type="search"], input[type="text"]')?.focus();
+    }
+  }
+
+  remove() {
+    document.removeEventListener("click", this.closeOnClick);
+  }
+}
+
+new ComponentType(Search, "lensTrailSearch", ".search");
+```
+
+</details>
+
+The CSS is where Mercury's Navbar makes a difference:
+
+<details><summary>components/search/search.css</summary>
+
+`components/search/search.css` ([source](../code/chapter15/steps/04-search/cms/mercury/components/search/search.css))
+
+```css
+/**
+ * @file
+ * The search's look: the core theme's CSS, with Mercury's variable names.
+ * Plain CSS, like the color scheme toggle's.
+ */
+
+/* The wrapper steps aside, so the icon and the panel are items of the
+   Navbar's links row (a wrapping flex row) like the toggle next to them. */
+.search {
+  display: contents;
+}
+.search__button {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background-color: var(--card);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: border-color 150ms;
+
+  &:hover {
+    border-color: var(--primary);
+  }
+
+  &[aria-expanded="true"] {
+    border-color: var(--primary);
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+  }
+
+  & svg {
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+  }
+}
+
+/* On a phone, the Navbar's links are at the bottom of Mercury's menu panel:
+   the field opens there, on a line of its own after the row's other items. */
+.search__panel {
+  order: 1;
+  flex-basis: 100%;
+
+  &[hidden] {
+    display: none;
+  }
+
+  /* The field and its button side by side, the field taking the room, up
+     to a width that suits a few words. */
+  & form {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    max-inline-size: 36rem;
+
+    & > :first-child {
+      flex: 1;
+      min-inline-size: 0;
+    }
+
+    & .form-item input {
+      inline-size: 100%;
+    }
+
+    /* Mercury gives the actions an equal share of a form row, and makes
+       the Navbar's buttons (its call-to-action links) nearly full width on
+       a phone, with a margin on each side. */
+    & .form-actions {
+      flex: none;
+
+      & .button.button {
+        inline-size: auto;
+        margin: 0;
+      }
+    }
+  }
+}
+
+/* From Mercury's md breakpoint, under the whole Navbar, from one side of the
+   container to the other: the Navbar is the nearest positioned element. */
+@media (min-width: 48rem) {
+  .search__panel {
+    position: absolute;
+    z-index: 600;
+    inset-inline: 0;
+    inset-block-start: 100%;
+    padding: 0.75rem 1rem;
+    border-block-end: 1px solid var(--border);
+    background-color: var(--background);
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 0.1);
+  }
+}
+```
+
+</details>
+
+- **`display: contents`** on the component's wrapper takes the box away and keeps what's in it. The button and the panel become items of the CTAs row themselves, next to the languages and the toggle, as if the wrapper weren't there.
+- **From Mercury's `md` breakpoint**, the panel opens under the whole Navbar, which is already `position: relative`.
+- **On a phone**, the CTAs are at the bottom of Mercury's menu panel, as the toggle found. There's no room under the Navbar, so the panel is a line of its own at the end of the row (`order: 1` puts it after the toggle, and `flex-basis: 100%` gives it the whole line).
+- **The form's button.** Mercury has a rule for buttons in the Navbar, meant for its call-to-action links: on a phone, they're nearly as wide as the screen, with a margin on each side. The search form's **Search** button is a `.button` in the Navbar too, so it got the same, and the field had no room. Our selector has to be more specific than Mercury's `.navbar--links .button.button`, which is why it says `.button.button` too.
+
 The templates have new Tailwind classes, so build Mercury's CSS again, as in Chapter 6:
 
 `terminal` ([source](../code/chapter15/snippets/mercury-build.sh))
@@ -1720,14 +2321,17 @@ ddev exec -d /var/www/html/web/themes/custom/mercury npm ci
 ddev exec -d /var/www/html/web/themes/custom/mercury npm run build
 ```
 
-![The Drupal CMS site's header: the logo and Lens & Trail on the left, and on the right Home underlined in green, Hikes, Albums, About, Join us, English · Español and the round toggle button](images/15-cms-header.png)
-*Figure 15.12: The Drupal CMS site's header*
+![The Drupal CMS site's header: the logo and Lens & Trail on the left, and on the right Home underlined in green, Hikes, Albums, About, Join us, Find a hike, English · Español, the round search button and the round toggle button](images/15-cms-header.png)
+*Figure 15.13: The Drupal CMS site's header*
 
 ![The Drupal CMS site's footer: the logo and the name, Meet us with the meeting times, the email address and Flickr, and under a line, My privacy settings, Upcoming hikes (RSS) and Log in on the left, the license line and Powered by Drupal on the right](images/15-cms-footer.png)
-*Figure 15.13: The footer*
+*Figure 15.14: The footer*
 
-![Mercury's menu panel on a phone, in dark mode: the logo and a close button at the top, Home, Hikes, Albums, About and Join us, and at the bottom English · Español and the toggle, with its choices open above it and Dark chosen](images/15-cms-phone-menu.png)
-*Figure 15.14: On a phone, the toggle is in Mercury's menu panel, and its choices open upwards*
+![Mercury's menu panel on a phone, in dark mode: the logo and a close button at the top, Home, Hikes, Albums, About, Join us and Find a hike, and at the bottom English · Español, the search button and the toggle, with the toggle's choices open above it and Dark chosen](images/15-cms-phone-menu.png)
+*Figure 15.15: On a phone, the toggle is in Mercury's menu panel, and its choices open upwards*
+
+![Mercury's menu panel on a phone with the search open: the menu links, then English · Español with the tinted search button and the toggle, and under them, on a line of their own, the search field and the Search button](images/15-cms-search-phone.png)
+*Figure 15.16: The search in Mercury's menu panel*
 
 ## Summary
 
@@ -1740,6 +2344,8 @@ You can now:
 - style Drupal's menus and language switcher by the markup and attributes Drupal gives, `aria-current` included;
 - give a landmark a name and a word its language, with two small templates;
 - turn a group of radio buttons into a disclosure, with `aria-expanded`, Escape and a click outside;
+- start with a link that works without JavaScript, and let a script turn it into a button (progressive enhancement);
+- hand a block over to a component of your own with a block template, on **Block layout** and in Canvas alike;
 - weigh a sticky header against Focus Not Obscured and `scroll-padding-top`;
 - add a region for a new place on the page, and theme a content block by its type;
 - decide whether to keep *Powered by Drupal*, and explain why it's there;
