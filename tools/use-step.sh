@@ -57,13 +57,27 @@ for site in core cms; do
   mkdir -p "$site_dir/web/themes/custom"
   for theme_dir in "$step_dir/$site"/*/; do
     theme=$(basename "$theme_dir")
-    rsync -a --delete "$REPO/$theme_dir" "$site_dir/web/themes/custom/$theme/"
+    # Every step's files have the same modification times, from the git
+    # checkout. Drupal caches parsed YAML files (the libraries and info files)
+    # and PHP caches compiled classes by path and modification time, so a
+    # copied file that keeps its time looks unchanged to them, and the previous
+    # step's version stays in use, even after a cache rebuild. --no-times gives
+    # each copied file the time of copying; --checksum makes rsync compare
+    # contents, because a file with a new content but the same size and time
+    # would otherwise be skipped.
+    rsync -a --no-times --checksum --delete "$REPO/$theme_dir" "$site_dir/web/themes/custom/$theme/"
     (
       cd "$site_dir"
       ddev drush theme:install -y "$theme"
       if [[ $set_default == 1 ]]; then
         ddev drush config:set -y system.theme default "$theme"
       fi
+      # The web server's PHP can still run a class from the previous step
+      # (src/Hook/*.php), when the new file hasn't reached the container by the
+      # time it checks: pages then fail with "does not have a method". A
+      # graceful reload of PHP-FPM empties its opcache. It comes before the
+      # cache rebuild, so no page is built while it reloads.
+      ddev exec 'killall -USR2 php-fpm' >/dev/null 2>&1 || true
       # Twig and the asset library definitions are cached; a rebuild picks up
       # the new templates, libraries and components.
       ddev drush cache:rebuild

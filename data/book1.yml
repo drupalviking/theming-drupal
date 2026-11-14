@@ -10,4 +10,4 @@
 # Book 1's public repository. tools/setup.sh clones it next to this book's
 # folder if there's no copy there yet.
 url: https://github.com/drupalviking/developing-open-sourced-web-software-with-drupal.git
-ref: '223b3ca'  # Book 1, chore/export-site-recipe: "Chapter 15: hikes led by admin get Jordi" (2026-11-07)
+ref: 'c37a523'  # Book 1, main: "Merge pull request #43 from drupalviking/fix/cms-search-link" (2026-11-14)

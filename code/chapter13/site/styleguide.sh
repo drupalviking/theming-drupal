@@ -21,6 +21,12 @@ if [ "${1:-core}" = core ]; then
   ddev composer config --json extra.patches.drupal/sdc_styleguide '[{"description": "PHP 8.5: (double) cast deprecated, use (float). Ours, no upstream issue (2026-11-12)", "url": "patches/sdc_styleguide-php85-float-cast.patch"}]'
 fi
 ddev composer require drupal/sdc_styleguide
+# The site keeps its patches in patches.lock.json (Book 1's Chapter 22): make
+# it again with the new patch, and apply it.
+if [ "${1:-core}" = core ]; then
+  ddev composer patches-relock
+  ddev composer patches-repatch
+fi
 ddev drush pm:install sdc_styleguide -y
 if [ "${1:-core}" = cms ]; then
   ddev drush config:set sdc_styleguide.settings component_explorer.exclude_modules '["navigation","canvas"]' --input-format=yaml -y

@@ -7,6 +7,8 @@
  * Run with: ddev drush php:script <this file>, from the Drupal CMS site's
  * folder. It uses Drupal CMS's own image styles, which already crop around
  * the focal point.
+ * 0. A Banner view mode for media, as on the core site, and the hike's Photo
+ *    shown with it (Book 1's Drupal CMS site uses Drupal CMS's 16_9_wide).
  * 1. A responsive image style, Banner: 4:3 below 40rem, 16:9 from there, with
  *    the theme's breakpoints. The Banner display uses it, and loads at once.
  * 2. A responsive image style, Album: squares, with the sizes of the grid.
@@ -16,9 +18,22 @@
  */
 
 use Drupal\Core\Entity\Entity\EntityViewDisplay;
+use Drupal\Core\Entity\Entity\EntityViewMode;
 use Drupal\crop\Entity\Crop;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
+
+if (!EntityViewMode::load('media.banner')) {
+  EntityViewMode::create(['id' => 'media.banner', 'label' => 'Banner', 'targetEntityType' => 'media'])->save();
+}
+if (!EntityViewDisplay::load('media.image.banner')) {
+  $display = EntityViewDisplay::load('media.image.default')->createCopy('banner');
+  $display->save();
+}
+$hike = EntityViewDisplay::load('node.hike.default');
+$photo = $hike->getComponent('field_photo');
+$photo['settings']['view_mode'] = 'banner';
+$hike->setComponent('field_photo', $photo)->save();
 
 $banner = ResponsiveImageStyle::load('banner') ?: ResponsiveImageStyle::create(['id' => 'banner', 'label' => 'Banner']);
 $banner->setBreakpointGroup('mercury');

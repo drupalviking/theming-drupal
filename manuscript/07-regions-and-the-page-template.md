@@ -6,7 +6,7 @@ Three pieces of Drupal decide that shape, and we'll work through them in order: 
 
 Nearly all of this chapter happens on the core site. The Drupal CMS site does the same job in a very different way, and we'll look at why near the end.
 
-![The hike page with the theme from Chapter 5: the logo, the menus and the breadcrumb stacked at the top, then the title and the photo, all in one column](images/07-hike-before.png)
+![The hike page with the theme from Chapter 5: the logo, the menus, the breadcrumb and the Search the club box stacked at the top, then the title and the photo, all in one column](images/07-hike-before.png)
 *Figure 7.1: The hike page at the end of Chapter 5: everything in one column.*
 
 ## What each template owns
@@ -128,11 +128,11 @@ A few things are worth a closer look.
 
 This file has no `@layer`: cascade layers come in the next chapter, along with the plan for all of the theme's CSS.
 
-![The hike page: the logo, the menu and the language links in one row, the title and photo on the left, and the Join the club and Next hikes blocks in a column on the right](images/07-hike-after.png)
+![The hike page: the logo, the menu and the language links in one row, the Search the club box below them, the title and photo on the left, and the Join the club and Next hikes blocks in a column on the right](images/07-hike-after.png)
 *Figure 7.5: The hike page with its regions in place. The menu and the links are still plain lists: the header gets its own chapter.*
 
-![The How to join page, with one column of content and no sidebar](images/07-join-after.png)
-*Figure 7.6: How to join has no blocks in the sidebar, so it has no second column and no `<aside>`.*
+![The How to join page: the header, the breadcrumb and the Search the club box, then the title How to join, and below it the text on the left and a When and where box on the right](images/07-join-after.png)
+*Figure 7.6: How to join has no blocks in the sidebar, so it has no `<aside>`. The When and where column is part of the page's own content, a two-column section from Layout Builder that Book 1 built.*
 
 ![The hike page on a 360-pixel phone screen, everything in one column](images/07-hike-after-phone.png)
 *Figure 7.7: The same page on a phone.*

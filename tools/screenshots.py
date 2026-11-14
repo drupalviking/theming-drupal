@@ -45,14 +45,14 @@ SHOTS = {
     ],
     "06": [
         ("before", "06-front-before", "cms", "/", 1280, 1000, False),
-        ("before", "06-join-before", "cms", "/join", 1280, 1000, False),
+        ("before", "06-first-hike-before", "cms", "/first-hike", 1280, 1000, False),
         ("before", "06-page-before", "cms", "/taking-photos-hike", 1280, 900, False),
         ("after", "06-front-after", "cms", "/", 1280, 1000, False),
-        ("after", "06-join-after", "cms", "/join", 1280, 1000, False),
+        ("after", "06-first-hike-after", "cms", "/first-hike", 1280, 1000, False),
         ("after", "06-page-after", "cms", "/taking-photos-hike", 1280, 900, False),
         ("after", "06-front-after-phone", "cms", "/", 360, 740, False),
         ("dark", "06-front-after-dark", "cms", "/", 1280, 1000, False),
-        ("dark", "06-join-after-dark", "cms", "/join", 1280, 1000, False),
+        ("dark", "06-first-hike-after-dark", "cms", "/first-hike", 1280, 1000, False),
     ],
     "07": [
         ("before", "07-hike-before", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 1000, False),
@@ -98,8 +98,8 @@ SHOTS = {
         ("dark", "13-hikes-wide-dark", "core", "/hikes", 1280, 900, False, ".hike-card"),
         ("styleguide", "13-styleguide-beside", "core", "/styleguide/component/Lens%20%26%20Trail/lens_trail%3Ahike-card/beside", 1280, 600, True),
         ("styleguide", "13-styleguide-top", "core", "/styleguide/component/Lens%20%26%20Trail/lens_trail%3Ahike-card/top", 1280, 800, True),
-        ("cms", "13-cms-home", "cms", "/home", 1280, 900, False, "[data-component-id='mercury:hike-card']"),
-        ("cms", "13-cms-home-phone", "cms", "/home", 360, 900, False, "[data-component-id='mercury:hike-card']"),
+        ("cms", "13-cms-home", "cms", "/", 1280, 900, False, "[data-component-id='mercury:hike-card']"),
+        ("cms", "13-cms-home-phone", "cms", "/", 360, 900, False, "[data-component-id='mercury:hike-card']"),
     ],
     # Appendix D: tools/use-step.sh d 01. The demo form, the accessibility panel
     # and the layout switcher need clicks, and were taken with a one-off script.
@@ -125,11 +125,12 @@ SHOTS = {
         ("cms", "14-cms-hike", "cms", "/hikes/glencorse-reservoir-winter-loop", 1280, 900, False, "h1"),
         ("cms", "14-cms-album", "cms", "/galleries/pentlands-21-november", 1280, 900, False, ".album"),
     ],
-    # 15: everything on step 03 (tools/use-step.sh 15 03, after code/chapter15/
-    # site/01-header.php and 02-footer.php on the core site and 03-cms.php on
-    # the Drupal CMS site). The open toggle, forced colors, Mercury's phone menu
-    # and the Canvas editor need clicks or emulation, and were taken with a
-    # one-off script.
+    # 15: everything on step 04 (tools/use-step.sh 15 04, after code/chapter15/
+    # site/01-header.php, 02-footer.php and 04-search.php on the core site and
+    # 03-cms.php on the Drupal CMS site), except the Canvas editor's figures,
+    # which show step 03. The open toggle and search, forced colors, Mercury's
+    # phone menu and the Canvas editor need clicks or emulation, and were taken
+    # with a one-off script.
     "15": [
         ("after", "15-header", "core", "/", 1280, 320, False),
         ("after", "15-header-phone", "core", "/", 360, 420, False),
