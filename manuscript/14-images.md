@@ -6,7 +6,7 @@ This chapter does the theme's half of the work. The banner loads first and in th
 
 Every image is in this chapter except one: the big photo on the front page, the hero, gets a chapter of its own.
 
-The core site starts where the chapter on components left it, with the styleguide pages from Appendix D. The Drupal CMS site starts there too, but now it has the hikes and albums as well: since the chapter on components, `tools/setup.sh` adds the first book's hikes and albums to it with a recipe, so both sites have the same pages to theme.
+The core site starts where the chapter on components left it, with the styleguide pages from Appendix D. The Drupal CMS site starts there too, with the same hikes and albums as the core site: the first book builds the club on both, so both sites have the same pages to theme.
 
 ## What the sites already have
 
@@ -294,15 +294,24 @@ The link around each photo copies what `media--image--album.html.twig` makes, so
 
 ## On the Drupal CMS site
 
-The Drupal CMS site has the same hikes and albums, and the same Banner and Album view modes, through the recipe. But it starts from a different place when it comes to images, so let's look before we change anything.
+The Drupal CMS site has the same hikes and albums, and an Album view mode for the album's photos. But it starts from a different place when it comes to images, so let's look before we change anything.
 
 ### What Drupal CMS brings
 
 Drupal CMS comes with Focal Point and Crop API installed and on its image forms (with releases for Drupal 11, which it runs), and with dozens of image styles, all cropped around the focal point and all in WebP. Their machine names say what they are: `16_9_1008x567_focal_point_webp` is 16:9, 1008 by 567 pixels. There's a set for each common shape (16:9, 4:3, 3:2, square, and portrait shapes) and a set of `uncropped_` ones that only scale.
 
-It has responsive image styles too, one for each shape and size, `16_9_wide`, `4_3_medium` and so on, and the recipe maps the first book's Banner to `16_9_wide`. They all use one breakpoint group, `custom`, with breakpoints at 500, 700, 1000 and 1300 pixels. Those aren't Mercury's: they're made by an **ECA** model. ECA (Events, Conditions, Actions) is a module that lets site builders describe "when this happens, do that" without code, and Drupal CMS uses it for a lot of its setup; one of its models, `define_breakpoints`, adds those four. And every one of those styles has `sizes="100vw"`: Drupal CMS can't know how wide Mercury's columns are, so it assumes the whole screen. That's safe, but a photo in a narrow column downloads a copy far bigger than it needs.
+It has responsive image styles too, one for each shape and size, `16_9_wide`, `4_3_medium` and so on, and the first book's hike page shows its photo with `16_9_wide`. They all use one breakpoint group, `custom`, with breakpoints at 500, 700, 1000 and 1300 pixels. Those aren't Mercury's: they're made by an **ECA** model. ECA (Events, Conditions, Actions) is a module that lets site builders describe "when this happens, do that" without code, and Drupal CMS uses it for a lot of its setup; one of its models, `define_breakpoints`, adds those four. And every one of those styles has `sizes="100vw"`: Drupal CMS can't know how wide Mercury's columns are, so it assumes the whole screen. That's safe, but a photo in a narrow column downloads a copy far bigger than it needs.
 
 So the theme's job is the same as on the core site, with what's already there.
+
+### A Banner view mode
+
+One thing is missing. On the core site, the first book shows a hike's photo with a media view mode of its own, **Banner**, and the theme hangs the banner's template (`media--image--banner.html.twig`) and its `fetchpriority` on that name. On this site, the first book used Drupal CMS's `16_9_wide`, which other pages can use too. Give the site a Banner of its own, so the theme treats the hike's photo the same way on both sites:
+
+1. Go to **Structure** > **Display modes** > **View modes**, and click **Add view mode**, then **Media**. Name it `Banner`, check **Image** under **Enable this view mode for the following Media types**, and click **Save**.
+2. Go to **Structure** > **Content types** > **Hike** > **Manage display**. Click the gear beside **Photo**, set **View mode** to **Banner**, click **Update**, then **Save**.
+
+The new display starts as a copy of the Image media type's default display. The next section gives it the club's responsive image style.
 
 ### Breakpoints, and the two styles
 
@@ -310,7 +319,7 @@ Mercury gets the club's breakpoints too, in `mercury.breakpoints.yml`. They're t
 
 <!-- include: code/chapter14/steps/05-cms/cms/mercury/mercury.breakpoints.yml as=mercury.breakpoints.yml -->
 
-The responsive image styles are made in the same forms as on the core site, with Drupal CMS's image styles. No new image styles this time: everything we need is there already. The focal points aren't, though: they're stored on this site, not in the photo, so the recipe's photos came in with Focal Point's default, the middle. Set the Glencorse photo's point on the far shore, as on the core site.
+The responsive image styles are made in the same forms as on the core site, with Drupal CMS's image styles. No new image styles this time: everything we need is there already. The focal points aren't, though: the first book never moved them, so every photo has Focal Point's default, the middle. Set the Glencorse photo's point on the far shore, as on the core site.
 
 - **Banner**, on the **Mercury** breakpoint group. **Narrow**: `calc(100vw - 2rem)`, with `4_3_500x375`, `4_3_700x525` and `4_3_960x720` (all `_focal_point_webp`). **Medium**: `16_9_704x396`, `16_9_1008x567`, `16_9_1312x738` and `16_9_1800x1080`, with the sizes below. Fallback `16_9_1008x567_focal_point_webp`. The media **Banner** display uses it, with **Eager** loading.
 - **Album**, on **Responsive Image**, with `1_1_300x300` and `1_1_600x600`, and the grid's sizes. The media **Album** display uses it, with **Lazy** loading.

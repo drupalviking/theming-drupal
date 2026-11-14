@@ -291,7 +291,7 @@ We checked the footer with the keyboard, at 320 pixels wide, in dark mode and in
 
 On the Drupal CMS site, as Chapter 7 found, there's nothing on **Block layout**. The header and the footer are two of Mercury's components, **Navbar** and **Footer**, in Canvas's **page template** for the theme, and the blocks are components in their slots. This section does the same design there, with three kinds of change: Mercury's templates, a new component, and the page template in Canvas.
 
-The site starts with a navbar that shows the logo and the main menu's links, as Mercury's pills: Drupal CMS's own **Home**, and **Hikes**, **Albums** and **About**, which the book's setup brings from the first book along with the hikes, the albums and their lists. The footer has "My privacy settings" and the first book's "Upcoming hikes (RSS)". The first book's Drupal CMS site also has a How to join page that no menu links to, so the main menu gets **Join us**, added on **Structure** > **Menus** > **Main navigation**.
+The first book filled the page template already. Its navbar has the logo, the main menu's links as Mercury's pills (**Home**, **Hikes**, **Albums**, **About**, **Join us** and **Find a hike**), the language switcher and a search box. Its footer has the meeting times, *Join the club* with a **How to join** button, and the footer menu: "Privacy policy", "My privacy settings" and "Upcoming hikes (RSS)". All of that stays: the club's editors made it, and the theme's job is to make it look like the design.
 
 ### The page template in Canvas
 
@@ -302,14 +302,14 @@ Open any page in Canvas. In the **Page data** panel on the right, under **Page t
 
 The template opens in the same editor as a page. Its **Layers** panel shows the tree: the theme's page template component, with Mercury's three regions as its slots; the Navbar in Header, with its slots **Site logo**, **Navigation menu** and **CTAs**; the **Page content** marker in Content, where each page's own components go; and the Footer, with **Branding & Social**, **Call to action**, **Utility links** and **Copyright text**.
 
-What we put in the slots:
+The first book's components are already in the slots: **Site branding** in **Site logo**, the main menu in **Navigation menu**, the **Language switcher** and the search box in **CTAs**; the meeting times in **Branding & Social**, *Join the club* in **Call to action**, and the footer menu in **Utility links**. What the design adds:
 
-1. **Site logo**: the **Site branding** block, with **Site name** checked as well as the logo.
-2. **CTAs**: the **Language switcher** block, and our new **Color scheme toggle** component (below). Mercury's own example buttons go.
-3. **Branding & Social**: another **Site branding**, logo and name.
-4. **Call to action**: a **Heading**, *Meet us*, at the size **heading-responsive-xl**, and a **Text** with the meeting times, the email address and Flickr, at **text-xs**. This site has no content blocks, so the Club info block isn't here; in Canvas, an editor changes these texts where they are.
-5. **Utility links**: the footer menu that's already there, and the **User account menu** block. Canvas doesn't offer that block until it's enabled, on **Appearance** > **Components**.
-6. **Copyright text**: a **Text** with the license line, and the **Powered by Drupal** block.
+1. **Site logo**: in the **Site branding** block's settings, check **Site name** as well as the logo.
+2. **CTAs**: our new **Color scheme toggle** component (below), after the search box.
+3. **Branding & Social**: another **Site branding**, logo and name, above the meeting times.
+4. **Utility links**: the **User account menu** block, after the footer menu. Canvas doesn't offer that block until it's enabled, on **Appearance** > **Components**.
+5. **Copyright text**: a **Text** with the license line, and the **Powered by Drupal** block.
+6. The first book's texts in the footer were made for a page, not a footer: set the **Text** components' **Text size** to **text-xs**, and *Join the club*'s **Text size** to **heading-responsive-xl**.
 
 Then **Review changes**, and publish.
 
@@ -318,7 +318,7 @@ Then **Review changes**, and publish.
 
 %% Author: on the test site, the page template was filled in by code/chapter15/site/03-cms.php (same result); the panel's labels and Figures 15.10 and 15.11 are from the real editor, but the drag-and-drop steps weren't walked by hand. %%
 
-One thing works differently from **Block layout**: a block in Canvas has no **Translate** tab, so the Meet us text and the license line are English on the Spanish pages until they're translated with Canvas's **Translate** tool.
+One thing works differently from **Block layout**: a block in Canvas has no **Translate** tab. The page template's texts are translated with Canvas Translate, as the first book did for the footer in its Chapter 18, and the new license line needs the same. (On a site built with this book's `tools/setup.sh`, the whole footer is English on the Spanish pages: the first book's export can't bring Canvas Translate's translations along yet.)
 
 ### Mercury's templates
 

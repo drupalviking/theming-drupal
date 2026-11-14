@@ -98,8 +98,8 @@ SHOTS = {
         ("dark", "13-hikes-wide-dark", "core", "/hikes", 1280, 900, False, ".hike-card"),
         ("styleguide", "13-styleguide-beside", "core", "/styleguide/component/Lens%20%26%20Trail/lens_trail%3Ahike-card/beside", 1280, 600, True),
         ("styleguide", "13-styleguide-top", "core", "/styleguide/component/Lens%20%26%20Trail/lens_trail%3Ahike-card/top", 1280, 800, True),
-        ("cms", "13-cms-home", "cms", "/home", 1280, 900, False, "[data-component-id='mercury:hike-card']"),
-        ("cms", "13-cms-home-phone", "cms", "/home", 360, 900, False, "[data-component-id='mercury:hike-card']"),
+        ("cms", "13-cms-home", "cms", "/", 1280, 900, False, "[data-component-id='mercury:hike-card']"),
+        ("cms", "13-cms-home-phone", "cms", "/", 360, 900, False, "[data-component-id='mercury:hike-card']"),
     ],
     # Appendix D: tools/use-step.sh d 01. The demo form, the accessibility panel
     # and the layout switcher need clicks, and were taken with a one-off script.

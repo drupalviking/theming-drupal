@@ -741,7 +741,7 @@ Colors and Text stay as they are for now: they're for the theme to replace with 
 
 ## On the Drupal CMS site
 
-The Drupal CMS site has no hikes: its content is pages built in **Canvas**, Drupal CMS's page builder. Editors put components on a page and fill them in, and SDC components show up in Canvas by themselves. So here the Hike card is something an editor uses, and that changes the contract.
+The Drupal CMS site has the same hikes, but its Home page is built in **Canvas**, Drupal CMS's page builder. Editors put components on a page and fill them in, and SDC components show up in Canvas by themselves. So here the Hike card is something an editor uses, and that changes the contract.
 
 ### What travels, and what doesn't
 
@@ -913,17 +913,17 @@ Open the Home page in Canvas, and the card is in the **Library**, under **Lens &
 ![The Canvas editor with the Library open, searched for hike, showing Lens & Trail and the Hike card under it](images/13-canvas-library.png)
 *Figure 13.9: The Hike card in the Canvas library*
 
-We gave the Home page a Next hikes section:
+The first book's Home page lists the next hikes with a view block, **Next hikes**. We replaced it with a section of Hike cards:
 
-1. Drag a **Section** from the library to below the hero. In its settings, set **Grid layout** to **33-33-33** and **Columns on mobile** to **1**, and turn on **Show header region**.
+1. Select the **Next hikes** block on the page, and delete it. Then drag a **Section** from the library to where it was. In its settings, set **Grid layout** to **33-33-33** and **Columns on mobile** to **1**, and turn on **Show header region**.
 2. Drag a **Heading** into the section's **Header**, with the text **Next hikes** and the **Heading level** **2**.
-3. Drag three **Hike cards** into the section's **Grid**, and fill them in with the first book's next three hikes. The Glencorse card gets the site's photo of Glencorse Reservoir from the media library. The other two have no photo on this site, and get the default photo.
+3. Drag three **Hike cards** into the section's **Grid**, and fill them in with the club's next three hikes: Turnhouse Hill and Carnethy Hill, North Berwick Law and the harbour, and the Glencorse Reservoir winter loop. **Link** each one to its hike page. The Turnhouse and Glencorse cards get their hike's photo from the media library. North Berwick has no photo, and gets the default photo.
 4. Click **Review changes**, and publish the page from there.
 
 ![The Canvas editor: the Layers panel shows the Section with its Heading and three Hike cards, and the Settings panel shows the third card's form: Title, Link, Heading level, Layout, Photo, Date and time, and Difficulty](images/13-canvas-form.png)
 *Figure 13.10: Every field in the form comes from the component's schema*
 
-![The Next hikes section on the Home page: three cards, the first two with the default photo, the club's logo on light sandstone, and the third with a photo of Glencorse Reservoir](images/13-cms-home.png)
+![The Next hikes section on the Home page: three cards, Turnhouse Hill with its photo, North Berwick Law with the default photo, the club's logo on light sandstone, and Glencorse Reservoir with its photo](images/13-cms-home.png)
 *Figure 13.11: The Next hikes section on the Drupal CMS site*
 
 ![The same section on a phone, with the cards one below the other](images/13-cms-home-phone.png)
