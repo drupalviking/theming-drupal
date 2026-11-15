@@ -343,7 +343,7 @@ document.addEventListener('visibilitychange', () => {
 
 We tested it on the core site: scrolled so the slider was out of the window, it stayed on the first slide well past the seven seconds; scrolled back, it moved on again.
 
-## Chapter 18, exercise 5: an album in JSON-LD
+## Chapter 18, exercise 6: an album in JSON-LD
 
 The hike's Event could be built in the template, because every value was on the hike itself. An album's photos are a step further away: each one is a media item, with the image file, the photographer and the license as fields. And JSON-LD wants each photo's full address, with the domain, which Twig's `file_url()` doesn't give. So the photos are built in PHP, in the node's preprocess, and the template puts them in the gallery:
 
