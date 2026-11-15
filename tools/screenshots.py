@@ -170,6 +170,28 @@ SHOTS = {
         ("cms", "16-cms-menu-es-phone", "cms", "/es", 360, 740, False, None, ".navbar--hamburger"),
         ("cms", "16-cms-mega-es", "cms", "/es", 1280, 480, False, None, ".main-menu__toggle"),
     ],
+    # 17: "hero" on step 01 (tools/use-step.sh 17 01) after code/chapter17/site/
+    # 01-hero.php, with the Newest album and Join the club hero blocks disabled
+    # (they come from 02-slides.php); "slides" on step 02 after 02-slides.php;
+    # "slider" and "dark" on step 03 after 03-translations.php; "cms" on step 05
+    # after 05-cms.php, 03-translations.php and 05-cms-home.php on the Drupal
+    # CMS site. The Canvas editor was not taken by this script.
+    "17": [
+        ("hero", "17-hero", "core", "/", 1280, 700, False),
+        ("hero", "17-hero-phone", "core", "/", 360, 740, False),
+        ("hero", "17-hike-hero-display", "core", "/admin/structure/types/manage/hike/display/hero", 1280, 760, True),
+        ("hero", "17-view-hero", "core", "/admin/structure/views/view/hikes/edit/block_3", 1280, 820, True),
+        ("hero", "17-styleguide-hero", "core", "/styleguide/component/Lens%20%26%20Trail/lens_trail%3Ahero/photo", 1280, 760, True),
+        ("slides", "17-slides", "core", "/", 1280, 700, False),
+        ("slides", "17-block-layout", "core", "/admin/structure/block", 1280, 640, True, ".region-title-hero"),
+        ("slides", "17-hero-slide-form", "core", "/admin/content/block/12", 1280, 1000, True),
+        ("slider", "17-slider", "core", "/", 1280, 700, False),
+        ("slider", "17-slider-join", "core", "/", 1280, 700, False, None, [".hero-slider__next", ".hero-slider__next"]),
+        ("slider", "17-slider-phone-es", "core", "/es", 360, 740, False),
+        ("dark", "17-slider-join-dark", "core", "/", 1280, 700, False, None, [".hero-slider__next", ".hero-slider__next"]),
+        ("cms", "17-cms-home", "cms", "/", 1280, 700, False),
+        ("cms", "17-cms-home-es-phone", "cms", "/es", 360, 740, False),
+    ],
 }
 
 

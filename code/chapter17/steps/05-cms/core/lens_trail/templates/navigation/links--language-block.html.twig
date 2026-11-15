@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * The language switcher's links: core's links.html.twig, with a lang
+ * attribute on each one.
+ *
+ * "Español" is a Spanish word, so a screen reader reading the English page
+ * should say it with a Spanish voice. The links are keyed by their language
+ * code, which is exactly what lang wants.
+ *
+ * @see core/modules/system/templates/links.html.twig
+ */
+#}
+{% if links -%}
+  <ul{{ attributes }}>
+    {%- for langcode, item in links -%}
+      <li{{ item.attributes.setAttribute('lang', langcode) }}>
+        {%- if item.link -%}
+          {{ item.link }}
+        {%- elseif item.text_attributes -%}
+          <span{{ item.text_attributes }}>{{ item.text }}</span>
+        {%- else -%}
+          {{ item.text }}
+        {%- endif -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+{%- endif %}

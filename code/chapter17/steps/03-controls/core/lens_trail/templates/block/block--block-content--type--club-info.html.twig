@@ -1,0 +1,13 @@
+{% extends "block.html.twig" %}
+{#
+/**
+ * @file
+ * A block that shows a Club info content block, wherever it's placed.
+ *
+ * The name comes from the block type (block_content__type__club_info), not
+ * from one block's machine name, so a second Club info block anywhere on
+ * the site looks the same.
+ */
+#}
+{% set attributes = attributes.addClass('club-info') %}
+{% set title_attributes = title_attributes.addClass('club-info__title') %}

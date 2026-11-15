@@ -1,0 +1,12 @@
+name: Credit below, with a caption
+description: As in the lightbox. A photo without a source has the photographer's name without a link.
+props:
+  photographer: Alan O'Dowd
+  license: CC BY-SA 2.0
+  # SDC Styleguide passes a prop a demo leaves out as NULL, which a string
+  # prop refuses, so every prop is here. An empty source: no link.
+  source: ''
+  caption: The view from Carnethy Hill
+  credit: below
+slots:
+  image: '<img src="/themes/custom/lens_trail/components/photo/demo/default-photo.svg" width="1280" height="720" alt="">'

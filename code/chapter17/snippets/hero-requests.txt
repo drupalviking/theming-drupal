@@ -1,0 +1,6 @@
+Largest Contentful Paint: the img in the first hero (turnhouse-hill-glencorse.jpg.avif)
+
+Photos requested as the front page loads, 1280 pixels wide, with their priority:
+  styles/banner/.../turnhouse-hill-glencorse.jpg.avif    High   the first slide
+  styles/banner/.../carnethy-from-turnhouse_1.jpg.avif   Low    the second slide, next to it
+  eight more, for the Hikes panel and further down       Low

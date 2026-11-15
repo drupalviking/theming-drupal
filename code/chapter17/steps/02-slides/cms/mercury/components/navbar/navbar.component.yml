@@ -1,0 +1,32 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Navbar
+group: Layout
+props:
+  type: object
+  properties:
+    menu_align:
+      title: Menu alignment
+      type: string
+      enum:
+        - left
+        - center
+        - right
+      default: center
+      examples:
+        - center
+slots:
+  logo:
+    title: Site logo
+  navigation:
+    title: Navigation menu
+  links:
+    title: CTAs
+  tools:
+    title: Next to the menu button
+    description: Stays in the Navbar's top row on a phone, next to the menu button, instead of going into the menu panel. Lens & Trail's own slot.
+
+libraryOverrides:
+  js:
+    navbar.js:
+      attributes:
+        type: module

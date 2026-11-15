@@ -1,0 +1,31 @@
+/*
+ * A short reset, in place of normalize.css: only what modern browsers still
+ * do differently from what we want.
+ */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  /* A photo is never wider than the space it's in. */
+  img,
+  video,
+  svg {
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
+  /* Form controls use the page's font, not the browser's. */
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+}

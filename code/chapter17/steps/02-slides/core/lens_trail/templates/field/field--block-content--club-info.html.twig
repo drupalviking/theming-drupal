@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * The fields of a Club info block: each label is a small heading over its
+ * value, so a screen reader can jump between Meeting times, Email and
+ * Follow us.
+ *
+ * Variables are core's field.html.twig's: label, label_hidden, items.
+ *
+ * @see core/modules/system/templates/field.html.twig
+ */
+#}
+<div{{ attributes.addClass('club-info__field') }}>
+  {% if not label_hidden %}
+    <h3{{ title_attributes.addClass('club-info__label') }}>{{ label }}</h3>
+  {% endif %}
+  {% for item in items %}
+    <div{{ item.attributes }}>{{ item.content }}</div>
+  {% endfor %}
+</div>
