@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * The Hero slider: several heroes, one at a time.
+ *
+ * Props: label. Slots: slides.
+ *
+ * Each element in the slides slot is one slide. Without JavaScript, they're a
+ * row that scrolls sideways and stops at each slide (CSS scroll snap), so
+ * every slide can be reached.
+ *
+ * aria-roledescription tells screen readers this section is a carousel,
+ * in the page's language, as in the ARIA Authoring Practices' pattern.
+ */
+#}
+<section{{ attributes.addClass('hero-slider') }} aria-roledescription="{{ 'carousel'|t }}" aria-label="{{ label }}">
+  <div class="hero-slider__slides">
+    {% block slides %}{{ slides }}{% endblock %}
+  </div>
+</section>

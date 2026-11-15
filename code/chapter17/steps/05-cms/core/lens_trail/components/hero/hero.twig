@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * The Hero: a big band at the top of a page.
+ *
+ * Props: eyebrow, heading, heading_level, text, url, link_text.
+ * Slots: meta, photo. Variants: photo (the default), color. Drupal puts the
+ * variant in the data-component-variant attribute, and the CSS reads it from
+ * there.
+ *
+ * The photo comes after the text in the HTML, so a screen reader meets the
+ * heading first and the photo's credit last. The CSS puts it behind the text.
+ */
+#}
+{% set heading_tag = 'h' ~ heading_level|default(2) %}
+<div{{ attributes.addClass('hero') }}>
+  <div class="hero__text">
+    {% if eyebrow %}
+      <p class="hero__eyebrow">{{ eyebrow }}</p>
+    {% endif %}
+    {% if meta %}
+      <div class="hero__meta">{% block meta %}{{ meta }}{% endblock %}</div>
+    {% endif %}
+    <{{ heading_tag }} class="hero__heading">{{ heading }}</{{ heading_tag }}>
+    {% if text %}
+      <p class="hero__intro">{{ text }}</p>
+    {% endif %}
+    {% if url and link_text %}
+      <a class="hero__link" href="{{ url }}">{{ link_text }}</a>
+    {% endif %}
+  </div>
+  {% if photo %}
+    <div class="hero__photo">{% block photo %}{{ photo }}{% endblock %}</div>
+  {% endif %}
+</div>

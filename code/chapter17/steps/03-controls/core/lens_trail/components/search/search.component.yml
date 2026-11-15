@@ -1,0 +1,38 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Search
+description: A search icon in the header that opens a search field under it. Without JavaScript, the icon is a link to the search page.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - url
+    - id
+  properties:
+    url:
+      type: string
+      format: uri-reference
+      title: Search page
+      description: The search page, where the icon goes without JavaScript.
+      examples:
+        - /search
+    id:
+      type: string
+      title: ID
+      description: The id of the field's panel, which the button points to with aria-controls.
+      examples:
+        - site-search
+    label:
+      type: string
+      title: Label
+      description: What the panel is, for screen readers.
+      examples:
+        - Search the club
+slots:
+  form:
+    title: Form
+    description: The search form, as Drupal rendered it.
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

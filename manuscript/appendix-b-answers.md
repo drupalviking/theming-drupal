@@ -119,3 +119,21 @@ We tested it on the core site at 1280 pixels wide: a pointer passing over Hikes 
 
 One rough edge is left: hover over Hikes, wait for the panel, and then click the arrow, and the click closes it, because the hover already opened it. Many sites live with that. It's one more reason the club's menu opens on a click only, and why this is an exercise and not the chapter's code.
 
+
+## Chapter 17, exercise 5: slides that wait while out of sight
+
+The slider already has a list of reasons not to move: `stopped`, `hovered` and `focused`, all checked in `schedule()`. The answer adds two more, and two things that set them: the slider scrolled out of the window, and the page's tab in the background.
+
+<!-- include: code/chapter17/snippets/hero-slider.offscreen.js lines=40-45 as=components/hero-slider/hero-slider.js -->
+
+<!-- include: code/chapter17/snippets/hero-slider.offscreen.js lines=62-68 as=components/hero-slider/hero-slider.js -->
+
+<!-- include: code/chapter17/snippets/hero-slider.offscreen.js lines=143-152 as=components/hero-slider/hero-slider.js -->
+
+- **An `IntersectionObserver`**, not a scroll listener. It's the browser's own way to say when an element comes into the window and leaves it, and it says so only when that changes, not on every pixel of a scroll. With `threshold: 0.5`, it reports when half of the slider crosses the edge; less than half in sight counts as out of sight.
+- **`visibilitychange`** fires when the tab goes to the background or comes back, and when the window is minimized. `document.hidden` says which. Browsers slow down timers in background tabs anyway, but slower isn't stopped: without this, a visitor could come back after a few minutes to the third slide.
+- **Both only call `schedule()`.** When the slider comes back into sight, the wait starts from the beginning, so the visitor gets the whole seven seconds with the slide they left. Nothing else in the script changes: Pause still wins over everything, and a press on Next still works while the slider is half out of the window.
+
+We tested it on the core site: scrolled so the slider was out of the window, it stayed on the first slide well past the seven seconds; scrolled back, it moved on again.
+
+%% Author: the background tab was not tested by hand; only scrolling away was. %%

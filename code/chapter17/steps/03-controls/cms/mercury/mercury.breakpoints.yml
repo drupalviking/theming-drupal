@@ -1,0 +1,22 @@
+# The club's breakpoints, from the design (Chapter 3), as in the core theme:
+# the layout changes at 40rem and 64rem. Responsive image styles use them for
+# art direction. (Drupal CMS has breakpoints of its own, the "custom" group,
+# which an ECA model makes; they're in pixels and start at 500px.)
+mercury.narrow:
+  label: Narrow
+  mediaQuery: ''
+  weight: 0
+  multipliers:
+    - 1x
+mercury.medium:
+  label: Medium
+  mediaQuery: 'all and (min-width: 40rem)'
+  weight: 1
+  multipliers:
+    - 1x
+mercury.wide:
+  label: Wide
+  mediaQuery: 'all and (min-width: 64rem)'
+  weight: 2
+  multipliers:
+    - 1x

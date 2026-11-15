@@ -1,0 +1,60 @@
+/**
+ * @file
+ * The breadcrumb: Home › Next hikes on wide screens, ← Next hikes on phones.
+ */
+@layer components {
+  .breadcrumb {
+    margin-block: var(--space-s);
+    font-size: var(--font-size-step--1);
+  }
+
+  .breadcrumb__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .breadcrumb__link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--size-target);
+    color: var(--color-action);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  /* Phones: only the way up, the last link in the trail, with an arrow. */
+  .breadcrumb__item:not(:last-child) {
+    display: none;
+  }
+
+  .breadcrumb__item:last-child .breadcrumb__link::before {
+    content: "←" / "";
+    margin-inline-end: var(--space-2xs);
+  }
+
+  /* 40rem is --breakpoint-medium: room for the whole trail. */
+  @media (min-width: 40rem) {
+    .breadcrumb__item:not(:last-child) {
+      display: list-item;
+    }
+
+    .breadcrumb__item:last-child .breadcrumb__link::before {
+      content: none;
+    }
+
+    /* The separator comes from CSS, so a screen reader doesn't read it: the
+       text after the slash is what it says instead, nothing. */
+    .breadcrumb__item + .breadcrumb__item::before {
+      content: "›" / "";
+      padding-inline: var(--space-2xs);
+      color: var(--color-muted);
+    }
+  }
+}

@@ -1,0 +1,35 @@
+- region "Club highlights":
+  - button "Pause the slides"
+  - button "Previous slide"
+  - button "Next slide"
+  - button "Slide 1 of 3"
+  - button "Slide 2 of 3"
+  - button "Slide 3 of 3"
+  - group "1 of 3":
+    - paragraph: Next hike
+    - time: Saturday, 21 November 2026 at 09:30
+    - heading "Turnhouse Hill and Carnethy Hill" [level=2]
+    - link "See the hike":
+      - /url: /hikes/turnhouse-hill
+    - 'figure "Photo: dave souza · CC BY-SA 4.0"':
+      - img "Turnhouse Hill seen across Glencorse Reservoir, with a rowing boat at the landing stage"
+      - text: "Photo:"
+      - link "dave souza":
+        - /url: https://commons.wikimedia.org/wiki/File:Glencorse_Reservoir,_Turnhouse_Hill.jpg
+      - text: · CC BY-SA 4.0
+  - group "2 of 3":
+    - paragraph: Newest album
+    - heading "Pentlands, 21 November" [level=2]
+    - link "See the photos":
+      - /url: /galleries/pentlands-21-november
+    - 'figure "Photo: Jim Barton · CC BY-SA 2.0"':
+      - img "The path down from Turnhouse Hill, with Carnethy Hill rising behind it"
+      - text: "Photo:"
+      - link "Jim Barton":
+        - /url: https://commons.wikimedia.org/wiki/File:Carnethy_Hill_from_Turnhouse_Hill_-_geograph.org.uk_-_6273248.jpg
+      - text: · CC BY-SA 2.0
+  - group "3 of 3":
+    - heading "Join the club" [level=2]
+    - paragraph: Membership is £20 a year, £10 for students.
+    - link "How to join":
+      - /url: /join

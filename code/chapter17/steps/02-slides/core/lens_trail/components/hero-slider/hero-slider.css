@@ -1,0 +1,31 @@
+/**
+ * @file
+ * The Hero slider component.
+ */
+@layer components {
+  /* The slides side by side, each as wide as the slider. The row scrolls
+     sideways, and stops at the start of a slide (scroll snap), never between
+     two. */
+  .hero-slider__slides {
+    display: grid;
+    grid-auto-columns: 100%;
+    grid-auto-flow: column;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+
+    & > * {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+  }
+
+  /* Every slide as tall as the tallest, all the way down to the hero inside
+     it: a slide is a block, the block has the view's wrappers, and the hero
+     is somewhere inside them. A grid item stretches to its row, so each
+     wrapper that holds a hero is made a grid too. */
+  .hero-slider__slides > *,
+  .hero-slider__slides > * :has(.hero) {
+    display: grid;
+  }
+}

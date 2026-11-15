@@ -294,3 +294,51 @@ document.addEventListener('keydown', (event) => {
 We tested it on the core site at 1280 pixels wide: a pointer passing over Hikes in 50 milliseconds left it closed; resting on it opened the panel; moving down into the panel kept it open; Escape closed it with the pointer still over it; and leaving closed it after the wait. Enter on the button, Escape back to the button, and a click all worked as before.
 
 One rough edge is left: hover over Hikes, wait for the panel, and then click the arrow, and the click closes it, because the hover already opened it. Many sites live with that. It's one more reason the club's menu opens on a click only, and why this is an exercise and not the chapter's code.
+
+## Chapter 17, exercise 5: slides that wait while out of sight
+
+The slider already has a list of reasons not to move: `stopped`, `hovered` and `focused`, all checked in `schedule()`. The answer adds two more, and two things that set them: the slider scrolled out of the window, and the page's tab in the background.
+
+`components/hero-slider/hero-slider.js` ([source](../code/chapter17/snippets/hero-slider.offscreen.js))
+
+```javascript
+let hovered = false;
+let focused = false;
+// Out of sight: less than half of the slider is in the window, or the
+// page's tab is in the background.
+let offscreen = false;
+let backgrounded = document.hidden;
+```
+
+`components/hero-slider/hero-slider.js` ([source](../code/chapter17/snippets/hero-slider.offscreen.js))
+
+```javascript
+// The next slide in a few seconds, unless something says not now.
+function schedule() {
+  clearTimeout(timer);
+  if (!stopped && !hovered && !focused && !offscreen && !backgrounded) {
+    timer = setTimeout(() => show(current + 1), interval);
+  }
+}
+```
+
+`components/hero-slider/hero-slider.js` ([source](../code/chapter17/snippets/hero-slider.offscreen.js))
+
+```javascript
+// An IntersectionObserver says when the slider comes into the window and
+// leaves it, without a scroll listener: the browser works it out.
+new IntersectionObserver((entries) => {
+  offscreen = entries[0].intersectionRatio < 0.5;
+  schedule();
+}, { threshold: 0.5 }).observe(slider);
+document.addEventListener('visibilitychange', () => {
+  backgrounded = document.hidden;
+  schedule();
+});
+```
+
+- **An `IntersectionObserver`**, not a scroll listener. It's the browser's own way to say when an element comes into the window and leaves it, and it says so only when that changes, not on every pixel of a scroll. With `threshold: 0.5`, it reports when half of the slider crosses the edge; less than half in sight counts as out of sight.
+- **`visibilitychange`** fires when the tab goes to the background or comes back, and when the window is minimized. `document.hidden` says which. Browsers slow down timers in background tabs anyway, but slower isn't stopped: without this, a visitor could come back after a few minutes to the third slide.
+- **Both only call `schedule()`.** When the slider comes back into sight, the wait starts from the beginning, so the visitor gets the whole seven seconds with the slide they left. Nothing else in the script changes: Pause still wins over everything, and a press on Next still works while the slider is half out of the window.
+
+We tested it on the core site: scrolled so the slider was out of the window, it stayed on the first slide well past the seven seconds; scrolled back, it moved on again.

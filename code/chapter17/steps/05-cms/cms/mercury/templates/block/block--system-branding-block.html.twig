@@ -1,0 +1,45 @@
+{% extends 'block.html.twig' %}
+{#
+/**
+ * @file
+ * Theme override for a branding block.
+ *
+ * Each branding element variable (logo, name, slogan) is only available if
+ * enabled in the block configuration.
+ *
+ * Available variables:
+ * - site_logo: Logo for site as defined in Appearance or theme settings.
+ * - site_name: Name for site as defined in Site information settings.
+ * - site_slogan: Slogan for site as defined in Site information settings.
+ *
+ * Lens & Trail: the logo and the name side by side, as on the core site. The
+ * logo is decoration when the name is next to it (alt=""). Mercury gave it
+ * the site name as its alt text, which is empty when the name is switched
+ * off: the link then had no name at all, so without the name it says "Home",
+ * as core's template does.
+ */
+#}
+
+{% block content %}
+  {% set site_logo_url = site_logo ? file_url(site_logo) : '' %}
+
+  <a
+    href="{{ home_url|default('/') }}"
+    class="inline-flex items-center gap-3 font-sans text-xl font-bold text-foreground no-underline hover:text-primary"
+    rel="home"
+  >
+    {% block branding %}
+      {% if site_logo %}
+        <div class="branding size-12 shrink-0">
+          <img class="h-full w-full" src="{{ site_logo_url }}" alt="{{ site_name ? '' : 'Home'|t }}" />
+        </div>
+      {% endif %}
+      {% if site_name %}
+        <span>{{ site_name }}</span>
+      {% endif %}
+    {% endblock %}
+  </a>
+  {% if site_slogan %}
+    <p class="mt-2 text-sm text-muted-foreground">{{ site_slogan }}</p>
+  {% endif %}
+{% endblock %}
