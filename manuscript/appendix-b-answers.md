@@ -137,3 +137,23 @@ The slider already has a list of reasons not to move: `stopped`, `hovered` and `
 We tested it on the core site: scrolled so the slider was out of the window, it stayed on the first slide well past the seven seconds; scrolled back, it moved on again.
 
 %% Author: the background tab was not tested by hand; only scrolling away was. %%
+
+## Chapter 18, exercise 5: an album in JSON-LD
+
+The hike's Event could be built in the template, because every value was on the hike itself. An album's photos are a step further away: each one is a media item, with the image file, the photographer and the license as fields. And JSON-LD wants each photo's full address, with the domain, which Twig's `file_url()` doesn't give. So the photos are built in PHP, in the node's preprocess, and the template puts them in the gallery:
+
+<!-- include: code/chapter18/snippets/LensTrailHooks.album-json-ld.php function=preprocessNode as=src/Hook/LensTrailHooks.php -->
+
+<!-- include: code/chapter18/snippets/LensTrailHooks.album-json-ld.php function=imageObjects as=src/Hook/LensTrailHooks.php -->
+
+- **`generateAbsoluteString()`**, from core's `file_url_generator` service, gives the file's address with the domain. The hook class gets the service in its constructor (`FileUrlGeneratorInterface $fileUrlGenerator`), like the others.
+- **`caption`** is the image's alt text. It describes the photo, which is what a caption in Schema.org is for. **`creditText`** and **`creator`** are the photographer, and **`license`** is the license's address, which the club's list field stores as a key: the method maps the keys to Creative Commons' addresses. "All rights reserved, used with permission" has no address, so those photos have no `license`.
+- **`array_filter()`** drops the empty values, so a photo without a photographer has no empty `creditText`.
+
+The template adds the gallery at the end, as the hike's page does with its Event:
+
+<!-- include: code/chapter18/snippets/node--gallery--full.album-json-ld.html.twig lines=33-42 as=templates/content/node--gallery--full.html.twig -->
+
+No cache tag is lost: the photos are rendered in the same template (`content.field_photos`), and that passes the media items' tags up to the page. On the core site, the Pentlands album gives an `ImageGallery` with four `ImageObject`s, each with its photographer and a CC BY-SA 2.0 or 4.0 address.
+
+%% Author: checked as valid JSON on the core test site; not run through the Schema Markup Validator. %%

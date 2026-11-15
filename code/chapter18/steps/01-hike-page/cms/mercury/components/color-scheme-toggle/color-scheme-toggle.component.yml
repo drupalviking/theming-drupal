@@ -1,0 +1,16 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Color scheme toggle
+description: A round button that opens three choices, Light, Dark and Site default. Made by its script, so visitors without JavaScript don't see it. The core theme's toggle, as a component.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  properties: {}
+libraryOverrides:
+  js:
+    color-scheme-toggle.js:
+      attributes:
+        type: module
+  dependencies:
+    - core/drupal
+    - core/once

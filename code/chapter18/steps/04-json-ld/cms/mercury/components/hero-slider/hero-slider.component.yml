@@ -1,0 +1,38 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Hero slider
+description: Several heroes in one place, one at a time, with Pause, Previous and Next. The core theme's component, for Canvas.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - label
+  properties:
+    label:
+      type: string
+      title: Label
+      description: What the slides are, for screen readers, such as "Club highlights".
+      examples:
+        - Club highlights
+    heading:
+      type: string
+      title: Page heading
+      description: The page's h1, for screen readers only, on a page that shows no title of its own, such as Home. Leave it empty anywhere else.
+      examples:
+        - Welcome to Lens & Trail
+    interval:
+      type: number
+      title: Interval
+      description: How many seconds each slide stays. Never less than 7, the design says.
+      enum: [7, 10, 15]
+      default: 7
+      examples:
+        - 7
+slots:
+  slides:
+    title: Slides
+    description: One component or block for each slide, such as a Hero. The first is the most important.
+libraryOverrides:
+  dependencies:
+    - core/drupal
+    - core/once

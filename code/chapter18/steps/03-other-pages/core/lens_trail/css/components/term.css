@@ -1,0 +1,22 @@
+/**
+ * @file
+ * A term's own part of its page (an area's photo and description), and the
+ * list of what's tagged with it, under it.
+ */
+@layer components {
+  .term {
+    display: grid;
+    gap: var(--space-s);
+    margin-block-end: var(--space-l);
+
+    & > * {
+      max-inline-size: var(--size-content);
+    }
+  }
+
+  /* The cards in the term's list, one under the other. */
+  .term ~ * .hike-card,
+  .term ~ .hike-card {
+    margin-block-end: var(--space-m);
+  }
+}

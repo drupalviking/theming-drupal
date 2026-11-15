@@ -1,0 +1,28 @@
+/**
+ * @file
+ * A news item's page: like a hike's, the date and the title under the photo.
+ */
+@layer components {
+  .news {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .news__header {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .news__date {
+    color: var(--color-muted);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .news__title {
+    margin: 0;
+  }
+
+  .news__body > * {
+    max-inline-size: var(--size-content);
+  }
+}

@@ -1,0 +1,25 @@
+{#
+/**
+ * @file
+ * A hike in the Hero view mode: the next hike, in the Home page's slider.
+ *
+ * The Hero component takes the date and the photo as props, for Canvas. Here
+ * they're rendered by Drupal, so the template embeds the component and puts
+ * them in its meta and photo blocks instead. Without a photo, the hero is
+ * the Color style.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{% set photo = content.field_photo|render %}
+{% embed 'mercury:hero' with {
+  style: photo ? 'photo' : 'color',
+  eyebrow: 'Next hike'|t,
+  heading: node.label,
+  url: url,
+  link_text: 'See the hike'|t,
+  date: content.field_date,
+  rendered_photo: photo,
+} only %}
+  {% block meta %}<div class="hero__meta">{{ date }}</div>{% endblock %}
+  {% block photo %}{{ rendered_photo }}{% endblock %}
+{% endembed %}

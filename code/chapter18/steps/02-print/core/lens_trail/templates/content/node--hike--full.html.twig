@@ -1,0 +1,47 @@
+{#
+/**
+ * @file
+ * A hike's own page, in the order of the design: the photo, the date and
+ * the title, the key facts, then the description.
+ *
+ * The page's h1 is here, after the photo, so the Page title block is taken
+ * off hike pages (lens_trail's hook_preprocess_page()). The facts are a
+ * description list; each one comes from field--fact.html.twig.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{{ attach_library('lens_trail/hike') }}
+<article{{ attributes.addClass('hike') }}>
+  <div class="hike__photo">
+    {{ content.field_photo }}
+  </div>
+
+  <header class="hike__header">
+    {{ content.field_date|add_class('hike__date') }}
+    {{ title_prefix }}
+    <h1{{ title_attributes.addClass('hike__title') }}>{{ label }}</h1>
+    {{ title_suffix }}
+    {# The leader's name, as text: rendering it here still passes the user's
+       cache tags up to the page. #}
+    {% set leader = content.field_hike_leader|render|striptags|trim %}
+    {% if leader %}
+      <p class="hike__leader">{{ 'Led by @name'|t({'@name': leader}) }}</p>
+    {% endif %}
+  </header>
+
+  <dl class="hike__facts">
+    {{ content.field_meeting_place }}
+    {{ content.field_distance }}
+    {{ content.field_difficulty }}
+    {{ content.field_area }}
+  </dl>
+
+  {# The Directions button and the map of the starting point go here, when
+     hikes have one (a feature at the end of the book). #}
+
+  <div class="hike__description">
+    {{ content.field_body }}
+  </div>
+
+  {{ content|without('field_photo', 'field_date', 'field_hike_leader', 'field_meeting_place', 'field_distance', 'field_difficulty', 'field_area', 'field_body') }}
+</article>
