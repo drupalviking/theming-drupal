@@ -11,7 +11,7 @@ Chapter 3 designed the club's hero as a **slider** with three slides: the next h
 5. **The hero photo as the page's Largest Contentful Paint**: what loads first, and what waits.
 6. **The same on the Drupal CMS site**, in Canvas.
 
-The core site starts where the menus chapter left it: the front page opens with the page title, "Welcome to Lens & Trail", the club's two sentences and the Next hikes cards, and the Hero region from Chapter 7 is empty. The Drupal CMS site's Home opens with Mercury's **CTA** component, the same welcome with a How to join button, on the page's background color.
+The core site starts where the menus chapter left it: the front page opens with the page title, "Welcome to Lens & Trail", the club's two sentences and the Next hikes cards, and the Hero region from Chapter 7 is empty. The Drupal CMS site's Home opens with Mercury's **Hero CTA** component, the same welcome with a How to join button, on the page's background color.
 
 ## What makes a hero
 
@@ -349,7 +349,7 @@ Three things change on the way:
 
 - **Canvas doesn't use a component's variants**, so the style is a prop, **Style** (Photo or Color), as the Hike card's layout was in Chapter 13.
 - **In Canvas, editors fill everything in by hand**, so the date and the photo are props too: a **Meta** line and a **Photo** from the media library, with a **Photo credit** text. A Twig template that has them rendered, such as a hike's Hero view mode, embeds the component and replaces its `meta` and `photo` blocks instead.
-- **The slider takes the page's h1.** A Canvas page on Home shows no title of its own; Book 1's h1 was the CTA's heading. The slider has a **Page heading** prop, printed visually hidden, before the controls.
+- **The slider takes the page's h1.** A Canvas page on Home shows no title of its own; Book 1's h1 was the Hero CTA's heading. The slider has a **Page heading** prop, printed visually hidden, before the controls.
 
 <!-- include: code/chapter17/steps/05-cms/cms/mercury/components/hero/hero.twig as=mercury/components/hero/hero.twig -->
 
@@ -379,23 +379,59 @@ The site building is the core site's, with one difference in names. Drupal CMS a
 
 ### The slider in Canvas
 
-Then the Home page, in Canvas:
+Then the Home page, in Canvas. Open **Home** from **Pages**, and open **Layers** in the sidebar, so you can see where things go: the editor's preview is a crowded place to drop things, and the Layers panel always tells the truth.
 
-1. Open **Home** in Canvas, select Mercury's **CTA** at the top (Book 1's welcome), and delete it.
-2. From the **Lens & Trail** group, drag a **Hero slider** to the top of the page. Set **Label** to Club highlights, **Page heading** to Welcome to Lens & Trail, and **Interval** to 7.
-3. Into its **Slides** slot, drag the **Next hike, in the hero** block, then the **Newest album, in the hero** block (both from **Lists (Views)**), with their titles off.
-4. Then a **Hero**, after them: **Style** Color, **Heading** Join the club, **Text** Membership is £20 a year, £10 for students., **Link** How to join, **Link text** How to join.
-5. **Publish**, and translate the slider's Label and Page heading and the Hero's text into Spanish, as Book 1 did with Canvas Translate.
+1. Select Mercury's **Hero CTA** at the top of the page (Book 1's welcome). Open its menu (the three dots next to it in Layers) and choose **Delete**.
+2. Open **Library**, and search for *hero*. The search finds everything a hero needs, in three groups: Mercury's three heroes, our **Hero** and **Hero slider** under **Lens & Trail**, and the two view blocks under **Lists (Views)**. Drag a **Hero slider** to the top of the page. Its form comes filled in from the component's examples: **Label** Club highlights, **Page heading** Welcome to Lens & Trail, **Interval** 7. That's what Home needs, so leave them. Then check in **Layers** that the slider is at the top level, right under **Content**: when we dropped it at the top of the preview, it landed inside the **Grid** under it, next to the club's two sentences. Dragging it above the Grid in Layers puts it right.
 
-The slot mixes two kinds of things, and the slider doesn't mind: two blocks Drupal renders from views, and a component an editor fills in. Each is one element in the slot, so each is one slide.
+![The Canvas editor: the Library searched for hero, with Hero billboard, Hero CTA and Hero side-by-side under Hero, Hero and Hero slider under Lens & Trail, and Newest album, in the hero and Next hike, in the hero under Lists (Views); the Hero slider is selected on the page, and its form on the right shows Label Club highlights, Page heading Welcome to Lens & Trail and Interval 7](images/17-canvas-slider.png)
+*Figure 17.13: The Hero slider, from the Library, with its form.*
 
-%% Author: on the test site, done by code/chapter17/site/05-cms-home.php, not in the Canvas editor; the Canvas editor screenshots are still to take. In Canvas, a page's translations share its tree of components (which, where, in what order) and only the inputs are translated: setting both languages' trees in one save shifted the Spanish inputs by two components. The script saves English first, then the Spanish inputs by UUID. %%
+3. Drag the **Next hike, in the hero** block into the slider's **Slides** slot (the dashed box), then the **Newest album, in the hero** block onto the lower half of the first slide, so it goes after it. A view block's form has **Items per block** and **Override title**; leave both. Canvas doesn't print a block's title, so there's nothing to turn off. The preview shows the slider as it will be, controls and all.
+
+![The Canvas editor with the Layers panel: Hero slider, with its Slides slot holding Next hike, in the hero and Newest album, in the hero, above the Grid and the Section of Book 1's Home; the next hike's slide in the preview with the slider's controls; on the right, the selected block's form, Items per block 1 (default setting) and Override title, off](images/17-canvas-slides.png)
+*Figure 17.14: Two view blocks in the slider's Slides slot.*
+
+4. Then a **Hero**, the one in the **Lens & Trail** group, for Join the club. Dropping it after the second slide is fiddly, because that slide is hidden behind the first. Drop it anywhere, then open its menu in Layers and choose **Move** › **Move into** › **Slides (Hero slider)**. It goes in first; **Move** › **Move down**, twice, puts it last. Its form is filled with the examples too, the next hike's. Change them:
+   - **Style**: Color.
+   - **Eyebrow** and **Meta**: empty.
+   - **Heading**: Join the club. **Heading level** stays 2: the slider prints the h1.
+   - **Text**: Membership is £20 a year, £10 for students.
+   - **Link**: type *How to*, and choose **How to join** from the list. Canvas stores it as a link to the page, not to its address, so Spanish visitors go to the Spanish page.
+   - **Link text**: How to join. **Photo credit**: empty.
+
+![The Canvas editor with the Hero selected in the Slides slot, after the two view blocks; the preview shows the Join the club slide on the peach tint with its How to join button and the third dot filled; the form on the right: Style Color, Eyebrow and Meta empty, Heading Join the club, Heading level 2, Text Membership is £20 a year, £10 for students., Link How to join (3), Link text How to join](images/17-canvas-join.png)
+*Figure 17.15: The Join the club slide, a Hero filled in by hand.*
+
+5. **Review 1 change**, check **Welcome to Lens & Trail**, and **Publish 1 selected**.
+
+The slot mixes two kinds of things, and the slider doesn't mind: two blocks Drupal renders from views, and a component an editor fills in. Each is one element in the slot, so each is one slide. That's what the contributed slider modules in *A module, or our own?* can't do, and it's the reason the club's slider is a component with a slot.
+
+Last, the Spanish. As Book 1 showed, a Canvas page's translations share its components; only their text is translated. So the Spanish Home already has the slider, with English words in it. Open **Translate** in Canvas's sidebar, and select the state in the row of *Welcome to Lens & Trail*: it's **Outdated** now, because the English changed. The new boxes are:
+
+| English | Spanish |
+|---|---|
+| Club highlights (the slider's Label) | Lo último del club |
+| Welcome to Lens & Trail (its Page heading) | Te damos la bienvenida a Lens & Trail |
+| Join the club | Únete al club |
+| Membership is £20 a year, £10 for students. | La cuota es de 20 £ al año, 10 £ para estudiantes. |
+| `entity:node/3` | `entity:node/3` |
+| How to join | Cómo unirse |
+
+The URL is the one box to copy as it is. `entity:node/3` means "page 3, How to join", not an address, and Drupal gives each language that page's own address: `/es/unete` for Spanish visitors. (Book 1's Hero CTA had `internal:/join`, an address, and needed `internal:/unete`.) The two blocks' **Description** is a label for editors, and their **Title** is empty; leave them, as in Book 1.
+
+![Canvas Translate for Welcome to Lens & Trail, English to Spanish: the Newest album block's Description and Title untranslated, and the Hero's Heading Únete al club, Text La cuota es de 20 £ al año, 10 £ para estudiantes., URL entity:node/3 and Link text Cómo unirse; Draft, Saved, 10/24 fields](images/17-canvas-translate.png)
+*Figure 17.16: The Join the club slide, in Spanish.*
+
+Then **Review & publish**, and **Publish all**.
+
+%% Author: walked in the Canvas editor and Canvas Translate on the test site (Canvas 1.12.0, 2026-11-15), with Playwright. code/chapter17/site/05-cms-home.php does the same for rebuilds; it saves English first, then the Spanish inputs by UUID, because setting both languages' trees in one save shifted the Spanish inputs by two components. %%
 
 ![Drupal CMS's Home with the club's hero under the Navbar: the Turnhouse Hill photo, Next hike, the date, the heading, See the hike, the controls and the credit; the club's two sentences and When and where under it](images/17-cms-home.png)
-*Figure 17.13: The slider on Drupal CMS's Home.*
+*Figure 17.17: The slider on Drupal CMS's Home.*
 
 ![The same in Spanish on a phone, with Próxima excursión, the Spanish date and title, Ver la excursión, the controls, and Foto: dave souza at the top](images/17-cms-home-es-phone.png)
-*Figure 17.14: In Spanish, on a phone.*
+*Figure 17.18: In Spanish, on a phone.*
 
 ## Summary
 
