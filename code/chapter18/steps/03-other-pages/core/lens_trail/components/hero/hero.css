@@ -1,0 +1,177 @@
+/**
+ * @file
+ * The Hero component: text over a photo, or on the tint color.
+ */
+@layer components {
+  .hero {
+    /* The photo and the gradient go behind the text, but not behind the
+       page: isolation keeps their negative z-index inside the hero. */
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-items: end;
+    min-block-size: clamp(30rem, 80svh, 36rem);
+    overflow: hidden;
+    /* White on the photo in both color schemes, like the photo's credit:
+       it's on a photo, not on the page. The background is for the moment
+       before the photo arrives. */
+    background: var(--color-neutral-950);
+    color: var(--color-neutral-0);
+
+    @media (min-width: 48rem) {
+      align-items: center;
+    }
+  }
+
+  /* The text lines up with the page content under the hero. */
+  .hero__text {
+    inline-size: 100%;
+    max-inline-size: var(--size-content);
+    margin-inline: auto;
+    padding: var(--space-xl) var(--space-m) var(--space-3xl);
+
+    & > * {
+      max-inline-size: 34rem;
+    }
+  }
+
+  .hero__eyebrow {
+    margin: 0;
+    font-size: var(--font-size-step--1);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .hero__meta {
+    margin-block-start: var(--space-3xs);
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .hero__heading {
+    margin-block: var(--space-2xs) var(--space-m);
+    color: inherit;
+    font-size: var(--font-size-step-5);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+
+  .hero__intro {
+    margin-block: 0 var(--space-m);
+    font-size: var(--font-size-step-1);
+  }
+
+  .hero__link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--size-target);
+    padding-inline: var(--space-m);
+    border-radius: var(--radius-small);
+    background: var(--color-green-700);
+    color: var(--color-neutral-0);
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+    transition: background-color var(--duration-fast);
+
+    &:hover {
+      background: var(--color-green-800);
+    }
+
+    /* The page's focus ring is the action color, which would be lost on a
+       dark photo. */
+    &:focus-visible {
+      outline-color: var(--color-neutral-0);
+    }
+  }
+
+  /* The photo fills the hero, cut to its shape. Every wrapper between the
+     hero and the img (the media item, the figure, the picture) has to be as
+     tall as the hero too. */
+  .hero__photo {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+
+    & :is(div, figure, picture) {
+      block-size: 100%;
+    }
+
+    & img {
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+
+    /* On a phone, the slider's controls take the bottom corner, so the
+       credit goes to the top. */
+    & .photo__caption {
+      @media (max-width: 47.99rem) {
+        inset-block: 0 auto;
+      }
+    }
+  }
+
+  /* The gradient: the darkest where the text is, at the bottom on a phone and
+     on the left on a wider screen. text-shadow alone isn't enough: on a white
+     sky, white text with a shadow is still hard to read. After the photo in
+     the HTML, so it's drawn over it. */
+  .hero:has(.hero__photo)::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(to top, rgb(22 19 15 / 0.85) 0%, rgb(22 19 15 / 0.7) 55%, rgb(22 19 15 / 0.1) 100%);
+    pointer-events: none;
+
+    @media (min-width: 48rem) {
+      background: linear-gradient(to right, rgb(22 19 15 / 0.85) 0%, rgb(22 19 15 / 0.7) 45%, rgb(22 19 15 / 0) 80%);
+    }
+  }
+
+  /* No photo: the tint color, and the page's own text and button colors. */
+  .hero[data-component-variant="color"] {
+    min-block-size: 0;
+    background: var(--color-tint);
+    color: var(--color-on-tint);
+
+    & .hero__text {
+      padding-block: var(--space-2xl);
+    }
+
+    & .hero__link {
+      background: var(--color-action);
+      color: var(--color-on-action);
+
+      &:focus-visible {
+        outline-color: var(--color-action);
+      }
+    }
+  }
+}
+
+/* A little parallax: as the page scrolls up, the photo drifts up a little
+   slower than the text over it, as if it were further away. A scroll-driven
+   animation ties the animation to the scroll position instead of time:
+   view() is the hero's progress through the window, and the exit range is
+   the part where it's leaving at the top. By then the hero's top is out of
+   sight, so the gap the photo leaves there is never seen.
+   Only with no preference for reduced motion, and only in browsers that
+   have scroll-driven animations; elsewhere the photo scrolls with the page.
+   In a parent that scrolls sideways, such as the Hero slider, view() would
+   follow that parent instead of the page, so a parent can give its own
+   timeline in --hero-parallax-timeline. */
+@layer components {
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .hero__photo img {
+        animation: hero-parallax linear both;
+        animation-timeline: var(--hero-parallax-timeline, view());
+        animation-range: exit;
+      }
+    }
+  }
+
+  @keyframes hero-parallax {
+    to {
+      translate: 0 25%;
+    }
+  }
+}

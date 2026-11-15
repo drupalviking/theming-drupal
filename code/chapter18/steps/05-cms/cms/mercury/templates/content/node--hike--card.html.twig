@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * A hike in the Card view mode, as in the lists on an area's page (Drupal
+ * CMS's views list content as cards): the Hike card component, with the
+ * photo beside the text.
+ *
+ * The card takes props, as in Canvas, so this template reads them from the
+ * node. The photo's src is the one Canvas makes for its own image props: the
+ * original's address with the parametrized image style in a query string,
+ * which the card's canvas:image turns into a srcset.
+ *
+ * The component checks the types of its props. The address comes as a
+ * GeneratedUrl object, and generatedUrl is the string in it. The width and
+ * height come as strings, and "+ 0" makes them numbers.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{% set image = node.field_photo.entity.field_media_image %}
+{% include 'mercury:hike-card' with {
+  title: node.label,
+  url: url,
+  heading_level: 2,
+  layout: 'beside',
+  date: node.field_date.value ~ 'Z',
+  difficulty: node.field_difficulty.value,
+  walking_time: walking_time,
+  photo: image.isEmpty ? null : {
+    src: image.src_with_alternate_widths.generatedUrl,
+    alt: image.alt,
+    width: image.width + 0,
+    height: image.height + 0,
+  },
+} only %}
+{# Nothing of the display is printed, but rendering it passes its cache tags
+   (the photo's, for one) up to the list. #}
+{% set cache = content|render %}

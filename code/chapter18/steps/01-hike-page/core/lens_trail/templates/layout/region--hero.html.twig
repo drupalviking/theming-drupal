@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * The Hero region: the full-width band at the top of the front page.
+ *
+ * Its blocks are the slides of a Hero slider, in the order of Block layout.
+ *
+ * The region comes before the content region, and so before the page title.
+ * On the front page, the title moves here, as the page's h1, for screen
+ * readers only: the heroes' own headings are h2s, and they shouldn't come
+ * before the h1. The page title block is hidden on the front page in Block
+ * layout, and lens_trail's preprocess_region adds page_title here.
+ *
+ * @see \Drupal\lens_trail\Hook\LensTrailHooks::preprocessRegion()
+ */
+#}
+{% if content %}
+  <div{{ attributes.addClass('region', 'region-hero') }}>
+    {% if page_title %}
+      <h1 class="visually-hidden">{{ page_title }}</h1>
+    {% endif %}
+    {{ include('lens_trail:hero-slider', {
+      label: 'Club highlights'|t,
+      slides: content,
+    }, with_context = false) }}
+  </div>
+{% endif %}

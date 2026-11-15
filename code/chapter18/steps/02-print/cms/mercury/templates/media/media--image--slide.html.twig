@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * An Image media item in the Slide view modes: the photo behind a hero in
+ * the Home page's slider.
+ *
+ * Drupal CMS has a Hero view mode of its own, for a page's featured image,
+ * so ours are called Slide and Slide, later. The Photo component draws the
+ * photo and its credit, as in the Banner's.
+ * For the variables, see core's media.html.twig.
+ */
+#}
+<div{{ attributes }}>
+  {{ include('mercury:photo', {
+    image: content.field_media_image,
+    photographer: media.field_photographer.value,
+    license: content.field_license.0['#markup'],
+    source: media.field_source.uri,
+    credit: 'over',
+  }, with_context = false) }}
+</div>

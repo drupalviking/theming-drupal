@@ -1,0 +1,73 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Hero
+description: A big band at the top of a page, as wide as the window, with a heading and a link. Text over a photo, or on the tint color.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - heading
+  properties:
+    eyebrow:
+      type: string
+      title: Eyebrow
+      description: A few words above the heading that say what it is, such as "Next hike". Optional.
+      examples:
+        - Next hike
+    heading:
+      type: string
+      title: Heading
+      examples:
+        - Turnhouse Hill and Carnethy Hill
+    heading_level:
+      # number, not integer, as in the Hike card: SDC Styleguide can't read
+      # an integer from a demo file.
+      type: number
+      title: Heading level
+      description: 2 when the page has its own h1, as the front page has.
+      enum:
+        - 1
+        - 2
+        - 3
+      default: 2
+    text:
+      type: string
+      title: Text
+      description: A sentence under the heading. Optional.
+      examples:
+        - Membership is £20 a year, £10 for students.
+    url:
+      type: string
+      format: uri-reference
+      title: Link
+      description: Where the button goes. Without it, there's no button.
+      examples:
+        - /hikes/turnhouse-hill-and-carnethy-hill
+    link_text:
+      type: string
+      title: Link text
+      description: What the button says. Say where it goes, not "Read more".
+      examples:
+        - See the hike
+slots:
+  meta:
+    title: Meta
+    description: A line between the eyebrow and the heading, such as the hike's date, rendered by Drupal. Optional.
+  photo:
+    title: Photo
+    description: The photo behind the text, as Drupal has rendered it, with its credit. Only in the Photo variant.
+variants:
+  photo:
+    title: Photo
+    description: White text on a photo, darkened by a gradient where the text is.
+  color:
+    title: Color
+    description: Text on the tint color, for a hero without a photo.
+libraryOverrides:
+  # As in the Hike card: the layers are declared in the base library's first
+  # file, so it has to come first. The photo in the slot is usually a Photo
+  # component, which brings its own CSS; this makes sure it's there when the
+  # slot is filled some other way, such as in a demo.
+  dependencies:
+    - lens_trail/base
+    - core/components.lens_trail--photo

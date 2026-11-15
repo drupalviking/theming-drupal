@@ -10,6 +10,9 @@ page, so the figures stay readable in print. The tags let a chapter take the
 same page before and after a step (put the step on the site first, with
 tools/use-step.sh, then run the tag).
 
+Shots tagged "print" are taken as the page prints (print media, 794 pixels
+wide: an A4 page at 96 dpi).
+
 Logged-in shots log in as admin with a one-time link (drush user:login).
 
 Needs Python Playwright: python3 -m pip install playwright && python3 -m playwright install chromium
@@ -192,6 +195,25 @@ SHOTS = {
         ("cms", "17-cms-home", "cms", "/", 1280, 700, False),
         ("cms", "17-cms-home-es-phone", "cms", "/es", 360, 740, False),
     ],
+    # 18: "before" on Chapter 17's site (snapshot ch17-core-04 and
+    # tools/use-step.sh 17 05); the rest on step 04 (tools/use-step.sh 18 04)
+    # after code/chapter18/site/01-hike-page.php, 03-other-pages.php and
+    # translations.php; "cms" on step 05 after 05-cms.php and
+    # translations.php on the Drupal CMS site.
+    "18": [
+        ("before", "18-hike-before", "core", "/hikes/turnhouse-hill", 1280, 1400, False),
+        ("page", "18-hike", "core", "/hikes/turnhouse-hill", 1280, 1300, False),
+        ("page", "18-hike-phone", "core", "/hikes/turnhouse-hill", 360, 1100, False),
+        ("page", "18-hike-display", "core", "/admin/structure/types/manage/hike/display/default", 1280, 1100, True),
+        ("page", "18-news", "core", "/news/club-has-website", 1280, 1100, False),
+        ("page", "18-album", "core", "/galleries/pentlands-21-november", 1280, 700, False),
+        ("page", "18-comments", "core", "/galleries/pentlands-21-november", 1280, 500, False, "section:has(.comment)"),
+        ("page", "18-area", "core", "/areas/pentland-hills", 1280, 1500, False),
+        ("print", "18-hike-print", "core", "/hikes/turnhouse-hill", 794, 1123, False),
+        ("cms", "18-cms-hike", "cms", "/hikes/turnhouse-hill", 1280, 1300, False),
+        ("cms", "18-cms-area", "cms", "/areas/pentland-hills", 1280, 1500, False),
+        ("cms", "18-cms-print", "cms", "/hikes/turnhouse-hill", 794, 1123, False),
+    ],
 }
 
 
@@ -216,6 +238,8 @@ def main(chapter, tag=None):
                                           viewport={"width": width, "height": height},
                                           color_scheme="dark" if t == "dark" else "light")
             page = context.new_page()
+            if t == "print" or name.endswith("-print"):
+                page.emulate_media(media="print")
             if logged_in:
                 page.goto(login_url(site))
             page.goto(SITES[site][0] + path)

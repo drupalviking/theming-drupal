@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * The first book's search box (the Search view's exposed form, in the
+ * Navbar's CTAs slot) as the Navbar's search icon. The form goes into the
+ * Search component's form slot. When the block is set to show its title, the
+ * title isn't printed: it becomes the panel's name for screen readers instead
+ * (label is empty when the title is hidden).
+ *
+ * See block.html.twig for the variables.
+ */
+#}
+{{ include('mercury:search', {
+  url: path('view.search.page_1'),
+  id: 'site-search',
+  label: label,
+  form: content,
+}, with_context = false) }}

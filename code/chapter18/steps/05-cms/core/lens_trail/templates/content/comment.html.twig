@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * One comment: who wrote it and when, then what they wrote.
+ *
+ * The comment's own subject is left out: it's the first words of the
+ * comment, so it would say the same thing twice. Replies are indented by
+ * the field's template, from core.
+ * For the variables, see core's comment.html.twig.
+ */
+#}
+{{ attach_library('lens_trail/comments') }}
+<article{{ attributes.addClass('comment', status == 'unpublished' ? 'comment--unpublished') }}>
+  <p class="comment__meta">
+    <span class="comment__author">{{ author }}</span>
+    <time class="comment__date" datetime="{{ comment.createdtime|date('c') }}">{{ created }}</time>
+  </p>
+  {{ title_prefix }}
+  {{ title_suffix }}
+  <div{{ content_attributes.addClass('comment__content') }}>
+    {{ content|without('links') }}
+  </div>
+  {{ content.links }}
+</article>

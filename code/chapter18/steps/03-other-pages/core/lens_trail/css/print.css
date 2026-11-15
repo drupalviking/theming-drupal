@@ -1,0 +1,102 @@
+/**
+ * @file
+ * The club's pages on paper, after Chapter 3's hike handout: only the
+ * content, black on white, the facts as a list, and the addresses of links
+ * written out. The library loads it with media="print", so the browser
+ * doesn't wait for it before showing a page on screen.
+ *
+ * The print layer is the last in layers.css, so it wins over everything else
+ * without !important.
+ */
+@layer print {
+  /* Light colors on paper, whatever the screen was. The roles are
+     light-dark() pairs, so this one line changes all of them. */
+  :root,
+  :root[data-color-scheme] {
+    color-scheme: light;
+  }
+
+  @page {
+    margin: 15mm;
+  }
+
+  body {
+    background: none;
+    font-size: 11pt;
+  }
+
+  /* What's only for the screen: the menus and tools, the breadcrumb, the
+     hero, the sidebar and the footer. On a hike's page, its photo (mostly
+     ink) and the albums from it. A block's id is its machine name in Block
+     layout. */
+  .site-header__tools,
+  .region-primary-menu,
+  .site-header button,
+  .region-breadcrumb,
+  .region-hero,
+  .layout-sidebar,
+  .site-footer,
+  #block-lens-trail-albums-from-this-hike,
+  .hike__photo {
+    display: none;
+  }
+
+  /* The header is the club's logo and name, with a line under it. */
+  .site-header {
+    position: static;
+    border-block-end: 1pt solid;
+  }
+
+  .page-columns {
+    display: block;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  /* On paper you can't click: the address of a link to another site goes
+     after its text. Links to the club's own pages don't need it. */
+  .layout-content a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+  }
+
+  /* A hike's facts: a list of labels and values, no boxes. */
+  .hike__facts {
+    display: block;
+  }
+
+  .fact {
+    display: flex;
+    gap: 0.5em;
+    padding: 0;
+    border: 0;
+
+    & .fact__label::after {
+      content: ":";
+    }
+
+    & .fact__label,
+    & .fact__extra {
+      color: inherit;
+      font-size: inherit;
+    }
+  }
+
+  /* Headings stay with what follows them, and photos aren't cut in two. */
+  h1, h2, h3 {
+    break-after: avoid;
+  }
+
+  img, figure {
+    break-inside: avoid;
+  }
+
+  .printed-from[hidden] {
+    display: block;
+    margin-block-start: 2em;
+    font-size: 0.85em;
+  }
+}

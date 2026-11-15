@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 320" width="480" height="320" role="img" aria-labelledby="title">
+  <title id="title">Lens &amp; Trail: no photo yet</title>
+  <!-- The club's default photo, for a hike without one. color.tint (sand.100) with the logo in color.on-tint (sand.800), light mode. Drawn in Penpot (Components page, "Default photo"). CC BY-SA 4.0 or GPL-2.0-or-later, so the themes can ship it. -->
+  <rect width="480" height="320" fill="#ffe2c8"/>
+  <g fill="none" stroke="#603703" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+    <circle cx="240" cy="160" r="26"/>
+    <circle cx="240" cy="152" r="7"/>
+    <path d="M216 174 L230 160 L238 168 L248 156 L264 174"/>
+  </g>
+</svg>

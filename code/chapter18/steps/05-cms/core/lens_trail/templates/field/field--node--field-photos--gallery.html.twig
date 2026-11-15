@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * The photos of an album (the Photos field of the Gallery content type).
+ *
+ * The Album component draws the grid and the lightbox; this template only
+ * puts each photo in a list item. For the variables, see core's
+ * field.html.twig.
+ */
+#}
+{% embed 'lens_trail:album' %}
+  {% block photos %}
+    {% for item in items %}
+      <li class="album__item">{{ item.content }}</li>
+    {% endfor %}
+  {% endblock %}
+{% endembed %}

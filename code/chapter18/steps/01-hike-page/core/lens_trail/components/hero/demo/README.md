@@ -1,0 +1,1 @@
+turnhouse-hill.avif: Turnhouse Hill across Glencorse Reservoir, by dave souza, CC BY-SA 4.0, from https://commons.wikimedia.org/wiki/File:Glencorse_Reservoir,_Turnhouse_Hill.jpg, cut to 16:9 by the site's Banner image style.

@@ -342,3 +342,92 @@ document.addEventListener('visibilitychange', () => {
 - **Both only call `schedule()`.** When the slider comes back into sight, the wait starts from the beginning, so the visitor gets the whole seven seconds with the slide they left. Nothing else in the script changes: Pause still wins over everything, and a press on Next still works while the slider is half out of the window.
 
 We tested it on the core site: scrolled so the slider was out of the window, it stayed on the first slide well past the seven seconds; scrolled back, it moved on again.
+
+## Chapter 18, exercise 6: an album in JSON-LD
+
+The hike's Event could be built in the template, because every value was on the hike itself. An album's photos are a step further away: each one is a media item, with the image file, the photographer and the license as fields. And JSON-LD wants each photo's full address, with the domain, which Twig's `file_url()` doesn't give. So the photos are built in PHP, in the node's preprocess, and the template puts them in the gallery:
+
+`src/Hook/LensTrailHooks.php`, `preprocessNode()` ([source](../code/chapter18/snippets/LensTrailHooks.album-json-ld.php))
+
+```php
+/**
+ * Implements hook_preprocess_node().
+ *
+ * Adds an estimated walking time to hike cards, and an album's photos, as
+ * Schema.org ImageObjects, to its own page.
+ */
+#[Hook('preprocess_node')]
+public function preprocessNode(array &$variables): void {
+  $node = $variables['node'];
+  if ($node->bundle() === 'hike' && in_array($variables['view_mode'], ['card', 'card_list', 'teaser'], TRUE)) {
+    $variables['walking_time'] = $this->walkingTime($node);
+  }
+  if ($node->bundle() === 'gallery' && $variables['view_mode'] === 'full') {
+    $variables['photos'] = $this->imageObjects($node);
+  }
+}
+```
+
+`src/Hook/LensTrailHooks.php`, `imageObjects()` ([source](../code/chapter18/snippets/LensTrailHooks.album-json-ld.php))
+
+```php
+/**
+ * An album's photos, for JSON-LD: the file's full address, and who took it
+ * under which license, from the media item's fields.
+ */
+protected function imageObjects(NodeInterface $album): array {
+  $licenses = [
+    'cc_by_sa_4_0' => 'https://creativecommons.org/licenses/by-sa/4.0/',
+    'cc_by_sa_2_0' => 'https://creativecommons.org/licenses/by-sa/2.0/',
+    'cc_by_4_0' => 'https://creativecommons.org/licenses/by/4.0/',
+    'cc0' => 'https://creativecommons.org/publicdomain/zero/1.0/',
+  ];
+  $photos = [];
+  foreach ($album->get('field_photos')->referencedEntities() as $media) {
+    $image = $media->get('field_media_image');
+    if ($image->isEmpty()) {
+      continue;
+    }
+    $photo = [
+      '@type' => 'ImageObject',
+      // Twig's file_url() gives an address without the domain; JSON-LD
+      // wants all of it.
+      'contentUrl' => $this->fileUrlGenerator->generateAbsoluteString($image->entity->getFileUri()),
+      'caption' => $image->alt,
+      'creditText' => $media->get('field_photographer')->value,
+    ];
+    if (!$media->get('field_photographer')->isEmpty()) {
+      $photo['creator'] = ['@type' => 'Person', 'name' => $media->get('field_photographer')->value];
+    }
+    $license = $licenses[$media->get('field_license')->value] ?? NULL;
+    if ($license) {
+      $photo['license'] = $license;
+    }
+    $photos[] = array_filter($photo);
+  }
+  return $photos;
+}
+```
+
+- **`generateAbsoluteString()`**, from core's `file_url_generator` service, gives the file's address with the domain. The hook class gets the service in its constructor (`FileUrlGeneratorInterface $fileUrlGenerator`), like the others.
+- **`caption`** is the image's alt text. It describes the photo, which is what a caption in Schema.org is for. **`creditText`** and **`creator`** are the photographer, and **`license`** is the license's address, which the club's list field stores as a key: the method maps the keys to Creative Commons' addresses. "All rights reserved, used with permission" has no address, so those photos have no `license`.
+- **`array_filter()`** drops the empty values, so a photo without a photographer has no empty `creditText`.
+
+The template adds the gallery at the end, as the hike's page does with its Event:
+
+`templates/content/node--gallery--full.html.twig` ([source](../code/chapter18/snippets/node--gallery--full.album-json-ld.html.twig))
+
+```twig
+{% set gallery = {
+  '@context': 'https://schema.org',
+  '@type': 'ImageGallery',
+  'name': node.label,
+  'url': url('entity.node.canonical', {'node': node.id})|render,
+  'image': photos,
+} %}
+<script type="application/ld+json">
+  {{ gallery|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE'))|raw }}
+</script>
+```
+
+No cache tag is lost: the photos are rendered in the same template (`content.field_photos`), and that passes the media items' tags up to the page. On the core site, the Pentlands album gives an `ImageGallery` with four `ImageObject`s, each with its photographer and a CC BY-SA 2.0 or 4.0 address.
