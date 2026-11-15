@@ -2310,6 +2310,8 @@ The CSS is where Mercury's Navbar makes a difference:
 - **On a phone**, the CTAs are at the bottom of Mercury's menu panel, as the toggle found. There's no room under the Navbar, so the panel is a line of its own at the end of the row (`order: 1` puts it after the toggle, and `flex-basis: 100%` gives it the whole line).
 - **The form's button.** Mercury has a rule for buttons in the Navbar, meant for its call-to-action links: on a phone, they're nearly as wide as the screen, with a margin on each side. The search form's **Search** button is a `.button` in the Navbar too, so it got the same, and the field had no room. Our selector has to be more specific than Mercury's `.navbar--links .button.button`, which is why it says `.button.button` too.
 
+The design has the search next to the Menu button on a phone, as on the core site. Mercury's Navbar has no place for it there yet; the menus chapter gives it one.
+
 The templates have new Tailwind classes, so build Mercury's CSS again, as in Chapter 6:
 
 `terminal` ([source](../code/chapter15/snippets/mercury-build.sh))

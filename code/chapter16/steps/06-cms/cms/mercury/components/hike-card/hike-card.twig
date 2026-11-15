@@ -1,0 +1,55 @@
+{#
+/**
+ * @file
+ * The Hike card: the core theme's component, styled with Tailwind.
+ *
+ * In Canvas, editors fill everything in by hand, so the facts are props here,
+ * not a slot.
+ */
+#}
+{% set heading = 'h' ~ heading_level|default(3) %}
+{% set difficulty_labels = {
+  easy: 'Easy'|t,
+  moderate: 'Moderate'|t,
+  hard: 'Hard'|t,
+} %}
+{% set beside = layout|default('top') == 'beside' %}
+<article{{ attributes.addClass('@container w-full overflow-hidden rounded-lg border border-club-border bg-club-surface') }}>
+  <div class="grid{{ beside ? ' @[30rem]:grid-cols-[2fr_3fr] @[30rem]:items-start' }}">
+    <div class="p-club-s">
+      <{{ heading }} class="mb-club-2xs text-step-1 font-semibold">
+        <a href="{{ url }}" class="text-club-action underline hover:no-underline">{{ title }}</a>
+      </{{ heading }}>
+      <div class="flex flex-wrap items-center gap-x-club-xs gap-y-club-2xs text-step--1">
+        <time datetime="{{ date }}" class="text-club-muted">{{ date|date('U')|format_date('long') }}</time>
+        <span class="rounded-full bg-club-tint px-club-2xs text-club-on-tint">{{ difficulty_labels[difficulty] }}</span>
+        {% if walking_time %}
+          <span class="text-club-muted">{{ walking_time }}</span>
+        {% endif %}
+      </div>
+    </div>
+    {% if photo.src %}
+      {# Canvas's own image component makes the srcset from Canvas's image
+         style, in the widths Canvas allows. The sizes: "auto" lets a browser
+         that knows it use the card's real width, because the photo loads
+         lazily; the rest is for the others (three cards a row from 48rem). #}
+      {% include 'canvas:image' with {
+        src: photo.src,
+        alt: photo.alt,
+        width: photo.width,
+        height: photo.height,
+        sizes: 'auto, (min-width: 48rem) 33vw, 100vw',
+        class: '-order-1 aspect-[3/2] w-full object-cover',
+      } only %}
+    {% else %}
+      {# No photo yet: the club's default photo, as on the core site. #}
+      <svg class="-order-1 aspect-[3/2] w-full bg-club-tint text-club-on-tint" viewBox="0 0 480 320" aria-hidden="true" focusable="false">
+        <g fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+          <circle cx="240" cy="160" r="26"/>
+          <circle cx="240" cy="152" r="7"/>
+          <path d="M216 174 L230 160 L238 168 L248 156 L264 174"/>
+        </g>
+      </svg>
+    {% endif %}
+  </div>
+</article>

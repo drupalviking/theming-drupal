@@ -1,0 +1,44 @@
+{#
+/**
+ * @file
+ * The main menu: core's menu.html.twig, with classes for the theme.
+ *
+ * - main-menu on the first list, main-menu__submenu on the lists under it.
+ * - main-menu__item--active-trail on the items on the way to the current
+ *   page: on the hike archive, Hikes is in the active trail.
+ * - main-menu__item--has-submenu on the items with links under them.
+ *
+ * See core's menu.html.twig for the variables: items, and in each item
+ * title, url, below, in_active_trail, is_expanded and attributes.
+ */
+#}
+{% import _self as menus %}
+
+{{ menus.menu_links(items, attributes, 0) }}
+
+{% macro menu_links(items, attributes, menu_level) %}
+  {% import _self as menus %}
+  {% if items %}
+    {% if menu_level == 0 %}
+      <ul{{ attributes.addClass('main-menu') }}>
+    {% else %}
+      <ul class="main-menu__submenu">
+    {% endif %}
+    {% for item in items %}
+      {%
+        set classes = [
+          'main-menu__item',
+          item.in_active_trail ? 'main-menu__item--active-trail',
+          item.below ? 'main-menu__item--has-submenu',
+        ]
+      %}
+      <li{{ item.attributes.addClass(classes) }}>
+        {{ link(item.title, item.url, { class: ['main-menu__link'] }) }}
+        {% if item.below %}
+          {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}

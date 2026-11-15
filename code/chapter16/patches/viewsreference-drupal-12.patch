@@ -1,0 +1,148 @@
+diff --git a/src/Attribute/ViewsReferenceSetting.php b/src/Attribute/ViewsReferenceSetting.php
+new file mode 100644
+index 0000000..b8510ec
+--- /dev/null
++++ b/src/Attribute/ViewsReferenceSetting.php
+@@ -0,0 +1,39 @@
++<?php
++
++namespace Drupal\viewsreference\Attribute;
++
++use Drupal\Component\Plugin\Attribute\Plugin;
++use Drupal\Core\StringTranslation\TranslatableMarkup;
++
++/**
++ * Defines a views reference setting attribute.
++ *
++ * Drupal 12 no longer discovers plugins by annotation alone: a plugin manager
++ * needs an attribute class, and keeps reading the annotation for BC.
++ *
++ * @see \Drupal\viewsreference\Plugin\ViewsReferenceSettingManager
++ * @see \Drupal\viewsreference\Annotation\ViewsReferenceSetting
++ */
++#[\Attribute(\Attribute::TARGET_CLASS)]
++class ViewsReferenceSetting extends Plugin {
++
++  /**
++   * Constructs a ViewsReferenceSetting attribute.
++   *
++   * @param string $id
++   *   The plugin ID.
++   * @param \Drupal\Core\StringTranslation\TranslatableMarkup|null $label
++   *   The label of the plugin.
++   * @param mixed $default_value
++   *   The field default value.
++   * @param class-string|null $deriver
++   *   (optional) The deriver class.
++   */
++  public function __construct(
++    public readonly string $id,
++    public readonly ?TranslatableMarkup $label = NULL,
++    public readonly mixed $default_value = NULL,
++    public readonly ?string $deriver = NULL,
++  ) {}
++
++}
+diff --git a/src/Hook/ViewsReferenceThemeHooks.php b/src/Hook/ViewsReferenceThemeHooks.php
+new file mode 100644
+index 0000000..94899a6
+--- /dev/null
++++ b/src/Hook/ViewsReferenceThemeHooks.php
+@@ -0,0 +1,23 @@
++<?php
++
++namespace Drupal\viewsreference\Hook;
++
++/**
++ * Preprocessing for the module's theme hooks.
++ *
++ * Registered with "initial preprocess" in viewsreference_theme(): Drupal 12
++ * no longer calls template_preprocess_HOOK() functions in .module files.
++ */
++class ViewsReferenceThemeHooks {
++
++  /**
++   * Prepares variables for viewsreference--view-title.html.twig.
++   */
++  public function preprocessViewTitle(array &$variables): void {
++    $variables['title'] = ['#markup' => $variables['variables']['#title']];
++    if (!empty($variables['variables']['#view'])) {
++      \Drupal::service('renderer')->addCacheableDependency($variables, $variables['variables']['#view']->storage);
++    }
++  }
++
++}
+diff --git a/src/Plugin/Field/FieldFormatter/ViewsReferenceFieldFormatter.php b/src/Plugin/Field/FieldFormatter/ViewsReferenceFieldFormatter.php
+index 8a89c5b..0c0847e 100644
+--- a/src/Plugin/Field/FieldFormatter/ViewsReferenceFieldFormatter.php
++++ b/src/Plugin/Field/FieldFormatter/ViewsReferenceFieldFormatter.php
+@@ -198,7 +198,7 @@ class ViewsReferenceFieldFormatter extends FormatterBase {
+       // only generate cacheable metadata from an array.
+       if (is_array($render_array)) {
+         $cacheable_metadata = CacheableMetadata::createFromRenderArray($render_array);
+-        $cacheability->merge($cacheable_metadata);
++        $cacheability = $cacheability->merge($cacheable_metadata);
+       }
+     }
+ 
+diff --git a/src/Plugin/Field/FieldWidget/ViewsReferenceTrait.php b/src/Plugin/Field/FieldWidget/ViewsReferenceTrait.php
+index cdb25c8..b757636 100644
+--- a/src/Plugin/Field/FieldWidget/ViewsReferenceTrait.php
++++ b/src/Plugin/Field/FieldWidget/ViewsReferenceTrait.php
+@@ -442,7 +442,7 @@ trait ViewsReferenceTrait {
+    * @return array
+    *   An array of field values, keyed by delta.
+    */
+-  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
++  public function massageFormValues(array $values, array $form, FormStateInterface $form_state): array {
+     $values = parent::massageFormValues($values, $form, $form_state);
+     foreach ($values as $key => $value) {
+       if (isset($value['options']) && is_array($value['options'])) {
+diff --git a/src/Plugin/ViewsReferenceSettingManager.php b/src/Plugin/ViewsReferenceSettingManager.php
+index e85a7e4..0efea50 100644
+--- a/src/Plugin/ViewsReferenceSettingManager.php
++++ b/src/Plugin/ViewsReferenceSettingManager.php
+@@ -23,7 +23,7 @@ class ViewsReferenceSettingManager extends DefaultPluginManager {
+    *   The module handler to invoke the alter hook with.
+    */
+   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
+-    parent::__construct('Plugin/ViewsReferenceSetting', $namespaces, $module_handler, 'Drupal\viewsreference\Plugin\ViewsReferenceSettingInterface', 'Drupal\viewsreference\Annotation\ViewsReferenceSetting');
++    parent::__construct('Plugin/ViewsReferenceSetting', $namespaces, $module_handler, 'Drupal\viewsreference\Plugin\ViewsReferenceSettingInterface', 'Drupal\viewsreference\Attribute\ViewsReferenceSetting', 'Drupal\viewsreference\Annotation\ViewsReferenceSetting');
+ 
+     $this->alterInfo('viewsreference_viewsreference_setting_info');
+     $this->setCacheBackend($cache_backend, 'viewsreference_viewsreference_setting_plugins');
+diff --git a/viewsreference.module b/viewsreference.module
+index 4e5aa01..ef00f13 100644
+--- a/viewsreference.module
++++ b/viewsreference.module
+@@ -5,6 +5,7 @@
+  * Defines a field type to embed views in an entity reference field.
+  */
+ 
++use Drupal\viewsreference\Hook\ViewsReferenceThemeHooks;
+ use Drupal\Component\Utility\Html;
+ use Drupal\Component\Utility\Xss;
+ use Drupal\Core\Routing\RouteMatchInterface;
+@@ -47,6 +48,10 @@ function viewsreference_theme($existing, $type, $theme, $path) {
+     'viewsreference__view_title' => [
+       'template' => 'viewsreference--view-title',
+       'render element' => 'variables',
++      // Drupal 11.2 and newer call this instead of the procedural
++      // template_preprocess_viewsreference__view_title(); Drupal 12 no
++      // longer calls the procedural one at all.
++      'initial preprocess' => ViewsReferenceThemeHooks::class . ':preprocessViewTitle',
+     ],
+     'viewsreference__lazy_builder_loading' => [
+       'template' => 'viewsreference--lazy-builder-loading',
+@@ -59,10 +64,7 @@ function viewsreference_theme($existing, $type, $theme, $path) {
+  * Implements hook_preprocess_HOOK().
+  */
+ function template_preprocess_viewsreference__view_title(&$variables) {
+-  $variables['title'] = ['#markup' => $variables['variables']['#title']];
+-  if (!empty($variables['variables']['#view'])) {
+-    \Drupal::service('renderer')->addCacheableDependency($variables, $variables['variables']['#view']->storage);
+-  }
++  \Drupal::service(ViewsReferenceThemeHooks::class)->preprocessViewTitle($variables);
+ }
+ 
+ /**

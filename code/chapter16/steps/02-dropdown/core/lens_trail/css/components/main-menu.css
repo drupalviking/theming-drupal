@@ -1,0 +1,110 @@
+/**
+ * @file
+ * The main menu in the header: one row of links that wraps when it runs out
+ * of room, and a dropdown under Hikes. The classes come from
+ * templates/navigation/menu--main.html.twig, the button from js/main-menu.js.
+ */
+@layer components {
+  .main-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-xs);
+    /* The links' padding would push the first one in from the logo. */
+    margin: 0;
+    margin-inline-start: calc(-1 * var(--space-2xs));
+    padding: 0;
+    list-style: none;
+  }
+
+  .main-menu__item {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .main-menu__link {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: var(--size-target);
+    padding-inline: var(--space-2xs);
+    color: var(--color-text);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    text-underline-offset: 0.3em;
+
+    &:hover {
+      color: var(--color-action);
+      text-decoration: underline;
+    }
+
+    /* The page you're on: Drupal marks the link for us. */
+    &[aria-current="page"] {
+      color: var(--color-action);
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  /* The section you're in: Hikes, on the hike archive. Only for the eye; the
+     breadcrumb says it in words. */
+  .main-menu__item--active-trail > .main-menu__link {
+    color: var(--color-action);
+  }
+
+  /* The dropdown's button: as tall as the link, so it's easy to hit, but
+     narrow, so it stays next to the word it belongs to. */
+  .main-menu__toggle {
+    display: inline-grid;
+    place-items: center;
+    inline-size: 1.75rem;
+    block-size: var(--size-target);
+    margin-inline-start: calc(-1 * var(--space-2xs));
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-small);
+    background: none;
+    color: inherit;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-action);
+    }
+
+    & svg {
+      inline-size: 1.25rem;
+      block-size: 1.25rem;
+      transition: rotate var(--duration-fast);
+    }
+
+    &[aria-expanded="true"] svg {
+      rotate: 180deg;
+    }
+  }
+
+  /* Without the script there's no button, and the list stays hidden: the
+     hikes page links to the archive. With it, the hidden attribute decides. */
+  .main-menu__submenu {
+    display: none;
+  }
+
+  .main-menu__item:has(> .main-menu__toggle) > .main-menu__submenu:not([hidden]) {
+    position: absolute;
+    z-index: 10;
+    inset-block-start: 100%;
+    inset-inline-start: 0;
+    display: block;
+    min-inline-size: 14rem;
+    margin: 0;
+    padding: var(--space-2xs);
+    list-style: none;
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-overlay);
+
+    & .main-menu__link {
+      display: flex;
+      padding-inline: var(--space-xs);
+    }
+  }
+}

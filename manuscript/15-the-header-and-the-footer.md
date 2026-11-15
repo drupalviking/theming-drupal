@@ -203,7 +203,7 @@ The button is the toggle's round button, with the same tokens. The panel opens o
 
 The rest is site building. On **Block layout**, find **Search the club** in **Highlighted**, set its **Region** to **Secondary menu**, after the **Language switcher**, and save. On a phone, the button sits with the languages and the toggle, under the menu, for now.
 
-%% Author: on the test site, the block was moved by code/chapter15/site/04-search.php. The design (2026-11-13 Decisions) has the search next to the Menu button on a phone; that's the menus chapter's to do. %%
+%% Author: on the test site, the block was moved by code/chapter15/site/04-search.php. %%
 
 > **Try it:** Switch JavaScript off in the browser's developer tools (in Chrome, Ctrl-Shift-P or Cmd-Shift-P, then *Disable JavaScript*), and reload a page. The magnifying glass is still there. What happens when you click it? And with JavaScript back on, what does a screen reader say about the button before and after you press it?
 
@@ -468,7 +468,7 @@ The CSS is where Mercury's Navbar makes a difference:
 - **On a phone**, the CTAs are at the bottom of Mercury's menu panel, as the toggle found. There's no room under the Navbar, so the panel is a line of its own at the end of the row (`order: 1` puts it after the toggle, and `flex-basis: 100%` gives it the whole line).
 - **The form's button.** Mercury has a rule for buttons in the Navbar, meant for its call-to-action links: on a phone, they're nearly as wide as the screen, with a margin on each side. The search form's **Search** button is a `.button` in the Navbar too, so it got the same, and the field had no room. Our selector has to be more specific than Mercury's `.navbar--links .button.button`, which is why it says `.button.button` too.
 
-%% Author: the design (2026-11-13 Decisions) has the search next to the Menu button on a phone. On Mercury, everything in the CTAs slot is in the menu panel on a phone, so the search is there, after the languages. Next to the Menu button would mean a slot of our own in the Navbar; worth deciding with the menus chapter. %%
+The design has the search next to the Menu button on a phone, as on the core site. Mercury's Navbar has no place for it there yet; the menus chapter gives it one.
 
 The templates have new Tailwind classes, so build Mercury's CSS again, as in Chapter 6:
 

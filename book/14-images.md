@@ -171,7 +171,11 @@ Focal Point is one click per photo, it serves every shape we'll ever add, and it
 > # 2. The Drupal 12 merge requests from both issue queues, as patches.
 > mkdir -p patches
 > cp "$BOOK2/code/chapter14/patches/"*.patch patches/
-> ddev composer config --json extra.patches.drupal/crop '[{"description": "Drupal 12 compatibility https://www.drupal.org/project/crop/issues/3629654 (MR !37)", "url": "patches/crop-3629654-drupal-12.patch"}]'
+> # The second Crop patch is ours: on Drupal 12, Crop's procedural
+> # hook_requirements() in crop.install stops every module from installing
+> # ("Class crop_requirements does not exist"; core issue #3574003). It moves the
+> # check into Drupal's requirements classes. Not posted upstream (2026-11-14).
+> ddev composer config --json extra.patches.drupal/crop '[{"description": "Drupal 12 compatibility https://www.drupal.org/project/crop/issues/3629654 (MR !37)", "url": "patches/crop-3629654-drupal-12.patch"}, {"description": "Drupal 12: hook_requirements() as InstallRequirementsInterface and hook_runtime_requirements. Ours, see core #3574003 (2026-11-14)", "url": "patches/crop-drupal-12-requirements.patch"}]'
 > ddev composer config --json extra.patches.drupal/focal_point '[{"description": "Drupal 12 readiness https://www.drupal.org/project/focal_point/issues/3634508 (MR !67, with its src/ Hook folder renamed to src/Hook)", "url": "patches/focal_point-3634508-drupal-12.patch"}]'
 >
 > # 3. The module. The site keeps its patches in patches.lock.json (Book 1's
@@ -182,7 +186,7 @@ Focal Point is one click per photo, it serves every shape we'll ever add, and it
 > ddev drush pm:install focal_point -y
 > ```
 >
-> `mglaman/composer-drupal-lenient` is a Composer plugin that lets Composer install a module whose release doesn't list your version of Drupal; you name the modules it may do that for. The patches are in the book's repository, under `code/chapter14/patches/`. The site already has `composer-patches`, with its list of applied patches in `patches.lock.json` (Book 1's Chapter 22), so after the new patches are added, `patches-relock` makes that list again and `patches-repatch` applies them. On the Drupal CMS site, which runs Drupal 11, none of this is needed: Focal Point comes with it.
+> `mglaman/composer-drupal-lenient` is a Composer plugin that lets Composer install a module whose release doesn't list your version of Drupal; you name the modules it may do that for. The patches are in the book's repository, under `code/chapter14/patches/`. The site already has `composer-patches`, with its list of applied patches in `patches.lock.json` (Book 1's Chapter 22), so after the new patches are added, `patches-relock` makes that list again and `patches-repatch` applies them. The second Crop patch is ours, and not from the issue queue: on Drupal 12, Crop's old-style `hook_requirements()` stops *every* module from installing, with Drush and on **Extend** alike ("Class crop_requirements does not exist"). Drupal 12 wants those checks as classes, so the patch moves Crop's into one. Core's issue about it, [#3574003](https://www.drupal.org/project/drupal/issues/3574003), was still open when we wrote this. On the Drupal CMS site, which runs Drupal 11, none of this is needed: Focal Point comes with it.
 
 With the module installed, the image field's widget has to be the Focal Point one, on both of the image's forms:
 

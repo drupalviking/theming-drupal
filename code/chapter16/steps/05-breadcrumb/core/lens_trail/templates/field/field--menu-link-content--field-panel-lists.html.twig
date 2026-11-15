@@ -1,0 +1,12 @@
+{#
+/**
+ * @file
+ * A menu link's Panel lists: one element for each list, and no wrappers, so
+ * the panel's grid can place them.
+ *
+ * See field.html.twig for the variables.
+ */
+#}
+{% for item in items %}
+  <div{{ item.attributes.addClass('main-menu__list') }}>{{ item.content }}</div>
+{% endfor %}

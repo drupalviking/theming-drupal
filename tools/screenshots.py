@@ -29,7 +29,8 @@ SITES = {
     "cms": ("https://lens-and-trail-cms-theme.ddev.site:8443", BASE / "lens-and-trail-cms-theme"),
 }
 
-# tag, file name, site, path, width, height, logged in[, a CSS selector to scroll to]
+# tag, file name, site, path, width, height, logged in[, a CSS selector to
+# scroll to (or None)[, a CSS selector to click first, or a list of them]]
 SHOTS = {
     "05": [
         ("olivero", "05-hike-olivero", "core", "/hikes/glencorse-reservoir-winter-loop", 1280, 1000, False),
@@ -141,6 +142,34 @@ SHOTS = {
         ("cms", "15-cms-header", "cms", "/", 1280, 320, False),
         ("cms", "15-cms-footer", "cms", "/", 1280, 480, False, ".site-footer"),
     ],
+    # 16: "menu" on step 01 and "dropdown" on step 02, from the ch15-done
+    # snapshot after code/chapter15/site/04-search.php and code/chapter16/site/
+    # 01-menu.php (no Menu Item Extras yet: its template would take over). The rest on step 06 (tools/use-step.sh 16
+    # 06), after 03-mega-modules.sh, 03-mega.php and 04-translations.php on both
+    # sites and 06-cms.php on the Drupal CMS site. 16-panel-es-phone with
+    # JavaScript aggregation off (PROJECT-LOG: Drupal 12's aggregates leave the
+    # script translations out). The Canvas editor and the accessibility tree were
+    # not taken by this script.
+    "16": [
+        ("menu", "16-menu-active", "core", "/hikes/archive", 1280, 320, False),
+        ("dropdown", "16-dropdown", "core", "/hikes/archive", 1280, 360, False, None, ".main-menu__toggle"),
+        ("dropdown", "16-dropdown-phone", "core", "/hikes/archive", 360, 520, False, None, ".main-menu__toggle"),
+        ("mega", "16-menu-link-fields", "core", "/admin/structure/menu/item/22/edit", 1280, 1400, True, "#edit-field-panel-lists-wrapper"),
+        ("mega", "16-mega", "core", "/", 1280, 520, False, None, ".main-menu__toggle"),
+        ("dark", "16-mega-dark", "core", "/", 1280, 520, False, None, ".main-menu__toggle"),
+        ("panel", "16-header-phone", "core", "/hikes/archive", 360, 320, False),
+        ("panel", "16-panel-phone", "core", "/hikes/archive", 360, 740, False, None, ".nav-panel__button"),
+        ("panel", "16-panel-tablet", "core", "/hikes/archive", 800, 600, False, None, ".nav-panel__button"),
+        ("panel", "16-panel-es-phone", "core", "/es", 360, 740, False, None, ".nav-panel__button"),
+        ("breadcrumb", "16-breadcrumb", "core", "/hikes/archive", 1280, 320, False),
+        ("breadcrumb", "16-breadcrumb-phone", "core", "/hikes/archive", 360, 320, False),
+        ("cms", "16-cms-mega", "cms", "/", 1280, 480, False, None, ".main-menu__toggle"),
+        ("cms", "16-cms-header-phone", "cms", "/hikes/archive", 360, 320, False),
+        ("cms", "16-cms-search-phone", "cms", "/hikes/archive", 360, 320, False, None, ".search__button"),
+        ("cms", "16-cms-menu-phone", "cms", "/hikes/archive", 360, 740, False, None, [".navbar--hamburger", ".main-menu__toggle"]),
+        ("cms", "16-cms-menu-es-phone", "cms", "/es", 360, 740, False, None, ".navbar--hamburger"),
+        ("cms", "16-cms-mega-es", "cms", "/es", 1280, 480, False, None, ".main-menu__toggle"),
+    ],
 }
 
 
@@ -156,7 +185,11 @@ def main(chapter, tag=None):
     out = ROOT / "manuscript" / "images"
     with sync_playwright() as p:
         browser = p.chromium.launch()
-        for t, name, site, path, width, height, logged_in, *scroll in shots:
+        for t, name, site, path, width, height, logged_in, *extra in shots:
+            scroll = extra[0] if extra else None
+            clicks = extra[1] if len(extra) > 1 else []
+            if isinstance(clicks, str):
+                clicks = [clicks]
             context = browser.new_context(ignore_https_errors=True, device_scale_factor=2,
                                           viewport={"width": width, "height": height},
                                           color_scheme="dark" if t == "dark" else "light")
@@ -167,9 +200,13 @@ def main(chapter, tag=None):
             page.wait_for_load_state("networkidle")
             page.evaluate("document.fonts.ready")
             if scroll:
-                page.locator(scroll[0]).first.evaluate("el => el.scrollIntoView()")
+                page.locator(scroll).first.evaluate("el => el.scrollIntoView()")
                 # Lazy images below the first screen load once they're in view.
                 page.wait_for_timeout(1000)
+            for selector in clicks:
+                page.locator(selector).first.click()
+                # Transitions and lazy images in what the click opened.
+                page.wait_for_timeout(600)
             page.screenshot(path=str(out / f"{name}.png"))
             context.close()
             print(f"manuscript/images/{name}.png")

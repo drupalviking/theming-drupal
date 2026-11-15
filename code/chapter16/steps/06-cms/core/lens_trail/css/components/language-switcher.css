@@ -1,0 +1,44 @@
+/**
+ * @file
+ * The language switcher, as "English · Español".
+ */
+@layer components {
+  .language-switcher-language-url {
+    & ul {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      margin: 0;
+      margin-inline-start: calc(-1 * var(--space-3xs));
+      padding: 0;
+      list-style: none;
+    }
+
+    /* A dot between two languages. The text after the slash is what a
+       screen reader says for it: nothing. */
+    & li + li::before {
+      content: "·" / "";
+      padding-inline: var(--space-3xs);
+      color: var(--color-muted);
+    }
+
+    & a {
+      display: inline-flex;
+      align-items: center;
+      min-block-size: var(--size-target);
+      padding-inline: var(--space-3xs);
+      color: var(--color-action);
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+
+      /* The language you're reading in isn't a link you need. */
+      &[aria-current="page"] {
+        color: var(--color-text);
+        font-weight: var(--font-weight-semibold);
+      }
+    }
+  }
+}
