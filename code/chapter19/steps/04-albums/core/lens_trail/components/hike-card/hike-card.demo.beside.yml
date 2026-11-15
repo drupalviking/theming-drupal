@@ -1,0 +1,10 @@
+name: Photo beside
+description: In a wide list, as on /hikes. Make the window narrower to see the photo move on top.
+props:
+  title: Glencorse Reservoir winter loop
+  url: '#'
+  heading_level: 2
+  variant: beside
+slots:
+  photo: '<img src="/themes/custom/lens_trail/components/hike-card/demo/default-photo.svg" width="480" height="320" alt="">'
+  facts: '<div class="hike-card__date"><time datetime="2026-12-19T09:30:00Z">Saturday, 19 December 2026 at 09:30</time></div><div class="hike-card__difficulty">Easy</div><div class="hike-card__walking-time">About 1 hour 50 min on foot</div>'

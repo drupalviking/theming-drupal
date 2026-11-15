@@ -431,3 +431,59 @@ The template adds the gallery at the end, as the hike's page does with its Event
 ```
 
 No cache tag is lost: the photos are rendered in the same template (`content.field_photos`), and that passes the media items' tags up to the page. On the core site, the Pentlands album gives an `ImageGallery` with four `ImageObject`s, each with its photographer and a CC BY-SA 2.0 or 4.0 address.
+
+## Chapter 19, exercise 6: more news, without the one on the page
+
+Most of the answer is site building: a new display, More news, with one setting no other display on the club's site uses. In the News view, **Add** › **Block**, then, for **This block (override)** each time:
+
+1. **Title**: More news. **Pager**: **Display a specified number of items**, 3.
+2. **Show**: **Content**, **Card**, as in Latest news, so the cards are the same.
+3. **More link**: **Yes**, "All news", to the Page display.
+4. **No results behavior**: remove "No news yet." for this display only. A news item's page always has a news item, so the only time there's nothing to show is when there's one news item in all, and then the block should not be there at all (**Hide block if the view output is empty**, under **Block settings**).
+5. **Contextual filters** › **Add** › **Content: ID**. **When the filter value is not in the URL** › **Provide default value** › **Content ID from URL**: the ID of the node on the page. Then, under **More**, check **Exclude**: the filter now takes every news item *except* that one, instead of only that one.
+
+The same, as the test site's script does it:
+
+`code/chapter19/snippets/more-news.php` ([source](../code/chapter19/snippets/more-news.php))
+
+```php
+$view = View::load('news');
+$latest = $view->getDisplay('block_1');
+$view->getExecutable()->newDisplay('block', 'More news', 'block_2');
+$more = &$view->getDisplay('block_2');
+$more['display_options'] = [
+  'title' => 'More news',
+  'block_description' => 'More news',
+  'pager' => ['type' => 'some', 'options' => ['items_per_page' => 3, 'offset' => 0]],
+  'arguments' => [
+    'nid' => [
+      'id' => 'nid',
+      'table' => 'node_field_data',
+      'field' => 'nid',
+      'entity_type' => 'node',
+      'entity_field' => 'nid',
+      'plugin_id' => 'node_nid',
+      // The node on the page, from the URL...
+      'default_action' => 'default',
+      'default_argument_type' => 'node',
+      'default_argument_options' => [],
+      // ...left out, instead of being the only one.
+      'not' => TRUE,
+      'specify_validation' => FALSE,
+      'break_phrase' => FALSE,
+    ],
+  ],
+  'defaults' => ['title' => FALSE, 'pager' => FALSE, 'arguments' => FALSE, 'empty' => FALSE] + $latest['display_options']['defaults'],
+  // No "No news yet" here: with nothing to show, the block isn't shown.
+  'empty' => [],
+  'block_hide_empty' => TRUE,
+] + $latest['display_options'];
+$view->save();
+```
+
+- **`'not' => TRUE`** is the **Exclude** checkbox.
+- **`defaults`**: every setting that this display changes is taken off the view's defaults ("This block (override)"); the rest, such as the Card rows and the more link, come from Latest news.
+
+Then the block, in **Block layout**: **Place block** in the Content region, **More news**, visible for the content type **News** only (the **Content type** condition), so it isn't on hikes or albums. No template: the cards are `node--news--card.html.twig` already, with their h3 under the block's h2, and the "more" link and the spacing come from `views.css`.
+
+We tested it on the core site: on Membership fees for 2027, More news lists the photo competition, the walk for new members and the winter hike, without the fees; on the Spanish page it says Más noticias and Todas las noticias (a translation of the display's title and link text, in **Translate view**); and hike pages don't have it.

@@ -1,0 +1,36 @@
+{#
+/**
+ * @file
+ * The months on the Hike archive, as a row of links: "January 2027 (2)".
+ * Core's views-view-summary.html.twig prints a plain list; this one, for the
+ * Hikes view only, makes it a navigation landmark with a name, and puts the
+ * number of hikes in its own element. The month names are made in
+ * ThemeHooks::preprocessViewsViewSummary().
+ *
+ * Available variables:
+ * - rows: The months. Each has link (the month), url, count, and active
+ *   (TRUE on the month that's showing).
+ * - options: The summary's settings; options.count is "Display record count
+ *   with link".
+ */
+#}
+{{ attach_library('mercury/summary') }}
+<nav class="summary" aria-label="{{ 'Hikes by month'|t }}">
+  <ul class="summary__items">
+    {% for row in rows %}
+      {% if row.active %}
+        {% set row_attributes = row.attributes.addClass('summary__link', 'is-active').setAttribute('aria-current', 'page') %}
+      {% else %}
+        {% set row_attributes = row.attributes.addClass('summary__link') %}
+      {% endif %}
+      <li>
+        <a href="{{ row.url }}"{{ row_attributes|without('href') }}>
+          {{- row.link -}}
+          {% if options.count %}
+            <span class="summary__count">{{ row.count }}</span>
+          {% endif %}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</nav>

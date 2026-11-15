@@ -1,0 +1,18 @@
+/**
+ * @file
+ * A teaser in a list: the title, then a short version of the rest, with a
+ * line between teasers.
+ */
+.teaser {
+  padding-block: var(--spacing-club-m);
+  border-block-end: var(--border-thin) solid var(--border);
+}
+
+.teaser__title {
+  margin-block: 0 var(--spacing-club-xs);
+  font-size: var(--text-step-2);
+}
+
+.teaser__content > * {
+  max-inline-size: 70ch;
+}

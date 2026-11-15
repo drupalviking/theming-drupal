@@ -1,0 +1,76 @@
+{#
+/**
+ * @file
+ * Every view on the site: a list, a block, a page. Core's version is a <div>
+ * with nothing in it to style by, so this one adds classes:
+ *
+ * - view, on all of them;
+ * - view--news and view--news--page-1: the view and its display, for the few
+ *   rules that are about one list (machine names, as in the Views UI);
+ * - the "CSS class" a view can set in Advanced > Other.
+ *
+ * Then a wrapper for each part, so the rows, the empty text, the pager and the
+ * "more" link can each get their own spacing.
+ *
+ * Available variables (core's views-view.html.twig lists them all):
+ * - id, display_id: The view's and the display's machine names.
+ * - css_class: The CSS class from the view's settings.
+ * - title, header, footer, exposed, attachment_before, attachment_after,
+ *   rows, empty, pager, more, feed_icons: The parts of the view.
+ * - dom_id: A unique id for this view on the page, used by AJAX.
+ */
+#}
+{{ attach_library('lens_trail/views') }}
+{# Core's pager template has the classes it needs, but no CSS of its own. #}
+{% if pager %}
+  {{ attach_library('lens_trail/pager') }}
+{% endif %}
+{%
+  set classes = [
+    'view',
+    'view--' ~ id|clean_class,
+    'view--' ~ id|clean_class ~ '--' ~ display_id|clean_class,
+    css_class,
+    dom_id ? 'js-view-dom-id-' ~ dom_id,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {{ title }}
+  {{ title_suffix }}
+
+  {% if header %}
+    <header class="view__header">
+      {{ header }}
+    </header>
+  {% endif %}
+
+  {% if exposed %}
+    <div class="view__filters">
+      {{ exposed }}
+    </div>
+  {% endif %}
+  {{ attachment_before }}
+
+  {% if rows -%}
+    <div class="view__content">
+      {{ rows }}
+    </div>
+  {% elseif empty -%}
+    <div class="view__empty">
+      {{ empty }}
+    </div>
+  {% endif %}
+  {{ pager }}
+
+  {{ attachment_after }}
+  {{ more }}
+
+  {% if footer %}
+    <footer class="view__footer">
+      {{ footer }}
+    </footer>
+  {% endif %}
+
+  {{ feed_icons }}
+</div>

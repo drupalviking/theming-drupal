@@ -1,0 +1,72 @@
+/**
+ * @file
+ * The header's search: a round icon like the color scheme toggle's, and a
+ * panel across the whole header, under it.
+ */
+@layer components {
+  .search__button {
+    display: inline-grid;
+    place-items: center;
+    inline-size: var(--size-target);
+    block-size: var(--size-target);
+    padding: 0;
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-round);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    cursor: pointer;
+    transition: border-color var(--duration-fast);
+
+    &:hover {
+      border-color: var(--color-action);
+    }
+
+    &[aria-expanded="true"] {
+      border-color: var(--color-action);
+      background-color: var(--color-tint);
+      color: var(--color-on-tint);
+    }
+
+    & svg {
+      inline-size: 1.5rem;
+      block-size: 1.5rem;
+    }
+  }
+
+  /* Under the header, from one side of the window to the other: the header
+     is the nearest positioned element (css/layout.css). */
+  .search__panel {
+    position: absolute;
+    z-index: 10;
+    inset-inline: 0;
+    inset-block-start: 100%;
+    padding-block: var(--space-s);
+    border-block-end: var(--border-thin) solid var(--color-border);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-overlay);
+
+    &[hidden] {
+      display: none;
+    }
+
+    /* The view's form: the field takes the room, up to a width that suits a
+       few words, and the button sits beside it. */
+    & form > div {
+      max-inline-size: 36rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: var(--space-xs);
+    }
+
+    & .form-item {
+      flex: 1 1 16rem;
+      margin: 0;
+    }
+
+    & input[type="text"],
+    & input[type="search"] {
+      inline-size: 100%;
+    }
+  }
+}

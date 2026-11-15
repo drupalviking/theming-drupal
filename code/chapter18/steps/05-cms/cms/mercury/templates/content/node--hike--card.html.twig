@@ -17,7 +17,7 @@
  */
 #}
 {% set image = node.field_photo.entity.field_media_image %}
-{% include 'mercury:hike-card' with {
+{% set props = {
   title: node.label,
   url: url,
   heading_level: 2,
@@ -25,13 +25,18 @@
   date: node.field_date.value ~ 'Z',
   difficulty: node.field_difficulty.value,
   walking_time: walking_time,
-  photo: image.isEmpty ? null : {
+} %}
+{# A hike without a photo leaves the photo out: the component's schema takes
+   an object or nothing, not null. #}
+{% if image is not empty and not image.isEmpty %}
+  {% set props = props|merge({photo: {
     src: image.src_with_alternate_widths.generatedUrl,
     alt: image.alt,
     width: image.width + 0,
     height: image.height + 0,
-  },
-} only %}
+  }}) %}
+{% endif %}
+{% include 'mercury:hike-card' with props only %}
 {# Nothing of the display is printed, but rendering it passes its cache tags
    (the photo's, for one) up to the list. #}
 {% set cache = content|render %}

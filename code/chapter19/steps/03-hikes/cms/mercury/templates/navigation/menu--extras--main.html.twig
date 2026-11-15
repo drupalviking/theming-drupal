@@ -1,0 +1,86 @@
+{#
+/**
+ * @file
+ * The main menu, with Menu Item Extras: Mercury's menu--main.html.twig under
+ * the name the module's suggestion asks for, with the core theme's dropdown.
+ *
+ * Mercury's own template printed the first level only. This one adds, as on
+ * the core site:
+ * - main-menu__dropdown around what opens under a link: the links under it,
+ *   and, when the link has them, its Panel lists and Panel photo
+ *   (main-menu__item--has-panel). js/main-menu.js, the core theme's script,
+ *   gives the link a button that shows and hides it.
+ * - The BEM classes the script and css/main-menu.css look for, next to
+ *   Mercury's Tailwind classes.
+ *
+ * Available variables: see Mercury's menu.html.twig. Menu Item Extras adds,
+ * in each item, content (the menu link's fields, rendered) and entity (the
+ * menu link itself).
+ */
+#}
+{% import _self as menus %}
+{{ attach_library('mercury/main-menu') }}
+
+{# Mercury made the nav "relative"; the Hikes panel is placed against the
+   whole Navbar instead, so it isn't. #}
+{% set classes = 'flex justify-start' %}
+{% set attributes = attributes ? attributes.addClass(classes) : ' class="' ~ classes ~ '"' %}
+
+<nav {{ attributes }} aria-label="{{ menu_label }}">
+  {{ menus.menu_links(items, 0) }}
+</nav>
+
+{% macro menu_links(items, menu_level) %}
+  {% import _self as menus %}
+  {% if items %}
+    {% if menu_level == 0 %}
+      <ul class="main-menu flex flex-col gap-1 p-0 font-body md:w-auto md:flex-row" data-level="1">
+    {% else %}
+      <ul class="main-menu__submenu">
+    {% endif %}
+    {% for item in items %}
+      {% set title = item.title is not empty ? item.title : item.text %}
+      {% set url %}
+        {{- item.url -}}
+      {% endset %}
+      {% set lists = item.content.field_panel_lists|render %}
+      {% set photo = item.content.field_panel_photo|render %}
+      {% set has_panel = menu_level == 0 and (lists or photo) %}
+      {%
+        set item_classes = [
+          'main-menu__item',
+          item.in_active_trail ? 'main-menu__item--active-trail',
+          item.below or has_panel ? 'main-menu__item--has-dropdown',
+          has_panel ? 'main-menu__item--has-panel',
+          menu_level == 0 ? 'flex flex-wrap items-center md:flex-nowrap md:relative text-base rounded-md',
+        ]
+      %}
+      <li{{ item.attributes.addClass(item_classes) }}>
+        {% if url is not empty %}
+          {% if menu_level == 0 %}
+            <a
+              href="{{ url }}"
+              {# Lens & Trail: links as on the core site, not Mercury's pills. #}
+              class="main-menu__link flex min-h-11 shrink-1 grow-1 basis-0 items-center gap-1 p-2 font-semibold underline-offset-[0.3em] duration-150 hover:text-primary hover:underline {{ item.in_active_trail ? 'text-primary underline decoration-2' : 'text-foreground no-underline' }}"
+              data-level="1"
+            >
+              {{ title }}
+            </a>
+          {% else %}
+            <a href="{{ url }}" class="main-menu__link">{{ title }}</a>
+          {% endif %}
+        {% endif %}
+        {% if item.below or has_panel %}
+          <div class="main-menu__dropdown">
+            {% if has_panel %}{{ lists }}{% endif %}
+            {{ menus.menu_links(item.below, menu_level + 1) }}
+            {% if has_panel and photo %}
+              <div class="main-menu__photo">{{ photo }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}

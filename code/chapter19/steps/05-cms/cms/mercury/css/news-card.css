@@ -1,0 +1,55 @@
+/**
+ * @file
+ * A news item in a list (node--news--card.html.twig): the photo first, and
+ * beside the text when the card is at least 30rem wide, as on the News page;
+ * on top of it in a narrow column, such as Latest news on Home.
+ */
+.news-card {
+  container-type: inline-size;
+  padding-block: var(--spacing-club-m);
+  border-block-end: var(--border-thin) solid var(--border);
+}
+
+.news-card__layout {
+  display: grid;
+  gap: var(--spacing-club-s);
+}
+
+/* Two columns only when there's a photo to put in the first one. */
+@container (min-width: 30rem) {
+  .news-card__layout:has(.news-card__photo) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    align-items: start;
+  }
+}
+
+/* After the text in the HTML, so the heading comes first for screen
+   readers; before it on screen. */
+.news-card__photo {
+  order: -1;
+
+  & img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: var(--radius-medium);
+  }
+}
+
+.news-card__date {
+  color: var(--muted-foreground);
+  font-size: var(--text-step--1);
+  font-weight: var(--font-weight-semibold);
+}
+
+.news-card__title {
+  margin-block: var(--spacing-club-3xs) var(--spacing-club-xs);
+  font-size: var(--text-step-1);
+}
+
+.news-card__summary > * {
+  max-inline-size: 70ch;
+  margin-block-end: 0;
+}

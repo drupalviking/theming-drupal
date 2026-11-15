@@ -1,0 +1,19 @@
+/**
+ * @file
+ * "All news", "All upcoming hikes": the "more" link after a view's rows
+ * (templates/views/views-view.html.twig), with an arrow that's only for the
+ * eye. As in the core theme.
+ */
+.more-link {
+  margin-block-start: var(--spacing-club-s);
+
+  & a {
+    color: var(--primary);
+    font-weight: var(--font-weight-semibold);
+
+    &::after {
+      content: " →" / "";
+      white-space: pre;
+    }
+  }
+}

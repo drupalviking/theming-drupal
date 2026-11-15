@@ -1,0 +1,31 @@
+/**
+ * @file
+ * An album in Albums from this hike (templates/views/
+ * views-view-fields--albums--block-1.html.twig): a photo with the album's
+ * title under it, all one link.
+ */
+@layer components {
+  .album-link {
+    display: grid;
+    gap: var(--space-2xs);
+    color: var(--color-action);
+    font-weight: var(--font-weight-semibold);
+
+    & img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+      border-radius: var(--radius-medium);
+    }
+
+    &:hover .album-link__title {
+      text-decoration-thickness: 2px;
+    }
+  }
+
+  .album-link__title {
+    text-decoration: underline;
+  }
+}

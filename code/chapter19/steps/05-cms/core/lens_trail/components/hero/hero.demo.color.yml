@@ -1,0 +1,13 @@
+name: Color
+description: A hero without a photo, on the tint color.
+props:
+  eyebrow: ''
+  heading: Join the club
+  heading_level: 2
+  text: Membership is £20 a year, £10 for students.
+  url: '#'
+  link_text: How to join
+  variant: color
+slots:
+  meta: ''
+  photo: ''

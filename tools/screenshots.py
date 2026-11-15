@@ -214,6 +214,27 @@ SHOTS = {
         ("cms", "18-cms-area", "cms", "/areas/pentland-hills", 1280, 1500, False),
         ("cms", "18-cms-print", "cms", "/hikes/turnhouse-hill", 794, 1123, False),
     ],
+    # 19: all on step 05 (tools/use-step.sh 19 05) after code/chapter19/site/
+    # 01-news.php to 04-albums.php on both sites, and 05-cms.php on the Drupal
+    # CMS site.
+    "19": [
+        ("news", "19-news", "core", "/news", 1280, 1100, False),
+        ("news", "19-news-phone-es", "core", "/es/news", 360, 900, False),
+        ("news", "19-front-news", "core", "/", 1280, 900, False, ".view--news--block-1"),
+        ("news", "19-news-view", "core", "/admin/structure/views/view/news", 1280, 900, True),
+        ("markup", "19-pager", "core", "/news", 1280, 600, False, ".view--news--page-1 .views-row:last-child"),
+        ("hikes", "19-hikes-filter", "core", "/hikes", 1280, 700, False),
+        ("hikes", "19-archive", "core", "/hikes/archive/202612", 1280, 900, False),
+        ("hikes", "19-archive-es-phone", "core", "/es/hikes/archive", 360, 800, False),
+        ("albums", "19-albums", "core", "/galleries", 1280, 800, False),
+        ("albums", "19-from-hike", "core", "/hikes/arthurs-seat-sunrise", 1280, 700, False, "#block-lens-trail-albums-from-this-hike"),
+        ("albums", "19-albums-block-view", "core", "/admin/structure/views/view/albums/edit/block_1", 1280, 900, True),
+        ("albums", "19-photo-theme", "core", "/taxonomy/term/69", 1280, 800, False),
+        ("cms", "19-cms-news", "cms", "/news", 1280, 900, False),
+        ("cms", "19-cms-home-news", "cms", "/", 1280, 700, False, ".view-id-news"),
+        ("cms", "19-cms-albums", "cms", "/galleries", 1280, 800, False),
+        ("cms", "19-cms-archive", "cms", "/hikes/archive/202612", 1280, 800, False),
+    ],
 }
 
 

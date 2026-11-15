@@ -1,0 +1,55 @@
+/**
+ * @file
+ * Comments: the author and the date in a small line, then the comment,
+ * in a box.
+ */
+@layer components {
+  .comment {
+    max-inline-size: var(--size-content);
+    margin-block: var(--space-s);
+    padding: var(--space-s);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background: var(--color-surface);
+
+    & > :last-child {
+      margin-block-end: 0;
+    }
+  }
+
+  .comment__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 var(--space-xs);
+    margin: 0 0 var(--space-2xs);
+    font-size: var(--font-size-step--1);
+  }
+
+  .comment__author {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .comment__date {
+    color: var(--color-muted);
+  }
+
+  .comment__content > * {
+    margin-block: 0 var(--space-xs);
+  }
+
+  .comment--unpublished {
+    border-style: dashed;
+  }
+
+  /* "Reply", or "Log in or register to post comments": a small line, not a
+     bulleted list. */
+  .comment .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: var(--font-size-step--1);
+  }
+}

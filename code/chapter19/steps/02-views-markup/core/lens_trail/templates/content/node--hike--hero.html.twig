@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * A hike in the Hero view mode: the next hike, at the top of the front page.
+ *
+ * The markup and styles are in the Hero component. This template only hands
+ * it the node's values. Without a photo, the hero is the Color variant.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{% set photo = content.field_photo|render %}
+{{ include('lens_trail:hero', {
+  eyebrow: 'Next hike'|t,
+  meta: content.field_date,
+  heading: node.label,
+  url: url,
+  link_text: 'See the hike'|t,
+  variant: photo ? 'photo' : 'color',
+  photo: photo,
+}, with_context = false) }}

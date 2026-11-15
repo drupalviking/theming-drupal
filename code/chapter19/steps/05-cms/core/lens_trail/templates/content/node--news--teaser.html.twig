@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * A news item in a list, as on the News page: the date and the title as the
+ * link, the first lines of the text, and the photo, beside the text when
+ * there's room.
+ *
+ * The title is an h2 under the page's h1, unless a template that includes
+ * this one says otherwise (node--news--card.html.twig, under a block's h2).
+ * No "Read more": the title already says where it goes.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{{ attach_library('lens_trail/news-teaser') }}
+{% set heading = 'h' ~ heading_level|default(2) %}
+{% set photo = content.field_photo|render %}
+<article{{ attributes.addClass('news-teaser') }}>
+  <div class="news-teaser__layout">
+    <div class="news-teaser__text">
+      <time class="news-teaser__date" datetime="{{ node.createdtime|date('c') }}">{{ node.createdtime|format_date('day_date') }}</time>
+      {{ title_prefix }}
+      <{{ heading }}{{ title_attributes.addClass('news-teaser__title') }}>
+        <a href="{{ url }}">{{ label }}</a>
+      </{{ heading }}>
+      {{ title_suffix }}
+      <div class="news-teaser__summary">
+        {{ content.field_body }}
+      </div>
+    </div>
+    {% if photo %}
+      <div class="news-teaser__photo">{{ photo }}</div>
+    {% endif %}
+  </div>
+  {{ content|without('field_photo', 'field_body', 'links') }}
+</article>
