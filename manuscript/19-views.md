@@ -19,7 +19,7 @@ Book 1 gave the club a News content type, and its chapter on content types promi
 - **Page**: `/news`, titled News, five items to a page with a full pager, in the **Teaser** view mode, and a **News** link in the main menu after Albums.
 - **Block**: Latest news, the two newest items in the **Card** view mode, with an **All news** link to the page. On the core site, it's in the sidebar of the front page, after Next hikes.
 
-Both show only published news, in the language of the page, with "No news yet." when there's nothing to show. The club also had only one news item, which is not much of a list, so five more joined it, from the days after the website opened.
+Both show only published news, in the language of the page, with "No news yet." when there's nothing to show. The club also had only one news item, which is not much of a list, so five more joined it, from the days after the website opened. That's content, not theming, but a theme for a list needs a list to try it on: if your site has only Book 1's one item, add five of your own (**Content** › **Add content** › **News**), each with a Spanish translation and most with a photo (leave one or two without, to see how the card looks then), before you go on. Six items make two pages of five, so the pager has something to show.
 
 %% Author: on the test sites this was done by code/chapter19/site/01-news.php (the view, the displays, the Spanish, the block, the Day date format) and 02-more-news.php (five news items in English and Spanish, five to a page). The view's machine name is news. Readers who did Book 1's exercise may have named theirs differently; the template names in this chapter use news. %%
 
@@ -245,6 +245,8 @@ A view can list media as well as content: **Add view**, **Show: Media of type Im
 - **Pager**: a mini pager, 24 photos to a page. **No results behavior**: "No photos with this theme yet."
 - **Block layout**: the block in the Content region, after the term's own view, visible on **Taxonomy term** pages of the **Photo themes** vocabulary only (the block's **Vocabulary** condition).
 
+The pages still had little to show, because each photo theme was on one photo. So the club tagged its photos with more of them: Hills is now on four photos, Water on three, Landscape on four. Like the news items, that's content, not theming, but one photo doesn't show a grid. Tag a few of your own photos the same way: **Content** › **Media**, edit a photo, and add themes in its **Photo themes** field.
+
 The album's page uses the **Album** component from Chapter 14 for its grid and lightbox, through a field template. The view's rows can go into the same component, through the style template, `views-view-unformatted--photo-themes.html.twig`:
 
 <!-- include: code/chapter19/steps/04-albums/core/lens_trail/templates/views/views-view-unformatted--photo-themes.html.twig as=templates/views/views-view-unformatted--photo-themes.html.twig -->
@@ -256,7 +258,7 @@ The album's page uses the **Album** component from Chapter 14 for its grid and l
 
 > **Try it:** Click a photo on the Hills page. The lightbox opens, and its Next button goes through the Hills photos, not an album's. Then open a node's page, such as a hike, and check in the page source that there's no `view--photo-themes` on it.
 
-%% Author: each theme had one photo on the test sites, so 04-albums.php also gives the six photos more themes (Hills on four, Water on three or four). That's content, not theming: say whether the book should tell readers to tag their own photos, or leave it. %%
+%% Author: on the test sites, 04-albums.php gives the six photos their extra themes (the list in the text above). %%
 
 ## On Drupal CMS
 
