@@ -1,0 +1,82 @@
+{#
+/**
+ * @file
+ * A hike's own page, in the order of the design: the photo, the date and
+ * the title, the key facts, then the description.
+ *
+ * The page's h1 is here, after the photo, so the Page title block is taken
+ * off hike pages (lens_trail's hook_preprocess_page()). The facts are a
+ * description list; each one comes from field--fact.html.twig.
+ *
+ * At the end, the hike as a Schema.org Event, in JSON-LD, for search engines
+ * and other programs that read the page.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{{ attach_library('lens_trail/hike') }}
+<article{{ attributes.addClass('hike') }}>
+  <div class="hike__photo">
+    {{ content.field_photo }}
+  </div>
+
+  <header class="hike__header">
+    {{ content.field_date|add_class('hike__date') }}
+    {{ title_prefix }}
+    <h1{{ title_attributes.addClass('hike__title') }}>{{ label }}</h1>
+    {{ title_suffix }}
+    {# The leader's name, as text: rendering it here still passes the user's
+       cache tags up to the page. #}
+    {% set leader = content.field_hike_leader|render|striptags|trim %}
+    {% if leader %}
+      <p class="hike__leader">{{ 'Led by @name'|t({'@name': leader}) }}</p>
+    {% endif %}
+  </header>
+
+  <dl class="hike__facts">
+    {{ content.field_meeting_place }}
+    {{ content.field_distance }}
+    {{ content.field_difficulty }}
+    {{ content.field_area }}
+  </dl>
+
+  {# The Directions button and the map of the starting point go here, when
+     hikes have one (a feature at the end of the book). #}
+
+  <div class="hike__description">
+    {{ content.field_body }}
+  </div>
+
+  {{ content|without('field_photo', 'field_date', 'field_hike_leader', 'field_meeting_place', 'field_distance', 'field_difficulty', 'field_area', 'field_body') }}
+</article>
+
+{# The date is stored in UTC, without the zone: the Z says so, and the date
+   filter writes it in the site's time zone. #}
+{% set event = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  'name': node.label,
+  'url': url('entity.node.canonical', {'node': node.id})|render,
+  'startDate': (node.field_date.value ~ 'Z')|date('c'),
+  'eventStatus': 'https://schema.org/EventScheduled',
+  'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+  'location': {
+    '@type': 'Place',
+    'name': node.field_meeting_place.value,
+    'address': {
+      '@type': 'PostalAddress',
+      'addressRegion': node.field_area.entity.label,
+      'addressCountry': 'GB',
+    },
+  },
+  'organizer': {
+    '@type': 'Organization',
+    'name': 'Lens & Trail',
+    'url': url('<front>')|render,
+  },
+} %}
+{# JSON_HEX_TAG writes < and > as \u003C and \u003E, so nothing in a title
+   can close the script element. With that, the slashes in addresses and the
+   "ñ" in Spanish can stay as they are. #}
+<script type="application/ld+json">
+  {{ event|json_encode(constant('JSON_HEX_TAG') b-or constant('JSON_UNESCAPED_SLASHES') b-or constant('JSON_UNESCAPED_UNICODE'))|raw }}
+</script>

@@ -1,0 +1,96 @@
+/**
+ * @file
+ * The club's pages on paper, after Chapter 3's hike handout: the core theme's
+ * print.css, with Mercury's markup. Only the content, black on white, the
+ * facts as a list, and the addresses of links written out. The library loads
+ * it with media="print", so the browser doesn't wait for it on screen.
+ *
+ * Most of Mercury's CSS is in Tailwind's cascade layers, so this file,
+ * outside them, wins over it without !important. Two rules aren't: the
+ * Navbar's and this theme's own component CSS, so the selectors here that
+ * meet them are a little more specific than theirs.
+ */
+
+/* Light colors on paper, whatever the screen was. theme.css sets the
+   visitor's choice with the same selector, and this file comes after it. */
+:root,
+:root.dark,
+:root[data-color-scheme] {
+  color-scheme: light;
+}
+
+@page {
+  margin: 15mm;
+}
+
+body {
+  background: none;
+  font-size: 11pt;
+}
+
+/* What's only for the screen: the menus and the buttons in the Navbar, the
+   breadcrumb and the footer. On a hike's page, its photo (mostly ink) and
+   the albums from it. */
+header[role="banner"] .navbar--menu,
+header[role="banner"] button,
+nav[aria-label="breadcrumb"],
+footer[role="contentinfo"],
+.view-albums,
+.hike__photo {
+  display: none;
+}
+
+/* The header is the club's logo and name, with a line under it. */
+header[role="banner"] {
+  border-block-end: 1pt solid;
+}
+
+a {
+  color: inherit;
+}
+
+/* On paper you can't click: the address of a link to another site goes
+   after its text. Links to the club's own pages don't need it. */
+.layout-content a[href^="http"]::after {
+  content: " (" attr(href) ")";
+  font-size: 0.85em;
+  overflow-wrap: anywhere;
+}
+
+/* A hike's facts: a list of labels and values, no boxes. */
+.hike__facts {
+  display: block;
+}
+
+.hike__facts .fact,
+.album-page__facts .fact {
+  display: flex;
+  gap: 0.5em;
+  padding: 0;
+  border: 0;
+
+  & .fact__label::after {
+    content: ":";
+  }
+
+  & .fact__label,
+  & .fact__extra {
+    color: inherit;
+    font-size: inherit;
+  }
+}
+
+/* Headings stay with what follows them, and photos aren't cut in two. */
+h1, h2, h3 {
+  break-after: avoid;
+}
+
+img, figure {
+  break-inside: avoid;
+}
+
+.printed-from {
+  display: block;
+  margin-block-start: 2em;
+  font-size: 0.85em;
+}

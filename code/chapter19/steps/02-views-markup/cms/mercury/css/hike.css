@@ -1,0 +1,60 @@
+/**
+ * @file
+ * A hike's own page: the date and the title under the photo, the key facts
+ * as boxes, two to a row, and the description.
+ */
+.hike {
+  display: grid;
+  gap: var(--spacing-club-m);
+}
+
+.hike__header {
+  display: grid;
+  gap: var(--spacing-club-2xs);
+}
+
+.hike__date {
+  color: var(--muted-foreground);
+  font-weight: var(--font-weight-semibold);
+}
+
+.hike__title {
+  margin: 0;
+  /* What Mercury's page-title.html.twig gives the page title. */
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.1;
+
+  @media (min-width: 48rem) {
+    font-size: var(--text-5xl);
+  }
+
+  @media (min-width: 64rem) {
+    font-size: var(--text-6xl);
+  }
+}
+
+.hike__leader {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+/* Two columns, even on a phone: the four facts are short, and all of them
+   fit on the first screen. */
+.hike__facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-club-xs);
+  margin: 0;
+}
+
+.hike__facts .fact {
+  padding: var(--spacing-club-xs) var(--spacing-club-s);
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-medium);
+  background: var(--card);
+}
+
+.hike__description > * {
+  max-inline-size: 70ch;
+}

@@ -1,0 +1,159 @@
+/**
+ * @file
+ * The Hero's look: the core theme's CSS, with Mercury's variable names.
+ * Plain CSS, like the search's. See the core theme's hero.css for the why.
+ */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-items: end;
+  min-block-size: clamp(30rem, 80svh, 36rem);
+  overflow: hidden;
+  background: var(--color-club-neutral-950);
+  color: var(--color-club-neutral-0);
+
+  @media (min-width: 48rem) {
+    align-items: center;
+  }
+}
+
+.hero__text {
+  inline-size: 100%;
+  max-inline-size: var(--size-content);
+  margin-inline: auto;
+  padding: var(--spacing-club-xl) var(--spacing-club-m) var(--spacing-club-3xl);
+
+  & > * {
+    max-inline-size: 34rem;
+  }
+}
+
+.hero__eyebrow {
+  margin: 0;
+  font-size: var(--text-step--1);
+  font-weight: var(--font-weight-bold);
+}
+
+.hero__meta {
+  margin-block-start: var(--spacing-club-3xs);
+  font-weight: var(--font-weight-semibold);
+}
+
+.hero__heading {
+  margin-block: var(--spacing-club-2xs) var(--spacing-club-m);
+  color: inherit;
+  font-family: var(--font-family-heading);
+  font-size: var(--text-step-5);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.hero__intro {
+  margin-block: 0 var(--spacing-club-m);
+  font-size: var(--text-step-1);
+}
+
+.hero__link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--size-target);
+  padding-inline: var(--spacing-club-m);
+  border-radius: var(--radius-small);
+  background: var(--color-club-green-700);
+  color: var(--color-club-neutral-0);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  transition: background-color var(--duration-fast);
+
+  &:hover {
+    background: var(--color-club-green-800);
+  }
+
+  &:focus-visible {
+    outline: var(--border-focus) solid var(--color-club-neutral-0);
+    outline-offset: 2px;
+  }
+}
+
+.hero__photo {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+
+  & :is(div, figure, picture) {
+    block-size: 100%;
+  }
+
+  & img {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  /* The credit: the Photo component's, or the Canvas prop's. On a phone, at
+     the top, out of the way of the slider's controls. */
+  & figcaption {
+    position: absolute;
+    inset-block: auto 0;
+    inset-inline: auto 0;
+    max-inline-size: 100%;
+    padding: var(--spacing-club-3xs) var(--spacing-club-xs);
+    background: var(--color-club-neutral-950);
+    color: var(--color-club-neutral-0);
+    font-size: var(--text-step--1);
+
+    @media (max-width: 47.99rem) {
+      inset-block: 0 auto;
+    }
+  }
+}
+
+.hero--photo::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(to top, rgb(22 19 15 / 0.85) 0%, rgb(22 19 15 / 0.7) 55%, rgb(22 19 15 / 0.1) 100%);
+  pointer-events: none;
+
+  @media (min-width: 48rem) {
+    background: linear-gradient(to right, rgb(22 19 15 / 0.85) 0%, rgb(22 19 15 / 0.7) 45%, rgb(22 19 15 / 0) 80%);
+  }
+}
+
+.hero--color {
+  min-block-size: 0;
+  background: var(--color-club-tint);
+  color: var(--color-club-on-tint);
+
+  & .hero__text {
+    padding-block: var(--spacing-club-2xl);
+  }
+
+  & .hero__link {
+    background: var(--color-club-action);
+    color: var(--color-club-on-action);
+
+    &:focus-visible {
+      outline-color: var(--color-club-action);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .hero__photo img {
+      animation: hero-parallax linear both;
+      animation-timeline: var(--hero-parallax-timeline, view());
+      animation-range: exit;
+    }
+  }
+}
+
+@keyframes hero-parallax {
+  to {
+    translate: 0 25%;
+  }
+}

@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * An album in a list on the Drupal CMS site, as on the Albums page: the first
+ * photo as its cover, the title as the link, the date of the hike and how
+ * many photos there are. The same as the core theme's template of this name.
+ *
+ * The date is the hike's: an album has no date of its own, but a Hike field,
+ * so the template follows it to the hike, and takes the hike's cache tags
+ * with it.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{{ attach_library('mercury/album-card') }}
+{% set count = node.field_photos|length %}
+{% set hike = node.field_hike.entity %}
+<article{{ attributes.addClass('album-card') }}>
+  <div class="album-card__text">
+    {{ title_prefix }}
+    <h2{{ title_attributes.addClass('album-card__title') }}>
+      <a href="{{ url }}">{{ label }}</a>
+    </h2>
+    {{ title_suffix }}
+    {% if hike.field_date.date %}
+      <time class="album-card__date" datetime="{{ hike.field_date.value }}">{{ hike.field_date.date.getTimestamp()|format_date('day_date') }}</time>
+      {{ {'#cache': {'tags': hike.getCacheTags()}} }}
+    {% endif %}
+    <p class="album-card__count">
+      {% trans %}1 photo{% plural count %}{{ count }} photos{% endtrans %}
+    </p>
+  </div>
+  {% if content.field_photos[0] %}
+    <div class="album-card__photo">{{ content.field_photos[0] }}</div>
+  {% endif %}
+</article>

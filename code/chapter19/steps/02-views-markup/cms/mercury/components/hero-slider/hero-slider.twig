@@ -1,0 +1,58 @@
+{#
+/**
+ * @file
+ * The Hero slider: the core theme's component, for Canvas.
+ *
+ * Props: label, heading, interval. Slots: slides.
+ *
+ * cq-full is Mercury's class for a component as wide as the window, inside
+ * the page's container, as its Hero billboard is.
+ *
+ * One addition: heading, the page's h1 for screen readers. On the core site
+ * the region template prints it; a Canvas page has no title of its own on
+ * Home, so the slider takes it.
+ *
+ * Each element in the slides slot is one slide. Without JavaScript, they're a
+ * row that scrolls sideways and stops at each slide (CSS scroll snap), so
+ * every slide can be reached. hero-slider.js adds the rest.
+ *
+ * The markup follows the carousel pattern of the ARIA Authoring Practices:
+ * aria-roledescription tells screen readers the section is a carousel, and
+ * the controls come first, so a keyboard user can pause the slides before
+ * reaching them.
+ *
+ * The controls are hidden until the script shows them: without it, they
+ * couldn't do anything. Their text is here, not in the script, so Drupal
+ * translates it with the rest of the page. The script reads the texts it
+ * needs to fill in from the data attributes.
+ */
+#}
+<section{{ attributes.addClass('hero-slider', 'cq-full') }}
+  aria-roledescription="{{ 'carousel'|t }}"
+  aria-label="{{ label }}"
+  data-interval="{{ interval|default(7) }}"
+  data-slide="{{ 'slide'|t }}"
+  data-slide-label="{{ '@number of @total'|t }}">
+  {% if heading %}
+    <h1 class="visually-hidden">{{ heading }}</h1>
+  {% endif %}
+  <div class="hero-slider__controls" hidden>
+    <button type="button" class="hero-slider__button hero-slider__play" data-pause="{{ 'Pause the slides'|t }}" data-play="{{ 'Play the slides'|t }}">
+      <svg class="hero-slider__icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+      <svg class="hero-slider__icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+      <span class="visually-hidden">{{ 'Pause the slides'|t }}</span>
+    </button>
+    <button type="button" class="hero-slider__button hero-slider__previous">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="visually-hidden">{{ 'Previous slide'|t }}</span>
+    </button>
+    <button type="button" class="hero-slider__button hero-slider__next">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 18 6-6-6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="visually-hidden">{{ 'Next slide'|t }}</span>
+    </button>
+    <div class="hero-slider__dots" data-label="{{ 'Slide @number of @total'|t }}"></div>
+  </div>
+  <div class="hero-slider__slides">
+    {% block slides %}{{ slides }}{% endblock %}
+  </div>
+</section>

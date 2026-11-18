@@ -1,0 +1,54 @@
+/**
+ * @file
+ * The months on the Hike archive (templates/views/
+ * views-view-summary--hikes.html.twig): a row of links that wraps, each with
+ * the number of hikes in a small badge.
+ */
+@layer components {
+  .summary {
+    margin-block-end: var(--space-l);
+  }
+
+  .summary__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .summary__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    min-block-size: 2.75rem;
+    padding-inline: var(--space-s) var(--space-xs);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-round);
+    background-color: var(--color-surface);
+    color: var(--color-action);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+
+    &:hover {
+      border-color: var(--color-action);
+    }
+
+    &.is-active {
+      border-color: var(--color-action);
+      background-color: var(--color-action);
+      color: var(--color-on-action);
+    }
+  }
+
+  .summary__count {
+    min-inline-size: 1.5rem;
+    padding-inline: var(--space-3xs);
+    border-radius: var(--radius-round);
+    background-color: var(--color-tint);
+    color: var(--color-on-tint);
+    font-size: var(--font-size-step--1);
+    text-align: center;
+  }
+}

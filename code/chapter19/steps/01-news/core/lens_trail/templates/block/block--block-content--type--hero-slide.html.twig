@@ -1,0 +1,27 @@
+{% extends "block.html.twig" %}
+{#
+/**
+ * @file
+ * A block that shows a Hero slide content block: a hero the club's editors
+ * write themselves, such as the invitation to join.
+ *
+ * The Hero component takes text, so the text fields' values come from the
+ * block content entity, in the page's language, and only the photo is
+ * rendered. Without a photo, the hero is the Color variant.
+ */
+#}
+{% block content %}
+  {% set slide = content['#block_content'] %}
+  {% set photo = content.field_photo|render %}
+  {{ include('lens_trail:hero', {
+    heading: slide.field_heading.value,
+    text: slide.field_text.value,
+    url: slide.field_link.0 ? slide.field_link.0.getUrl().toString() : '',
+    link_text: slide.field_link.title,
+    variant: photo ? 'photo' : 'color',
+    photo: photo,
+  }, with_context = false) }}
+  {# The rest prints nothing, but carries the block's cache tags, so the
+     slide changes when an editor changes the block. #}
+  {{ content|without('field_heading', 'field_text', 'field_link', 'field_photo') }}
+{% endblock %}

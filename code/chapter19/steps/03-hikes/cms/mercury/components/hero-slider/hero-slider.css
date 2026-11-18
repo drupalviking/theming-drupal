@@ -1,0 +1,149 @@
+/**
+ * @file
+ * The Hero slider's look: the core theme's CSS, with Mercury's variable
+ * names. Plain CSS, like the search's. See the core theme's hero-slider.css
+ * for the why.
+ */
+/* The slides side by side, each as wide as the slider. The row scrolls
+   sideways, and stops at the start of a slide (scroll snap), never between
+   two. */
+.hero-slider__slides {
+  display: grid;
+  grid-auto-columns: 100%;
+  grid-auto-flow: column;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+
+  & > * {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+}
+
+/* Every slide as tall as the tallest, all the way down to the hero inside
+   it: a slide is a block, the block has the view's wrappers, and the hero
+   is somewhere inside them. A grid item stretches to its row, so each
+   wrapper that holds a hero is made a grid too. */
+.hero-slider__slides > *,
+.hero-slider__slides > * :has(.hero) {
+  display: grid;
+}
+
+/* The controls, once the script has shown them: at the bottom of the
+   slider, lined up with the page content. They're first in the HTML, so
+   they're first when you Tab. */
+.hero-slider {
+  position: relative;
+  /* Mercury's components below have no space of their own above them. */
+  margin-block-end: var(--spacing-club-xl);
+}
+
+.hero-slider__controls:not([hidden]) {
+  position: absolute;
+  z-index: 1;
+  inset-block-end: var(--spacing-club-m);
+  inset-inline: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-club-2xs);
+  max-inline-size: var(--size-content);
+  margin-inline: auto;
+  padding-inline: var(--spacing-club-m);
+  /* The box is as wide as the page; only the buttons take clicks. */
+  pointer-events: none;
+
+  & > * {
+    pointer-events: auto;
+  }
+}
+
+/* With the controls, the row's scroll bar isn't needed: it still scrolls
+   under a finger or a trackpad. */
+.hero-slider:has(.hero-slider__controls:not([hidden])) .hero-slider__slides {
+  scrollbar-width: none;
+}
+
+/* White and round, on any slide: a photo or the tint color. The border is
+   for the tint, where white alone would hardly show. */
+.hero-slider__button {
+  display: grid;
+  place-items: center;
+  inline-size: var(--size-target);
+  block-size: var(--size-target);
+  padding: 0;
+  border: var(--border-thin) solid var(--color-club-neutral-400);
+  border-radius: var(--radius-round);
+  background: var(--color-club-neutral-0);
+  color: var(--color-club-neutral-950);
+  cursor: pointer;
+
+  & svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    fill: currentColor;
+  }
+
+  &:hover {
+    background: var(--color-club-neutral-100);
+  }
+
+  &:focus-visible {
+    outline: var(--border-focus) solid var(--color-club-neutral-0);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 var(--border-focus) var(--color-club-neutral-950);
+  }
+}
+
+/* Pause while the slides play, Play once they're stopped. */
+.hero-slider__play[data-state="stopped"] .hero-slider__icon-pause,
+.hero-slider__play:not([data-state="stopped"]) .hero-slider__icon-play {
+  display: none;
+}
+
+/* The dots on a dark pill, so they show on any slide. Each dot is a
+   24-pixel button, the smallest target WCAG allows, with a smaller
+   circle drawn inside it. */
+.hero-slider__dots {
+  display: flex;
+  margin-inline-start: var(--spacing-club-2xs);
+  padding-inline: var(--spacing-club-3xs);
+  border-radius: var(--radius-round);
+  background: rgb(22 19 15 / 0.6);
+}
+
+.hero-slider__dot {
+  display: grid;
+  place-items: center;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+
+  &::before {
+    content: "";
+    inline-size: 0.625rem;
+    block-size: 0.625rem;
+    border: 2px solid var(--color-club-neutral-0);
+    border-radius: var(--radius-round);
+  }
+
+  &[aria-current="true"]::before {
+    background: var(--color-club-neutral-0);
+  }
+
+  &:focus-visible {
+    outline: var(--border-focus) solid var(--color-club-neutral-0);
+    outline-offset: 2px;
+  }
+}
+
+/* The heroes' parallax follows the slider's progress through the window,
+   not the row of slides, which only scrolls sideways (see hero.css). */
+.hero-slider {
+  view-timeline: --hero-slider block;
+  --hero-parallax-timeline: --hero-slider;
+}

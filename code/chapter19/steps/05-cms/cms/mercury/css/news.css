@@ -1,0 +1,38 @@
+/**
+ * @file
+ * A news item's page: like a hike's, the date and the title under the photo.
+ */
+.news {
+  display: grid;
+  gap: var(--spacing-club-m);
+}
+
+.news__header {
+  display: grid;
+  gap: var(--spacing-club-2xs);
+}
+
+.news__date {
+  color: var(--muted-foreground);
+  font-weight: var(--font-weight-semibold);
+}
+
+.news__title {
+  margin: 0;
+  /* What Mercury's page-title.html.twig gives the page title. */
+  font-size: var(--text-4xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.1;
+
+  @media (min-width: 48rem) {
+    font-size: var(--text-5xl);
+  }
+
+  @media (min-width: 64rem) {
+    font-size: var(--text-6xl);
+  }
+}
+
+.news__body > * {
+  max-inline-size: 70ch;
+}

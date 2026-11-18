@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Any content in the Teaser view mode that has no template of its own, such
+ * as an album or a news item in an area's list: the title as the one link,
+ * then the rest. No "Read more": the title already says where it goes.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{{ attach_library('lens_trail/teaser') }}
+<article{{ attributes.addClass('teaser') }}>
+  {{ title_prefix }}
+  <h2{{ title_attributes.addClass('teaser__title') }}>
+    <a href="{{ url }}">{{ label }}</a>
+  </h2>
+  {{ title_suffix }}
+  <div class="teaser__content">
+    {{ content|without('links') }}
+  </div>
+</article>

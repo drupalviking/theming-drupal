@@ -1,0 +1,24 @@
+/**
+ * @file
+ * A term's own part of its page (an area's photo and description), and the
+ * list of what's tagged with it, under it.
+ */
+.term {
+  display: grid;
+  gap: var(--spacing-club-s);
+  margin-block-end: var(--spacing-club-l);
+
+  & > * {
+    max-inline-size: 70ch;
+  }
+}
+
+/* The list under it, from the term's view: as wide as the description, and
+   with room between the cards, which Drupal CMS's views don't give. */
+.view:has(.term) .view-content {
+  max-inline-size: 48rem;
+
+  & > * + * {
+    margin-block-start: var(--spacing-club-m);
+  }
+}

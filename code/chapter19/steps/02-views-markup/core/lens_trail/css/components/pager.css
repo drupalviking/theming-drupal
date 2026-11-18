@@ -1,0 +1,55 @@
+/**
+ * @file
+ * The pagers: the full pager (core's pager.html.twig, which has the classes
+ * already) and the mini pager (templates/views/views-mini-pager.html.twig,
+ * which borrows them).
+ */
+@layer components {
+  .pager {
+    margin-block-start: var(--space-l);
+  }
+
+  .pager__items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-2xs);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Each page is a box big enough to tap: 2.75rem is 44px. */
+  .pager__item a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    padding-inline: var(--space-xs);
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-surface);
+    color: var(--color-action);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+
+    &:hover {
+      border-color: var(--color-action);
+    }
+  }
+
+  /* The page we're on: filled, and announced as the current page. */
+  .pager__item.is-active a {
+    border-color: var(--color-action);
+    background-color: var(--color-action);
+    color: var(--color-on-action);
+  }
+
+  .pager__item--ellipsis,
+  .pager__item--current {
+    padding-inline: var(--space-2xs);
+    color: var(--color-muted);
+  }
+}

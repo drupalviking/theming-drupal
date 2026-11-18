@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * The photos on a photo theme's page (the Photo themes view): the same grid
+ * and lightbox as an album's page, the Album component, with one view row
+ * for each photo.
+ *
+ * Available variables (core's views-view-unformatted.html.twig lists them):
+ * - rows: The rows; row.content is the photo.
+ * - title: The title of a group of rows, when the view groups them.
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+{% embed 'mercury:album' %}
+  {% block photos %}
+    {% for row in rows %}
+      <li>{{ row.content }}</li>
+    {% endfor %}
+  {% endblock %}
+{% endembed %}

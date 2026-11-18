@@ -1,0 +1,195 @@
+/**
+ * @file
+ * The main menu's dropdown and the Hikes panel: the core theme's CSS, with
+ * Mercury's variable names and breakpoints. Plain CSS, like the search's.
+ *
+ * Mercury's md (48rem): the menu is a row in the Navbar, and Hikes opens a
+ * small dropdown with the links under it. Mercury's lg (64rem): the whole
+ * panel, as wide as the Navbar, under it. On a phone, in Mercury's menu
+ * panel, the dropdown opens in place, under Hikes.
+ */
+
+.main-menu__toggle {
+  display: inline-grid;
+  place-items: center;
+  inline-size: 1.75rem;
+  block-size: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: calc(var(--radius) - 2px);
+  background: none;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary);
+  }
+
+  & svg {
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    transition: rotate 150ms;
+  }
+
+  &[aria-expanded="true"] svg {
+    rotate: 180deg;
+  }
+}
+
+/* Without the script there's no button, and the dropdown stays hidden: the
+   hikes page links to the archive. With it, the hidden attribute decides. */
+.main-menu__dropdown {
+  display: none;
+}
+
+.main-menu__item:has(> .main-menu__toggle) > .main-menu__dropdown:not([hidden]) {
+  display: block;
+  flex-basis: 100%;
+  padding-inline-start: 1rem;
+}
+
+.main-menu__submenu {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  & .main-menu__link {
+    display: flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    padding-inline: 0.5rem;
+    color: var(--foreground);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+  }
+}
+
+/* The panel's lists and photo are for wide screens. On a narrower one, the
+   dropdown has only the links under Hikes. */
+.main-menu__list,
+.main-menu__photo {
+  display: none;
+}
+
+@media (min-width: 48rem) {
+  .main-menu__item:has(> .main-menu__toggle) > .main-menu__dropdown:not([hidden]) {
+    position: absolute;
+    z-index: 10;
+    inset-block-start: 100%;
+    inset-inline-start: 0;
+    min-inline-size: 14rem;
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background-color: var(--card);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* The Hikes panel, under the whole Navbar: the Navbar is Mercury's
+   positioned element, so the item and the menu's wrapper mustn't be one. */
+@media (min-width: 64rem) {
+  .navbar--dropdown-menu-wrapper:has(.main-menu__item--has-panel) {
+    position: static;
+  }
+
+  .main-menu__item--has-panel {
+    position: static;
+
+    /* The same :has() as the dropdown's rule above, so this one wins. */
+    &:has(> .main-menu__toggle) > .main-menu__dropdown:not([hidden]) {
+      inset-inline: 1rem;
+      display: grid;
+      grid-template-columns: minmax(10rem, 1fr) minmax(14rem, 1.5fr) minmax(16rem, 1.5fr);
+      grid-template-rows: auto 1fr;
+      gap: 0.5rem 2.5rem;
+      min-inline-size: 0;
+      padding: 1.5rem;
+    }
+
+    /* Areas on the left, the next hikes and the links in the middle, the
+       photo on the right: the order of the HTML, so the order you tab. */
+    & .main-menu__list {
+      display: block;
+    }
+
+    & .main-menu__list:first-child {
+      grid-row: 1 / span 2;
+    }
+
+    & .main-menu__submenu {
+      grid-column: 2;
+    }
+
+    & .main-menu__photo {
+      display: block;
+      grid-column: 3;
+      grid-row: 1 / span 2;
+
+      & img {
+        border-radius: var(--radius);
+      }
+    }
+  }
+}
+
+/* What's inside the panel: the views' titles as small labels, plain lists. */
+.main-menu__list {
+  & .viewsreference--view-title {
+    margin-block-end: 0.5rem;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  & ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  & li + li {
+    margin-block-start: 0.5rem;
+  }
+
+  & a {
+    color: var(--foreground);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+  }
+
+  & .hike-date {
+    display: block;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+  }
+}
+
+/* "All upcoming hikes" and "Hike archive": links onwards, with an arrow
+   that's only for the eye. */
+.main-menu__item--has-panel .more-link a,
+.main-menu__item--has-panel .main-menu__submenu .main-menu__link {
+  display: inline-flex;
+  padding-inline: 0;
+  color: var(--primary);
+  font-weight: 600;
+
+  &::after {
+    content: " →" / "";
+    white-space: pre;
+  }
+}
+
+.main-menu__item--has-panel .more-link {
+  margin-block-start: 0.75rem;
+}

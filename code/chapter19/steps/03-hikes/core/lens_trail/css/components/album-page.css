@@ -1,0 +1,22 @@
+/**
+ * @file
+ * An album's page: the hike and the area in a line, then the text, the
+ * photos and the comments.
+ */
+@layer components {
+  .album-page {
+    display: grid;
+    gap: var(--space-m);
+  }
+
+  .album-page__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-l);
+    margin: 0;
+  }
+
+  .album-page__body > * {
+    max-inline-size: var(--size-content);
+  }
+}

@@ -1,0 +1,31 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Hero slider
+description: Several heroes in one place, one at a time, with Pause, Previous and Next. Without JavaScript, a row you can scroll sideways.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - label
+  properties:
+    label:
+      type: string
+      title: Label
+      description: What the slides are, for screen readers, such as "Club highlights".
+      examples:
+        - Club highlights
+    interval:
+      type: number
+      title: Interval
+      description: How many seconds each slide stays before the next one comes. Never less than 7, the design says.
+      minimum: 7
+      default: 7
+slots:
+  slides:
+    title: Slides
+    description: The slides, one element each, usually Hero components in blocks. The first is the most important; many visitors see only that one.
+libraryOverrides:
+  dependencies:
+    - lens_trail/base
+    - core/drupal
+    - core/once

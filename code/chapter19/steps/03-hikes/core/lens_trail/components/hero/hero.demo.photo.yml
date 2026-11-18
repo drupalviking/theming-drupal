@@ -1,0 +1,15 @@
+name: Photo
+description: The next hike on the front page, with its photo and the photo's credit.
+props:
+  # SDC Styleguide passes a prop a demo leaves out as NULL, which a string
+  # prop refuses, so every prop is here.
+  eyebrow: Next hike
+  heading: Turnhouse Hill and Carnethy Hill
+  heading_level: 2
+  text: ''
+  url: '#'
+  link_text: See the hike
+  variant: photo
+slots:
+  meta: 'Saturday, 21 November 2026 at 09:30'
+  photo: '<figure class="photo photo--credit-over"><img src="/themes/custom/lens_trail/components/hero/demo/turnhouse-hill.avif" width="1280" height="720" alt=""><figcaption class="photo__caption"><span class="photo__credit">Photo: dave souza · <span class="photo__license">CC BY-SA 4.0</span></span></figcaption></figure>'

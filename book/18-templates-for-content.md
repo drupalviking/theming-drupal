@@ -1071,7 +1071,7 @@ Drupal CMS's views show content in the **Card** view mode, not Teaser, so on an 
  */
 #}
 {% set image = node.field_photo.entity.field_media_image %}
-{% include 'mercury:hike-card' with {
+{% set props = {
   title: node.label,
   url: url,
   heading_level: 2,
@@ -1079,13 +1079,18 @@ Drupal CMS's views show content in the **Card** view mode, not Teaser, so on an 
   date: node.field_date.value ~ 'Z',
   difficulty: node.field_difficulty.value,
   walking_time: walking_time,
-  photo: image.isEmpty ? null : {
+} %}
+{# A hike without a photo leaves the photo out: the component's schema takes
+   an object or nothing, not null. #}
+{% if image is not empty and not image.isEmpty %}
+  {% set props = props|merge({photo: {
     src: image.src_with_alternate_widths.generatedUrl,
     alt: image.alt,
     width: image.width + 0,
     height: image.height + 0,
-  },
-} only %}
+  }}) %}
+{% endif %}
+{% include 'mercury:hike-card' with props only %}
 {# Nothing of the display is printed, but rendering it passes its cache tags
    (the photo's, for one) up to the list. #}
 {% set cache = content|render %}
@@ -1093,7 +1098,7 @@ Drupal CMS's views show content in the **Card** view mode, not Teaser, so on an 
 
 The photo is the interesting part. In Canvas, an image prop is an object with `src`, `alt`, `width` and `height`, and Chapter 14 showed that Canvas's `canvas:image` turns `src` into a `srcset`, when the address has the parametrized image style in its query string. Canvas adds a property to every image field that gives exactly that address, `src_with_alternate_widths`. So the card gets the same small images on an area's page as in Canvas.
 
-The component **validates** its props: SDC checks every value against the types in `hike-card.component.yml`, and a wrong type stops the page with an error, which is how we found the two details in the template's comment. `src_with_alternate_widths` is a `GeneratedUrl` object, and its `generatedUrl` is the string. The image's width and height come as strings (`"1200"`), and `+ 0` makes them numbers.
+The component **validates** its props: SDC checks every value against the types in `hike-card.component.yml`, and a wrong type stops the page with an error, which is how we found the two details in the template's comment. `src_with_alternate_widths` is a `GeneratedUrl` object, and its `generatedUrl` is the string. The image's width and height come as strings (`"1200"`), and `+ 0` makes them numbers. And a hike without a photo, such as North Berwick Law, must leave the `photo` prop out altogether: the schema takes an object or nothing, and `null` stops the page too. That's why the template builds the props first, and adds the photo only when there is one.
 
 The **Card** display then needs only the photo: the template reads everything else from the node. Rendering `content` at the end, without printing it, passes the photo's cache tags up to the list, as `content|without(...)` does on the hike's page.
 

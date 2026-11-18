@@ -1,0 +1,12 @@
+{#
+/**
+ * @file
+ * A grid of photos, which a lightbox (album.js) takes over when JavaScript
+ * runs. Without JavaScript, each photo is a link to its large version.
+ *
+ * A list, so a screen reader says how many photos there are.
+ */
+#}
+<ul class="album">
+  {% block photos %}{{ photos }}{% endblock %}
+</ul>

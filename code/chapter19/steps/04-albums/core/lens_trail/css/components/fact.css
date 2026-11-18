@@ -1,0 +1,22 @@
+/**
+ * @file
+ * A fact (field--fact.html.twig): a small label over its value. Where the
+ * facts go, and in what kind of box, is up to the page they're on.
+ */
+@layer components {
+  .fact__label {
+    color: var(--color-muted);
+    font-size: var(--font-size-step--1);
+  }
+
+  .fact__value {
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .fact__extra {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--font-size-step--1);
+  }
+}

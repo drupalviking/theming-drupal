@@ -1,0 +1,43 @@
+/**
+ * @file
+ * An album in a list (node--gallery--card.html.twig): the cover photo on top,
+ * then the title, the date and the number of photos.
+ */
+.album-card {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  overflow: hidden;
+  border: var(--border-thin) solid var(--border);
+  border-radius: var(--radius-medium);
+  background-color: var(--card);
+}
+
+.album-card__photo {
+  order: -1;
+
+  & img {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+}
+
+.album-card__text {
+  padding: var(--spacing-club-s);
+}
+
+.album-card__title {
+  margin-block: 0 var(--spacing-club-3xs);
+  font-size: var(--text-step-1);
+}
+
+.album-card__date,
+.album-card__count {
+  display: block;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: var(--text-step--1);
+}

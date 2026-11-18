@@ -1,0 +1,78 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Hike card
+description: A hike in a list, with its photo, title, date and difficulty.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - title
+    - url
+    - date
+    - difficulty
+  properties:
+    title:
+      type: string
+      title: Title
+      examples:
+        - Glencorse Reservoir winter loop
+    url:
+      type: string
+      format: uri-reference
+      title: Link
+      description: The hike's page.
+      examples:
+        - /
+    heading_level:
+      type: number
+      title: Heading level
+      description: One below the heading the cards are under.
+      enum:
+        - 2
+        - 3
+        - 4
+      default: 3
+      examples:
+        - 3
+    layout:
+      type: string
+      title: Layout
+      description: Beside means beside the text when the card is wide enough.
+      enum:
+        - top
+        - beside
+      meta:enum:
+        top: Photo on top
+        beside: Photo beside
+      default: top
+      examples:
+        - top
+    photo:
+      $ref: json-schema-definitions://canvas.module/image
+      type: object
+      title: Photo
+    date:
+      type: string
+      format: date-time
+      title: Date and time
+      examples:
+        - '2026-12-19T09:30:00Z'
+    difficulty:
+      type: string
+      title: Difficulty
+      enum:
+        - easy
+        - moderate
+        - hard
+      meta:enum:
+        easy: Easy
+        moderate: Moderate
+        hard: Hard
+      examples:
+        - easy
+    walking_time:
+      type: string
+      title: Walking time
+      description: For example, About 2 hours on foot.
+      examples:
+        - About 1 hour 50 min on foot

@@ -1,0 +1,46 @@
+/**
+ * @file
+ * An album in a list (node--gallery--card.html.twig): the cover photo on top,
+ * then the title, the date and the number of photos. The photo comes after
+ * the text in the HTML, so the title comes first for screen readers.
+ */
+@layer components {
+  .album-card {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    overflow: hidden;
+    border: var(--border-thin) solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-surface);
+  }
+
+  .album-card__photo {
+    order: -1;
+
+    & img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      aspect-ratio: 3 / 2;
+      object-fit: cover;
+    }
+  }
+
+  .album-card__text {
+    padding: var(--space-s);
+  }
+
+  .album-card__title {
+    margin-block: 0 var(--space-3xs);
+    font-size: var(--font-size-step-1);
+  }
+
+  .album-card__date,
+  .album-card__count {
+    display: block;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: var(--font-size-step--1);
+  }
+}

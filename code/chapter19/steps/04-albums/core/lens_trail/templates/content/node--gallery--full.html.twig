@@ -1,0 +1,29 @@
+{#
+/**
+ * @file
+ * An album's page: which hike it's from and where, the text, the photos
+ * (the Album component, from the images chapter), and the comments.
+ *
+ * The h1 is the Page title block's, before this. The hike and the area are
+ * facts, like a hike's, but in a line instead of boxes.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{{ attach_library('lens_trail/album-page') }}
+<article{{ attributes.addClass('album-page') }}>
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <dl class="album-page__facts">
+    {{ content.field_hike }}
+    {{ content.field_area }}
+  </dl>
+
+  <div class="album-page__body">
+    {{ content.field_body }}
+  </div>
+
+  {{ content.field_photos }}
+
+  {{ content|without('field_hike', 'field_area', 'field_body', 'field_photos') }}
+</article>

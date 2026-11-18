@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * One album in Albums from this hike, at the end of a hike's page: the first
+ * photo and the album's title, the whole thing one link to the album.
+ *
+ * This display is built from fields, not a view mode: the view chooses what
+ * to show (the title and one photo), and this template decides how. Each
+ * field is in fields, by its machine name in the view; .content is what the
+ * field shows, already rendered. A field knows nothing of the row it's in,
+ * so the album's address comes from the row itself: row.nid is the album's
+ * node ID.
+ *
+ * Available variables (core's views-view-fields.html.twig lists them all):
+ * - fields: The fields, keyed by their machine names in the view.
+ * - row: The result row; row._entity is the album.
+ */
+#}
+{{ attach_library('mercury/album-link') }}
+<a class="album-link" href="{{ path('entity.node.canonical', {'node': row.nid}) }}">
+  <span class="album-link__photo">{{ fields.field_photos.content }}</span>
+  <span class="album-link__title">{{ fields.title.content }}</span>
+</a>

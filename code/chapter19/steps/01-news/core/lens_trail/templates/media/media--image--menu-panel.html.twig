@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * A photo in a menu panel (the Menu panel view mode): the Photo component,
+ * with the media's name as the caption and the credit below.
+ *
+ * See media.html.twig for the variables.
+ */
+#}
+<div{{ attributes }}>
+  {{ title_suffix.contextual_links }}
+  {{ include('lens_trail:photo', {
+    image: content.field_media_image,
+    caption: media.label,
+    photographer: media.field_photographer.value,
+    license: content.field_license.0['#markup'],
+    source: media.field_source.uri,
+    credit: 'below',
+  }, with_context = false) }}
+</div>

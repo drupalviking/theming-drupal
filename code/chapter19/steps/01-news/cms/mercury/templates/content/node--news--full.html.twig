@@ -1,0 +1,31 @@
+{#
+/**
+ * @file
+ * A news item's own page: the photo, the date and the title, then the text.
+ *
+ * Like a hike's page, it prints its own h1 after the photo, so Mercury's
+ * page title is taken off news pages (ThemeHooks::preprocessPage()).
+ * The date is when the item was published; "Submitted by" is gone, because
+ * news comes from the club, not from an account.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{{ attach_library('mercury/news') }}
+<article{{ attributes.addClass('news') }}>
+  <div class="news__photo">
+    {{ content.field_photo }}
+  </div>
+
+  <header class="news__header">
+    <time class="news__date" datetime="{{ node.createdtime|date('c') }}">{{ node.createdtime|format_date('custom', 'j F Y') }}</time>
+    {{ title_prefix }}
+    <h1{{ title_attributes.addClass('news__title') }}>{{ label }}</h1>
+    {{ title_suffix }}
+  </header>
+
+  <div class="news__body">
+    {{ content.field_content }}
+  </div>
+
+  {{ content|without('field_photo', 'field_content') }}
+</article>

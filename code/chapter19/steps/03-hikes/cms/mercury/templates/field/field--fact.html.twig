@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * A fact: a label and a value, in a description list (dl), such as a hike's
+ * key facts on its page. Mercury's hook_theme_suggestions_field_alter()
+ * suggests it for the fields that are facts.
+ *
+ * The label is a dt even when the display hides it, so it's still there for
+ * screen readers. extra is a line under the value, from
+ * ThemeHooks::preprocessField(): the walking time, under the distance.
+ * For the other variables, see core's field.html.twig.
+ */
+#}
+{{ attach_library('mercury/fact') }}
+<div{{ attributes.addClass('fact') }}>
+  <dt{{ title_attributes.addClass('fact__label', label_hidden ? 'visually-hidden') }}>{{ label }}</dt>
+  {% for item in items %}
+    <dd{{ item.attributes.addClass('fact__value') }}>{{ item.content }}</dd>
+  {% endfor %}
+  {% if extra %}
+    <dd class="fact__extra">{{ extra }}</dd>
+  {% endif %}
+</div>

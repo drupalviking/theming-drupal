@@ -1,0 +1,75 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Hero
+description: A big band at the top of a page, as wide as the window, with a heading and a link. The core theme's Hero component, for Canvas.
+group: Lens & Trail
+status: stable
+props:
+  type: object
+  required:
+    - heading
+  properties:
+    style:
+      type: string
+      title: Style
+      description: Text over a photo, or on the tint color.
+      enum:
+        - photo
+        - color
+      meta:enum:
+        photo: Photo
+        color: Color
+      default: photo
+      examples:
+        - photo
+    eyebrow:
+      type: string
+      title: Eyebrow
+      description: A few words above the heading that say what it is, such as "Next hike".
+      examples:
+        - Next hike
+    meta:
+      type: string
+      title: Meta
+      description: A line between the eyebrow and the heading, such as a date.
+      examples:
+        - Saturday, 21 November 2026 at 09:30
+    heading:
+      type: string
+      title: Heading
+      examples:
+        - Turnhouse Hill and Carnethy Hill
+    heading_level:
+      type: number
+      title: Heading level
+      description: 2 when the page has its own h1.
+      enum: [1, 2, 3]
+      default: 2
+      examples:
+        - 2
+    text:
+      type: string
+      title: Text
+      examples:
+        - Membership is £20 a year, £10 for students.
+    url:
+      type: string
+      format: uri-reference
+      title: Link
+      examples:
+        - /join
+    link_text:
+      type: string
+      title: Link text
+      description: What the button says. Say where it goes, not "Read more".
+      examples:
+        - How to join
+    photo:
+      $ref: json-schema-definitions://canvas.module/image
+      type: object
+      title: Photo
+    credit:
+      type: string
+      title: Photo credit
+      description: Who took the photo, and its license, as the club's license asks.
+      examples:
+        - 'Photo: dave souza · CC BY-SA 4.0'

@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * The Hero: the core theme's component, for Canvas.
+ *
+ * Canvas doesn't use a component's variants, so the style is a prop, like
+ * the Hike card's layout. And in Canvas, editors fill everything in by hand,
+ * so the date and the photo are props. A template that has them rendered,
+ * such as a hike's Hero view mode, embeds the component and replaces the meta
+ * and photo blocks instead.
+ */
+#}
+{% set heading_tag = 'h' ~ heading_level|default(2) %}
+{% set with_photo = style|default('photo') == 'photo' %}
+<div{{ attributes.addClass('hero', with_photo ? 'hero--photo' : 'hero--color') }}>
+  <div class="hero__text">
+    {% if eyebrow %}
+      <p class="hero__eyebrow">{{ eyebrow }}</p>
+    {% endif %}
+    {% block meta %}
+      {% if meta %}
+        <div class="hero__meta">{{ meta }}</div>
+      {% endif %}
+    {% endblock %}
+    <{{ heading_tag }} class="hero__heading">{{ heading }}</{{ heading_tag }}>
+    {% if text %}
+      <p class="hero__intro">{{ text }}</p>
+    {% endif %}
+    {% if url and link_text %}
+      <a class="hero__link" href="{{ url }}">{{ link_text }}</a>
+    {% endif %}
+  </div>
+  {% if with_photo %}
+    <div class="hero__photo">
+      {% block photo %}
+        {% if photo.src %}
+          <figure>
+            {% include 'canvas:image' with {
+              src: photo.src,
+              alt: photo.alt,
+              width: photo.width,
+              height: photo.height,
+              sizes: '100vw',
+              loading: 'lazy',
+            } only %}
+            {% if credit %}
+              <figcaption class="hero__credit">{{ credit }}</figcaption>
+            {% endif %}
+          </figure>
+        {% endif %}
+      {% endblock %}
+    </div>
+  {% endif %}
+</div>

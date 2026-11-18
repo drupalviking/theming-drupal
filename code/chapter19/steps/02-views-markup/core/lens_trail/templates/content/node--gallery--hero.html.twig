@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * An album in the Hero view mode: the newest album, in the front page's
+ * slider.
+ *
+ * The first photo only: the field's display renders them all, but only the
+ * one that's printed is drawn, and only its image is in the page.
+ * For the variables, see core's node.html.twig.
+ */
+#}
+{% set photo = content.field_photos.0|render %}
+{{ include('lens_trail:hero', {
+  eyebrow: 'Newest album'|t,
+  heading: node.label,
+  url: url,
+  link_text: 'See the photos'|t,
+  variant: photo ? 'photo' : 'color',
+  photo: photo,
+}, with_context = false) }}

@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * A term on its own page, such as an area: its photo, then its description.
+ * The h1 is Mercury's page title, and the list of what's tagged with the
+ * term comes after this, from the term's view.
+ * For the variables, see core's taxonomy-term.html.twig.
+ */
+#}
+{{ attach_library('mercury/term') }}
+<div{{ attributes.addClass('term') }}>
+  {{ title_prefix }}
+  {{ title_suffix }}
+  {{ content }}
+</div>
